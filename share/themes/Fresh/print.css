@@ -1,0 +1,11 @@
+.group {
+	page-break-inside:avoid;
+	}
+#header, #menu, #announcements, #dateform, #footer, .icon {
+	display:none;
+	}
+#background_left, #background_right {
+	background:none;
+	width:auto;
+	padding:0;
+	}

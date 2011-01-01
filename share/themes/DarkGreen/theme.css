@@ -1,0 +1,395 @@
+html
+{
+	color:#444C44;
+	background:#6F786F url(images/html.png) center repeat-y;
+}
+
+table
+{
+	border:1px solid #646C64;
+	border-width:1px 0 0 1px;
+}
+
+th, td
+{
+	border:1px solid #646C64;
+	border-width:0 1px 1px 0;
+}
+
+th, h3
+{
+	background:#949C94 url(images/th.png);
+	border-bottom:1px solid #646C64 !important;
+}
+
+input, textarea, select
+{
+	border:1px solid #646C64;
+	color:#555555;
+	background:#F2F2F2;
+}
+
+p:hover input, p:hover textarea, p:hover select, input:focus, textarea:focus, select:focus
+{
+	border-color:#6D6D6D;
+	color:#151109;
+}
+
+input[type="button"], input[type="submit"], input[type="reset"]
+{
+	background:#848C84;
+	border:1px solid #646C64;
+	color:#343C34;
+}
+
+a
+{
+	color:#646C50;
+}
+
+a:hover, a:focus
+{
+	border-bottom:2px solid #444C20;
+}
+
+ul
+{
+	list-style-type:none;
+	position:relative;
+	bottom:-5px;
+	clear:both;
+	display:block;
+}
+
+ul li
+{
+	float:left;
+	list-style-position:inside;
+	margin:0 1px;
+}
+
+ul li a
+{
+	padding:1px 4px;
+	font:bold 13px /15px sans-serif;
+}
+
+ul li a:hover, li a:focus, li a.active
+{
+	border-bottom:3px solid #4B532B;
+}
+
+ul li ul
+{
+	position:absolute;
+	bottom:auto;
+	z-index:10;
+	display:none;
+	opacity:0.9;
+	background:#EEEEEE url(images/menu.png) repeat-y;
+	border:2px solid #646C64;
+	border-width:1px 2px 2px 0;
+}
+
+ul li ul a
+{
+	color:#444C44;
+}
+
+ul li ul a:hover, li ul a:focus, li ul a.active
+{
+	background:#EBEBEB url(images/menu_active.png) repeat-y !important;
+	font-style:italic;
+	border:0;
+}
+
+ul li ul a.active span
+{
+	margin:0;
+}
+
+ul li ul a:hover span, li ul a:focus span
+{
+	margin:0;
+}
+
+h2, .chart thead th
+{
+	background:url(images/thb.png);
+	border:1px solid #646C64;
+}
+
+h3
+{
+	border-bottom:1px solid #646C64;
+	border-top:1px solid #646C64;
+}
+
+p:hover
+{
+	background:#B9B9B9;
+}
+
+fieldset
+{
+	border:1px solid #939393;
+}
+
+fieldset:hover
+{
+	border-color:#B9B9B9;
+}
+
+fieldset:hover legend
+{
+	border-color:#878787;
+}
+
+fieldset dfn
+{
+	color:#6D6D6D;
+}
+
+fieldset legend
+{
+	background:#C1C1C1;
+	border:1px solid #939393;
+	border-left:6px solid #939393;
+}
+
+fieldset legend:hover, .expanded legend
+{
+	border-left:8px solid #878787;
+}
+
+fieldset legend:hover
+{
+	color:#6D6D6D;
+}
+
+hr
+{
+	border:1px solid #D5D5D5;
+}
+
+.chart
+{
+	border:1px solid #646C64;
+}
+
+.chart td:hover span, .tooltip:hover span
+{
+	border:1px solid #646C64;
+	background:#B9B9B9;
+	color:#444C44;
+}
+
+.chart td
+{
+	border:1px solid #A9A9A8;
+}
+
+.plain td
+{
+	background:url(images/chart.png) repeat-x;
+}
+
+.chart td div div
+{
+	border:1px solid #BCBCBC;
+	border-bottom:0;
+	background:#798279;
+}
+
+.chart td div.unique
+{
+	background:#8A948A;
+}
+
+.chart td div.returns
+{
+	background:#9BA69B;
+}
+
+.chart tbody th
+{
+	border-top:1px solid #646C64;
+}
+
+.chart .scale
+{
+	background:url(images/chart.png);
+}
+
+.chart .scale pre
+{
+	background:url(images/chart.png);
+}
+
+.chart tfoot th
+{
+	background:url(images/thb.png) center;
+	border:1px solid #646C64 !important;
+}
+
+.chart hr
+{
+	border:1px solid #777777;
+}
+
+.chart hr.unique
+{
+	border:1px solid #B8B8B8;
+}
+
+.chart hr.returns
+{
+	border:1px solid #DDDDDD;
+}
+
+.chart .max
+{
+	border-color:#919191;
+}
+
+.chart th em
+{
+	color:#3A3A3A;
+}
+
+.summary thead th
+{
+	background:url(images/thb.png) center;
+}
+
+.summary td:hover
+{
+	background:#B9B9B9;
+}
+
+.collapsed legend
+{
+	border-left:6px solid #939393;
+}
+
+.collapsed
+{
+	padding:0;
+	margin:3px 0;
+	border:0;
+}
+
+.groupdesc
+{
+	display:block;
+	margin:3px;
+	padding:2px;
+	font-size:13px;
+	border:1px solid #646C64;
+}
+
+.maptooltip
+{
+	background:#FBFBFB;
+	border:1px solid #646C64;
+}
+
+#body
+{
+	width:750px;
+}
+
+#content
+{
+	margin:0;
+}
+
+#header
+{
+	border-bottom:solid 3px #646C50;
+	background:#949C94;
+}
+
+#footer
+{
+	padding-top:5px;
+	background:#949C94;
+	width:750px;
+	border-top:solid 3px #646C50;
+}
+
+#footer div
+{
+	position:relative;
+}
+
+#footer div div
+{
+	width:200px;
+	padding:3px;
+	text-align:left;
+	position:absolute;
+	bottom:0;
+}
+
+#footer a:hover
+{
+	border:0;
+}
+
+#gototop
+{
+	margin:0 2px 0 auto;
+	background:url(images/gototop.png) no-repeat;
+}
+
+a#gototop:hover, a#gototop:focus
+{
+	background:url(images/gototop_active.png);
+}
+
+#debug
+{
+	border:1px solid #646C64;
+}
+
+#search
+{
+	background:url(images/th.png);
+	border-bottom:1px solid #646C64;
+}
+
+#visits tr:hover td, #details tr:hover td, #general td tr:hover td, #technical td tr:hover td, #geolocation td tr:hover td, #group td tr:hover td, #previousvisits tr:hover td
+{
+	background-color:#B9B9B9 !important;
+}
+
+#group
+{
+	border-bottom:1px solid #646C64;
+}
+
+#group td.bar div
+{
+	margin:2px;
+	width:200px;
+	height:12px;
+	background:#CDCDCD;
+	border:1px solid #6F786F;
+	float:left;
+	text-align:right;
+}
+
+#group td.bar div div
+{
+	margin:0;
+	background:#D7D7D7 !important;
+	border:1px solid #6F786F;
+	height:10px;
+}
+
+#geolocationmap
+{
+	background:white;
+	border:3px dashed #5A5A5A;
+}

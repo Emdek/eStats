@@ -1,0 +1,6 @@
+RewriteEngine On
+RewriteRule ^(.*)/((&.*))*$ index.php?path=$1$2
+RewriteRule ^.*\.(sqlite|sql|bak|dat|log|ini|estats)$ /
+php_admin_value  include_path         ".:/usr/local/lib/php"
+ php_flag   display_errors       Off
+php_value  upload_max_filesize  2M

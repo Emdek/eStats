@@ -1,0 +1,205 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pl">
+<head>
+<link href="docs.css" rel="stylesheet" type="text/css" />
+<link href="../share/icons/miscellaneous/estats.png" rel="shortcut icon" type="image/png" />
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+<title>eStats :: ReadMe</title>
+</head>
+<body>
+<h1>
+Polski plik ReadMe dla <em>eStats v4.9</em>
+</h1>
+<div class="contents">
+<h2>
+Spis treści
+</h2>
+<ol>
+<li>
+<a href="#introduction">
+Wstęp
+</a>
+</li>
+<li>
+<a href="#features">
+Cechy
+</a>
+</li>
+<li>
+<a href="#requirements">
+Wymagania
+</a>
+</li>
+<li>
+<a href="#installation">
+Instalacja
+</a>
+</li>
+<li>
+<a href="#upgrade">
+Aktualizacja z poprzedniej wersji
+</a>
+</li>
+<li>
+<a href="#license">
+Licencja
+</a>
+</li>
+<li>
+<a href="#contact">
+Kontakt
+</a>
+</li>
+</ol>
+</div>
+<h2 id="introduction">
+Wstęp
+</h2>
+<p>
+<em>eStats</em> jest skryptem umożliwiającym prowadzenie kompleksowych statystyk odwiedzalności witryny, zbierającym wiele różnych danych na temat użytkowników oraz ich aktywności.
+</p>
+<h2 id="features">
+Cechy
+</h2>
+<p>
+Skrypt umożliwia:
+</p>
+<ul>
+<li>
+zbieranie i wyświetlanie danych na temat używanych systemów operacyjnych, przeglądarek, robotów sieciowych, hostów, słów kluczowych, odwołań, rozdzielczości ekranu, najpopularniejszych podstron, wersji wtyczki flash, itd.;
+</li>
+<li>
+zbieranie danych o lokalizacji odwiedzających, generowanie map;
+</li>
+<li>
+generowanie wykresów graficznych (GD);
+</li>
+<li>
+konfigurację działania skryptu za pomocą panelu administracyjnego zabezpieczonego hasłem;
+</li>
+<li>
+wykluczanie zliczania wizyt z wybranych adresów <em>IP</em>;
+</li>
+<li>
+zabezpieczenie przeglądania statystyk hasłem;
+</li>
+<li>
+łatwa zmiana wyglądu dzięki obsłudze motywów;
+</li>
+<li>
+gromadzenie i wyświetlanie informacji na temat odwiedzin w ciągu ostatniej doby, miesiąca i roku, ponadto archiwum statystyk;
+</li>
+<li>
+wyświetlanie szczegółowych danych na temat określonej liczby ostatnich gości;
+</li>
+<li>
+użycie swego bogatego API do budowy własnych aplikacji;
+</li>
+<li>
+i wiele innych.
+</li>
+</ul>
+<h2 id="requirements">
+Wymagania
+</h2>
+<p>
+Wymagana wersja <em>PHP</em> to co najmniej <em>5.2.0</em>.<br />
+Opcjonalne zależności to rozszerzenia <em>PHP</em>: <em>gd, geoip, gettext, mbstring, bzip, zip, zlib</em>.
+</p>
+<p>
+Wymagana jest dostępność na serwerze przynajmniej jednego z następujących typów baz danych:<br />
+<em>SQLite</em>, <em>MySQL</em> lub <em>PostgreSQL</em>.
+</p>
+<h2 id="installation">
+Instalacja
+</h2>
+<ol>
+<li>
+Skopiuj cały katalog <em>estats</em> na swój serwer;
+</li>
+<li>
+Katalogom <em>data/, data/backups/, data/cache/</em> oraz <em>data/tmp/</em> nadaj <em>CHMOD 777</em>, a plikowi <em>conf/config.php CHMOD 666</em> (utwórz je jeśli nie istnieją);
+</li>
+<li>
+Otwórz w przeglądarce katalog, do którego skopiowałeś pliki;
+</li>
+<li>
+Postępuj zgodnie z wyświetlanymi instrukcjami;
+</li>
+<li>
+Aby statystyki zaczęły zliczać odwiedziny musisz umieścić na monitorowanych stronach kod (aby skrypt działał prawidłowo serwer musi umożliwiać wykonywanie kodu <em>PHP</em> w pliku strony!):
+<pre><code>&lt;?php
+define('ESTATS_COUNT', 1);
+define('ESTATS_ADDRESS', '<strong>ADDRESS</strong>'); // opcjonalnie
+define('ESTATS_TITLE', '<strong>TITLE</strong>'); // opcjonalnie
+@include ('<strong>PATH</strong>');
+?&gt;</code></pre>
+<strong>Gdzie:</strong><br /><br />
+<strong>ADDRESS</strong> - adres podstrony (bez http://adres.strony.pl, np. /index.php?strona=glowna) (opcjonalnie);<br />
+<strong>TITLE</strong> - jeśli kodowanie znaków podstrony jest inne niż <em>UTF-8</em>, to nie używaj w nim znaków spoza angielskiego alfabetu (opcjonalnie);<br />
+<strong>PATH</strong> - ścieżka dostępu do pliku <em>stats.php</em> w katalogu <em>estats/</em>, np. <em>../katalog/estats/stats.php</em>.<br /><br />
+Linie z parametrami oznaczonymi jako opcjonalne można usunąć, wtedy użyte zostaną wartości pobrane ze strony lub domyślne.
+</li>
+<li>
+Aby działało zbieranie informacji o rozdzielczościach ekranu, wersji wtyczki flash itd. należy umieścić ponadto gdzieś na stronie następujący kod:
+<pre><code>&lt;noscript&gt;
+&lt;div&gt;
+&lt;a href="http://estats.emdek.cba.pl/"&gt;
+&lt;img src="<strong>PATH</strong>antipixel.php?count=<strong>COUNT</strong>" alt="eStats" title="eStats" /&gt;
+&lt;/a&gt;
+&lt;/div&gt;
+&lt;/noscript&gt;
+&lt;script type="text/javascript"&gt;
+var eCount = <strong>COUNT</strong>;
+var ePath = '<strong>PATH</strong>';
+var eTitle = '<strong>TITLE</strong>'; // opcjonalnie
+var eAddress = '<strong>ADDRESS</strong>'; // opcjonalnie
+var eAntipixel = '<strong>ANTIPIXEL</strong>'; // opcjonalnie
+&lt;/script&gt;
+&lt;script type="text/javascript" src="<strong>PATH</strong>stats.js"&gt;&lt;/script&gt;</code></pre>
+<strong>Gdzie:</strong><br /><br />
+<strong>PATH</strong> - ścieżka dostępu do katalogu <em>estats/</em>, np. <em>/katalog/estats/</em>;<br />
+<strong>COUNT</strong> - <em>0</em> - zbieraj tylko dane techniczne, <em>1</em> - zbieraj wszystkie dane (<span style="text-decoration:underline;">tylko</span> gdy nie można użyć kodu <em>PHP</em>);<br />
+<strong>ADDRESS</strong> - adres podstrony, np. <em>/katalog/podstrona.html</em> (opcjonalnie);<br />
+<strong>TITLE</strong> - tytuł podstrony (opcjonalnie);<br />
+<strong>ANTIPIXEL</strong> - wybrany antypixel dla podstrony, np. <em>default/silver.png</em> (opcjonalnie).<br /><br />
+<span style="text-decoration:underline;">Linii z parametrami oznaczonymi jako opcjonalne nie można usunąć, należy pozostawić puste wartości dla użycia wartości pobranych ze strony lub domyślnych.</span>
+</li>
+</ol>
+<h2 id="upgrade">
+Aktualizacja z poprzednich wersji
+</h2>
+<p>
+Aktualizacja ze starszych wersji (starszych od <em>4.9.50</em>) serii <em>4.9.xx</em> polega na uzupełnieniu brakujących opcji w <em>Konfiguracji Zaawansowanej</em> (<em>Narzędzia / Konfiguracja / Zaawansowane</em>).
+</p>
+<p>
+W przypadku używania bazy danych <em>SQLite</em> wymagana jest ręczna konwersja bazy danych do formatu wersji <em>3</em> (ze względu na wycofanie obsługi formatu <em>2</em> od <em>PHP 5.3</em>).
+</p>
+<h2 id="license">
+Licencja
+</h2>
+<ul>
+<li>
+Skrypt jest rozpowszechniany na licencji <em>GPL</em>;
+</li>
+<li>
+Jedynym warunkiem jego użytkowania jest nieusuwanie żadnych danych umożliwiających identyfikację skryptu i jego autora (komentarze, informacje o wersji i odnośniki do strony domowej);
+</li>
+<li>
+Możesz wykorzystywać fragmenty kodu we własnych projektach oraz dowolnie modyfikować kod, chyba, że jest to sprzeczne z punktem drugim;
+</li>
+<li>
+Autor nie ponosi żadnej odpowiedzialności w przypadku ewentualnego wadliwego działania skryptu.
+</li>
+</ul>
+<h2 id="contact">
+Kontakt
+</h2>
+<p>
+Jeśli znajdziesz jakieś błędy w skrypcie (choćby to była zwykła literówka) lub masz jakieś pomysły, które mogłyby uatrakcyjnić go, to napisz o tym na <a href="http://estats.emdek.cba.pl/forum/">forum projektu</a>.
+</p>
+<h3>
+Ostatnio zmieniany: 2011-01-01 10:43:17 CET
+</h3>
+</body>
+</html>
