@@ -1240,7 +1240,7 @@ if (EstatsTheme::option('Type') != 'xhtml')
 
 header(EstatsTheme::option('Header'));
 
-if (defined('$Gzip') && $Gzip && function_exists('ob_gzhandler') && stristr($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip') && !(ini_get('zlib.output_compression') == 'On' || ini_get('zlib.output_compression_level') > 0) || ini_get('output_handler') == 'ob_gzhandler')
+if (!empty($Gzip) && function_exists('ob_gzhandler') && stristr($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip') && !(ini_get('zlib.output_compression') == 'On' || ini_get('zlib.output_compression_level') > 0 || ini_get('output_handler') == 'ob_gzhandler'))
 {
 	header('Content-Encoding: gzip');
 	ob_start('ob_gzhandler');
