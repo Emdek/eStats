@@ -362,7 +362,11 @@ if (!isset($_SESSION[EstatsCore::session()]['theme']) || !EstatsTheme::exists($_
 	}
 }
 
-EstatsTheme::set($_SESSION[EstatsCore::session()]['theme']);
+if (!EstatsTheme::set($_SESSION[EstatsCore::session()]['theme']))
+{
+	estats_error_message(sprintf(EstatsLocale::translate('Can not load theme %s!'), $_SESSION[EstatsCore::session()]['theme']), __FILE__, __LINE__, TRUE);
+}
+
 EstatsTheme::load('common');
 
 $Locales = EstatsLocale::available();
