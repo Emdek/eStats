@@ -109,7 +109,7 @@ Continuation of installation can cause unexpected results!'), 'error');
 	'GraphicsEnabled' => array(TRUE, EstatsGUI::FIELD_BOOLEAN),
 	'LogFile' => array(FALSE, EstatsGUI::FIELD_BOOLEAN),
 	'DataDir' => array('data/', EstatsGUI::FIELD_VALUE),
-	'TimeCollectFrequency' => array('GET', EstatsGUI::FIELD_SELECT),
+	'TimeCollectFrequency' => array('hourly', EstatsGUI::FIELD_SELECT),
 	'DataCollectFrequency' => array('monthly', EstatsGUI::FIELD_SELECT),
 	'PathMode' => array('hourly', EstatsGUI::FIELD_SELECT)
 	));
