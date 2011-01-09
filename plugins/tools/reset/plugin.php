@@ -54,7 +54,6 @@ if (isset($_POST['ResetData']))
 	EstatsCore::logEvent(EstatsCore::EVENT_DATADELETED);
 	EstatsGUI::notify(EstatsLocale::translate('Data deleted successfully.'), 'success');
 	EstatsCore::setConfiguration(array('CollectedFrom' => $_SERVER['REQUEST_TIME']), 0);
-
 }
 
 if (isset($_POST['ResetTables']) && !array_diff($_POST['Tables'], $DatabaseTables) && !in_array('configuration', $_POST['Tables']) && !in_array('logs', $_POST['Tables']))
