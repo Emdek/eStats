@@ -103,7 +103,7 @@ Continuation of installation can cause unexpected results!'), 'error');
 	'logfile' => EstatsLocale::translate('Log events to text file'),
 	);
 		$Options = array((isset($Information['Defaults'])?$Information['Defaults']:array()), array(
-	'PersistentConnection' => array(TRUE, EstatsGUI::FIELD_BOOLEAN),
+	'PersistentConnection' => array(FALSE, EstatsGUI::FIELD_BOOLEAN),
 	'Overwrite' => array(FALSE, EstatsGUI::FIELD_BOOLEAN),
 	'Gzip' => array(FALSE, EstatsGUI::FIELD_BOOLEAN),
 	'GraphicsEnabled' => array(TRUE, EstatsGUI::FIELD_BOOLEAN),
