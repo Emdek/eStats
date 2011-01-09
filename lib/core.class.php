@@ -1039,7 +1039,7 @@ class EstatsCore
 		{
 			if (!self::$VisitorID)
 			{
-				self::$VisitorID = (max(self::$Driver->selectField('visitors', array(EstatsDriver::FUNCTION_MAX, 'id')), self::visitsAmount('unique')) + 1);
+				self::$VisitorID = (max(self::$Driver->selectField('visitors', array(EstatsDriver::ELEMENT_FUNCTION, array(EstatsDriver::FUNCTION_MAX, 'id'))), self::visitsAmount('unique')) + 1);
 				self::$IsNewVisit = TRUE;
 			}
 
