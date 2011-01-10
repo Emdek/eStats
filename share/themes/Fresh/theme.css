@@ -797,16 +797,32 @@ a#gototop:hover, a#gototop:focus
 	line-height:30px;
 }
 
+#details th, #details td
+{
+	padding:0;
+}
+
+#details th
+{
+	text-align:center !important;
+}
+
+#details td
+{
+	padding:0 8px 0 10px !important;
+	text-align:left;
+	width:50% !important;
+}
+
 #details th p
 {
 	text-align:right !important;
 }
 
-#details td
+#details th p, #details td p
 {
-	padding:0 8px 0 20px !important;
-	text-align:left;
-	width:50% !important;
+	line-height:16px;
+	margin:3px;
 }
 
 #details .corner_left_top
@@ -816,11 +832,6 @@ a#gototop:hover, a#gototop:focus
 	display:block;
 	background:url(images/background_group_header_left.png) no-repeat left top;
 	float:left;
-}
-
-#details th
-{
-	text-align:center !important;
 }
 
 #search
