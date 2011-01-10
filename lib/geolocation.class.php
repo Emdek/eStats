@@ -21,7 +21,7 @@ class EstatsGeolocation
 
 	static function isAvailable()
 	{
-		return ((function_exists('geoip_record_by_name') && geoip_db_avail(GEOIP_CITY_EDITION_REV0)) || (is_readable((defined('ESTATS_PATH')?ESTATS_PATH:'').$GLOBALS['DataDir'].'geoip_'.$GLOBALS['DBID'].'.sqlite') && class_exists('PDO')));
+		return ((function_exists('geoip_record_by_name') && geoip_db_avail(GEOIP_CITY_EDITION_REV0)) || (isset($GLOBALS['DataDir']) && is_readable((defined('ESTATS_PATH')?ESTATS_PATH:'').$GLOBALS['DataDir'].'geoip_'.$GLOBALS['DBID'].'.sqlite') && class_exists('PDO')));
 	}
 
 /**
