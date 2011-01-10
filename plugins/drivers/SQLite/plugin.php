@@ -468,7 +468,7 @@ class EstatsDriverSqlite extends EstatsDriver
 				}
 				else
 				{
-					$Parts[] = $this->fieldString($Fields[$i]).' AS "'.$Fields[$i].'"';
+					$Parts[] = $this->fieldString($Fields[$i]).(strstr($Fields[$i], '.')?'':' AS "'.$Fields[$i].'"');
 				}
 			}
 
