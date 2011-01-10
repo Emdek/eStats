@@ -869,7 +869,7 @@ class EstatsCore
 
 	static function visitsOnline($Time = 300)
 	{
-		return (int) self::$Driver->selectAmount('visitors', array(array(EstatsDriver::ELEMENT_OPERATION, array(array(EstatsDriver::ELEMENT_FUNCTION, array(EstatsDriver::FUNCTION_TIMESTAMP, 'lastvisit')), EstatsDriver::OPERATOR_GREATEROREQUAL, array(EstatsDriver::ELEMENT_VALUE, (time() - $Time))))));
+		return (int) self::$Driver->selectAmount('visitors', array(array(EstatsDriver::ELEMENT_OPERATION, array('lastvisit', EstatsDriver::OPERATOR_GREATEROREQUAL, array(EstatsDriver::ELEMENT_VALUE, date('Y-m-d H:i:s', ($_SERVER['REQUEST_TIME'] - $Time)))))));
 	}
 
 /**
@@ -989,7 +989,7 @@ class EstatsCore
 
 		if (self::$Driver->selectAmount('ignored', $Where))
 		{
-			if (self::$Driver->selectAmount('ignored', array(array(EstatsDriver::ELEMENT_OPERATION, array('ip', EstatsDriver::OPERATOR_EQUAL, array(EstatsDriver::ELEMENT_VALUE, self::$IP))), EstatsDriver::OPERATOR_AND, array(EstatsDriver::ELEMENT_OPERATION, array(array(EstatsDriver::ELEMENT_FUNCTION, array(EstatsDriver::FUNCTION_TIMESTAMP, 'lastvisit')), EstatsDriver::OPERATOR_GREATER, array(EstatsDriver::ELEMENT_VALUE, $_SERVER['REQUEST_TIME'] - 4320))))))
+			if (self::$Driver->selectAmount('ignored', array(array(EstatsDriver::ELEMENT_OPERATION, array('ip', EstatsDriver::OPERATOR_EQUAL, array(EstatsDriver::ELEMENT_VALUE, self::$IP))), EstatsDriver::OPERATOR_AND, array(EstatsDriver::ELEMENT_OPERATION, array('lastvisit', EstatsDriver::OPERATOR_GREATER, array(EstatsDriver::ELEMENT_VALUE, date('Y-m-d H:i:s', ($_SERVER['REQUEST_TIME'] - 4320))))))))
 			{
 				$Values = array(
 	'views' => array(EstatsDriver::ELEMENT_EXPRESSION, array('views', EstatsDriver::OPERATOR_INCREASE)),
@@ -1290,7 +1290,7 @@ class EstatsCore
 				}
 				else
 				{
-					self::$VisitorID = (int) self::$Driver->selectField('visitors', 'id', array(array(EstatsDriver::ELEMENT_OPERATION, array(array(EstatsDriver::ELEMENT_FUNCTION, array(EstatsDriver::FUNCTION_TIMESTAMP, 'firstvisit')), EstatsDriver::OPERATOR_GREATER, array(EstatsDriver::ELEMENT_VALUE, $_SERVER['REQUEST_TIME'] - (self::option('VisitTime') / 2)))), EstatsDriver::OPERATOR_AND, array(EstatsDriver::ELEMENT_OPERATION, array('ip', EstatsDriver::OPERATOR_EQUAL, array(EstatsDriver::ELEMENT_VALUE, self::$IP)))), 0, array('id'), FALSE);
+					self::$VisitorID = (int) self::$Driver->selectField('visitors', 'id', array(array(EstatsDriver::ELEMENT_OPERATION, array('firstvisit', EstatsDriver::OPERATOR_GREATER, array(EstatsDriver::ELEMENT_VALUE, date('Y-m-d H:i:s', ($_SERVER['REQUEST_TIME'] - (self::option('VisitTime') / 2)))))), EstatsDriver::OPERATOR_AND, array(EstatsDriver::ELEMENT_OPERATION, array('ip', EstatsDriver::OPERATOR_EQUAL, array(EstatsDriver::ELEMENT_VALUE, self::$IP)))), 0, array('id'), FALSE);
 				}
 
 				if (self::$VisitorID > 0)
