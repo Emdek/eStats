@@ -38,16 +38,6 @@ function estats_error_message($Error, $File, $Line, $NotFile = FALSE, $Warning =
 	}
 }
 
-if (!defined('ESTATS_ADDRESS'))
-{
-	define('ESTATS_ADDRESS', $_SERVER['REQUEST_URI']);
-}
-
-if (!defined('ESTATS_TITLE'))
-{
-	define('ESTATS_TITLE', '');
-}
-
 if (defined('ESTATS_COUNT') || defined('ESTATS_JSINFORMATION'))
 {
 	header('Expires: '.gmdate('r', 0));
@@ -126,7 +116,7 @@ if (defined('ESTATS_COUNT') || defined('ESTATS_JSINFORMATION'))
 
 	if (!defined('ESTATS_CRITICAL') && EstatsCore::option('StatsEnabled'))
 	{
-		EstatsCore::collectData(defined('ESTATS_COUNT'), ESTATS_ADDRESS, ESTATS_TITLE, (defined('ESTATS_JSINFORMATION')?$JSInformation:array()));
+		EstatsCore::collectData(defined('ESTATS_COUNT'), (defined('ESTATS_ADDRESS')?ESTATS_ADDRESS:$_SERVER['REQUEST_URI']), (defined('ESTATS_TITLE')?ESTATS_TITLE:''), (defined('ESTATS_JSINFORMATION')?$JSInformation:array()));
 	}
 }
 ?>
