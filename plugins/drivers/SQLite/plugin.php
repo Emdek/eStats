@@ -2,7 +2,7 @@
 /**
  * SQLite database driver class for eStats
  * @author Emdek <http://emdek.pl>
- * @version 4.0.01
+ * @version 4.0.02
  */
 
 class EstatsDriverSqlite extends EstatsDriver
@@ -468,7 +468,7 @@ class EstatsDriverSqlite extends EstatsDriver
 				}
 				else
 				{
-					$Parts[] = $this->fieldString($Fields[$i]);
+					$Parts[] = $this->fieldString($Fields[$i]).' AS "'.$Fields[$i].'"';
 				}
 			}
 
