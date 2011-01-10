@@ -38,7 +38,7 @@ function estats_error_message($Error, $File, $Line, $NotFile = FALSE, $Warning =
 	}
 }
 
-if (defined('ESTATS_COUNT') || defined('ESTATS_JSINFORMATION'))
+if (defined('ESTATS_COUNT') || defined('ESTATS_JSINFORMATION') || defined('ESTATS_MINISTATS'))
 {
 	header('Expires: '.gmdate('r', 0));
 	header('Last-Modified: '.gmdate('r'));
