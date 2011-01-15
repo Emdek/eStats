@@ -21,7 +21,7 @@ class EstatsGroup
 	static function selectData($Group, $Amount, $Offset, $From = 0, $To = 0)
 	{
 		$Data = array();
-		$FetchBefore = ($From || $To);
+		$FetchBefore = ($From && $To);
 		$WhereCurrent = EstatsCore::timeClause('time', $From, $To);
 		$WhereBefore = ($FetchBefore?EstatsCore::timeClause('time', ($From - ($To - $From)), $From):array());
 		$FieldSum = array(EstatsDriver::ELEMENT_FUNCTION, array(EstatsDriver::FUNCTION_SUM, 'amount'), 'sum');
