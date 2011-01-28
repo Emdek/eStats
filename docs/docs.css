@@ -1,8 +1,11 @@
-* {
+*
+{
 	margin:0;
 	padding:0;
-	}
-body {
+}
+
+body
+{
 	padding:20px;
 	border:10px solid #A5A5A5;
 	border-right:0;
@@ -11,53 +14,64 @@ body {
 	color:#535353;
 	font-family:Arial, sans-serif;
 	cursor:default;
-	}
-a {
+}
+
+a
+{
 	color:#8C8C8C;
 	border-bottom:1px dashed #C8C8C8;
 	text-decoration:none;
-	}
-a:hover {
+}
+
+a:hover
+{
 	color:#6B6B6B;
-	}
-ul {
-	margin-left:30px;
-	}
-li {
-	list-style-position:inside;
-	}
-ul li {
-	list-style-position:inside;
-	}
-p {
+}
+
+ul
+{
+	padding-left:20px;
+}
+
+ol
+{
+	padding-left:25px;
+}
+
+p
+{
 	padding:3px;
-	}
-h1, h2, h3 {
+}
+
+h1, h2, h3
+{
 	margin:5px 0;
-	}
-h1 {
+}
+
+h1
+{
 	margin:5px 0 10px 0;
-	}
-pre {
+}
+
+pre
+{
 	margin:10px;
 	border:1px solid #EAEAEA;
 	border-left:5px solid gray;
 	padding:3px 3px 3px 15px;
 	background:#FBFBFB;
-	}
-.contents {
+}
+
+#contents
+{
 	background:#FDFDFD;
 	padding:5px 20px 12px 12px;
 	margin:10px;
 	border:1px solid #DDDDDD;
 	border-left:10px solid #DDDDDD;
-	}
-.contents > ul {
-	margin:5px;
-	}
-#changelog {
-	margin:10px 50px;
-	}
-#changelog ul, #changelog li {
-	list-style-position:outside;
-	}
+}
+
+#changelog
+{
+	margin:10px 30px;
+}

@@ -10,7 +10,7 @@
 <h1>
 Polski plik ReadMe dla <em>eStats v4.9</em>
 </h1>
-<div class="contents">
+<div id="contents">
 <h2>
 Spis treści
 </h2>
@@ -56,7 +56,7 @@ Kontakt
 Wstęp
 </h2>
 <p>
-<em>eStats</em> jest skryptem umożliwiającym prowadzenie kompleksowych statystyk odwiedzalności witryny, zbierającym wiele różnych danych na temat użytkowników oraz ich aktywności.
+<em>eStats</em> jest skryptem umożliwiającym prowadzenie kompleksowych statystyk odwiedzin witryny, zbierającym wiele różnych danych na temat użytkowników oraz ich aktywności.
 </p>
 <h2 id="features">
 Cechy
@@ -103,12 +103,13 @@ i wiele innych.
 Wymagania
 </h2>
 <p>
-Wymagana wersja <em>PHP</em> to co najmniej <em>5.2.0</em>.<br />
-Opcjonalne zależności to rozszerzenia <em>PHP</em>: <em>gd, geoip, gettext, mbstring, bzip, zip, zlib</em>.
+Wymagana wersja <em>PHP</em> to co najmniej <em>5.2.0</em>.
 </p>
 <p>
-Wymagana jest dostępność na serwerze przynajmniej jednego z następujących typów baz danych:<br />
-<em>SQLite</em>, <em>MySQL</em> lub <em>PostgreSQL</em>.
+Wymagana jest dostępność na serwerze przynajmniej jednego z następujących typów baz danych: <em>SQLite</em>, <em>MySQL</em> lub <em>PostgreSQL</em>.
+</p>
+<p>
+Opcjonalne zależności to rozszerzenia <em>PHP</em>: <em>gd, geoip, gettext, mbstring, bzip, zip, zlib</em>.
 </p>
 <h2 id="installation">
 Instalacja
@@ -170,10 +171,13 @@ var eAntipixel = '<strong>ANTIPIXEL</strong>'; // opcjonalnie
 Aktualizacja z poprzednich wersji
 </h2>
 <p>
-Aktualizacja ze starszych wersji (starszych od <em>4.9.50</em>) serii <em>4.9.xx</em> polega na uzupełnieniu brakujących opcji w <em>Konfiguracji Zaawansowanej</em> (<em>Narzędzia / Konfiguracja / Zaawansowane</em>).
+Aktualizacja ze starszych wersji serii <em>4.9.xx</em> polega na zwykłej podmianie plików.
 </p>
 <p>
-W przypadku używania bazy danych <em>SQLite</em> wymagana jest ręczna konwersja bazy danych do formatu wersji <em>3</em> (ze względu na wycofanie obsługi formatu <em>2</em> od <em>PHP 5.3</em>).
+W przypadku używania bazy danych <em>SQLite</em> oraz wersji starszych od <em>4.9.50</em> wymagana jest ręczna konwersja bazy danych do formatu wersji <em>3.x</em> (ze względu na wycofanie obsługi wersji <em>2.x</em> od <em>PHP 5.3</em>).
+</p>
+<p>
+Pamiętaj aby zawsze utworzyć kopię zapasową danych przed aktualizacją!
 </p>
 <h2 id="license">
 Licencja
@@ -199,7 +203,7 @@ Kontakt
 Jeśli znajdziesz jakieś błędy w skrypcie (choćby to była zwykła literówka) lub masz jakieś pomysły, które mogłyby uatrakcyjnić go, to napisz o tym na <a href="http://estats.emdek.cba.pl/forum/">forum projektu</a>.
 </p>
 <h3>
-Ostatnio zmieniany: 2011-01-01 10:43:17 CET
+Ostatnio zmieniany: 2011-01-28 16:12:10 CET
 </h3>
 </body>
 </html>

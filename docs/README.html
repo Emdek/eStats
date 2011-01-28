@@ -10,7 +10,7 @@
 <h1>
 English ReadMe file for <em>eStats v4.9</em>
 </h1>
-<div class="contents">
+<div id="contents">
 <h2>
 Table of contents
 </h2>
@@ -42,7 +42,7 @@ Upgrade from previous version
 </li>
 <li>
 <a href="#license">
-Licence
+License
 </a>
 </li>
 <li>
@@ -56,7 +56,7 @@ Contact
 Introduction
 </h2>
 <p>
-<em>eStats</em> is a script that allows to manage complex website statistics, it collects very many different informations about users and theirs activity.
+<em>eStats</em> is a script that allows to manage complex website statistics, it collects very many different information about users and their activity.
 </p>
 <h2 id="features">
 Features
@@ -66,7 +66,7 @@ Script allows to:
 </p>
 <ul>
 <li>
-collect and display information about used OSes, browsers, robots, hosts, keywords, referrers, screen resolutions, websites popularity, flash plugin version, etc.;
+collect and display information about used operating systems, browsers, robots, hosts, keywords, referrers, screen resolutions, websites popularity, flash plugin version, etc.;
 </li>
 <li>
 collect data about location of visitors, maps generation;
@@ -78,7 +78,7 @@ generation of graphical charts (GD);
 configure the script by the control panel with password protection;
 </li>
 <li>
-exclude counting visits from choosen <em>IP</em> adresses;
+exclude counting visits from chosen <em>IP</em> addresses;
 </li>
 <li>
 protect preview of stats by password;
@@ -103,31 +103,32 @@ and many others.
 Requirements
 </h2>
 <p>
-Required <em>PHP</em> version is <em>5.2.0</em> or higher.<br />
-Optional requirements are <em>PHP</em> extensions: <em>gd, geoip, gettext, mbstring, bzip, zip, zlib</em>.
+Required <em>PHP</em> version is <em>5.2.0</em> or higher.
 </p>
 <p>
-Support on the server at least one of the following databases is required:<br />
-<em>SQLite</em>, <em>MySQL</em> or <em>PostgreSQL</em>.
+Server support for at least one of the following databases is required: <em>SQLite</em>, <em>MySQL</em> or <em>PostgreSQL</em>.
+</p>
+<p>
+Optional requirements are <em>PHP</em> extensions: <em>gd, geoip, gettext, mbstring, bzip, zip, zlib</em>.
 </p>
 <h2 id="installation">
 Installation
 </h2>
 <ol>
 <li>
-Copy whole <em>estats</em> directory into Your server;
+Copy whole <em>estats</em> directory into your server;
 </li>
 <li>
 Set up <em>CHMOD 777</em> for directories <em>data/, data/backups/, data/cache/</em> and <em>data/tmp/</em> and <em>CHMOD 666</em> for file <em>conf/config.php</em> (create them if do not exist);
 </li>
 <li>
-Open in the browser directory where You copied files;
+Open in the browser directory where you copied files;
 </li>
 <li>
 Follow displayed instructions;
 </li>
 <li>
-You must put into sources of monitored websites this code (script will work correctly only if the server alllows to execute <em>PHP</em> code in the website file!):
+You must put into sources of monitored websites this code (script will work correctly only if the server allows to execute <em>PHP</em> code in the website file!):
 <pre><code>&lt;?php
 define('ESTATS_COUNT', 1);
 define('ESTATS_ADDRESS', '<strong>ADDRESS</strong>'); // optional
@@ -136,12 +137,12 @@ define('ESTATS_TITLE', '<strong>TITLE</strong>'); // optional
 ?&gt;</code></pre>
 <strong>Where:</strong><br /><br />
 <strong>ADDRESS</strong> - website address (without http://website.address.com, example: /index.php?page=main) (optional);<br />
-<strong>TITLE</strong> - if file text encoding is different than <em>UTF-8</em>, You shouldn't use characters outside English alphabet (optional);<br />
+<strong>TITLE</strong> - if file text encoding is different than <em>UTF-8</em>, you should not use characters outside English alphabet (optional);<br />
 <strong>PATH</strong> - path to file <em>stats.php</em> in <em>estats/</em> directory, example: <em>../directory/estats/stats.php</em>.<br /><br />
 Lines with parameters marked as optional could be safely removed.
 </li>
 <li>
-Collecting informations about screen resolutions, flash plugin version etc. will work only if You put this code into the website source:
+Collecting informations about screen resolutions, flash plugin version etc. will work only if you put this code into the website source:
 <pre><code>&lt;noscript&gt;
 &lt;div&gt;
 &lt;a href="http://estats.emdek.cba.pl/"&gt;
@@ -159,21 +160,24 @@ var eAntipixel = '<strong>ANTIPIXEL</strong>'; // optional
 &lt;script type="text/javascript" src="<strong>PATH</strong>stats.js"&gt;&lt;/script&gt;</code></pre>
 <strong>Where:</strong><br /><br />
 <strong>PATH</strong> - path to <em>estats</em> directory, example: <em>/directory/estats/</em>,<br />
-<strong>COUNT</strong> - <em>0</em> - collect only technical data, <em>1</em> - collect all data (<span style="text-decoration:underline;">only</span> if You could not use <em>PHP</em> code).<br />
+<strong>COUNT</strong> - <em>0</em> - collect only technical data, <em>1</em> - collect all data (<span style="text-decoration:underline;">only</span> if you can not use <em>PHP</em> code).<br />
 <strong>ADDRESS</strong> - website address, example: <em>/directory/website.html</em> (optional);<br />
 <strong>TITLE</strong> - website title (optional);<br />
 <strong>ANTIPIXEL</strong> - selected antipixel for website, example <em>default/silver.png</em> (optional).<br /><br />
-<span style="text-decoration:underline;">Lines with parameters marked as optional can not be removed, You should leave these values blank if You want use values taken from website or defaults.</span>
+<span style="text-decoration:underline;">Lines with parameters marked as optional can not be removed, you should leave these values blank if you want use values taken from website or defaults.</span>
 </li>
 </ol>
 <h2 id="upgrade">
-Upgrade from previous version
+Upgrading from previous versions
 </h2>
 <p>
-Upgrade from older versions (older than <em>4.9.50</em>) of serie <em>4.9.xx</em> requires complementing of options in <em>Advanced Configuration</em> (<em>Tools / Configuration / Advanced</em>).
+To upgrade from older versions of <em>4.9.xx</em> series just replace files.
 </p>
 <p>
-In case if you are using <em>SQLite</em> database then manual conversion of database file to version <em>3</em> is required (because of <em>PHP 5.3</em> dropping support for format <em>2</em>).
+In case if you were using version older than <em>4.9.50</em> and <em>SQLite</em> database then manual conversion of database file to version <em>3.x</em> is required (because of <em>PHP 5.3</em> dropping support for version <em>2.8</em>).
+</p>
+<p>
+Remember to always backup data before upgrading!
 </p>
 <h2 id="license">
 License
@@ -183,23 +187,23 @@ License
 Script is circulated on <em>GPL</em> license;
 </li>
 <li>
-The only one condition of use is do not erasing any data that allow to identify the author of the script and the script itself (comments, informations about version and links to the homepage);
+The only one condition of use is do not erasing any data that allow to identify the author of the script and the script itself (comments, information about version and links to the homepage);
 </li>
 <li>
-You can use parts of the code in Your own projects and modify the code if it isn't at variance with the second mark;
+You can use parts of the code in your own projects and modify the code if it is not at variance with the second point;
 </li>
 <li>
-Author does not bear in case of incorrect script work.
+Author does not bear in case of script malfunction.
 </li>
 </ul>
 <h2 id="contact">
 Contact
 </h2>
 <p>
-If You found errors in the script (though this was only a letter mistake) or You have ideas, that can make the script more atractive, You can post Your ideas at <a href="http://estats.emdek.cba.pl/forum/">project's forum</a>.
+If you find any bugs in the script (though this was only a typo), or have any ideas, that might enhance it, then post your ideas on <a href="http://estats.emdek.cba.pl/forum/">project forum</a>.
 </p>
 <h3>
-Last modified: 2011-01-01 10:43:17 CET
+Last modified: 2011-01-28 16:12:10 CET
 </h3>
 </body>
 </html>
