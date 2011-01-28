@@ -47,15 +47,6 @@ if (isset($_GET['checkversion']) && !isset($_SESSION[EstatsCore::session()]['Che
 }
 
 EstatsTheme::add('page', '<h3>
-{heading-start}'.EstatsLocale::translate('Actions').'{heading-end}
-</h3>
-<form action="{selfpath}" method="post">
-<div class="buttons">
-<input type="submit" name="statsenabled" value="'.(EstatsCore::option('StatsEnabled')?EstatsLocale::translate('Disable statistics'):EstatsLocale::translate('Enable statistics')).'" tabindex="'.EstatsGUI::tabindex().'" />
-<input type="submit" name="maintenance" value="'.(EstatsCore::option('Maintenance')?EstatsLocale::translate('Disable maintenance mode'):EstatsLocale::translate('Enable maintenance mode')).'" tabindex="'.EstatsGUI::tabindex().'" />
-</div>
-</form>
-<h3>
 {heading-start}'.EstatsLocale::translate('Summary').'{heading-end}
 </h3>
 <p>

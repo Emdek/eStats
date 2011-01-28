@@ -2,12 +2,12 @@
 /**
  * eStats - statistics for web pages
  * @author Emdek <http://emdek.pl>
- * @version 4.9.51
+ * @version 5.0.00
  * @date 2011-01-15 14:30:00
  */
 
-define('ESTATS_VERSIONSTRING', '4.9.51');
-define('ESTATS_VERSIONSTATUS', 'stable');
+define('ESTATS_VERSIONSTRING', '5.0.00');
+define('ESTATS_VERSIONSTATUS', 'snapshot');
 define('ESTATS_VERSIONTIME', 1295098200);
 
 /**
@@ -488,14 +488,14 @@ if (ESTATS_USERLEVEL == 2)
 		}
 	}
 
-	if (isset($_GET['statsenabled']) || isset($_POST['statsenabled']))
+	if (isset($_GET['enable']))
 	{
-		EstatsCore::setConfiguration(array('StatsEnabled' => !EstatsCore::option('StatsEnabled')));
+		EstatsCore::setConfiguration(array('StatsEnabled' => TRUE));
 	}
 
-	if (isset($_GET['maintenance']) || isset($_POST['maintenance']))
+	if (isset($_GET['maintenance']))
 	{
-		EstatsCore::setConfiguration(array('Maintenance' => !EstatsCore::option('Maintenance')));
+		EstatsCore::setConfiguration(array('Maintenance' => FALSE));
 	}
 }
 
@@ -1145,7 +1145,7 @@ if (EstatsCore::option('Maintenance') && ESTATS_USERLEVEL == 2)
 if (!EstatsCore::option('StatsEnabled') && !defined('ESTATS_INSTALL'))
 {
 	EstatsGUI::notify(EstatsLocale::translate('Statistics are disabled.').((ESTATS_USERLEVEL == 2)?'<br />
-<a href="{selfpath}{separator}statsenabled" tabindex="'.EstatsGUI::tabindex().'"><strong>'.EstatsLocale::translate('Enable statistics').'</strong></a>.':''), 'information');
+<a href="{selfpath}{separator}enable" tabindex="'.EstatsGUI::tabindex().'"><strong>'.EstatsLocale::translate('Enable data collecting').'</strong></a>.':''), 'information');
 }
 
 if (EstatsTheme::contains('css'))
