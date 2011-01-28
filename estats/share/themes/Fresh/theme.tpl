@@ -8,7 +8,7 @@
 <link href="{datapath}share/icons/miscellaneous/estats.png" rel="shortcut icon" type="image/png" />
 <title>eStats :: {title}</title>
 {css}<!--
-Fresh theme for eStats 4.9
+Fresh theme for eStats 5.0
 Author: Emdek
 http://estats.emdek.cba.pl
 Licence: GPL

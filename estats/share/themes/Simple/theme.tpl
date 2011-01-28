@@ -5,7 +5,7 @@
 {meta}<link href="{datapath}share/icons/miscellaneous/estats.png" rel="shortcut icon" type="image/png">
 <title>eStats :: {title}</title>
 <!--
-Simple theme for eStats 4.9
+Simple theme for eStats 5.0
 Author: Emdek
 URL: http://estats.emdek.cba.pl
 Licence: GPL

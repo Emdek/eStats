@@ -7,7 +7,7 @@
 <link href="{datapath}share/icons/miscellaneous/estats.png" rel="shortcut icon" type="image/png" />
 <title>eStats :: {title}</title>
 {css}<!--
-DatkGreen theme for eStats 4.9
+DatkGreen theme for eStats 5.0
 Author: Neo, updated by Emdek
 Licence: GPL
 -->
