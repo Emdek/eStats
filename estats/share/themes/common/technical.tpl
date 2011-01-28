@@ -1,0 +1,31 @@
+[start:technical]<!--start:dateform-->{dateform}<!--end:dateform--><table cellpadding="0" cellspacing="0" id="technical">
+<tr>
+<td>
+{browsers}</td>
+<td>
+{operatingsystems}</td>
+</tr>
+<tr>
+<td>
+{browser-versions}</td>
+<td>
+{operatingsystem-versions}</td>
+</tr>
+<tr>
+<td>
+{screens}</td>
+<td>
+{flash}</td>
+</tr>
+<tr>
+<td rowspan="2">
+{java}</td>
+<td>
+{javascript}</td>
+</tr>
+<tr>
+<td>
+{cookies}</td>
+</tr>
+</table>
+[/end]
