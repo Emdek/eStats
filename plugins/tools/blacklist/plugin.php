@@ -37,8 +37,8 @@ EstatsTheme::add('page', '<form action="{selfpath}" method="post">
 <small id="desc"><sup>*</sup> '.EstatsLocale::translate('Use * for replace end part of address.').'</small>
 </p>
 <div class="buttons">
-<input type="submit" onclick="if (!confirm('.EstatsLocale::translate('Do You really want to save?').')) return false" value="'.EstatsLocale::translate('Save').'" name="SaveConfiguration" tabindex="'.EstatsGUI::tabindex().'" />
-<input type="submit" onclick="if (!confirm('.EstatsLocale::translate('Do You really want to restore defaults?').')) return false" value="'.EstatsLocale::translate('Defaults').'" name="Defaults" tabindex="'.EstatsGUI::tabindex().'" />
+<input type="submit" onclick="if (!confirm(\''.EstatsLocale::translate('Do You really want to save?').'\')) return false" value="'.EstatsLocale::translate('Save').'" name="SaveConfiguration" tabindex="'.EstatsGUI::tabindex().'" />
+<input type="submit" onclick="if (!confirm(\''.EstatsLocale::translate('Do You really want to restore defaults?').'\')) return false" value="'.EstatsLocale::translate('Defaults').'" name="Defaults" tabindex="'.EstatsGUI::tabindex().'" />
 <input type="reset" value="'.EstatsLocale::translate('Reset').'" tabindex="'.EstatsGUI::tabindex().'" />
 </div>
 
