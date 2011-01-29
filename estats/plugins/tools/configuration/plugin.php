@@ -342,8 +342,8 @@ else
 	EstatsTheme::append('page', EstatsGUI::optionRowWidget(EstatsLocale::translate('Statistics antipixel'), '', 'Antipixel', '<img src="{datapath}share/antipixels/'.htmlspecialchars(EstatsCore::option('Antipixel'), ENT_QUOTES, 'UTF-8', FALSE).'" alt="Preview" id="antipixelpreview" />
 <select name="Antipixel" id="F_Antipixel" onchange="document.getElementById(\'antipixelpreview\').src = \'{datapath}share/antipixels/\' + this.options[selectedIndex].value">
 '.$AntipixelSelect.'</select>', EstatsGUI::FIELD_CUSTOM).EstatsGUI::optionRowWidget(EstatsLocale::translate('Default theme'), '', 'DefaultTheme', EstatsCore::option('DefaultTheme'), EstatsGUI::FIELD_SELECT, array_keys($Themes)).EstatsGUI::optionRowWidget(EstatsLocale::translate('Mode of passing data in the path'), '', 'PathMode', EstatsCore::option('Path|mode'), EstatsGUI::FIELD_SELECT, array('GET', 'PATH_INFO', 'Rewrite')).'<div class="buttons">
-<input type="submit" onclick="if (!confirm(\''.EstatsLocale::translate('Do You really want to save?').'\')) return false" value="'.EstatsLocale::translate('Save').'" name="SaveConfiguration" tabindex="'.EstatsGUI::tabindex().'" />
-<input type="submit" onclick="if (!confirm(\''.EstatsLocale::translate('Do You really want to restore defaults?').'\')) return false" value="'.EstatsLocale::translate('Defaults').'" name="Defaults" tabindex="'.EstatsGUI::tabindex().'" />
+<input type="submit" onclick="if (!confirm(\''.EstatsLocale::translate('Do you really want to save?').'\')) return false" value="'.EstatsLocale::translate('Save').'" name="SaveConfiguration" tabindex="'.EstatsGUI::tabindex().'" />
+<input type="submit" onclick="if (!confirm(\''.EstatsLocale::translate('Do you really want to restore defaults?').'\')) return false" value="'.EstatsLocale::translate('Defaults').'" name="Defaults" tabindex="'.EstatsGUI::tabindex().'" />
 <input type="reset" value="'.EstatsLocale::translate('Reset').'" tabindex="'.EstatsGUI::tabindex().'" />
 <input type="button" onclick="location.href = \'{path}tools/configuration/advanced{suffix}\'" value="'.EstatsLocale::translate('Advanced').'" />
 </div>

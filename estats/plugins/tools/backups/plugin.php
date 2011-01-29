@@ -168,8 +168,8 @@ EstatsTheme::add('page', '<h3>
 </h3>
 <form action="{selfpath}" method="post">
 '.EstatsGUI::optionRowWidget(EstatsLocale::translate('Backup creation profile'), '', 'Backups|profile', EstatsCore::option('Backups|profile'), EstatsGUI::FIELD_SELECT, $Profiles).EstatsGUI::optionRowWidget(EstatsLocale::translate('Create backups after specified time (s)'), '', 'Backups|creationinterval', EstatsCore::option('Backups|creationinterval')).EstatsGUI::optionRowWidget(EstatsLocale::translate('Tables to archivize'), '', 'Backups|usertables[]', EstatsCore::option('Backups|usertables'), EstatsGUI::FIELD_SELECT, array_keys(EstatsCore::loadData('share/data/database.ini'))).EstatsGUI::optionRowWidget(EstatsLocale::translate('Replace existing data'), '', 'Backups|replacedata', EstatsCore::option('Backups|replacedata'), EstatsGUI::FIELD_BOOLEAN).'<div class="buttons">
-<input type="submit" onclick="if (!confirm(\''.EstatsLocale::translate('Do You really want to save?').'\')) return false" value="'.EstatsLocale::translate('Save').'" name="SaveConfiguration" tabindex="'.EstatsGUI::tabindex().'" />
-<input type="submit" onclick="if (!confirm(\''.EstatsLocale::translate('Do You really want to restore defaults?').'\')) return false" value="'.EstatsLocale::translate('Defaults').'" name="Defaults" tabindex="'.EstatsGUI::tabindex().'" />
+<input type="submit" onclick="if (!confirm(\''.EstatsLocale::translate('Do you really want to save?').'\')) return false" value="'.EstatsLocale::translate('Save').'" name="SaveConfiguration" tabindex="'.EstatsGUI::tabindex().'" />
+<input type="submit" onclick="if (!confirm(\''.EstatsLocale::translate('Do you really want to restore defaults?').'\')) return false" value="'.EstatsLocale::translate('Defaults').'" name="Defaults" tabindex="'.EstatsGUI::tabindex().'" />
 <input type="reset" value="'.EstatsLocale::translate('Reset').'" tabindex="'.EstatsGUI::tabindex().'" />
 <input type="submit" name="CreateBackup" value="'.EstatsLocale::translate('Create backup').'" tabindex="'.EstatsGUI::tabindex().'" />
 </div>
