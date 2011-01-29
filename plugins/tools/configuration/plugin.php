@@ -268,30 +268,21 @@ else
 		}
 	}
 
-	$OptionNames = array(
-	'Pass' => EstatsLocale::translate('Password for viewing statistics (leave empty, if you allow free access)'),
-	'VisitTime' => EstatsLocale::translate('Time after that visit is count again (seconds)'),
-	'LogEnabled' => EstatsLocale::translate('Log errors and important information'),
-	'CountPhrases' => EstatsLocale::translate('Count whole phrases instead of keywords'),
-	);
-	$Options = array(
-	'Pass' => array('', EstatsGUI::FIELD_VALUE),
-	'VisitTime' => array(EstatsCore::option('VisitTime'), EstatsGUI::FIELD_VALUE),
-	'LogEnabled' => array(EstatsCore::option('LogEnabled'), EstatsGUI::FIELD_BOOLEAN),
-	'CountPhrases' => array(EstatsCore::option('CountPhrases'), EstatsGUI::FIELD_BOOLEAN)
-	);
-
 	EstatsTheme::add('page', '<form action="{selfpath}" method="post">
 <h3>
 {heading-start}'.EstatsLocale::translate('Administrator password').'{heading-end}
 </h3>
 ');
 
-	$Keys = array('Current', 'New', 'Repeat');
+	$Options = array(
+	'Current' => EstatsLocale::translate('Current password'),
+	'New' => EstatsLocale::translate('New password'),
+	'Repeat' => EstatsLocale::translate('Repeat password')
+	);
 
-	for ($i = 0; $i < 3; ++$i)
+	foreach ($Options as $Key => $Value)
 	{
-		EstatsTheme::append('page', EstatsGUI::optionRowWidget(EstatsLocale::translate($Keys[$i].' password'), '', $Keys[$i].'Password'));
+		EstatsTheme::append('page', EstatsGUI::optionRowWidget($Value, '', $Key.'Password'));
 	}
 
 	EstatsTheme::append('page', '<div class="buttons">
@@ -304,11 +295,16 @@ else
 </h3>
 ');
 
-	$i = 0;
+	$Options = array(
+	'Pass' => array(EstatsLocale::translate('Password for viewing statistics (leave empty, if you allow free access)'), '', EstatsGUI::FIELD_VALUE),
+	'VisitTime' => array(EstatsLocale::translate('Time after that visit is count again (seconds)'), EstatsCore::option('VisitTime'), EstatsGUI::FIELD_VALUE),
+	'LogEnabled' => array(EstatsLocale::translate('Log errors and important information'), EstatsCore::option('LogEnabled'), EstatsGUI::FIELD_BOOLEAN),
+	'CountPhrases' => array(EstatsLocale::translate('Count whole phrases instead of keywords'), EstatsCore::option('CountPhrases'), EstatsGUI::FIELD_BOOLEAN)
+	);
 
 	foreach ($Options as $Key => $Value)
 	{
-		EstatsTheme::append('page', EstatsGUI::optionRowWidget($OptionNames[$Key].(($Key == 'Pass')?' <strong>['.(EstatsCore::option('Pass')?EstatsLocale::translate('Currently enabled'):EstatsLocale::translate('Currently disabled')).']</strong>':''), '', $Key, $Value[0], $Value[1]));
+		EstatsTheme::append('page', EstatsGUI::optionRowWidget($Value[0].(($Key == 'Pass')?' <strong>['.(EstatsCore::option('Pass')?EstatsLocale::translate('Currently enabled'):EstatsLocale::translate('Currently disabled')).']</strong>':''), '', $Key, $Value[1], $Value[2]));
 	}
 
 	$AntipixelSelect = $CurrentDirectory = '';
