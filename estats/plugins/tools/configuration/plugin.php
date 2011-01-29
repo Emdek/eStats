@@ -51,6 +51,7 @@ if (isset($Path[3]) && $Path[3] == 'advanced')
 	'Keywords' => EstatsLocale::translate('Ignored keywords'),
 	'OnlineTime' => EstatsLocale::translate('On-line visit time'),
 	'Referrers' => EstatsLocale::translate('Ignored referrers'),
+	'StatsEnabled' => EstatsLocale::translate('Enable data collecting'),
 	'BlacklistMonitor' => EstatsLocale::translate('Save information about ignored and blocked visits'),
 	'LogEnabled' => EstatsLocale::translate('Log errors and important information'),
 	'CountPhrases' => EstatsLocale::translate('Count whole phrases instead of keywords'),
