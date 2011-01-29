@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: estats\n"
-"POT-Creation-Date: 2011-01-15 12:54+0100\n"
+"POT-Creation-Date: 2011-01-29 20:45+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE\n"
@@ -781,6 +781,10 @@ msgstr ""
 
 #: share/data/countries.ini
 msgid "Cuba"
+msgstr ""
+
+#: plugins/tools/configuration/plugin.php
+msgid "Current password"
 msgstr ""
 
 #: lib/gui.class.php
@@ -2069,6 +2073,10 @@ msgstr ""
 
 #: share/data/countries.ini
 msgid "New Caledonia"
+msgstr ""
+
+#: plugins/tools/configuration/plugin.php
+msgid "New password"
 msgstr ""
 
 #: share/data/countries.ini

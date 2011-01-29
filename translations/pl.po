@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: estats\n"
-"POT-Creation-Date: 2011-01-15 12:54+0100\n"
-"PO-Revision-Date: 2011-01-15 13:55+0100\n"
+"POT-Creation-Date: 2011-01-29 20:45+0100\n"
+"PO-Revision-Date: 2011-01-29 20:47+0100\n"
 "Last-Translator: Michał D. aka Emdek <emdeck@gmail.com>\n"
 "Language-Team: \n"
 "Language: \n"
@@ -21,9 +21,33 @@ msgstr "- strona %d. z %d"
 msgid "24 hours"
 msgstr "Doba"
 
+#: index.php
+msgid ""
+"<em>PHP safe mode</em> has been activated on this server!<br />\n"
+"That could cause problems in case of automatic creation of files and directories.<br />\n"
+"Solution is change of their owner or manual creation."
+msgstr ""
+"<em>Tryb bezpieczny PHP</em> został aktywowany na serwerze!<br />\n"
+"Może to powodować problemy w przypadku automatycznego tworzenia plików i katalogów.<br />\n"
+"Rozwiązaniem jest zmiana ich właściciela lub ich ręczne utworzenie."
+
 #: plugins/tools/summary/plugin.php
 msgid "<em>eStats</em> version"
 msgstr "Wersja <em>eStats</em>"
+
+#: install.php
+msgid ""
+"<strong>Welcome in eStats installer!</strong><br /><br />\n"
+"This script allows to install eStats easy and fast on your server.<br />\n"
+"You were redirected here because file <em>conf/config.php</em> does not exists or is incorrect / incompatible with this eStats version.<br />\n"
+"Select database type and admin password.<br />\n"
+"After you fill all fields click <em>Continue</em> button to configure the script."
+msgstr ""
+"<strong>Witaj w instalatorze eStats!</strong><br /><br />\n"
+"Skrypt ten umożliwia łatwą i szybką instalację eStats na Twoim serwerze.<br />\n"
+"Zostałeś przekierowany tutaj ponieważ plik <em>conf/config.php</em> nie istnieje lub jest nieprawidłowy / niekompatybilny z tą wersją eStats.<br />\n"
+"Wybierz typ bazy danych oraz hasło administratora.<br />\n"
+"Po wypełnieniu wszystkich pól kliknij przycisk <em>Kontynuuj</em> aby skonfigurować skrypt."
 
 #: share/data/languages.ini
 msgid "Abkhazian"
@@ -675,6 +699,14 @@ msgid "Continents"
 msgstr "Kontynenty"
 
 #: install.php
+msgid ""
+"Continuation despite errors threatens unexpected results!\n"
+"You continue on your own risk!"
+msgstr ""
+"Kontynuowanie pomimo błędów może prowadzić do nieoczekiwanych rezultatów!\n"
+"Kontynuujesz na własne ryzyko!"
+
+#: install.php
 msgid "Continue"
 msgstr "Kontynuuj"
 
@@ -749,6 +781,10 @@ msgstr "Chorwacki"
 #: share/data/countries.ini
 msgid "Cuba"
 msgstr "Kuba"
+
+#: plugins/tools/configuration/plugin.php
+msgid "Current password"
+msgstr "Obecne hasło"
 
 #: lib/gui.class.php
 msgid "Current period"
@@ -2001,6 +2037,10 @@ msgstr "Roboty sieciowe"
 msgid "New Caledonia"
 msgstr "Nowa Kaledonia"
 
+#: plugins/tools/configuration/plugin.php
+msgid "New password"
+msgstr "Nowe hasło"
+
 #: share/data/countries.ini
 msgid "New Zealand"
 msgstr "Nowa Zelandia"
@@ -2797,9 +2837,27 @@ msgstr "Demokratyczna Republika Kongo"
 msgid "This IP address was blocked!"
 msgstr "Ten adres IP został zablokowany!"
 
+#: install.php
+msgid ""
+"This database module is not supported on this server!<br />\n"
+"Continuation of installation can cause unexpected results!"
+msgstr ""
+"Ten moduł bazy danych nie jest obsługiwany na tym serwerze!<br />\n"
+"Kontynuacja może prowadzić do nieoczekiwanych rezultatów!"
+
 #: lib/group.class.php
 msgid "This group is disabled!"
 msgstr "Ta grupa jest nieaktywna!"
+
+#: index.php
+msgid ""
+"This is a test version of <em>eStats</em> (status: <em>%s</em>).<br />\n"
+"Its functionality could be incomplete, could work incorrect and be incompatible with newest versions!<br />\n"
+"<strong style=\"text-decoration:underline;\">Use at own risk!</strong>"
+msgstr ""
+"Jest to wersja testowa <em>eStats</em> (status: <em>%s</em>).<br />\n"
+"Jej funkcjonalność może być niepełna, może także działać nieprawidłowo i być niekompatybilna z nowszymi wersjami!<br />\n"
+"<strong style=\"text-decoration:underline;\">Używasz jej na własne ryzyko!</strong>"
 
 #: index.php
 msgid "This translation (%s) is not complete!"
@@ -3223,53 +3281,3 @@ msgstr "strona"
 msgid "Åland Islands"
 msgstr "Wyspy Alandzkie"
 
-
-#: index.php
-msgid ""
-"This is a test version of <em>eStats</em> (status: <em>%s</em>).<br />\n"
-"Its functionality could be incomplete, could work incorrect and be incompatible with newest versions!<br />\n"
-"<strong style=\"text-decoration:underline;\">Use at own risk!</strong>"
-msgstr ""
-"Jest to wersja testowa <em>eStats</em> (status: <em>%s</em>).<br />\n"
-"Jej funkcjonalność może być niepełna, może także działać nieprawidłowo i być niekompatybilna z nowszymi wersjami!<br />\n"
-"<strong style=\"text-decoration:underline;\">Używasz jej na własne ryzyko!</strong>"
-
-#: install.php
-msgid ""
-"This database module is not supported on this server!<br />\n"
-"Continuation of installation can cause unexpected results!"
-msgstr ""
-"Ten moduł bazy danych nie jest obsługiwany na tym serwerze!<br />\n"
-"Kontynuacja może prowadzić do nieoczekiwanych rezultatów!"
-
-#: index.php
-msgid ""
-"<em>PHP safe mode</em> has been activated on this server!<br />\n"
-"That could cause problems in case of automatic creation of files and directories.<br />\n"
-"Solution is change of their owner or manual creation."
-msgstr ""
-"<em>Tryb bezpieczny PHP</em> został aktywowany na serwerze!<br />\n"
-"Może to powodować problemy w przypadku automatycznego tworzenia plików i katalogów.<br />\n"
-"Rozwiązaniem jest zmiana ich właściciela lub ich ręczne utworzenie."
-
-#: install.php
-msgid ""
-"<strong>Welcome in eStats installer!</strong><br /><br />\n"
-"This script allows to install eStats easy and fast on your server.<br />\n"
-"You were redirected here because file <em>conf/config.php</em> does not exists or is incorrect / incompatible with this eStats version.<br />\n"
-"Select database type and admin password.<br />\n"
-"After you fill all fields click <em>Continue</em> button to configure the script."
-msgstr ""
-"<strong>Witaj w instalatorze eStats!</strong><br /><br />\n"
-"Skrypt ten umożliwia łatwą i szybką instalację eStats na Twoim serwerze.<br />\n"
-"Zostałeś przekierowany tutaj ponieważ plik <em>conf/config.php</em> nie istnieje lub jest nieprawidłowy / niekompatybilny z tą wersją eStats.<br />\n"
-"Wybierz typ bazy danych oraz hasło administratora.<br />\n"
-"Po wypełnieniu wszystkich pól kliknij przycisk <em>Kontynuuj</em> aby skonfigurować skrypt."
-
-#: install.php
-msgid ""
-"Continuation despite errors threatens unexpected results!\n"
-"You continue on your own risk!"
-msgstr ""
-"Kontynuowanie pomimo błędów może prowadzić do nieoczekiwanych rezultatów!\n"
-"Kontynuujesz na własne ryzyko!"

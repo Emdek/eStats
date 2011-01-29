@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: estats\n"
-"POT-Creation-Date: 2010-09-27 22:39+0100\n"
-"PO-Revision-Date: 2010-09-27 22:41+0100\n"
+"POT-Creation-Date: 2011-01-29 20:45+0100\n"
+"PO-Revision-Date: 2011-01-29 20:48+0100\n"
 "Last-Translator: Michał D. aka Emdek <emdeck@gmail.com>\n"
 "Language-Team: \n"
 "Language: \n"
@@ -54,7 +54,8 @@ msgid "Actions"
 msgstr "Abläufe"
 
 #: plugins/tools/configuration/plugin.php
-msgid "Add robots visits to vists"
+#, fuzzy
+msgid "Add robots visits to visits"
 msgstr "Besuche von Webcrawlers zu Besuche beifügen"
 
 #: plugins/tools/configuration/plugin.php
@@ -157,10 +158,6 @@ msgstr "Anzahl der Einträge pro Seite in Besucheinzelheiten"
 msgid "Amount of entries per page in Visits"
 msgstr "Anzahl der Einträge pro Seite in Besucheinzelheiten"
 
-#: lib/group.class.php
-msgid "Amount of items (current: %d)"
-msgstr "Einträge Anzahl (zur Zeit: %d)"
-
 #: pages/visits.php
 #, fuzzy
 msgid "Amount of views"
@@ -187,18 +184,6 @@ msgstr "Wiederherstellung von einer Sicherheitskopie fehlgeschlagen"
 
 #: install.php
 msgid "An error occured during database connection attempt!"
-msgstr ""
-
-#: plugins/tools/editor/plugin.php
-msgid "An error occured during file creation!"
-msgstr ""
-
-#: plugins/tools/editor/plugin.php
-msgid "An error occured during file deletion!"
-msgstr ""
-
-#: plugins/tools/editor/plugin.php
-msgid "An error occured during saving file!"
 msgstr ""
 
 #: install.php
@@ -437,6 +422,10 @@ msgstr "Dieses Schlagwort aus Statistik ausschließen"
 msgid "Block counting of this referrer"
 msgstr "Diesen Referrer aus Statistik ausschließen"
 
+#: plugins/tools/blacklist/plugin.php
+msgid "Blocked"
+msgstr "Blockiert"
+
 #: share/data/countries.ini
 msgid "Bolivia"
 msgstr "Bolivien"
@@ -444,10 +433,6 @@ msgstr "Bolivien"
 #: share/data/countries.ini
 msgid "Bosnia and Herzegovina"
 msgstr "Bosnien und Herzegowina"
-
-#: index.php
-msgid "Bots"
-msgstr "Webcrawler"
 
 #: share/data/countries.ini
 msgid "Botswana"
@@ -558,6 +543,10 @@ msgstr "Keine Verbindung zur Datenbank!"
 msgid "Can not found class %s!"
 msgstr ""
 
+#: index.php
+msgid "Can not load theme %s!"
+msgstr ""
+
 #: install.php
 msgid "Can you use <em>PHP</em> code on your page?"
 msgstr ""
@@ -657,6 +646,11 @@ msgstr "Koordinaten"
 #: share/data/countries.ini
 msgid "Cocos Islands"
 msgstr "Kokosinseln"
+
+#: plugins/tools/configuration/plugin.php
+#, fuzzy
+msgid "Collect visit details "
+msgstr "Alte Einzelheiten zu Besuche löschen"
 
 #: share/data/countries.ini
 msgid "Colombia"
@@ -793,10 +787,6 @@ msgstr "Sicherheitskopie automatisch nach einer bestimmten Zeit erstellen (Zeita
 msgid "Create backups after specified time (seconds)"
 msgstr "Sicherheitskopie automatisch nach einer bestimmten Zeit erstellen (Zeitangabe in Sekunden)"
 
-#: plugins/tools/editor/plugin.php
-msgid "Creation of backup and very cautious editing of each file are recommended!"
-msgstr ""
-
 #: share/data/countries.ini
 msgid "Croatia"
 msgstr "Kroatien"
@@ -808,6 +798,11 @@ msgstr "Kroatisch"
 #: share/data/countries.ini
 msgid "Cuba"
 msgstr "Kuba"
+
+#: plugins/tools/configuration/plugin.php
+#, fuzzy
+msgid "Current password"
+msgstr "Aktueles Kennwort"
 
 #: lib/gui.class.php
 #, fuzzy
@@ -821,10 +816,6 @@ msgstr "Derzeit deaktiviert"
 #: plugins/tools/configuration/plugin.php
 msgid "Currently enabled"
 msgstr "Derzeit aktiviert"
-
-#: plugins/tools/editor/plugin.php
-msgid "Custom path to file"
-msgstr ""
 
 #: share/data/countries.ini
 msgid "Cyprus"
@@ -944,7 +935,7 @@ msgstr "Datenbankmodul"
 msgid "Database user password"
 msgstr "Angemeldet bleiben?"
 
-#: pages/feed.php plugins/tools/logs/plugin.php
+#: pages/feed.php pages/visits.php plugins/tools/logs/plugin.php
 msgid "Date"
 msgstr "Datum"
 
@@ -976,7 +967,12 @@ msgstr "Standardmotiv"
 msgid "Default value"
 msgstr "Standardwert"
 
-#: plugins/tools/backups/plugin.php plugins/tools/editor/plugin.php
+#: plugins/tools/backups/plugin.php plugins/tools/blacklist/plugin.php
+#: plugins/tools/configuration/plugin.php
+msgid "Defaults"
+msgstr "Standardeinstellung"
+
+#: plugins/tools/backups/plugin.php
 msgid "Delete"
 msgstr "Löschen"
 
@@ -1033,11 +1029,13 @@ msgstr "Wollen Sie wirklich gewälte Referrer ausschlißen?"
 msgid "Do You really want to restore data?"
 msgstr "Wollen Sie wirklich gewählte Daten widerherstellen?"
 
-#: lib/gui.class.php
+#: plugins/tools/backups/plugin.php plugins/tools/blacklist/plugin.php
+#: plugins/tools/configuration/plugin.php
 msgid "Do You really want to restore defaults?"
 msgstr "Wollen Sie wirklich Standardeinstellungen wiederherstellen?"
 
-#: lib/gui.class.php
+#: plugins/tools/backups/plugin.php plugins/tools/blacklist/plugin.php
+#: plugins/tools/configuration/plugin.php
 msgid "Do You really want to save?"
 msgstr "Wollen Sie wirklich alle Änderungen speichern?"
 
@@ -1051,11 +1049,6 @@ msgstr "Wollen Sie wirklich gewälte Referrer ausschlißen?"
 msgid "Do you really want to exclude thiskeyword / phrase?"
 msgstr "Wollen sie wirklich gewählte Schlagwort / Ausdruck ausschließen?"
 
-#: plugins/tools/editor/plugin.php
-#, fuzzy
-msgid "Do you really want to save this file?"
-msgstr "Wollen Sie wirklich alle Änderungen speichern?"
-
 #: plugins/tools/summary/plugin.php
 msgid "Documentation"
 msgstr "Dokumentation"
@@ -1067,11 +1060,6 @@ msgstr "Dominica"
 #: share/data/countries.ini
 msgid "Dominican Republic"
 msgstr "Dominikanische Republik"
-
-#: plugins/tools/editor/plugin.php
-#, fuzzy
-msgid "Dou you really want to delete this file?"
-msgstr "Wollen Sie wirklich gewählte Daten löschen?"
 
 #: plugins/tools/backups/plugin.php
 msgid "Download"
@@ -1090,10 +1078,6 @@ msgstr "Niederländisch"
 msgid "Ecuador"
 msgstr "Ecuador"
 
-#: plugins/tools/editor/plugin.php
-msgid "Edit"
-msgstr ""
-
 #: share/data/countries.ini
 msgid "Egypt"
 msgstr "Ägypten"
@@ -1105,11 +1089,6 @@ msgstr "El Salvador"
 #: plugins/tools/configuration/plugin.php
 msgid "Enable caching for administrator"
 msgstr ""
-
-#: lib/group.class.php
-#, fuzzy
-msgid "Enable data collecting for this group"
-msgstr "Datensammlung für die Gruppe aktiviert"
 
 #: install.php
 msgid "Enable generation of maps and graphical charts (<em>GD</em> extension)"
@@ -1219,18 +1198,6 @@ msgstr "Wert des Feldes weicht von dem Standard-Wert ab"
 #: share/data/countries.ini share/data/languages.ini
 msgid "Fiji"
 msgstr "Fidschi"
-
-#: plugins/tools/editor/plugin.php
-msgid "File created successfully."
-msgstr ""
-
-#: plugins/tools/editor/plugin.php
-msgid "File deleted successfully."
-msgstr ""
-
-#: plugins/tools/editor/plugin.php
-msgid "File saved successfully."
-msgstr ""
 
 #: plugins/tools/configuration/plugin.php plugins/tools/logs/plugin.php
 msgid "Filter"
@@ -1535,6 +1502,14 @@ msgstr "Isländisch"
 #: install.php
 msgid "If no actions remain for execution go to <a href=\"%s\" tabindex=\"%d\"><strong>configuration</strong></a> page and perform after installation setup."
 msgstr ""
+
+#: plugins/tools/blacklist/plugin.php
+msgid "Ignore visits from this browser (using <em>cookies</em>)"
+msgstr ""
+
+#: plugins/tools/blacklist/plugin.php
+msgid "Ignored"
+msgstr "Ignoriert"
 
 #: plugins/tools/blacklist/plugin.php plugins/tools/configuration/plugin.php
 msgid "Ignored IPs"
@@ -2103,9 +2078,18 @@ msgstr "Webcrawlers"
 msgid "Network robot"
 msgstr "Webcrawlers"
 
+#: index.php pages/visits.php
+#, fuzzy
+msgid "Network robots"
+msgstr "Webcrawlers"
+
 #: share/data/countries.ini
 msgid "New Caledonia"
 msgstr "Neukaledonien"
+
+#: plugins/tools/configuration/plugin.php
+msgid "New password"
+msgstr "Neues Kennwort"
 
 #: share/data/countries.ini
 msgid "New Zealand"
@@ -2189,10 +2173,6 @@ msgstr ""
 
 #: install.php
 msgid "Not writeable"
-msgstr ""
-
-#: plugins/tools/editor/plugin.php
-msgid "Not writeable!"
 msgstr ""
 
 #: install.php
@@ -2380,10 +2360,6 @@ msgstr "Portugal"
 msgid "Portuguese"
 msgstr "Portugiesisch"
 
-#: pages/general.php pages/geolocation.php pages/technical.php
-msgid "Preview"
-msgstr "Ansicht"
-
 #: index.php
 #, fuzzy
 msgid "Previous"
@@ -2462,8 +2438,9 @@ msgstr "Daten, die schon existieren überschreiben (Benutzerdefinierte Einstellu
 msgid "Requirements"
 msgstr ""
 
-#: install.php plugins/tools/editor/plugin.php plugins/tools/logs/plugin.php
-#: plugins/tools/reset/plugin.php
+#: install.php plugins/tools/backups/plugin.php
+#: plugins/tools/blacklist/plugin.php plugins/tools/configuration/plugin.php
+#: plugins/tools/logs/plugin.php plugins/tools/reset/plugin.php
 msgid "Reset"
 msgstr "Rücksetzen"
 
@@ -2567,7 +2544,8 @@ msgstr "São Tomé und Príncipe"
 msgid "Saudi Arabia"
 msgstr "Saudi-Arabien"
 
-#: plugins/tools/editor/plugin.php
+#: plugins/tools/backups/plugin.php plugins/tools/blacklist/plugin.php
+#: plugins/tools/configuration/plugin.php
 msgid "Save"
 msgstr "Speichern"
 
@@ -2602,19 +2580,9 @@ msgstr "Suchen"
 msgid "Select"
 msgstr "Auswahlliste"
 
-#: plugins/tools/editor/plugin.php
-#, fuzzy
-msgid "Select file"
-msgstr "Auswahlliste"
-
 #: plugins/tools/reset/plugin.php
 msgid "Selected tables emptied successfully."
 msgstr ""
-
-#: plugins/tools/configuration/plugin.php
-#, fuzzy
-msgid "Selection of groups for which data is collected"
-msgstr "Gruppen, denen Daten gesammelt werden sollen."
 
 #: plugins/tools/backups/plugin.php
 msgid "Send"
@@ -2656,9 +2624,8 @@ msgstr "Süd-Sotho"
 msgid "Setswana"
 msgstr "Setswana"
 
-#: install.php pages/general.php pages/geolocation.php pages/technical.php
-#: plugins/tools/backups/plugin.php plugins/tools/blacklist/plugin.php
-#: plugins/tools/configuration/plugin.php
+#: install.php plugins/tools/backups/plugin.php
+#: plugins/tools/blacklist/plugin.php plugins/tools/configuration/plugin.php
 msgid "Settings"
 msgstr "Einstellungen"
 
@@ -2704,10 +2671,6 @@ msgstr "Alle anzeigen"
 msgid "Show data for"
 msgstr "Zeige Daten aus"
 
-#: plugins/tools/configuration/plugin.php
-msgid "Show differences between current data amount and from past period"
-msgstr ""
-
 #: pages/visits.php
 msgid "Show location on map"
 msgstr "Position auf Karte anzeigen"
@@ -2744,6 +2707,10 @@ msgstr "Singhalesisch"
 #: share/data/languages.ini
 msgid "Siswati"
 msgstr "Siswati"
+
+#: pages/visits.php
+msgid "Site"
+msgstr "Seite"
 
 #: index.php
 msgid "Sites"
@@ -3390,6 +3357,35 @@ msgstr "Seite"
 msgid "Åland Islands"
 msgstr "Åland"
 
+#~ msgid "Amount of items (current: %d)"
+#~ msgstr "Einträge Anzahl (zur Zeit: %d)"
+
+#~ msgid "Bots"
+#~ msgstr "Webcrawler"
+
+#, fuzzy
+#~ msgid "Do you really want to save this file?"
+#~ msgstr "Wollen Sie wirklich alle Änderungen speichern?"
+
+#, fuzzy
+#~ msgid "Dou you really want to delete this file?"
+#~ msgstr "Wollen Sie wirklich gewählte Daten löschen?"
+
+#, fuzzy
+#~ msgid "Enable data collecting for this group"
+#~ msgstr "Datensammlung für die Gruppe aktiviert"
+
+#~ msgid "Preview"
+#~ msgstr "Ansicht"
+
+#, fuzzy
+#~ msgid "Select file"
+#~ msgstr "Auswahlliste"
+
+#, fuzzy
+#~ msgid "Selection of groups for which data is collected"
+#~ msgstr "Gruppen, denen Daten gesammelt werden sollen."
+
 #~ msgid "Detailed"
 #~ msgstr "Detaillierte"
 
@@ -3419,9 +3415,6 @@ msgstr "Åland"
 
 #~ msgid "Amount of entries per page in Detailed"
 #~ msgstr "Anzahl der Einträge pro Seite in Dettailierte"
-
-#~ msgid "Delete old Visits details"
-#~ msgstr "Alte Einzelheiten zu Besuche löschen"
 
 #~ msgid "Do not delete old data"
 #~ msgstr "Alte Daten nicht löschen"
@@ -3483,23 +3476,14 @@ msgstr "Åland"
 #~ msgid "Percent"
 #~ msgstr "Prozent"
 
-#~ msgid "Site"
-#~ msgstr "Seite"
-
 #~ msgid "Hide"
 #~ msgstr "Asublenden"
 
 #~ msgid "Block this IP"
 #~ msgstr "IP blockieren"
 
-#~ msgid "Defaults"
-#~ msgstr "Standardeinstellung"
-
 #~ msgid "Others"
 #~ msgstr "sonstige"
-
-#~ msgid "New password"
-#~ msgstr "Neues Kennwort"
 
 #~ msgid "Text string"
 #~ msgstr "Textsequenz"
@@ -3515,12 +3499,6 @@ msgstr "Åland"
 
 #~ msgid "No backups"
 #~ msgstr "Keine Sicherheitskopie vorhanden"
-
-#~ msgid "Blocked"
-#~ msgstr "Blockiert"
-
-#~ msgid "Ignored"
-#~ msgstr "Ignoriert"
 
 #~ msgid "Informations"
 #~ msgstr "Information"
