@@ -26,7 +26,7 @@ if (isset($_POST['ResetCache']))
 
 if (isset($_POST['CreateBackup']))
 {
-	$BackupID = EstatsBackups::create('data');
+	$BackupID = EstatsBackups::create(ESTATS_VERSIONSTRING, 'data');
 
 	if ($BackupID)
 	{

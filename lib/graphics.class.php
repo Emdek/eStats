@@ -58,29 +58,29 @@ class EstatsGraphics
 
 /**
  * Checks if cache is valid and uses it
- * @param string CacheFile
+ * @param string ID
  * @param integer Time
  */
 
-	function cacheImage($CacheFile, $Time)
+	function cacheImage($ID, $Time)
 	{
-		if (!EstatsCache::status($CacheFile, $Time, '.png'))
+		if (!EstatsCache::status($ID, $Time, '.png'))
 		{
-			self::outputImage($CacheFile);
+			self::outputImage($ID);
 		}
 	}
 
 /**
  * Saves image data
- * @param string CacheFile
+ * @param string ID
  * @param resource Image
  */
 
-	static function saveImage($CacheFile, $Image)
+	static function saveImage($ID, $Image)
 	{
 		imagetruecolortopalette($Image, 0, 256);
 
-		$FileName = './'.$GLOBALS['DataDir'].$CacheFile.'_'.$GLOBALS['DBID'].'.png';
+		$FileName = EstatsCache::path($ID, '.png');
 
 		if (is_file($FileName))
 		{
@@ -100,28 +100,28 @@ class EstatsGraphics
 
 		imagedestroy($Image);
 
-		self::outputImage($CacheFile);
+		self::outputImage($ID);
 	}
 
 /**
  * Sends image to browser
- * @param string CacheFile
+ * @param string ID
  */
 
-	static function outputImage($CacheFile)
+	static function outputImage($ID)
 	{
 		header('Content-type: image/png');
-		die(file_get_contents('./'.$GLOBALS['DataDir'].$CacheFile.'_'.$GLOBALS['DBID'].'.png'));
+		die(file_get_contents(EstatsCache::path($ID, '.png')));
 	}
 
 /**
  * Generates pie chart
  * @param string ID
  * @param array Data
- * @param string CacheFile
+ * @param string ID
  */
 
-	static function chartPie($ID, $Data, $CacheFile)
+	static function chartPie($ID, $Data, $ID)
 	{
 		arsort($Data['data']);
 
@@ -261,7 +261,7 @@ class EstatsGraphics
 
 		imagecolortransparent($FinalImage, imagecolorallocate($FinalImage, 255, 255, 255));
 
-		self::saveImage($CacheFile, $FinalImage);
+		self::saveImage($ID, $FinalImage);
 	}
 
 /**
@@ -269,12 +269,12 @@ class EstatsGraphics
  * @param string ID
  * @param array Data
  * @param array Summary
- * @param string CacheFile
+ * @param string ID
  * @param string Type
  * @param boolean Join
  */
 
-	static function chartTime($ID, $Data, $Summary, $CacheFile, $Type, $Join)
+	static function chartTime($ID, $Data, $Summary, $ID, $Type, $Join)
 	{
 		if (!$Summary['maxall'])
 		{
@@ -283,7 +283,7 @@ class EstatsGraphics
 			imagefill($Image, 0, 0, imagecolorallocate($Image, 255, 255, 255));
 			imagecolortransparent($Image, imagecolorallocate($Image, 255, 255, 255));
 
-			self::saveImage($CacheFile, $Image);
+			self::saveImage($ID, $Image);
 		}
 
 		$Image = imagecreatetruecolor(1500, 340);
@@ -390,17 +390,17 @@ class EstatsGraphics
 
 		imagedestroy($Image);
 
-		self::saveImage($CacheFile, $FinalImage);
+		self::saveImage($ID, $FinalImage);
 	}
 
 /**
  * Generates map
  * @param string MapType
  * @param array Data
- * @param string CacheFile
+ * @param string ID
  */
 
-	static function map($MapType, $Data, $CacheFile)
+	static function map($MapType, $Data, $ID)
 	{
 		$Continents = isset($Data['continents']);
 		$Map = EstatsCore::loadData('share/maps/'.$MapType[0].'/map.ini', TRUE);
@@ -502,7 +502,7 @@ class EstatsGraphics
 			self::drawText($Image, ($Legend[0] + 10), ($Legend[1] + 52), 8, '0');
 		}
 
-		self::saveImage($CacheFile, $Image);
+		self::saveImage($ID, $Image);
 	}
 }
 ?>
