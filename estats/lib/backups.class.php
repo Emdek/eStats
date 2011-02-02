@@ -2,7 +2,7 @@
 /**
  * Backups management class for eStats
  * @author Emdek <http://emdek.pl>
- * @version 0.9.05
+ * @version 0.9.06
  */
 
 class EstatsBackups
@@ -65,13 +65,14 @@ class EstatsBackups
 
 /**
  * Creates backup
+ * @param string Version
  * @param string Profile
  * @param array Tables
  * @param boolean ReplaceData
  * @return string
  */
 
-	static function create($Profile = '', $Tables = NULL, $ReplaceData = TRUE)
+	static function create($Version = '', $Profile = '', $Tables = NULL, $ReplaceData = TRUE)
 	{
 		$Status = TRUE;
 		$BackupID = EstatsCore::option('CollectedFrom').'-'.$_SERVER['REQUEST_TIME'].'.'.$Profile;
@@ -81,7 +82,7 @@ class EstatsBackups
 		{
 			chmod($FileName, 0666);
 			file_put_contents($FileName, '/*
-eStats v'.ESTATS_VERSIONSTRING.' database backup
+eStats v'.$Version.' database backup
 Mode: '.$Profile.($ReplaceData?' (replace data)':'').'
 Time range: '.date('m.d.Y H:i:s', EstatsCore::option('CollectedFrom')).' - '.date('m.d.Y H:i:s').'
 Database: '.EstatsCore::driver()->option('Database').((EstatsCore::driver()->option('DatabaseVersion') != '?')?' '.EstatsCore::driver()->option('DatabaseVersion'):'').'
@@ -155,7 +156,7 @@ Module: '.EstatsCore::driver()->option('Name').' v'.EstatsCore::driver()->option
 	static function restore($BackupID)
 	{
 		$Status = TRUE;
-		$File = fopen(ESTATS_DATA.'backups/'.$BackupID.'.bak', 'r');
+		$File = fopen(self::$Prefix.'backups/'.$BackupID.'.bak', 'r');
 		$Buffer = '';
 		$Replace = $Recreate = $Create = $Table = $Fields = $Line = 0;
 		$Schema = EstatsCore::loadData('share/data/database.ini');

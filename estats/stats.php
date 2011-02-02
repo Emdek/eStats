@@ -96,9 +96,28 @@ if (defined('ESTATS_COUNT') || defined('ESTATS_JSINFORMATION') || defined('ESTAT
 		estats_error_message('Constant ESTATS_DATABASE_DRIVER not defined!', __FILE__, __LINE__);
 	}
 
-	if (!defined('ESTATS_CRITICAL') && EstatsCore::option('StatsEnabled'))
+	if (!defined('ESTATS_CRITICAL'))
 	{
-		EstatsCore::collectData(defined('ESTATS_COUNT'), (defined('ESTATS_ADDRESS')?ESTATS_ADDRESS:$_SERVER['REQUEST_URI']), (defined('ESTATS_TITLE')?ESTATS_TITLE:''), (defined('ESTATS_JSINFORMATION')?$JSInformation:array()));
+		if (EstatsCore::option('StatsEnabled'))
+		{
+			EstatsCore::collectData(defined('ESTATS_COUNT'), (defined('ESTATS_ADDRESS')?ESTATS_ADDRESS:$_SERVER['REQUEST_URI']), (defined('ESTATS_TITLE')?ESTATS_TITLE:''), (defined('ESTATS_JSINFORMATION')?$JSInformation:array()));
+		}
+
+		if (EstatsCore::option('Backups|creationinterval') && ((($_SERVER['REQUEST_TIME'] - EstatsCore::option('LastBackup')) > EstatsCore::option('Backups|creationinterval'))))
+		{
+			EstatsCore::setConfiguration(array('LastBackup' => $_SERVER['REQUEST_TIME']));
+
+			$BackupID = EstatsBackups::create(ESTATS_VERSIONSTRING, EstatsCore::option('Backups|profile'), EstatsCore::option('Backups|usertables'), EstatsCore::option('Backups|replacedata'));
+
+			if ($BackupID)
+			{
+				EstatsCore::logEvent(EstatsCore::EVENT_BACKUPCREATED, 'ID: '.$BackupID);
+			}
+			else
+			{
+				EstatsCore::logEvent(EstatsCore::EVENT_FAILEDBACKUPCREATION);
+			}
+		}
 	}
 }
 ?>

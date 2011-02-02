@@ -2,7 +2,7 @@
 /**
  * Data cache class for eStats
  * @author Emdek <http://emdek.pl>
- * @version 0.9.05
+ * @version 0.9.06
  */
 
 class EstatsCache
@@ -65,6 +65,18 @@ class EstatsCache
 	}
 
 /**
+ * Returns path to cached file
+ * @param string ID
+ * @param string Extension
+ * @return string
+ */
+
+	static function path($ID, $Extension = '.dat')
+	{
+		return self::$Prefix.'cache/'.$ID.'_'.self::$Security.$Extension;
+	}
+
+/**
  * Checks if data is available
  * @param string ID
  * @param string Extension
@@ -78,7 +90,7 @@ class EstatsCache
 			return FALSE;
 		}
 
-		return file_exists(self::$Prefix.'cache/'.$ID.'_'.self::$Security.$Extension);
+		return file_exists(self::path($ID, $Extension));
 	}
 
 /**
@@ -90,7 +102,7 @@ class EstatsCache
 
 	static function timestamp($ID, $Extension = '.dat')
 	{
-		return filemtime(self::$Prefix.'cache/'.$ID.'_'.self::$Security.$Extension);
+		return filemtime(self::path($ID, $Extension));
 	}
 
 /**
@@ -121,7 +133,7 @@ class EstatsCache
 		}
 		else if (self::exists($ID))
 		{
-			$Data = unserialize(file_get_contents(self::$Prefix.'cache/'.$ID.'_'.self::$Security.'.dat'));
+			$Data = unserialize(file_get_contents(self::path($ID, '.dat')));
 
 			if ($Store)
 			{
@@ -156,7 +168,7 @@ class EstatsCache
 			return FALSE;
 		}
 
-		$FileName = self::$Prefix.'cache/'.$ID.'_'.self::$Security.'.dat';
+		$FileName = self::path($ID, '.dat');
 
 		if (!is_writable($FileName))
 		{

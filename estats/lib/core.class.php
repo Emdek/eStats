@@ -403,22 +403,6 @@ class EstatsCore
 			self::$Language = substr($String, 0, (strlen($String) > 2 && $String[2] == '-')?5:2);
 		}
 
-		if (self::option('Backups|creationinterval') && ((($_SERVER['REQUEST_TIME'] - self::option('LastBackup')) > self::option('Backups|creationinterval'))))
-		{
-			self::setConfiguration(array('LastBackup' => $_SERVER['REQUEST_TIME']));
-
-			$BackupID = EstatsBackups::create(self::option('Backups|profile'), self::option('Backups|usertables'), self::option('Backups|replacedata'));
-
-			if ($BackupID)
-			{
-				self::logEvent(self::EVENT_BACKUPCREATED, 'ID: '.$BackupID);
-			}
-			else
-			{
-				self::logEvent(self::EVENT_FAILEDBACKUPCREATION);
-			}
-		}
-
 		return TRUE;
 	}
 

@@ -70,7 +70,7 @@ if (isset($_POST['DeleteBackup']))
 
 if (isset($_POST['CreateBackup']))
 {
-	$BackupID = EstatsBackups::create((($_POST['Backups|profile'] == 'user')?'manual':$_POST['Backups|profile']), (isset($_POST['Backups|usertables'])?$_POST['Backups|usertables']:array()), isset($_POST['Backups|replacedata']));
+	$BackupID = EstatsBackups::create(ESTATS_VERSIONSTRING, (($_POST['Backups|profile'] == 'user')?'manual':$_POST['Backups|profile']), (isset($_POST['Backups|usertables'])?$_POST['Backups|usertables']:array()), isset($_POST['Backups|replacedata']));
 
 	if ($BackupID)
 	{
