@@ -32,7 +32,7 @@ class EstatsGeolocation
 
 	static function information($IP)
 	{
-		if ($IP == '127.0.0.1' || $IP == 'unknown' || (!function_exists('geoip_record_by_name') && (!is_readable((defined('ESTATS_PATH')?ESTATS_PATH:'').$GLOBALS['DataDir'].'geoip_'.$GLOBALS['DBID'].'.sqlite') || !class_exists('PDO'))))
+		if ($IP == '127.0.0.1' || $IP == 'unknown' || !self::isAvailable())
 		{
 			return array();
 		}
