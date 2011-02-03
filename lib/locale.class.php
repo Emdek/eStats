@@ -46,7 +46,7 @@ class EstatsLocale
 
 	static public function set($Locale)
 	{
-		$FileName = 'locale/'.$Locale.'/locale.ini';
+		$FileName = './locale/'.$Locale.'/locale.ini';
 
 		if (!is_file($FileName))
 		{
@@ -81,9 +81,9 @@ class EstatsLocale
 			self::$Gettext = extension_loaded('gettext');
 		}
 
-		if (!$Directory && self::$Gettext && is_file('locale/'.self::$Locale.'/LC_MESSAGES/estats.mo'))
+		if (!$Directory && self::$Gettext && is_file('./locale/'.self::$Locale.'/LC_MESSAGES/estats.mo'))
 		{
-			bindtextdomain('estats', 'locale/');
+			bindtextdomain('estats', './locale/');
 			textdomain('estats');
 			bind_textdomain_codeset('estats', 'UTF-8');
 		}
@@ -94,7 +94,7 @@ class EstatsLocale
 				return;
 			}
 
-			$Path = $Directory.($Directory?'':'locale/').self::$Locale.($Directory?'':'/locale').'.php';
+			$Path = $Directory.($Directory?'':'./locale/').self::$Locale.($Directory?'':'/locale').'.php';
 
 			if (!is_file($Path))
 			{
@@ -127,7 +127,7 @@ class EstatsLocale
 		}
 
 		$Array = array();
-		$Locales = glob('locale/*/locale.ini');
+		$Locales = glob('./locale/*/locale.ini');
 
 		for ($i = 0, $c = count($Locales); $i < $c; ++$i)
 		{
@@ -177,7 +177,7 @@ class EstatsLocale
 
 	static function exists($Locale)
 	{
-		return file_exists('locale/'.$Locale.'/locale.ini');
+		return file_exists('./locale/'.$Locale.'/locale.ini');
 	}
 }
 ?>
