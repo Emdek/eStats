@@ -508,7 +508,7 @@ if (defined('ESTATS_INSTALL'))
 }
 else
 {
-	EstatsCache::configure(ESTATS_USERLEVEL < 2 || EstatsCore::option('Cache|enableforadministrator'));
+	EstatsCache::enable(ESTATS_USERLEVEL < 2 || EstatsCore::option('Cache|enableforadministrator'));
 
 	if (EstatsCore::option('Cache|clearinterval') && ($_SERVER['REQUEST_TIME'] - EstatsCore::option('LastClean')) > EstatsCore::option('Cache|clearinterval'))
 	{

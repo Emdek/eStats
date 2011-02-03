@@ -322,7 +322,7 @@ class EstatsCore
  * @param integer Mode
  * @param string Security
  * @param string Path
- * @param string DataDir
+ * @param string DataDirectory
  * @param string Driver
  * @param string Prefix
  * @param string Connection
@@ -358,7 +358,7 @@ class EstatsCore
 			return FALSE;
 		}
 
-		EstatsCache::configure(self::$Mode);
+		EstatsCache::enable(self::$Mode);
 
 		self::updateConfiguration();
 

@@ -21,11 +21,11 @@ class EstatsCache
 	static private $Cache;
 
 /**
- * Set configuration
+ * Enable or disable cache
  * @param boolean Enabled
  */
 
-	static function configure($Enabled = TRUE)
+	static function enable($Enabled = TRUE)
 	{
 		self::$Enabled = $Enabled;
 	}
