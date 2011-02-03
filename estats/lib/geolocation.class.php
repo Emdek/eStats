@@ -21,7 +21,7 @@ class EstatsGeolocation
 
 	static function isAvailable()
 	{
-		return ((function_exists('geoip_record_by_name') && geoip_db_avail(GEOIP_CITY_EDITION_REV0)) || (is_readable((defined('ESTATS_PATH')?ESTATS_PATH:'').ESTATS_DATA.'geoip_'.ESTATS_SECURITY.'.sqlite') && class_exists('PDO')));
+		return ((function_exists('geoip_record_by_name') && geoip_db_avail(GEOIP_CITY_EDITION_REV0)) || (is_readable(EstatsCore::path('data').'geoip_'.EstatsCore::security().'.sqlite') && class_exists('PDO')));
 	}
 
 /**
@@ -32,7 +32,7 @@ class EstatsGeolocation
 
 	static function information($IP)
 	{
-		if ($IP == '127.0.0.1' || $IP == 'unknown' || (!function_exists('geoip_record_by_name') && (!is_readable((defined('ESTATS_PATH')?ESTATS_PATH:'').ESTATS_DATA.'geoip_'.ESTATS_SECURITY.'.sqlite') || !class_exists('PDO'))))
+		if ($IP == '127.0.0.1' || $IP == 'unknown' || (!function_exists('geoip_record_by_name') && (!is_readable(EstatsCore::path('data').'geoip_'.EstatsCore::security().'.sqlite') || !class_exists('PDO'))))
 		{
 			return array();
 		}
@@ -47,7 +47,7 @@ class EstatsGeolocation
 			{
 				try
 				{
-					self::$PDO = new PDO('sqlite:'.realpath((defined('ESTATS_PATH')?ESTATS_PATH:'').ESTATS_DATA.'geoip_'.ESTATS_SECURITY.'.sqlite'), '', '', array(PDO::ATTR_PERSISTENT => TRUE));
+					self::$PDO = new PDO('sqlite:'.realpath(EstatsCore::path('data').'geoip_'.EstatsCore::security().'.sqlite'), '', '', array(PDO::ATTR_PERSISTENT => TRUE));
 				}
 				catch (Exception $e)
 				{

@@ -186,7 +186,7 @@ class EstatsCore
  * Contains data directory path
  */
 
-	static private $DataDir;
+	static private $DataDirectory;
 
 /**
  * Contains security string
@@ -331,12 +331,12 @@ class EstatsCore
  * @param boolean Persistent
  */
 
-	static function init($Mode, $Security, $Path, $DataDir, $Driver, $Prefix, $Connection, $User, $Password, $Persistent)
+	static function init($Mode, $Security, $Path, $DataDirectory, $Driver, $Prefix, $Connection, $User, $Password, $Persistent)
 	{
 		self::$Mode = $Mode;
 		self::$Security = $Security;
 		self::$Path = $Path;
-		self::$DataDir = $DataDir;
+		self::$DataDirectory = $DataDirectory;
 
 		$ClassName = 'EstatsDriver'.ucfirst(strtolower($Driver));
 
@@ -358,9 +358,9 @@ class EstatsCore
 			return FALSE;
 		}
 
-		EstatsCache::configure(self::$Security, self::$Path.self::$DataDir, self::$Mode);
+		EstatsCache::configure(self::$Security, self::$Path.self::$DataDirectory, self::$Mode);
 		EstatsCookie::configure(self::$Security);
-		EstatsBackups::configure(self::$Path.self::$DataDir);
+		EstatsBackups::configure(self::$Path.self::$DataDirectory);
 
 		self::updateConfiguration();
 
@@ -458,7 +458,7 @@ class EstatsCore
 			self::$Driver->insertData('logs', array('time' => date('Y-m-d H:i:s'), 'log' => $Event, 'info' => $Comment));
 		}
 
-		$FileName = self::$Path.self::$DataDir.'estats_'.self::$Security.'.log';
+		$FileName = self::$Path.self::$DataDirectory.'estats_'.self::$Security.'.log';
 
 		if (is_writable($FileName))
 		{
@@ -1288,27 +1288,41 @@ class EstatsCore
 	}
 
 /**
- * Returns reference to database driver object
- * @return object
+ * Returns path to specified directory
+ * @param string Directory
+ * @return string
  */
-	static function driver()
+
+	static function path($Directory = '')
 	{
-		return self::$Driver;
+		return self::$Path.(($Directory == 'data')?self::$DataDirectory:'');
 	}
 
 /**
  * Returns session identifier
  * @return string
  */
+
 	static function session()
 	{
 		return (self::$Session?self::$Session:'gb3kg4lehjl67bnd55fn');
 	}
 
 /**
+ * Returns security identifier
+ * @return string
+ */
+
+	static function security()
+	{
+		return self::$Security;
+	}
+
+/**
  * Returns detected language
  * @return string
  */
+
 	static function language()
 	{
 		return self::$Language;
@@ -1318,9 +1332,20 @@ class EstatsCore
  * Returns IP address
  * @return string
  */
+
 	static function IP()
 	{
 		return self::$IP;
+	}
+
+/**
+ * Returns reference to database driver object
+ * @return object
+ */
+
+	static function driver()
+	{
+		return self::$Driver;
 	}
 }
 ?>
