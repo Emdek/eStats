@@ -2,7 +2,7 @@
 /**
  * Core class for eStats
  * @author Emdek <http://emdek.pl>
- * @version 0.9.05
+ * @version 0.9.06
  */
 
 class EstatsCore
@@ -358,9 +358,7 @@ class EstatsCore
 			return FALSE;
 		}
 
-		EstatsCache::configure(self::$Security, self::$Path.self::$DataDirectory, self::$Mode);
-		EstatsCookie::configure(self::$Security);
-		EstatsBackups::configure(self::$Path.self::$DataDirectory);
+		EstatsCache::configure(self::$Mode);
 
 		self::updateConfiguration();
 

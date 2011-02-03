@@ -2,7 +2,7 @@
 /**
  * Cookies management class for eStats
  * @author Emdek <http://emdek.pl>
- * @version 0.9.05
+ * @version 0.9.06
  */
 
 class EstatsCookie
@@ -15,27 +15,10 @@ class EstatsCookie
 	static private $Cookies;
 
 /**
- * Security string
- */
-
-	static private $Security;
-
-/**
  * Server name
  */
 
-	static private $Server;
-
-/**
- * Set configuration
- * @param string Security
- */
-
-	static function configure($Security)
-	{
-		self::$Security = $Security;
-		self::$Server = ((substr($_SERVER['SERVER_NAME'], 0, 4) == 'www.')?substr($_SERVER['SERVER_NAME'], 4):$_SERVER['SERVER_NAME']);
-	}
+	static private $Server = NULL;
 
 /**
  * Checks if cookie exists
@@ -45,7 +28,7 @@ class EstatsCookie
 
 	static function exists($Key)
 	{
-		return isset($_COOKIE[md5(self::$Security.$Key)]);
+		return isset($_COOKIE[md5(EstatsCore::security().$Key)]);
 	}
 
 /**
@@ -56,7 +39,7 @@ class EstatsCookie
 
 	static function get($Key)
 	{
-		$Name = md5(self::$Security.$Key);
+		$Name = md5(EstatsCore::security().$Key);
 
 		if (!isset($_COOKIE[$Name]))
 		{
@@ -83,7 +66,12 @@ class EstatsCookie
 
 	static function set($Key, $Value, $Time = 31356000, $Path = '')
 	{
-		$Name = md5(self::$Security.$Key);
+		if (empty(self::$Server))
+		{
+			self::$Server = ((substr($_SERVER['SERVER_NAME'], 0, 4) == 'www.')?substr($_SERVER['SERVER_NAME'], 4):$_SERVER['SERVER_NAME']);
+		}
+
+		$Name = md5(EstatsCore::security().$Key);
 
 		setcookie($Name, serialize($Value), ($_SERVER['REQUEST_TIME'] + $Time), ($Path?$Path:'/'), self::$Server);
 
@@ -100,7 +88,7 @@ class EstatsCookie
 
 	static function delete($Key, $Path = '')
 	{
-		$Name = md5(self::$Security.$Key);
+		$Name = md5(EstatsCore::security().$Key);
 
 		setcookie($Name, '', 1, ($Path?$Path:'/'), self::$Server);
 

@@ -2,27 +2,11 @@
 /**
  * Backups management class for eStats
  * @author Emdek <http://emdek.pl>
- * @version 0.9.06
+ * @version 0.9.07
  */
 
 class EstatsBackups
 {
-
-/**
- * Directory prefix
- */
-
-	static private $Prefix;
-
-/**
- * Set configuration
- * @param string Prefix
- */
-
-	static function configure($Prefix)
-	{
-		self::$Prefix = $Prefix;
-	}
 
 /**
  * Returns backups size
@@ -32,7 +16,7 @@ class EstatsBackups
 	static function size()
 	{
 		$Size = 0;
-		$Files = glob(self::$Prefix.'backups/*.bak');
+		$Files = glob(EstatsCore::path('data').'backups/*.bak');
 
 		for ($i = 0, $c = count($Files); $i < $c; ++$i)
 		{
@@ -49,7 +33,7 @@ class EstatsBackups
 
 	static function amount()
 	{
-		return count(glob(self::$Prefix.'backups/*.bak'));
+		return count(glob(EstatsCore::path('data').'backups/*.bak'));
 	}
 
 /**
@@ -60,7 +44,7 @@ class EstatsBackups
 
 	static function available($Profile)
 	{
-		return glob(self::$Prefix.'backups/*.'.$Profile.'.bak', GLOB_BRACE);
+		return glob(EstatsCore::path('data').'backups/*.'.$Profile.'.bak', GLOB_BRACE);
 	}
 
 /**
@@ -76,7 +60,7 @@ class EstatsBackups
 	{
 		$Status = TRUE;
 		$BackupID = EstatsCore::option('CollectedFrom').'-'.$_SERVER['REQUEST_TIME'].'.'.$Profile;
-		$FileName = self::$Prefix.'backups/'.$BackupID.'.bak';
+		$FileName = EstatsCore::path('data').'backups/'.$BackupID.'.bak';
 
 		if (touch($FileName))
 		{
@@ -156,7 +140,7 @@ Module: '.EstatsCore::driver()->option('Name').' v'.EstatsCore::driver()->option
 	static function restore($BackupID)
 	{
 		$Status = TRUE;
-		$File = fopen(self::$Prefix.'backups/'.$BackupID.'.bak', 'r');
+		$File = fopen(EstatsCore::path('data').'backups/'.$BackupID.'.bak', 'r');
 		$Buffer = '';
 		$Replace = $Recreate = $Create = $Table = $Fields = $Line = 0;
 		$Schema = EstatsCore::loadData('share/data/database.ini');
@@ -275,7 +259,7 @@ Module: '.EstatsCore::driver()->option('Name').' v'.EstatsCore::driver()->option
 	static function delete($Pattern = '*')
 	{
 		$Status = TRUE;
-		$Files = glob(self::$Prefix.'backups/'.$Pattern.'.bak');
+		$Files = glob(EstatsCore::path('data').'backups/'.$Pattern.'.bak');
 
 		for ($i = 0, $c = count($Files); $i < $c; ++$i)
 		{
