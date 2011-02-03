@@ -33,7 +33,7 @@ class EstatsTheme
 	static private $Switches;
 
 /**
- * List of available locales
+ * List of available themes
  */
 
 	static private $Available = NULL;
@@ -46,7 +46,7 @@ class EstatsTheme
 
 	static function set($Theme)
 	{
-		$FileName = 'share/themes/'.$Theme.'/theme.ini';
+		$FileName = './share/themes/'.$Theme.'/theme.ini';
 
 		if (!is_file($FileName))
 		{
@@ -55,7 +55,7 @@ class EstatsTheme
 
 		self::$Theme = $Theme;
 		self::$Information = parse_ini_file($FileName, FALSE);
-		self::$Elements['index'] = file_get_contents('share/themes/'.$Theme.'/theme.tpl');
+		self::$Elements['index'] = file_get_contents('./share/themes/'.$Theme.'/theme.tpl');
 		self::$Switches = array();
 
 		return TRUE;
@@ -70,11 +70,11 @@ class EstatsTheme
 
 	static function load($File, $Directory = '')
 	{
-		$FileName = ($Directory?$Directory:'share/themes/').self::$Theme.'/'.$File.'.tpl';
+		$FileName = ($Directory?$Directory:'./share/themes/').self::$Theme.'/'.$File.'.tpl';
 
 		if (!is_file($FileName))
 		{
-			$FileName = ($Directory?$Directory:'share/themes/').'common/'.$File.'.tpl';
+			$FileName = ($Directory?$Directory:'./share/themes/').'common/'.$File.'.tpl';
 		}
 
 		if (!is_file($FileName))
@@ -107,7 +107,7 @@ class EstatsTheme
 		}
 
 		$Array = array();
-		$Themes = glob('share/themes/*/theme.ini');
+		$Themes = glob('./share/themes/*/theme.ini');
 
 		for ($i = 0, $c = count($Themes); $i < $c; ++$i)
 		{
@@ -250,7 +250,7 @@ class EstatsTheme
 
 	static function exists($Theme)
 	{
-		return file_exists('share/themes/'.$Theme.'/theme.ini');
+		return file_exists('./share/themes/'.$Theme.'/theme.ini');
 	}
 }
 ?>
