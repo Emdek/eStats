@@ -38,7 +38,7 @@ class EstatsCache
 	static function size()
 	{
 		$Size = 0;
-		$Files = glob(EstatsCore::path(TRUE).'cache/*.dat');
+		$Files = glob(EstatsCore::path(TRUE).'cache/'.(EstatsCore::statistics()?EstatsCore::statistics().'_':'').'*.dat');
 
 		for ($i = 0, $c = count($Files); $i < $c; ++$i)
 		{
@@ -57,7 +57,7 @@ class EstatsCache
 
 	static function path($ID, $Extension = '.dat')
 	{
-		return EstatsCore::path(TRUE).'cache/'.$ID.'_'.EstatsCore::security().$Extension;
+		return EstatsCore::path(TRUE).'cache/'.EstatsCore::statistics().'_'.$ID.'_'.EstatsCore::security().$Extension;
 	}
 
 /**
@@ -173,7 +173,7 @@ class EstatsCache
 	static function delete($Pattern = '*', $Extension = '{.dat,.png}')
 	{
 		$Status = TRUE;
-		$Files = glob(EstatsCore::path(TRUE).'cache/'.$Pattern.'_'.EstatsCore::security().$Extension, GLOB_BRACE);
+		$Files = glob(EstatsCore::path(TRUE).'cache/'.(EstatsCore::statistics()?EstatsCore::statistics().'_':'').$Pattern.'_'.EstatsCore::security().$Extension, GLOB_BRACE);
 
 		for ($i = 0, $c = count($Files); $i < $c; ++$i)
 		{

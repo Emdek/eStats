@@ -1332,6 +1332,16 @@ class EstatsCore
 	}
 
 /**
+ * Returns identifier of current statistics
+ * @return integer
+ */
+
+	static function statistics()
+	{
+		return self::$Statistics;
+	}
+
+/**
  * Returns reference to database driver object
  * @return object
  */
