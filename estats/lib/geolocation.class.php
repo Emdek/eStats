@@ -21,7 +21,7 @@ class EstatsGeolocation
 
 	static function isAvailable()
 	{
-		return ((function_exists('geoip_record_by_name') && geoip_db_avail(GEOIP_CITY_EDITION_REV0)) || (is_readable(EstatsCore::path('data').'geoip_'.EstatsCore::security().'.sqlite') && class_exists('PDO')));
+		return ((function_exists('geoip_record_by_name') && geoip_db_avail(GEOIP_CITY_EDITION_REV0)) || (is_readable(EstatsCore::path(TRUE).'geoip_'.EstatsCore::security().'.sqlite') && class_exists('PDO')));
 	}
 
 /**
@@ -47,7 +47,7 @@ class EstatsGeolocation
 			{
 				try
 				{
-					self::$PDO = new PDO('sqlite:'.realpath(EstatsCore::path('data').'geoip_'.EstatsCore::security().'.sqlite'), '', '', array(PDO::ATTR_PERSISTENT => TRUE));
+					self::$PDO = new PDO('sqlite:'.realpath(EstatsCore::path(TRUE).'geoip_'.EstatsCore::security().'.sqlite'), '', '', array(PDO::ATTR_PERSISTENT => TRUE));
 				}
 				catch (Exception $e)
 				{

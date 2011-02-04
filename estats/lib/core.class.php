@@ -335,8 +335,8 @@ class EstatsCore
 	{
 		self::$Mode = $Mode;
 		self::$Security = $Security;
-		self::$Path = $Path;
-		self::$DataDirectory = $DataDirectory;
+		self::$Path = realpath($Path).'/';
+		self::$DataDirectory = realpath(self::$Path.$DataDirectory).'/';
 
 		$ClassName = 'EstatsDriver'.ucfirst(strtolower($Driver));
 
@@ -456,7 +456,7 @@ class EstatsCore
 			self::$Driver->insertData('logs', array('time' => date('Y-m-d H:i:s'), 'log' => $Event, 'info' => $Comment));
 		}
 
-		$FileName = self::$Path.self::$DataDirectory.'estats_'.self::$Security.'.log';
+		$FileName = self::$DataDirectory.'estats_'.self::$Security.'.log';
 
 		if (is_writable($FileName))
 		{
@@ -1286,14 +1286,14 @@ class EstatsCore
 	}
 
 /**
- * Returns path to specified directory
- * @param string Directory
+ * Returns path to main or data directory
+ * @param boolean DataDirectory
  * @return string
  */
 
-	static function path($Directory = '')
+	static function path($DataDirectory = FALSE)
 	{
-		return self::$Path.(($Directory == 'data')?self::$DataDirectory:'');
+		return ($DataDirectory?self::$DataDirectory:self::$Path);
 	}
 
 /**
