@@ -195,10 +195,10 @@ class EstatsCore
 	static private $Security;
 
 /**
- * TRUE if initialized for use with GUI
+ * Statistics identifier
  */
 
-	static private $Mode;
+	static private $Statistics;
 
 /**
  * Contains current date time strings
@@ -212,14 +212,14 @@ class EstatsCore
 
 	static private function updateConfiguration()
 	{
-		if (!self::$Mode || EstatsCache::status('configuration', 86400))
+		if (EstatsCache::status('configuration', 86400))
 		{
 			$Data = array();
-			$Array = self::$Driver->selectData(array('configuration'), array('name', 'value'), (self::$Mode?NULL:array(array(EstatsDriver::ELEMENT_OPERATION, array('mode', EstatsDriver::OPERATOR_EQUAL, array(EstatsDriver::ELEMENT_VALUE, 0))))));
+			$Array = self::$Driver->selectData(array('configuration'), array('name', 'value'));
 
 			if (count($Array) < 2)
 			{
-				estats_error_message('Could not retrieve configuration ('.(self::$Mode?'GUI':'CORE').')!', __FILE__, __LINE__, TRUE);
+				estats_error_message('Could not retrieve configuration!', __FILE__, __LINE__, TRUE);
 			}
 
 			for ($i = 0, $c = count($Array); $i < $c; ++$i)
@@ -234,10 +234,7 @@ class EstatsCore
 				}
 			}
 
-			if (self::$Mode)
-			{
-				EstatsCache::save('configuration', self::$Configuration);
-			}
+			EstatsCache::save('configuration', self::$Configuration);
 		}
 		else
 		{
@@ -319,7 +316,7 @@ class EstatsCore
 
 /**
  * Initiates statistics
- * @param integer Mode
+ * @param integer Statistics
  * @param string Security
  * @param string Path
  * @param string DataDirectory
@@ -331,9 +328,9 @@ class EstatsCore
  * @param boolean Persistent
  */
 
-	static function init($Mode, $Security, $Path, $DataDirectory, $Driver, $Prefix, $Connection, $User, $Password, $Persistent)
+	static function init($Statistics, $Security, $Path, $DataDirectory, $Driver, $Prefix, $Connection, $User, $Password, $Persistent)
 	{
-		self::$Mode = $Mode;
+		self::$Statistics = $Statistics;
 		self::$Security = $Security;
 		self::$Path = realpath($Path).'/';
 		self::$DataDirectory = realpath(self::$Path.$DataDirectory).'/';
