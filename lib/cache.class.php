@@ -2,7 +2,7 @@
 /**
  * Data cache class for eStats
  * @author Emdek <http://emdek.pl>
- * @version 0.9.06
+ * @version 0.9.07
  */
 
 class EstatsCache
@@ -15,34 +15,18 @@ class EstatsCache
 	static private $Enabled = FALSE;
 
 /**
- * Security infix
- */
-
-	static private $Security;
-
-/**
- * Directory prefix
- */
-
-	static private $Prefix;
-
-/**
  * In memory cached data
  */
 
 	static private $Cache;
 
 /**
- * Set configuration
- * @param string Security
- * @param string Prefix
+ * Enable or disable cache
  * @param boolean Enabled
  */
 
-	static function configure($Security, $Prefix, $Enabled = TRUE)
+	static function enable($Enabled = TRUE)
 	{
-		self::$Security = $Security;
-		self::$Prefix = $Prefix;
 		self::$Enabled = $Enabled;
 	}
 
@@ -54,7 +38,7 @@ class EstatsCache
 	static function size()
 	{
 		$Size = 0;
-		$Files = glob(self::$Prefix.'cache/*.dat');
+		$Files = glob(EstatsCore::path(TRUE).'cache/*.dat');
 
 		for ($i = 0, $c = count($Files); $i < $c; ++$i)
 		{
@@ -73,7 +57,7 @@ class EstatsCache
 
 	static function path($ID, $Extension = '.dat')
 	{
-		return self::$Prefix.'cache/'.$ID.'_'.self::$Security.$Extension;
+		return EstatsCore::path(TRUE).'cache/'.$ID.'_'.EstatsCore::security().$Extension;
 	}
 
 /**
@@ -189,7 +173,7 @@ class EstatsCache
 	static function delete($Pattern = '*', $Extension = '{.dat,.png}')
 	{
 		$Status = TRUE;
-		$Files = glob(self::$Prefix.'cache/'.$Pattern.'_'.self::$Security.$Extension, GLOB_BRACE);
+		$Files = glob(EstatsCore::path(TRUE).'cache/'.$Pattern.'_'.EstatsCore::security().$Extension, GLOB_BRACE);
 
 		for ($i = 0, $c = count($Files); $i < $c; ++$i)
 		{
