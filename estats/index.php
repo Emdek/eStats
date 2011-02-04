@@ -48,18 +48,18 @@ function estats_error_handler($Number, $String, $File, $Line)
 
 /**
  * Generates error message
- * @param string Error
+ * @param string Message
  * @param string File
  * @param string Line
  * @param boolean NotFile
  * @param boolean Warning
  */
 
-function estats_error_message($Error, $File, $Line, $NotFile = FALSE, $Warning = FALSE)
+function estats_error_message($Message, $File, $Line, $NotFile = FALSE, $Warning = FALSE)
 {
 	if ($Warning)
 	{
-		EstatsGUI::notify(($NotFile?$Error:'Could not load file! (<em>'.$Error.'</em>)').'<br />
+		EstatsGUI::notify(($NotFile?$Message:'Could not load file! (<em>'.$Message.'</em>)').'<br />
 <strong>'.$File.': <em>'.$Line.'</em></strong>', ($Warning?'warning':'error'));
 
 	}

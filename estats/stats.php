@@ -2,7 +2,7 @@
 /**
  * Data collecting script for eStats
  * @author Emdek <http://emdek.pl>
- * @version 4.9.50
+ * @version 5.0.00
  */
 
 error_reporting(0);
@@ -17,14 +17,14 @@ define('ESTATS_PATH', dirname(__FILE__).'/');
 
 /**
  * Generates error message
- * @param string Error
+ * @param string Message
  * @param string File
  * @param string Line
  * @param boolean NotFile
  * @param boolean Warning
  */
 
-function estats_error_message($Error, $File, $Line, $NotFile = FALSE, $Warning = FALSE)
+function estats_error_message($Message, $File, $Line, $NotFile = FALSE, $Warning = FALSE)
 {
 	if (!$Warning && !defined('ESTATS_CRITICAL'))
 	{
@@ -33,7 +33,7 @@ function estats_error_message($Error, $File, $Line, $NotFile = FALSE, $Warning =
 
 	if (!defined('ESTATS_JSINFORMATION'))
 	{
-		echo '<b>eStats '.($Warning?'warning':'error').':</b> <i>'.($NotFile?$Error:'Could not load file: <b>'.$Error.'</b>!').'</i> (<b>'.$File.': '.$Line.'</b>)<br />
+		echo '<b>eStats '.($Warning?'warning':'error').':</b> <i>'.($NotFile?$Message:'Could not load file: <b>'.$Message.'</b>!').'</i> (<b>'.$File.': '.$Line.'</b>)<br />
 ';
 	}
 }
