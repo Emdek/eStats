@@ -358,8 +358,6 @@ class EstatsCore
 			return FALSE;
 		}
 
-		EstatsCache::enable(self::$Mode);
-
 		self::updateConfiguration();
 
 		self::$Session = md5('estats_'.substr(self::option('UniqueID'), 0, 10));
