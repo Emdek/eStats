@@ -180,7 +180,7 @@ if (!defined('ESTATS_INSTALL'))
 	}
 }
 
-if (EstatsCore::option('Path|mode'))
+if (EstatsCore::option('Path/mode'))
 {
 	$Path = (isset($_SERVER['PATH_INFO'])?explode('/', substr($_SERVER[((!$_SERVER['PATH_INFO'] && isset($_SERVER['ORIG_PATH_INFO']))?'ORIG_':'').'PATH_INFO'], 1)):array());
 }
@@ -254,7 +254,7 @@ if (isset($_POST['year']))
 
 	EstatsCookie::set('date', $Date);
 
-	die(header('Location: '.EstatsTheme::get('datapath').EstatsCore::option('Path|prefix').$Path[0].'/'.$Path[1].(($Path[1] == 'geolocation')?'/'.$_POST['map']:'').(($Path[1] != 'time' && isset($Path[($Path[1] == 'geolocation')?4:3]))?'/'.$Path[($Path[1] == 'geolocation')?3:2]:'').(($Path[1] == 'time')?((isset($Path[2]) && in_array($Path[2], $Groups['time']))?'/'.$Path[2]:'').((isset($_POST['TimeView']))?'/'.implode('+', $_POST['TimeView']):''):'').'/'.$Date.(($Path[1] == 'time' && isset($_POST['TimeCompare']))?'/compare':'').EstatsCore::option('Path|suffix')));
+	die(header('Location: '.EstatsTheme::get('datapath').EstatsCore::option('Path/prefix').$Path[0].'/'.$Path[1].(($Path[1] == 'geolocation')?'/'.$_POST['map']:'').(($Path[1] != 'time' && isset($Path[($Path[1] == 'geolocation')?4:3]))?'/'.$Path[($Path[1] == 'geolocation')?3:2]:'').(($Path[1] == 'time')?((isset($Path[2]) && in_array($Path[2], $Groups['time']))?'/'.$Path[2]:'').((isset($_POST['TimeView']))?'/'.implode('+', $_POST['TimeView']):''):'').'/'.$Date.(($Path[1] == 'time' && isset($_POST['TimeCompare']))?'/compare':'').EstatsCore::option('Path/suffix')));
 }
 
 if (EstatsCookie::exists('theme'))
@@ -276,7 +276,7 @@ if (isset($_POST['theme']))
 
 if (isset($_POST['locale']))
 {
-	die(header('Location: '.EstatsTheme::get('datapath').EstatsCore::option('Path|prefix').$_POST['locale'].'/'.implode('/', array_slice($Path, 1)).EstatsCore::option('Path|suffix')));
+	die(header('Location: '.EstatsTheme::get('datapath').EstatsCore::option('Path/prefix').$_POST['locale'].'/'.implode('/', array_slice($Path, 1)).EstatsCore::option('Path/suffix')));
 }
 
 if (isset($_GET['logout']) && !defined('ESTATS_INSTALL'))
@@ -450,8 +450,8 @@ EstatsTheme::add('selecttheme', ((count($Themes) > 2)?'<select name="theme" titl
 '.$SelectTheme.'</select>
 ':''));
 EstatsTheme::add('selectformindex', (EstatsTheme::get('selectform')?EstatsGUI::tabindex():''));
-EstatsTheme::add('path', EstatsTheme::get('datapath').EstatsCore::option('Path|prefix').$Path[0].'/');
-EstatsTheme::add('suffix', EstatsCore::option('Path|suffix'));
+EstatsTheme::add('path', EstatsTheme::get('datapath').EstatsCore::option('Path/prefix').$Path[0].'/');
+EstatsTheme::add('suffix', EstatsCore::option('Path/suffix'));
 
 if (ESTATS_USERLEVEL == 2)
 {
@@ -508,22 +508,22 @@ if (defined('ESTATS_INSTALL'))
 }
 else
 {
-	EstatsCache::enable(ESTATS_USERLEVEL < 2 || EstatsCore::option('Cache|enableforadministrator'));
+	EstatsCache::enable(ESTATS_USERLEVEL < 2 || EstatsCore::option('Cache/enableforadministrator'));
 
-	if (EstatsCore::option('Cache|clearinterval') && ($_SERVER['REQUEST_TIME'] - EstatsCore::option('LastClean')) > EstatsCore::option('Cache|clearinterval'))
+	if (EstatsCore::option('Cache/clearinterval') && ($_SERVER['REQUEST_TIME'] - EstatsCore::option('LastClean')) > EstatsCore::option('Cache/clearinterval'))
 	{
 		EstatsCore::setConfiguration(array('LastClean' => $_SERVER['REQUEST_TIME']));
 
 		EstatsCache::delete();
 	}
 
-	if (EstatsCore::option('LastCheck') != date('Ymd') && (EstatsCore::option('Visits|oldvisitspolicy') == 'compact' || EstatsCore::option('Visits|oldvisitspolicy') == 'delete'))
+	if (EstatsCore::option('LastCheck') != date('Ymd') && (EstatsCore::option('Visits/oldvisitspolicy') == 'compact' || EstatsCore::option('Visits/oldvisitspolicy') == 'delete'))
 	{
 		EstatsCore::setConfiguration(array('LastCheck' => date('Ymd')));
 
-		$Time = EstatsCore::driver()->selectData(array('details'), array(array(EstatsDriver::ELEMENT_FUNCTION, array(EstatsDriver::FUNCTION_MAX, 'time'), 'maxtime')), NULL, 1, (self::option('Visits|amount') * self::option('Visits|maxpages')), array('maxtime' => FALSE), array('id'));
+		$Time = EstatsCore::driver()->selectData(array('details'), array(array(EstatsDriver::ELEMENT_FUNCTION, array(EstatsDriver::FUNCTION_MAX, 'time'), 'maxtime')), NULL, 1, (self::option('Visits/amount') * self::option('Visits/maxpages')), array('maxtime' => FALSE), array('id'));
 		$Time = $Time[0]['maxtime'];
-		$Result = EstatsCore::driver()->selectData(array('details'), array('id', array(EstatsDriver::ELEMENT_FUNCTION, array(EstatsDriver::FUNCTION_MAX, 'time'), 'maxtime'), array(EstatsDriver::ELEMENT_FUNCTION, array(EstatsDriver::FUNCTION_MIN, 'time'), 'mintime')), array(array(EstatsDriver::ELEMENT_OPERATION, array('maxtime', EstatsDriver::OPERATOR_LESSOREQUAL, $Time)), EstatsDriver::OPERATOR_AND, array(EstatsDriver::ELEMENT_OPERATION, array('mintime', EstatsDriver::OPERATOR_LESS, ($_SERVER['REQUEST_TIME'] - max(self::option('VisitTime'), self::option('Visits|period')))))));
+		$Result = EstatsCore::driver()->selectData(array('details'), array('id', array(EstatsDriver::ELEMENT_FUNCTION, array(EstatsDriver::FUNCTION_MAX, 'time'), 'maxtime'), array(EstatsDriver::ELEMENT_FUNCTION, array(EstatsDriver::FUNCTION_MIN, 'time'), 'mintime')), array(array(EstatsDriver::ELEMENT_OPERATION, array('maxtime', EstatsDriver::OPERATOR_LESSOREQUAL, $Time)), EstatsDriver::OPERATOR_AND, array(EstatsDriver::ELEMENT_OPERATION, array('mintime', EstatsDriver::OPERATOR_LESS, ($_SERVER['REQUEST_TIME'] - max(self::option('VisitTime'), self::option('Visits/period')))))));
 
 		if ($Result)
 		{
@@ -536,7 +536,7 @@ else
 
 			EstatsCore::driver()->deleteData('details', array(array(EstatsDriver::ELEMENT_OPERATION, array('id', EstatsDriver::OPERATOR_IN, $UniqueIDs))));
 
-			if (EstatsCore::option('Visits|oldvisitspolicy') == 'delete')
+			if (EstatsCore::option('Visits/oldvisitspolicy') == 'delete')
 			{
 				EstatsCore::driver()->deleteData('visitors', array(array(EstatsDriver::ELEMENT_OPERATION, array('id', EstatsDriver::OPERATOR_IN, $UniqueIDs))));
 			}
@@ -798,15 +798,15 @@ else
 		{
 			if ($Path[2] == 'operatingsystem-versions')
 			{
-				$Frequency = $Weights[EstatsCore::option('CollectFrequency|operatingsystems')];
+				$Frequency = $Weights[EstatsCore::option('CollectFrequency/operatingsystems')];
 			}
 			else if ($Path[2] == 'browser-versions')
 			{
-				$Frequency = $Weights[EstatsCore::option('CollectFrequency|browsers')];
+				$Frequency = $Weights[EstatsCore::option('CollectFrequency/browsers')];
 			}
 			else
 			{
-				$Frequency = $Weights[EstatsCore::option('CollectFrequency|'.$Path[2])];
+				$Frequency = $Weights[EstatsCore::option('CollectFrequency/'.$Path[2])];
 			}
 		}
 		else
@@ -824,20 +824,20 @@ else
 					$Key = 'oses';
 				}
 
-				if ($Weights[EstatsCore::option('CollectFrequency|'.$Key)] < $Frequency)
+				if ($Weights[EstatsCore::option('CollectFrequency/'.$Key)] < $Frequency)
 				{
-					$Frequency = $Weights[EstatsCore::option('CollectFrequency|'.$Key)];
+					$Frequency = $Weights[EstatsCore::option('CollectFrequency/'.$Key)];
 				}
 			}
 		}
 	}
 	else if ($Path[1] == 'geolocation')
 	{
-		$Frequency = $Weights[EstatsCore::option('CollectFrequency|geolocation')];
+		$Frequency = $Weights[EstatsCore::option('CollectFrequency/geolocation')];
 	}
 	else if ($Path[1] == 'time')
 	{
-		$Frequency = $Weights[(EstatsCore::option('CollectFrequency|time') == 'hourly')?'daily':EstatsCore::option('CollectFrequency|time')];
+		$Frequency = $Weights[(EstatsCore::option('CollectFrequency/time') == 'hourly')?'daily':EstatsCore::option('CollectFrequency/time')];
 	}
 	else
 	{
@@ -879,7 +879,7 @@ else
 
 	for ($i = 0, $c = count($Menu); $i < $c; ++$i)
 	{
-		if (($Menu[$i] == 'geolocation' && !EstatsGeolocation::isAvailable()) || ($Menu[$i] == 'time' && EstatsCore::option('CollectFrequency|time') != 'disabled' && !EstatsCore::driver()->selectAmount('time')))
+		if (($Menu[$i] == 'geolocation' && !EstatsGeolocation::isAvailable()) || ($Menu[$i] == 'time' && EstatsCore::option('CollectFrequency/time') != 'disabled' && !EstatsCore::driver()->selectAmount('time')))
 		{
 			continue;
 		}
@@ -917,7 +917,7 @@ else
 			{
 				EstatsTheme::add('submenu-'.$Menu[$i].'_'.$Groups[$Menu[$i]][$j], FALSE);
 
-				if ((isset($GroupAmount[$Groups[$Menu[$i]][$j]]) && !$GroupAmount[$Groups[$Menu[$i]][$j]]) || ($Menu[$i] == 'time' && EstatsCore::option('CollectFrequency|time') != 'hourly' && in_array($Groups[$Menu[$i]][$j], array('24hours', 'hourspopularity'))))
+				if ((isset($GroupAmount[$Groups[$Menu[$i]][$j]]) && !$GroupAmount[$Groups[$Menu[$i]][$j]]) || ($Menu[$i] == 'time' && EstatsCore::option('CollectFrequency/time') != 'hourly' && in_array($Groups[$Menu[$i]][$j], array('24hours', 'hourspopularity'))))
 				{
 					continue;
 				}
@@ -1187,8 +1187,8 @@ if (file_exists('./share/themes/'.$_SESSION[EstatsCore::session()]['theme'].'/im
 	}
 }
 
-EstatsTheme::add('selfpath', EstatsTheme::get('datapath').EstatsCore::option('Path|prefix').implode('/', $Path).EstatsCore::option('Path|suffix'));
-EstatsTheme::add('separator', htmlspecialchars(EstatsCore::option('Path|separator'), ENT_QUOTES, 'UTF-8', FALSE));
+EstatsTheme::add('selfpath', EstatsTheme::get('datapath').EstatsCore::option('Path/prefix').implode('/', $Path).EstatsCore::option('Path/suffix'));
+EstatsTheme::add('separator', htmlspecialchars(EstatsCore::option('Path/separator'), ENT_QUOTES, 'UTF-8', FALSE));
 EstatsTheme::add('date', date('d.m.Y H:i:s T'));
 EstatsTheme::add('announcements', (count($_SESSION['ERRORS']) > 0 || count(EstatsGUI::notifications()) > 0));
 EstatsTheme::add('menu', EstatsTheme::contains('menu'));

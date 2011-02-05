@@ -24,25 +24,25 @@ if (isset($Path[3]) && $Path[3] == 'advanced')
 	'Path' => EstatsLocale::translate('Settings of passing variables in address'),
 	);
 	$OptionsNames = array(
-	'Backups|profile' => EstatsLocale::translate('Backup creating profile'),
-	'Backups|usertables' => EstatsLocale::translate('Tables to archivize (user profile)'),
-	'Backups|creationinterval' => EstatsLocale::translate('Create backups after specified time (seconds)'),
-	'Backups|replacedata' => EstatsLocale::translate('Replace existing data (user profile)'),
-	'Backups|sqlformat' => EstatsLocale::translate('Use SQL format (user profile)'),
-	'Cache|clearinterval' => EstatsLocale::translate('Interval of full cache clearing (days)'),
-	'Cache|detailed' => EstatsLocale::translate('Cache time for visitors list (seconds)'),
-	'Cache|enableforadministrator' => EstatsLocale::translate('Enable caching for administrator'),
-	'Cache|others' => EstatsLocale::translate('Cache time for other data (seconds)'),
-	'Cache|time' => EstatsLocale::translate('Cache time for time statistics data (seconds)'),
-	'Visits|amount' => EstatsLocale::translate('Amount of entries per page in Visits'),
-	'Visits|detailsamount' => EstatsLocale::translate('Amount of entries per page in Visit details'),
-	'Visits|maxpages' => EstatsLocale::translate('Max amount of pages available for user (0 - all available)'),
-	'Visits|oldvisitspolicy' => EstatsLocale::translate('Policy what to do with old visits data'),
-	'Visits|period' => EstatsLocale::translate('Amount of days from which visits data are displayed (0 - display all)'),
-	'Path|mode' => EstatsLocale::translate('Mode of passing data in the path'),
-	'Path|prefix' => EstatsLocale::translate('Address prefix'),
-	'Path|separator' => EstatsLocale::translate('Separator between address and GET query'),
-	'Path|suffix' => EstatsLocale::translate('Address suffix'),
+	'Backups/profile' => EstatsLocale::translate('Backup creating profile'),
+	'Backups/usertables' => EstatsLocale::translate('Tables to archivize (user profile)'),
+	'Backups/creationinterval' => EstatsLocale::translate('Create backups after specified time (seconds)'),
+	'Backups/replacedata' => EstatsLocale::translate('Replace existing data (user profile)'),
+	'Backups/sqlformat' => EstatsLocale::translate('Use SQL format (user profile)'),
+	'Cache/clearinterval' => EstatsLocale::translate('Interval of full cache clearing (days)'),
+	'Cache/detailed' => EstatsLocale::translate('Cache time for visitors list (seconds)'),
+	'Cache/enableforadministrator' => EstatsLocale::translate('Enable caching for administrator'),
+	'Cache/others' => EstatsLocale::translate('Cache time for other data (seconds)'),
+	'Cache/time' => EstatsLocale::translate('Cache time for time statistics data (seconds)'),
+	'Visits/amount' => EstatsLocale::translate('Amount of entries per page in Visits'),
+	'Visits/detailsamount' => EstatsLocale::translate('Amount of entries per page in Visit details'),
+	'Visits/maxpages' => EstatsLocale::translate('Max amount of pages available for user (0 - all available)'),
+	'Visits/oldvisitspolicy' => EstatsLocale::translate('Policy what to do with old visits data'),
+	'Visits/period' => EstatsLocale::translate('Amount of days from which visits data are displayed (0 - display all)'),
+	'Path/mode' => EstatsLocale::translate('Mode of passing data in the path'),
+	'Path/prefix' => EstatsLocale::translate('Address prefix'),
+	'Path/separator' => EstatsLocale::translate('Separator between address and GET query'),
+	'Path/suffix' => EstatsLocale::translate('Address suffix'),
 	'CountRobots' => EstatsLocale::translate('Add robots visits to visits'),
 	'VisitDetails' => EstatsLocale::translate('Collect visit details '),
 	'VisitTime' => EstatsLocale::translate('Time after that visit is count again (seconds)'),
@@ -66,11 +66,11 @@ if (isset($Path[3]) && $Path[3] == 'advanced')
 	);
 	$OptionSelects['DefaultLanguage'] = $Locales;
 	$OptionSelects['Antipixel'] = $OptionSelects['DefaultTheme'] = array();
-	$OptionSelects['Backups|profile'] = array('data', 'full', 'user');
+	$OptionSelects['Backups/profile'] = array('data', 'full', 'user');
 	$OptionSelects['ChartsType'] = array('areas', 'bars', 'html', 'lines');
-	$OptionSelects['Visits|oldvisitspolicy'] = array('keep', 'compact', 'delete');
-	$OptionSelects['Path|mode'] = range(0, 2);
-	$OptionSelects['CollectFrequency|time'] = array('disable', 'daily', 'hourly');
+	$OptionSelects['Visits/oldvisitspolicy'] = array('keep', 'compact', 'delete');
+	$OptionSelects['Path/mode'] = range(0, 2);
+	$OptionSelects['CollectFrequency/time'] = array('disable', 'daily', 'hourly');
 	$OptionSelects['DefaultTheme'] = array_keys(EstatsTheme::available());
 	$OptionSelects['Antipixel'] = glob('share/antipixels/*/*.{png,gif,jpg}', GLOB_BRACE);
 
@@ -211,28 +211,28 @@ else
 
 			if ($_POST['PathMode'] == 1)
 			{
-				$_POST['Path|mode'] = 1;
-				$_POST['Path|prefix'] = 'index.php/';
-				$_POST['Path|suffix'] = '';
-				$_POST['Path|separator'] = '?';
+				$_POST['Path/mode'] = 1;
+				$_POST['Path/prefix'] = 'index.php/';
+				$_POST['Path/suffix'] = '';
+				$_POST['Path/separator'] = '?';
 			}
 			else if ($_POST['PathMode'] == 2)
 			{
-				$_POST['Path|mode'] = 0;
-				$_POST['Path|prefix'] = '';
-				$_POST['Path|suffix'] = '/';
-				$_POST['Path|separator'] = '&';
+				$_POST['Path/mode'] = 0;
+				$_POST['Path/prefix'] = '';
+				$_POST['Path/suffix'] = '/';
+				$_POST['Path/separator'] = '&';
 			}
 			else
 			{
-				$_POST['Path|mode'] = 0;
-				$_POST['Path|prefix'] = 'index.php?path=';
-				$_POST['Path|suffix'] = '';
-				$_POST['Path|separator'] = '&';
+				$_POST['Path/mode'] = 0;
+				$_POST['Path/prefix'] = 'index.php?path=';
+				$_POST['Path/suffix'] = '';
+				$_POST['Path/separator'] = '&';
 			}
 		}
 
-		EstatsGUI::saveConfiguration(array('Pass', 'VisitTime', 'StatsEnabled', 'Maintenance', 'LogEnabled', 'CountPhrases', 'Antipixel', 'DefaultTheme', 'Path|mode', 'Path|prefix', 'Path|suffix', 'Path|separator'), $_POST, isset($_POST['Defaults']));
+		EstatsGUI::saveConfiguration(array('Pass', 'VisitTime', 'StatsEnabled', 'Maintenance', 'LogEnabled', 'CountPhrases', 'Antipixel', 'DefaultTheme', 'Path/mode', 'Path/prefix', 'Path/suffix', 'Path/separator'), $_POST, isset($_POST['Defaults']));
 	}
 
 	if (isset($_POST['ChangePassword']))
@@ -341,7 +341,7 @@ else
 
 	EstatsTheme::append('page', EstatsGUI::optionRowWidget(EstatsLocale::translate('Statistics antipixel'), '', 'Antipixel', '<img src="{datapath}share/antipixels/'.htmlspecialchars(EstatsCore::option('Antipixel'), ENT_QUOTES, 'UTF-8', FALSE).'" alt="Preview" id="antipixelpreview" />
 <select name="Antipixel" id="F_Antipixel" onchange="document.getElementById(\'antipixelpreview\').src = \'{datapath}share/antipixels/\' + this.options[selectedIndex].value">
-'.$AntipixelSelect.'</select>', EstatsGUI::FIELD_CUSTOM).EstatsGUI::optionRowWidget(EstatsLocale::translate('Default theme'), '', 'DefaultTheme', EstatsCore::option('DefaultTheme'), EstatsGUI::FIELD_SELECT, array_keys($Themes)).EstatsGUI::optionRowWidget(EstatsLocale::translate('Mode of passing data in the path'), '', 'PathMode', EstatsCore::option('Path|mode'), EstatsGUI::FIELD_SELECT, array('GET', 'PATH_INFO', 'Rewrite')).'<div class="buttons">
+'.$AntipixelSelect.'</select>', EstatsGUI::FIELD_CUSTOM).EstatsGUI::optionRowWidget(EstatsLocale::translate('Default theme'), '', 'DefaultTheme', EstatsCore::option('DefaultTheme'), EstatsGUI::FIELD_SELECT, array_keys($Themes)).EstatsGUI::optionRowWidget(EstatsLocale::translate('Mode of passing data in the path'), '', 'PathMode', EstatsCore::option('Path/mode'), EstatsGUI::FIELD_SELECT, array('GET', 'PATH_INFO', 'Rewrite')).'<div class="buttons">
 <input type="submit" onclick="if (!confirm(document.getElementById(\'F_Maintenance\').checked?\'Do you really want to enable maintenance mode?\nIf you log out before turning it off you will not be able to log in again!\':\''.EstatsLocale::translate('Do you really want to save?').'\')) return false" value="'.EstatsLocale::translate('Save').'" name="SaveConfiguration" tabindex="'.EstatsGUI::tabindex().'" />
 <input type="submit" onclick="if (!confirm(\''.EstatsLocale::translate('Do you really want to restore defaults?').'\')) return false" value="'.EstatsLocale::translate('Defaults').'" name="Defaults" tabindex="'.EstatsGUI::tabindex().'" />
 <input type="reset" value="'.EstatsLocale::translate('Reset').'" tabindex="'.EstatsGUI::tabindex().'" />

@@ -2,7 +2,7 @@
 /**
  * Installer GUI for eStats
  * @author Emdek <http://emdek.pl>
- * @version 4.9.50
+ * @version 5.0.00
  */
 
 if (!defined('ESTATS_INSTALL'))
@@ -17,12 +17,17 @@ if (function_exists('set_time_limit') && !ini_get('safe_mode'))
 
 $Error = FALSE;
 
-if (isset($_POST['AdminPass']) && isset($_POST['RepeatPassword']))
+if (isset($_POST['RootPassword']) && isset($_POST['RepeatPassword']))
 {
-	if ($_POST['AdminPass'] == $_POST['RepeatPassword'])
+	if ($_POST['RootPassword'] == $_POST['RepeatPassword'])
 	{
-		$_SESSION[EstatsCore::session()]['passlength'] = strlen($_POST['AdminPass']);
-		$_SESSION[EstatsCore::session()]['password'] = md5($_POST['AdminPass']);
+		$_SESSION[EstatsCore::session()]['passlength'] = strlen($_POST['RootPassword']);
+		$_SESSION[EstatsCore::session()]['password'] = md5($_POST['RootPassword']);
+
+		if ($_SESSION[EstatsCore::session()]['passlength'] < 5)
+		{
+			EstatsGUI::notify(EstatsLocale::translate('Administrator password has less than five characters, you should choose longer password for greater security!'), 'warning');
+		}
 	}
 	else
 	{
@@ -30,7 +35,19 @@ if (isset($_POST['AdminPass']) && isset($_POST['RepeatPassword']))
 	}
 }
 
-if (isset($_POST['DatabaseDriver']) && !isset($_POST['Execute']) && isset($_SESSION[EstatsCore::session()]['password']))
+if (isset($_POST['Email']))
+{
+	if (!empty($_POST['Email']) && preg_match('#\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b#i', $_POST['Email']))
+	{
+		$_SESSION[EstatsCore::session()]['email'] = $_POST['Email'];
+	}
+	else
+	{
+		EstatsGUI::notify(EstatsLocale::translate('Invalid email address!'), 'error');
+	}
+}
+
+if (isset($_POST['DatabaseDriver']) && !isset($_POST['Execute']) && isset($_SESSION[EstatsCore::session()]['password']) && isset($_SESSION[EstatsCore::session()]['email']))
 {
 	$Step = 2;
 
@@ -49,11 +66,6 @@ if (isset($_POST['DatabaseDriver']) && !isset($_POST['Execute']) && isset($_SESS
 		{
 			EstatsGUI::notify(EstatsLocale::translate('This database module is not supported on this server!<br />
 Continuation of installation can cause unexpected results!'), 'error');
-		}
-
-		if ($_SESSION[EstatsCore::session()]['passlength'] < 5)
-		{
-			EstatsGUI::notify(EstatsLocale::translate('Administrator password has less than five characters, you should choose longer password for greater security!'), 'warning');
 		}
 
 		if (isset($_POST['TestConnection']))
@@ -81,8 +93,6 @@ Continuation of installation can cause unexpected results!'), 'error');
 
 		$OptionSelects = array(
 	'PathMode' => array('GET', 'PATH_INFO', 'Rewrite'),
-	'TimeCollectFrequency' => array('yearly', 'monthly', 'daily', 'hourly', 'none'),
-	'DataCollectFrequency' => array('yearly', 'monthly', 'daily', 'hourly', 'none')
 	);
 		$OptionsNames = array(
 	'databasehost' => EstatsLocale::translate('Database host'),
@@ -93,11 +103,9 @@ Continuation of installation can cause unexpected results!'), 'error');
 	'databasename' => EstatsLocale::translate('Database name'),
 	'databaseprefix' => EstatsLocale::translate('Database tables prefix'),
 	'persistentconnection' => EstatsLocale::translate('Use persistent connection with database'),
-	'datadir' => EstatsLocale::translate('Data directory'),
+	'datadirectory' => EstatsLocale::translate('Data directory'),
 	'gzip' => EstatsLocale::translate('Use gzip compression'),
 	'overwrite' => EstatsLocale::translate('Overwrite existing tables (if they exist with the same name already)'),
-	'timecollectfrequency' => EstatsLocale::translate('Frequency of data collecting for time statistics'),
-	'datacollectfrequency' => EstatsLocale::translate('Frequency of data collecting for other data'),
 	'pathmode' => EstatsLocale::translate('Mode of passing data in the path'),
 	'graphicsenabled' => EstatsLocale::translate('Enable generation of maps and graphical charts (<em>GD</em> extension)'),
 	'logfile' => EstatsLocale::translate('Log events to text file'),
@@ -108,9 +116,7 @@ Continuation of installation can cause unexpected results!'), 'error');
 	'Gzip' => array(FALSE, EstatsGUI::FIELD_BOOLEAN),
 	'GraphicsEnabled' => array(TRUE, EstatsGUI::FIELD_BOOLEAN),
 	'LogFile' => array(FALSE, EstatsGUI::FIELD_BOOLEAN),
-	'DataDir' => array('data/', EstatsGUI::FIELD_VALUE),
-	'TimeCollectFrequency' => array('hourly', EstatsGUI::FIELD_SELECT),
-	'DataCollectFrequency' => array('monthly', EstatsGUI::FIELD_SELECT),
+	'DataDirectory' => array('data/', EstatsGUI::FIELD_VALUE),
 	'PathMode' => array('hourly', EstatsGUI::FIELD_SELECT)
 	));
 
@@ -192,46 +198,33 @@ Continuation of installation can cause unexpected results!'), 'error');
 		else
 		{
 			$Configuration = EstatsCore::loadData('share/data/configuration.ini');
-			$Configuration['Core']['CollectedFrom'] = $_SERVER['REQUEST_TIME'];
-			$Configuration['Core']['UniqueID'] = md5(uniqid(mt_rand(0, 1000000000)));
-			$Configuration['Core']['Version'] = ESTATS_VERSIONSTRING;
-			$Configuration['Core']['CollectFrequency']['time'] = $_POST['TimeCollectFrequency'];
-			$Configuration['Core']['LastBackup'] = 0;
-			$Configuration['Core']['StatsEnabled'] = 1;
-			$Configuration['GUI']['EditMode'] = 1;
-			$Configuration['GUI']['Maintenance'] = 0;
-			$Configuration['GUI']['LastCheck'] = date('Ymd');
-			$Configuration['GUI']['LastClean'] = $_SERVER['REQUEST_TIME'];
-			$Configuration['GUI']['Header'] = str_replace('\r\n', "\r\n", $Configuration['GUI']['Header']['value']);
-			$Configuration['GUI']['AdminPass'] = $_SESSION[EstatsCore::session()]['password'];
-			$Configuration['GUI']['Pass'] = '';
-
-			$_SESSION[md5('estats_'.substr($Configuration['Core']['UniqueID'], 0, 10))]['password'] = $_SESSION[EstatsCore::session()]['password'];
-
-			foreach ($Configuration['Core'] as $Key => $Value)
-			{
-				if (strstr($Key, 'CollectFrequency'))
-				{
-					$Configuration['Core'][$Key] = $_POST['DataCollectFrequency'];
-				}
-			}
+			$Configuration = array_merge($Configuration['Core'], $Configuration['GUI']);
+			$Configuration['CollectedFrom'] = $_SERVER['REQUEST_TIME'];
+			$Configuration['UniqueID'] = md5(uniqid(mt_rand(0, 1000000000)));
+			$Configuration['Version'] = ESTATS_VERSIONSTRING;
+			$Configuration['LastBackup'] = 0;
+			$Configuration['StatsEnabled'] = 1;
+			$Configuration['Maintenance'] = 0;
+			$Configuration['LastCheck'] = date('Ymd');
+			$Configuration['LastClean'] = $_SERVER['REQUEST_TIME'];
+			$Configuration['Header'] = str_replace('\r\n', "\r\n", $Configuration['Header']['value']);
 
 			if ($_POST['PathMode'] == 1)
 			{
-				$Configuration['GUI']['Path|mode'] = 1;
-				$Configuration['GUI']['Path|prefix'] = 'index.php/';
-				$Configuration['GUI']['Path|separator'] = '?';
+				$Configuration['Path/mode'] = 1;
+				$Configuration['Path/prefix'] = 'index.php/';
+				$Configuration['Path/separator'] = '?';
 			}
 			else if ($_POST['PathMode'] == 2)
 			{
-				$Configuration['GUI']['Path|prefix'] = '';
-				$Configuration['GUI']['Path|suffix'] = '/';
+				$Configuration['Path/prefix'] = '';
+				$Configuration['Path/suffix'] = '/';
 			}
 
 			$Security = uniqid(mt_rand(0, 999));
-			$DataDir = $_POST['DataDir'];
-			$Schema = EstatsCore::loadData('share/data/database.ini');
+			$DataDirectory = $_POST['DataDirectory'];
 			$ExistingTables = array();
+			$Schema = EstatsCore::loadData('share/data/database.ini');
 
 			foreach ($Schema as $Table => $Structure)
 			{
@@ -256,16 +249,21 @@ Continuation of installation can cause unexpected results!'), 'error');
 			}
 			else
 			{
-				foreach ($Configuration as $Group => $Value)
+				if (!$Driver->insertData('users', array('id' => 1, 'email' => $_SESSION[EstatsCore::session()]['email'], 'password' => $_SESSION[EstatsCore::session()]['password'], 'level' => 3)))
 				{
-					$Mode = (int) ($Group != 'Core');
+					$Errors['DatabaseStructure'] = TRUE;
+				}
 
-					foreach ($Value as $Option => $Value)
+				if (!$Driver->insertData('statistics', array('id' => 1, 'key' => md5(uniqid(mt_rand(0, 999))), 'user' => 1)))
+				{
+					$Errors['DatabaseStructure'] = TRUE;
+				}
+
+				foreach ($Configuration as $Key => $Value)
+				{
+					if (!$Driver->insertData('configuration', array('statistics' => 1, 'key' => $Key, 'value' => (is_array($Value)?$Value['value']:$Value))))
 					{
-						if (!$Driver->insertData('configuration', array('name' => str_replace('/', '|', $Option), 'value' => (is_array($Value)?$Value['value']:$Value), 'mode' => $Mode)))
-						{
-							$Errors['DatabaseStructure'] = TRUE;
-						}
+						$Errors['DatabaseStructure'] = TRUE;
 					}
 				}
 			}
@@ -278,7 +276,7 @@ define(\'ESTATS_DATABASE_PASSWORD\', \''.(isset($_POST['DatabasePassword'])?str_
 define(\'ESTATS_DATABASE_PREFIX\', \''.(isset($_POST['DatabasePrefix'])?str_replace('\'', '\\\'', $_POST['DatabasePrefix']):'').'\');
 define(\'ESTATS_DATABASE_PERSISTENT\', '.(isset($_POST['PersistentConnection'])?'TRUE':'FALSE').');
 define(\'ESTATS_SECURITY\', \''.str_replace('\'', '\\\'', $Security).'\');
-define(\'ESTATS_DATA\', \''.str_replace('\'', '\\\'', $_POST['DataDir']).'\');
+define(\'ESTATS_DATA\', \''.str_replace('\'', '\\\'', $_POST['DataDirectory']).'\');
 define(\'ESTATS_GZIP\', '.(int) isset($_POST['Gzip']).');
 define(\'eStats\', '.(int) $_SERVER['REQUEST_TIME'].');
 define(\'eStatsVersion\', \''.number_format((double) ESTATS_VERSIONSTRING, 1, '.', '').'\');
@@ -299,7 +297,7 @@ define(\'eStatsVersion\', \''.number_format((double) ESTATS_VERSIONSTRING, 1, '.
 
 				if (isset($_POST['LogFile']))
 				{
-					file_put_contents($DataDir.'estats_'.$Security.'.log', '
+					file_put_contents($DataDirectory.'estats_'.$Security.'.log', '
 '.$_SERVER['REQUEST_TIME'].' ('.date('Y-m-d H:i:s').'): eStats was installed (Version '.ESTATS_VERSIONSTRING.')');
 				}
 
@@ -314,6 +312,10 @@ define(\'eStatsVersion\', \''.number_format((double) ESTATS_VERSIONSTRING, 1, '.
 					EstatsGUI::notify(EstatsLocale::translate('Configuration file saved successfully.'), 'success');
 				}
 			}
+
+			$Session = md5('estats_'.substr($Configuration['UniqueID'], 0, 10));
+			$_SESSION[$Session]['password'] = $_SESSION[EstatsCore::session()]['password'];
+			$_SESSION[$Session]['email'] = $_SESSION[EstatsCore::session()]['email'];
 
 			EstatsTheme::add('page', '<h3>
 {heading-start}'.EstatsLocale::translate('End of installation').'{heading-end}
@@ -543,7 +545,15 @@ After you fill all fields click <em>Continue</em> button to configure the script
 ':'').'<p>
 <label>
 <span>
-<input type="password" name="AdminPass" tabindex="'.EstatsGUI::tabindex().'" />
+<input name="Email" tabindex="'.EstatsGUI::tabindex().'" />
+</span>
+'.EstatsLocale::translate('Administrator email').':
+</label>
+</p>
+<p>
+<label>
+<span>
+<input type="password" name="RootPassword" tabindex="'.EstatsGUI::tabindex().'" />
 </span>
 '.EstatsLocale::translate('Administrator password').':
 </label>

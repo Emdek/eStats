@@ -483,15 +483,15 @@ class EstatsGroup
 		$Information = '';
 		$FileName = $Group.'-'.$Page.($Suffix?'-'.$Suffix:'');
 
-		if (EstatsCache::status($FileName, EstatsCore::option('Cache|others')))
+		if (EstatsCache::status($FileName, EstatsCore::option('Cache/others')))
 		{
 			if (ESTATS_USERLEVEL > 1)
 			{
-				$Information.= (EstatsCore::option('GroupAmount|'.$ID)?'':EstatsGUI::notificationWidget(EstatsLocale::translate('This group is disabled!'), 'warning')).((!in_array($ID, array('browser-versions', 'operatingsystem-versions', 'cities', 'countries', 'regions', 'continents')) && EstatsCore::option('CollectFrequency|'.$ID) == 'disabled')?EstatsGUI::notificationWidget(EstatsLocale::translate('Data collecting for this group was disabled!'), 'warning'):'');
+				$Information.= (EstatsCore::option('GroupAmount/'.$ID)?'':EstatsGUI::notificationWidget(EstatsLocale::translate('This group is disabled!'), 'warning')).((!in_array($ID, array('browser-versions', 'operatingsystem-versions', 'cities', 'countries', 'regions', 'continents')) && EstatsCore::option('CollectFrequency/'.$ID) == 'disabled')?EstatsGUI::notificationWidget(EstatsLocale::translate('Data collecting for this group was disabled!'), 'warning'):'');
 			}
 
-			$Amount = self::selectAmount($Group, EstatsCore::option('GroupAmount|'.$ID), $Range[0], $Range[1]);
-			$PagesAmount = ceil($Amount / EstatsCore::option('GroupAmount|'.$ID));
+			$Amount = self::selectAmount($Group, EstatsCore::option('GroupAmount/'.$ID), $Range[0], $Range[1]);
+			$PagesAmount = ceil($Amount / EstatsCore::option('GroupAmount/'.$ID));
 
 			if ($Page < 1 || $Page > $PagesAmount)
 			{
@@ -499,7 +499,7 @@ class EstatsGroup
 			}
 
 			$Data = array(
-	'data' => self::selectData($Group, EstatsCore::option('GroupAmount|'.$ID), (($Page - 1) * EstatsCore::option('GroupAmount|'.$ID)), $Range[0], $Range[1]),
+	'data' => self::selectData($Group, EstatsCore::option('GroupAmount/'.$ID), (($Page - 1) * EstatsCore::option('GroupAmount/'.$ID)), $Range[0], $Range[1]),
 	'amount' => $Amount,
 	'sum_current' => self::selectSum($Group, $Range[0], $Range[1]),
 	'sum_before' => ((EstatsCore::option('AmountDifferences') && $Date[0])?self::selectSum($Group, ($Range[0] -($Range[1] - $Range[0])), $Range[0]):0),
@@ -515,7 +515,7 @@ class EstatsGroup
 
 			if (isset($Data['amount']) && $Data['amount'])
 			{
-				$PagesAmount = ceil($Data['amount'] / EstatsCore::option('GroupAmount|'.$ID));
+				$PagesAmount = ceil($Data['amount'] / EstatsCore::option('GroupAmount/'.$ID));
 				$Information.= EstatsGUI::notificationWidget(sprintf(EstatsLocale::translate('Data from <em>cache</em>, refreshed: %s.'), date('d.m.Y H:i:s', EstatsCache::timestamp($FileName))), 'information');
 			}
 			else
@@ -524,7 +524,7 @@ class EstatsGroup
 			}
 		}
 
-		if (!isset($Data['amount']) || !$Data['amount'] || !EstatsCore::option('GroupAmount|'.$ID))
+		if (!isset($Data['amount']) || !$Data['amount'] || !EstatsCore::option('GroupAmount/'.$ID))
 		{
 			$Information.= EstatsGUI::notificationWidget(EstatsLocale::translate('No data to display!'), 'error');
 		}
@@ -539,7 +539,7 @@ class EstatsGroup
 		}
 
 		EstatsTheme::add('group_chart', ($Extended && isset($Data['amount']) && $Data['amount'] && EstatsGraphics::isAvailable() && $Page == 1));
-		EstatsTheme::add('group_'.$ID.'_information', (EstatsCore::option('GroupAmount|'.$ID) && $Data['amount'] > EstatsCore::option('GroupAmount|'.$ID)));
+		EstatsTheme::add('group_'.$ID.'_information', (EstatsCore::option('GroupAmount/'.$ID) && $Data['amount'] > EstatsCore::option('GroupAmount/'.$ID)));
 		EstatsTheme::add('group_difference', (EstatsCore::option('AmountDifferences') && $Date[0]));
 
 		if ($Extended)
@@ -552,7 +552,7 @@ class EstatsGroup
 	'type' => 'chart',
 	'chart' => 'pie',
 	'diagram' => &$ID,
-	'cache' => EstatsCore::option('Cache|others'),
+	'cache' => EstatsCore::option('Cache/others'),
 	'data' => &$Data,
 	);
 			}
@@ -642,7 +642,7 @@ class EstatsGroup
 	'diagram' => &$ID,
 	'data' => &$DataPeriod,
 	'summary' => $ChartSummary,
-	'cache' => EstatsCore::option('Cache|others'),
+	'cache' => EstatsCore::option('Cache/others'),
 	'join' => 0
 	);
 
@@ -769,7 +769,7 @@ class EstatsGroup
 			$Icon = EstatsGUI::iconPath($Name, $ID);
 			$Contents.= EstatsTheme::parse(EstatsTheme::get('group-row'), array(
 	'title' => str_replace('{', '&#123;', htmlspecialchars($String)),
-	'number' => (++$Number + (($Page - 1) * EstatsCore::option('GroupAmount|'.$ID))),
+	'number' => (++$Number + (($Page - 1) * EstatsCore::option('GroupAmount/'.$ID))),
 	'icon' => ($Icon?EstatsGUI::iconTag($Icon, $String).'
 ':''),
 	'value' => ($Address?'<a href="'.htmlspecialchars($Address).'" tabindex="'.EstatsGUI::tabindex().'" title="'.htmlspecialchars($String).'" rel="nofollow">
@@ -784,7 +784,7 @@ class EstatsGroup
 	));
 		}
 
-		if ($Data['sum_current'] && EstatsCore::option('GroupAmount|'.$ID))
+		if ($Data['sum_current'] && EstatsCore::option('GroupAmount/'.$ID))
 		{
 			$Difference = EstatsGUI::formatDifference($Data['sum_current'], $Data['sum_before']);
 			$Summary = EstatsTheme::parse(EstatsTheme::get('group-amount'), array(
@@ -800,8 +800,8 @@ class EstatsGroup
 
 		return EstatsTheme::parse(EstatsTheme::get('group'), array(
 	'amount' => (int) $Data['amount'],
-	'displayed' => (int) ((EstatsCore::option('GroupAmount|'.$ID) > $Data['amount'])?$Data['amount']:EstatsCore::option('GroupAmount|'.$ID)),
-	'limit' => (int) EstatsCore::option('GroupAmount|'.$ID),
+	'displayed' => (int) ((EstatsCore::option('GroupAmount/'.$ID) > $Data['amount'])?$Data['amount']:EstatsCore::option('GroupAmount/'.$ID)),
+	'limit' => (int) EstatsCore::option('GroupAmount/'.$ID),
 	'title' => $Title,
 	'link' => ($Link?str_replace('{date}', '{period}', $Link):''),
 	'links' => (($PagesAmount > 1)?EstatsGUI::linksWidget($Page, $PagesAmount, str_replace('{date}', '{period}/{page}', $Link)):''),

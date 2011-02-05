@@ -47,12 +47,12 @@ if (!$ShowDetails)
 
 	$Where = ($ShowRobots?NULL:array(EstatsDriver::OPERATOR_GROUPING_START, array(EstatsDriver::ELEMENT_OPERATION, array('robot', EstatsDriver::OPERATOR_EQUAL, '')), EstatsDriver::OPERATOR_OR, array(EstatsDriver::ELEMENT_OPERATION, array('robot', EstatsDriver::OPERATOR_EQUAL, '0')), EstatsDriver::OPERATOR_GROUPING_END));
 	$Amount = EstatsCore::driver()->selectAmount('visitors', $Where);
-	$PagesAmount = ceil($Amount / EstatsCore::option('Visits|amount'));
+	$PagesAmount = ceil($Amount / EstatsCore::option('Visits/amount'));
 
-	if ($PagesAmount > EstatsCore::option('Visits|maxpages') && ESTATS_USERLEVEL < 2)
+	if ($PagesAmount > EstatsCore::option('Visits/maxpages') && ESTATS_USERLEVEL < 2)
 	{
-		$Amount = (EstatsCore::option('Visits|amount') * EstatsCore::option('Visits|maxpages'));
-		$PagesAmount = EstatsCore::option('Visits|maxpages');
+		$Amount = (EstatsCore::option('Visits/amount') * EstatsCore::option('Visits/maxpages'));
+		$PagesAmount = EstatsCore::option('Visits/maxpages');
 	}
 
 	if ($Page < 1 || $Page > $PagesAmount)
@@ -62,9 +62,9 @@ if (!$ShowDetails)
 
 	$FileName = 'visits-'.$Page.($ShowRobots?'':'-norobots');
 
-	if (EstatsCache::status($FileName, EstatsCore::option('Cache|visits')))
+	if (EstatsCache::status($FileName, EstatsCore::option('Cache/visits')))
 	{
-		$Data = EstatsCore::driver()->selectData(array('visitors'), array('id', 'lastvisit'), $Where, EstatsCore::option('Visits|amount'), (EstatsCore::option('Visits|amount') * ($Page - 1)), array('lastvisit' => FALSE));
+		$Data = EstatsCore::driver()->selectData(array('visitors'), array('id', 'lastvisit'), $Where, EstatsCore::option('Visits/amount'), (EstatsCore::option('Visits/amount') * ($Page - 1)), array('lastvisit' => FALSE));
 
 		EstatsCache::save($FileName, $Data);
 		EstatsTheme::add('cacheinformation', '');
@@ -319,12 +319,12 @@ if ($ShowDetails)
 
 	EstatsTheme::add('title', sprintf(EstatsLocale::translate('Visit details #%d'), $ShowID));
 
-	if ($Page < 1 || $Page > ceil($Data[0]['visitsamount'] / EstatsCore::option('Visits|detailsamount')))
+	if ($Page < 1 || $Page > ceil($Data[0]['visitsamount'] / EstatsCore::option('Visits/detailsamount')))
 	{
 		$Page = 1;
 	}
 
-	$Sites = EstatsCore::driver()->selectData(array('details'), array('time', 'address', array(EstatsDriver::ELEMENT_SUBQUERY, array(array('sites'), array('sites.name'), array(array(EstatsDriver::ELEMENT_OPERATION, array('sites.address', EstatsDriver::OPERATOR_EQUAL, 'details.address')))), 'title')), $Where, EstatsCore::option('Visits|detailsamount'), (EstatsCore::option('Visits|detailsamount') * ($Page - 1)), array('time' => FALSE));
+	$Sites = EstatsCore::driver()->selectData(array('details'), array('time', 'address', array(EstatsDriver::ELEMENT_SUBQUERY, array(array('sites'), array('sites.name'), array(array(EstatsDriver::ELEMENT_OPERATION, array('sites.address', EstatsDriver::OPERATOR_EQUAL, 'details.address')))), 'title')), $Where, EstatsCore::option('Visits/detailsamount'), (EstatsCore::option('Visits/detailsamount') * ($Page - 1)), array('time' => FALSE));
 
 	EstatsTheme::add('rows', '');
 
@@ -333,14 +333,14 @@ if ($ShowDetails)
 		$Title = htmlspecialchars($Sites[$i][empty($Sites[$i]['title'])?'address':'title']);
 
 		EstatsTheme::append('rows', EstatsTheme::parse(EstatsTheme::get('details-row'), array(
-	'num' => ($Data[0]['visitsamount'] - $i - (($Page - 1) * EstatsCore::option('Visits|detailsamount'))),
+	'num' => ($Data[0]['visitsamount'] - $i - (($Page - 1) * EstatsCore::option('Visits/detailsamount'))),
 	'date' => date('d.m.Y H:i:s', (is_numeric($Sites[$i]['time'])?$Sites[$i]['time']:strtotime($Sites[$i]['time']))),
 	'title' => $Title,
 	'link' => '<a href="'.htmlspecialchars($Sites[$i]['address']).'" tabindex="'.EstatsGUI::tabindex().'">'.EstatsGUI::cutString($Title, EstatsTheme::option('DetailsRowValueLength')).'</a>'
 	)));
 	}
 
-	$PagesAmount = ceil($Data[0]['visitsamount'] / EstatsCore::option('Visits|detailsamount'));
+	$PagesAmount = ceil($Data[0]['visitsamount'] / EstatsCore::option('Visits/detailsamount'));
 
 	if ($PagesAmount > 1)
 	{
@@ -373,7 +373,7 @@ if ($ShowDetails)
 		++$i;
 	}
 
-	EstatsTheme::add('page', str_replace('{rowspan}', (count($Sites) + (($Data[0]['visitsamount'] > EstatsCore::option('Visits|detailsamount'))?3:2) - 1), $Entry));
+	EstatsTheme::add('page', str_replace('{rowspan}', (count($Sites) + (($Data[0]['visitsamount'] > EstatsCore::option('Visits/detailsamount'))?3:2) - 1), $Entry));
 
 	sort($OtherIDs);
 
@@ -403,7 +403,7 @@ else
 	EstatsTheme::add('robotscheckbox', 'tabindex="'.EstatsGUI::tabindex().'"'.($ShowRobots?' checked="checked"':''));
 	EstatsTheme::add('robotsformindex', EstatsGUI::tabindex());
 
-	if ($PagesAmount > 1 && EstatsCore::option('Visits|maxpages') > 1)
+	if ($PagesAmount > 1 && EstatsCore::option('Visits/maxpages') > 1)
 	{
 		EstatsTheme::append('title', ' - '.EstatsLocale::translate('page').' '.$Page.'. '.EstatsLocale::translate('of').' '.$PagesAmount);
 	}

@@ -794,11 +794,9 @@ class EstatsGUI
 
 		for ($i = 0, $c = count($Options); $i < $c; ++$i)
 		{
-			$Options[$i] = str_replace('/', '|', $Options[$i]);
-
 			if ($RestoreDefaults)
 			{
-				$Configuration[$Options[$i]] = str_replace('\r\n', "\r\n", $Defaults[str_replace('|', '/', $Options[$i])]['value']);
+				$Configuration[$Options[$i]] = str_replace('\r\n', "\r\n", $Defaults[$Options[$i]]['value']);
 			}
 			else
 			{

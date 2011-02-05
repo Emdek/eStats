@@ -191,7 +191,7 @@ foreach ($Feeds as $Key => $Value)
 			}
 		}
 
-		if ((EstatsCore::option('CollectFrequency|time') == 'hourly' || $Key != '24hours') && $NewData[$TimeStamp]['time'])
+		if ((EstatsCore::option('CollectFrequency/time') == 'hourly' || $Key != '24hours') && $NewData[$TimeStamp]['time'])
 		{
 			$Content.= '<h2>
 '.EstatsLocale::translate('Time').' ('.EstatsLocale::translate($Titles[$Diagrams[$Key][0]]).')

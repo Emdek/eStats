@@ -12,7 +12,7 @@ if (!defined('eStats'))
 
 if (isset($_POST['SaveConfiguration']) || isset($_POST['Defaults']))
 {
-	EstatsGUI::saveConfiguration(array('Backups|profile', 'Backups|creationinterval', 'Backups|usertables', 'Backups|replacedata'), $_POST, isset($_POST['Defaults']));
+	EstatsGUI::saveConfiguration(array('Backups/profile', 'Backups/creationinterval', 'Backups/usertables', 'Backups/replacedata'), $_POST, isset($_POST['Defaults']));
 	EstatsGUI::notify(EstatsLocale::translate('Configuration saved successfully.'), 'success');
 }
 
@@ -70,7 +70,7 @@ if (isset($_POST['DeleteBackup']))
 
 if (isset($_POST['CreateBackup']))
 {
-	$BackupID = EstatsBackups::create(ESTATS_VERSIONSTRING, (($_POST['Backups|profile'] == 'user')?'manual':$_POST['Backups|profile']), (isset($_POST['Backups|usertables'])?$_POST['Backups|usertables']:array()), isset($_POST['Backups|replacedata']));
+	$BackupID = EstatsBackups::create(ESTATS_VERSIONSTRING, (($_POST['Backups/profile'] == 'user')?'manual':$_POST['Backups/profile']), (isset($_POST['Backups/usertables'])?$_POST['Backups/usertables']:array()), isset($_POST['Backups/replacedata']));
 
 	if ($BackupID)
 	{
@@ -167,7 +167,7 @@ EstatsTheme::add('page', '<h3>
 {heading-start}'.EstatsLocale::translate('Settings').'{heading-end}
 </h3>
 <form action="{selfpath}" method="post">
-'.EstatsGUI::optionRowWidget(EstatsLocale::translate('Backup creation profile'), '', 'Backups|profile', EstatsCore::option('Backups|profile'), EstatsGUI::FIELD_SELECT, $Profiles).EstatsGUI::optionRowWidget(EstatsLocale::translate('Create backups after specified time (s)'), '', 'Backups|creationinterval', EstatsCore::option('Backups|creationinterval')).EstatsGUI::optionRowWidget(EstatsLocale::translate('Tables to archivize'), '', 'Backups|usertables[]', EstatsCore::option('Backups|usertables'), EstatsGUI::FIELD_SELECT, array_keys(EstatsCore::loadData('share/data/database.ini'))).EstatsGUI::optionRowWidget(EstatsLocale::translate('Replace existing data'), '', 'Backups|replacedata', EstatsCore::option('Backups|replacedata'), EstatsGUI::FIELD_BOOLEAN).'<div class="buttons">
+'.EstatsGUI::optionRowWidget(EstatsLocale::translate('Backup creation profile'), '', 'Backups/profile', EstatsCore::option('Backups/profile'), EstatsGUI::FIELD_SELECT, $Profiles).EstatsGUI::optionRowWidget(EstatsLocale::translate('Create backups after specified time (s)'), '', 'Backups/creationinterval', EstatsCore::option('Backups/creationinterval')).EstatsGUI::optionRowWidget(EstatsLocale::translate('Tables to archivize'), '', 'Backups/usertables[]', EstatsCore::option('Backups/usertables'), EstatsGUI::FIELD_SELECT, array_keys(EstatsCore::loadData('share/data/database.ini'))).EstatsGUI::optionRowWidget(EstatsLocale::translate('Replace existing data'), '', 'Backups/replacedata', EstatsCore::option('Backups/replacedata'), EstatsGUI::FIELD_BOOLEAN).'<div class="buttons">
 <input type="submit" onclick="if (!confirm(\''.EstatsLocale::translate('Do you really want to save?').'\')) return false" value="'.EstatsLocale::translate('Save').'" name="SaveConfiguration" tabindex="'.EstatsGUI::tabindex().'" />
 <input type="submit" onclick="if (!confirm(\''.EstatsLocale::translate('Do you really want to restore defaults?').'\')) return false" value="'.EstatsLocale::translate('Defaults').'" name="Defaults" tabindex="'.EstatsGUI::tabindex().'" />
 <input type="reset" value="'.EstatsLocale::translate('Reset').'" tabindex="'.EstatsGUI::tabindex().'" />

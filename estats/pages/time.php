@@ -71,7 +71,7 @@ for ($i = 0, $c = count($Groups['time']); $i < $c; ++$i)
 
 	EstatsTheme::add($Groups['time'][$i], '');
 
-	if ((EstatsCore::option('CollectFrequency|time') != 'hourly' && in_array($Groups['time'][$i], array ('24hours', 'hours'))) || ($Var == 4 && $Groups['time'][$i] !== $Path[2]))
+	if ((EstatsCore::option('CollectFrequency/time') != 'hourly' && in_array($Groups['time'][$i], array ('24hours', 'hours'))) || ($Var == 4 && $Groups['time'][$i] !== $Path[2]))
 	{
 		continue;
 	}
@@ -113,7 +113,7 @@ for ($i = 0, $c = count($Groups['time']); $i < $c; ++$i)
 	$FileName = $Groups['time'][$i].'-'.implode('+', $ViewTypes).'-'.implode('_', $Date).($Compare?'-compare':'');
 	$Data = array(array(), array());
 
-	if (EstatsCache::status($FileName, EstatsCore::option('Cache|time')))
+	if (EstatsCache::status($FileName, EstatsCore::option('Cache/time')))
 	{
 		$Ranges = array(array($ChartInformation['range'][0], $ChartInformation['range'][1]));
 
@@ -253,7 +253,7 @@ for ($i = 0, $c = count($Groups['time']); $i < $c; ++$i)
 	'data' => $Data[0],
 	'summary' => $GraphicsSummary,
 	'mode' => implode ('+', $ViewTypes),
-	'cache' => EstatsCore::option('Cache|time'),
+	'cache' => EstatsCore::option('Cache/time'),
 	'join' => $Popularity
 	);
 	}

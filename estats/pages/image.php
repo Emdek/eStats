@@ -30,7 +30,7 @@ if ($_SESSION[EstatsCore::session()]['imagedata'][$_GET['id']]['type'] == 'map')
 	$MapType = explode('-', $_SESSION[EstatsCore::session()]['imagedata'][$_GET['id']]['map']);
 	$MapID = 'map-'.$MapType[0].(($MapType[0] == 'world')?'-'.$MapType[1]:'').'-'.$_SESSION[EstatsCore::session()]['locale'];
 
-	EstatsGraphics::cacheImage($MapID, EstatsCore::option('Cache|others'));
+	EstatsGraphics::cacheImage($MapID, EstatsCore::option('Cache/others'));
 	EstatsGraphics::map($MapType, $_SESSION[EstatsCore::session()]['imagedata'][$_GET['id']]['data'], $MapID);
 }
 
@@ -40,7 +40,7 @@ if ($_SESSION[EstatsCore::session()]['imagedata'][$_GET['id']]['type'] == 'chart
 
 	if ($_SESSION[EstatsCore::session()]['imagedata'][$_GET['id']]['chart'] == 'pie')
 	{
-		EstatsGraphics::cacheImage($MapID, EstatsCore::option('Cache|others'));
+		EstatsGraphics::cacheImage($MapID, EstatsCore::option('Cache/others'));
 		EstatsGraphics::chartPie($_SESSION[EstatsCore::session()]['imagedata'][$_GET['id']]['diagram'], $_SESSION[EstatsCore::session()]['imagedata'][$_GET['id']]['data'], $MapID);
 	}
 
