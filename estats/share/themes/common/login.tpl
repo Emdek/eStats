@@ -2,9 +2,17 @@
 <p>
 <label>
 <span>
+<input name="Email" tabindex="{tabindex}" /><br />
+</span>
+{lang_email}:
+</label>
+</p>
+<p>
+<label>
+<span>
 <input type="password" name="Password" tabindex="{tabindex}" /><br />
 </span>
-{lang_pass}:
+{lang_password}:
 </label>
 </p>
 <p>

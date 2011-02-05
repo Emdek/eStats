@@ -75,7 +75,7 @@ function estats_error_message($Message, $File, $Line, $NotFile = FALSE, $Warning
 <h1>
 Critical error!
 </h1>
-<strong>'.($NotFile?$Error:'Could not load file <em>'.$Error.'</em>!').' (<em>'.$File.':'.$Line.'</em>)</strong>
+<strong>'.($NotFile?$Message:'Could not load file <em>'.$Message.'</em>!').' (<em>'.$File.':'.$Line.'</em>)</strong>
 '.($_SESSION['ERRORS']?'<h2>Debug ('.count($_SESSION['ERRORS']).' errors)</h2>
 '.implode('', $_SESSION['ERRORS']):'').'
 </body>
@@ -171,7 +171,7 @@ if (!defined('ESTATS_INSTALL'))
 		estats_error_message('plugins/drivers/'.ESTATS_DATABASE_DRIVER.'/plugin.php', __FILE__, __LINE__);
 	}
 
-	EstatsCore::init(0, ESTATS_SECURITY, './', ESTATS_DATA, ESTATS_DATABASE_DRIVER, ESTATS_DATABASE_PREFIX, ESTATS_DATABASE_CONNECTION, ESTATS_DATABASE_USER, ESTATS_DATABASE_PASSWORD, ESTATS_DATABASE_PERSISTENT);
+	EstatsCore::init(1, ESTATS_SECURITY, './', ESTATS_DATA, ESTATS_DATABASE_DRIVER, ESTATS_DATABASE_PREFIX, ESTATS_DATABASE_CONNECTION, ESTATS_DATABASE_USER, ESTATS_DATABASE_PASSWORD, ESTATS_DATABASE_PERSISTENT);
 
 	if (EstatsCore::option('Version') != ESTATS_VERSIONSTRING)
 	{
@@ -279,49 +279,110 @@ if (isset($_POST['locale']))
 	die(header('Location: '.EstatsTheme::get('datapath').EstatsCore::option('Path/prefix').$_POST['locale'].'/'.implode('/', array_slice($Path, 1)).EstatsCore::option('Path/suffix')));
 }
 
-if (isset($_GET['logout']) && !defined('ESTATS_INSTALL'))
+if (defined('ESTATS_INSTALL'))
 {
-	unset($_SESSION[EstatsCore::session()]['password']);
-
-	EstatsCookie::delete('password');
-
-	die(header('Location: '.$_SERVER['PHP_SELF']));
+	define('ESTATS_USERLEVEL', 0);
 }
-
-if ((!isset($_SESSION[EstatsCore::session()]['password']) || !$_SESSION[EstatsCore::session()]['password']) && EstatsCookie::exists('password') && !defined('ESTATS_INSTALL'))
+else
 {
-	if (EstatsCookie::get('password') == md5(EstatsCore::option('Pass').EstatsCore::option('UniqueID')))
+	if (isset($_GET['logout']))
 	{
-		$_SESSION[EstatsCore::session()]['password'] = EstatsCore::option('Pass');
+		unset($_SESSION[EstatsCore::session()]['email']);
+		unset($_SESSION[EstatsCore::session()]['password']);
+
+		EstatsCookie::delete('email');
+		EstatsCookie::delete('password');
+
+		die(header('Location: '.$_SERVER['PHP_SELF']));
 	}
 
-	if (EstatsCookie::get('password') == md5(EstatsCore::option('AdminPass').EstatsCore::option('UniqueID')))
+	if (empty($_SESSION[EstatsCore::session()]['password']) && EstatsCookie::exists('password'))
 	{
-		if (!isset($_SESSION[EstatsCore::session()]['password']) || $_SESSION[EstatsCore::session()]['password'] != EstatsCore::option('AdminPass'))
+		if (!EstatsCookie::exists('email') && EstatsCookie::get('password') == md5(EstatsCore::option('Pass').EstatsCore::option('UniqueID')))
 		{
-			EstatsCore::logEvent(EstatsCore::EVENT_ADMINISTRATORLOGGEDIN, 'IP: '.EstatsCore::IP());
+			$_SESSION[EstatsCore::session()]['password'] = EstatsCore::option('Pass');
+
+			EstatsCookie::set('password', md5($_SESSION[EstatsCore::session()]['password'].EstatsCore::option('UniqueID')), 1209600);
 		}
 
-		$_SESSION[EstatsCore::session()]['password'] = EstatsCore::option('AdminPass');
+		if (EstatsCookie::exists('email'))
+		{
+			$Data = EstatsCore::driver()->selectRow('users', NULL, array(array(EstatsDriver::ELEMENT_OPERATION, array('email', EstatsDriver::OPERATOR_EQUAL, array(EstatsDriver::ELEMENT_VALUE, EstatsCookie::get('email'))))));
+
+			if ($Data && EstatsCookie::get('password') == md5($Data['password'].EstatsCore::option('UniqueID')))
+			{
+				if (!isset($_SESSION[EstatsCore::session()]['password']) || $_SESSION[EstatsCore::session()]['password'] != $Data['password'])
+				{
+					EstatsCore::logEvent((($Data['level'] < 3)?EstatsCore::EVENT_USERLOGGEDIN:EstatsCore::EVENT_ADMINISTRATORLOGGEDIN), 'IP: '.EstatsCore::IP());
+				}
+
+				$_SESSION[EstatsCore::session()]['email'] = $Data['email'];
+				$_SESSION[EstatsCore::session()]['password'] = $Data['password'];
+
+				EstatsCookie::set('email', $_SESSION[EstatsCore::session()]['email'], 1209600);
+				EstatsCookie::set('password', md5($_SESSION[EstatsCore::session()]['password'].EstatsCore::option('UniqueID')), 1209600);
+			}
+		}
+	}
+
+	if (!empty($_POST['Email']))
+	{
+		$_SESSION[EstatsCore::session()]['email'] = $_POST['Email'];
+
+		if (isset($_POST['Remember']))
+		{
+			EstatsCookie::set('email', $_POST['Email'], 1209600);
+		}
+	}
+
+	if (isset($_POST['Password']))
+	{
+		$_SESSION[EstatsCore::session()]['password'] = md5($_POST['Password']);
+
+		if (isset($_POST['Remember']))
+		{
+			EstatsCookie::set('password', md5($_SESSION[EstatsCore::session()]['password'].EstatsCore::option('UniqueID')), 1209600);
+		}
 	}
 
 	if (isset($_SESSION[EstatsCore::session()]['password']))
 	{
-		EstatsCookie::set('password', md5($_SESSION[EstatsCore::session()]['password'].EstatsCore::option('UniqueID')), 1209600);
+		if (empty($_SESSION[EstatsCore::session()]['email']))
+		{
+			define('ESTATS_USERLEVEL', (($_SESSION[EstatsCore::session()]['password'] == EstatsCore::option('Pass'))?1:0));
+		}
+		else
+		{
+			$Data = EstatsCore::driver()->selectRow('users', NULL, array(array(EstatsDriver::ELEMENT_OPERATION, array('email', EstatsDriver::OPERATOR_EQUAL, array(EstatsDriver::ELEMENT_VALUE, EstatsCookie::get('email'))))));
+
+			if (!empty($Data['password']) && $_SESSION[EstatsCore::session()]['password'] == $Data['password'])
+			{
+				define('ESTATS_USERLEVEL', $Data['level']);
+			}
+			else
+			{
+				define('ESTATS_USERLEVEL', 0);
+			}
+		}
 	}
-}
-
-if (isset($_POST['Password']) && !defined('ESTATS_INSTALL'))
-{
-	$_SESSION[EstatsCore::session()]['password'] = md5($_POST['Password']);
-
-	if (isset($_POST['Remember']))
+	else
 	{
-		EstatsCookie::set('password', md5($_SESSION[EstatsCore::session()]['password'].EstatsCore::option('UniqueID')), 1209600);
+		define('ESTATS_USERLEVEL', 0);
+	}
+
+	if (isset($_POST['Password']))
+	{
+		if (ESTATS_USERLEVEL)
+		{
+			EstatsCore::logEvent(((ESTATS_USERLEVEL < 3)?EstatsCore::EVENT_USERLOGGEDIN:EstatsCore::EVENT_ADMINISTRATORLOGGEDIN), 'IP: '.EstatsCore::IP());
+		}
+		else
+		{
+			EstatsCore::logEvent((($Path[1] == 'tools')?EstatsCore::EVENT_FAILEDADMISNISTRATORLOGIN:EstatsCore::EVENT_FAILEDUSERLOGIN), 'IP: '.EstatsCore::IP());
+			EstatsGUI::notify(EstatsLocale::translate('Wrong password or email!'), 'error');
+		}
 	}
 }
-
-define('ESTATS_USERLEVEL', (isset($_SESSION[EstatsCore::session()]['password'])?($_SESSION[EstatsCore::session()]['password'] == EstatsCore::option('AdminPass'))?2:(($_SESSION[EstatsCore::session()]['password'] == EstatsCore::option('Pass'))?1:0):0));
 
 EstatsTheme::add('meta', '');
 EstatsTheme::add('selectmap', '');
@@ -1045,16 +1106,11 @@ else
 	}
 	else if ((EstatsCore::option('Pass') && !ESTATS_USERLEVEL) || (ESTATS_USERLEVEL < 2 && ($Path[1] === 'login' || ($Path[1] === 'tools' && (!isset($Path[2]) || EstatsGUI::toolLevel($Path[2]) > ESTATS_USERLEVEL)))))
 	{
-		if (isset($_POST['Password']) && !ESTATS_USERLEVEL)
-		{
-			EstatsCore::logEvent((($Path[1] == 'tools')?EstatsCore::EVENT_FAILEDADMISNISTRATORLOGIN:EstatsCore::EVENT_FAILEDUSERLOGIN), 'IP: '.EstatsCore::IP());
-			EstatsGUI::notify(EstatsLocale::translate('Wrong password!'), 'error');
-		}
-
 		EstatsTheme::load('login');
 		EstatsTheme::link('login', 'page');
 		EstatsTheme::add('title', EstatsLocale::translate('Login'));
-		EstatsTheme::add('lang_pass', EstatsLocale::translate('Password'));
+		EstatsTheme::add('lang_email', EstatsLocale::translate('Email'));
+		EstatsTheme::add('lang_password', EstatsLocale::translate('Password'));
 		EstatsTheme::add('lang_remember', EstatsLocale::translate('Remember password'));
 		EstatsTheme::add('lang_loginto', EstatsLocale::translate('Log into'));
 	}
@@ -1068,11 +1124,6 @@ else
 	}
 	else
 	{
-		if (isset($_POST['Password']) && ($Path[1] == 'tools' || EstatsCore::option('Pass')))
-		{
-			EstatsCore::logEvent((($Path[1] == 'tools')?EstatsCore::EVENT_ADMINISTRATORLOGGEDIN:EstatsCore::EVENT_USERLOGGEDIN), 'IP: '.EstatsCore::IP());
-		}
-
 		if ($Path[1] == 'tools')
 		{
 			if (EstatsGUI::toolLevel($Path[2]) > ESTATS_USERLEVEL)

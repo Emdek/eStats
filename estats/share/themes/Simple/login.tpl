@@ -1,9 +1,18 @@
 [start:login]<form action="{selfpath}" method="post">
 <div align="center">
-<label for="pass">{lang_pass}</label>:
-<input type="password" name="Password" id="pass" tabindex="{tabindex}"><br>
-<label for="remember">{lang_remember}</label>:
-<input type="checkbox" name="Remember" id="remember" tabindex="{tabindex}"><br>
+<label>
+{lang_email}:
+<input name="Email" tabindex="{tabindex}"><br>
+</label>
+<div align="center">
+<label>
+{lang_password}:
+<input type="password" name="Password" tabindex="{tabindex}"><br>
+</label>
+<label>
+{lang_remember}:
+<input type="checkbox" name="Remember" tabindex="{tabindex}"><br>
+</label>
 <input type="submit" value="{lang_loginto}" tabindex="{tabindex}">
 </div>
 </form>

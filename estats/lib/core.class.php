@@ -215,7 +215,7 @@ class EstatsCore
 		if (EstatsCache::status('configuration', 86400))
 		{
 			$Data = array();
-			$Array = self::$Driver->selectData(array('configuration'), array('name', 'value'));
+			$Array = self::$Driver->selectData(array('configuration'), array('key', 'value'), array(array(EstatsDriver::ELEMENT_OPERATION, array('statistics', EstatsDriver::OPERATOR_EQUAL, array(EstatsDriver::ELEMENT_VALUE, self::$Statistics)))));
 
 			if (count($Array) < 2)
 			{
@@ -224,13 +224,13 @@ class EstatsCore
 
 			for ($i = 0, $c = count($Array); $i < $c; ++$i)
 			{
-				if (in_array($Array[$i]['name'], array('Keywords', 'BlockedIPs', 'IgnoredIPs', 'Referrers', 'Backups/usertables')))
+				if (in_array($Array[$i]['key'], array('Keywords', 'BlockedIPs', 'IgnoredIPs', 'Referrers', 'Backups/usertables')))
 				{
-					self::$Configuration[$Array[$i]['name']] = explode('|', $Array[$i]['value']);
+					self::$Configuration[$Array[$i]['key']] = explode('|', $Array[$i]['value']);
 				}
 				else
 				{
-					self::$Configuration[$Array[$i]['name']] = &$Array[$i]['value'];
+					self::$Configuration[$Array[$i]['key']] = &$Array[$i]['value'];
 				}
 			}
 
