@@ -298,9 +298,9 @@ else
 
 	if (empty($_SESSION[EstatsCore::session()]['password']) && EstatsCookie::exists('password'))
 	{
-		if (!EstatsCookie::exists('email') && EstatsCookie::get('password') == md5(EstatsCore::option('Pass').EstatsCore::option('UniqueID')))
+		if (!EstatsCookie::exists('email') && EstatsCookie::get('password') == md5(EstatsCore::option('AccessPassword').EstatsCore::option('UniqueID')))
 		{
-			$_SESSION[EstatsCore::session()]['password'] = EstatsCore::option('Pass');
+			$_SESSION[EstatsCore::session()]['password'] = EstatsCore::option('AccessPassword');
 
 			EstatsCookie::set('password', md5($_SESSION[EstatsCore::session()]['password'].EstatsCore::option('UniqueID')), 1209600);
 		}
@@ -349,7 +349,7 @@ else
 	{
 		if (empty($_SESSION[EstatsCore::session()]['email']))
 		{
-			define('ESTATS_USERLEVEL', (($_SESSION[EstatsCore::session()]['password'] == EstatsCore::option('Pass'))?1:0));
+			define('ESTATS_USERLEVEL', (($_SESSION[EstatsCore::session()]['password'] == EstatsCore::option('AccessPassword'))?1:0));
 		}
 		else
 		{
@@ -1082,7 +1082,7 @@ else
 		}
 	}
 
-	if (!EstatsCore::option('Pass'))
+	if (!EstatsCore::option('AccessPassword'))
 	{
 		$Modes = array('daily+weekly+monthly', 'daily+monthly', 'daily', 'weekly', 'monthly');
 
@@ -1104,7 +1104,7 @@ else
 		EstatsGUI::notify(EstatsLocale::translate('This IP address was blocked!'), 'error');
 		EstatsTheme::add('title', EstatsLocale::translate('Access denied'));
 	}
-	else if ((EstatsCore::option('Pass') && !ESTATS_USERLEVEL) || (ESTATS_USERLEVEL < 2 && ($Path[1] === 'login' || ($Path[1] === 'tools' && (!isset($Path[2]) || EstatsGUI::toolLevel($Path[2]) > ESTATS_USERLEVEL)))))
+	else if ((EstatsCore::option('AccessPassword') && !ESTATS_USERLEVEL) || (ESTATS_USERLEVEL < 2 && ($Path[1] === 'login' || ($Path[1] === 'tools' && (!isset($Path[2]) || EstatsGUI::toolLevel($Path[2]) > ESTATS_USERLEVEL)))))
 	{
 		EstatsTheme::load('login');
 		EstatsTheme::link('login', 'page');

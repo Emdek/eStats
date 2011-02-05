@@ -204,9 +204,9 @@ else
 	{
 		if (isset($_POST['SaveConfiguration']))
 		{
-			if (isset($_POST['Pass']) && $_POST['Pass'] !== '')
+			if (isset($_POST['AccessPassword']) && $_POST['AccessPassword'] !== '')
 			{
-				$_POST['Pass'] = md5($_POST['Pass']);
+				$_POST['AccessPassword'] = md5($_POST['AccessPassword']);
 			}
 
 			if ($_POST['PathMode'] == 1)
@@ -232,7 +232,7 @@ else
 			}
 		}
 
-		EstatsGUI::saveConfiguration(array('Pass', 'VisitTime', 'StatsEnabled', 'Maintenance', 'LogEnabled', 'CountPhrases', 'Antipixel', 'DefaultTheme', 'Path/mode', 'Path/prefix', 'Path/suffix', 'Path/separator'), $_POST, isset($_POST['Defaults']));
+		EstatsGUI::saveConfiguration(array('AccessPassword', 'VisitTime', 'StatsEnabled', 'Maintenance', 'LogEnabled', 'CountPhrases', 'Antipixel', 'DefaultTheme', 'Path/mode', 'Path/prefix', 'Path/suffix', 'Path/separator'), $_POST, isset($_POST['Defaults']));
 	}
 
 	if (isset($_POST['ChangePassword']))
@@ -297,7 +297,7 @@ else
 ');
 
 	$Options = array(
-	'Pass' => array(EstatsLocale::translate('Password for viewing statistics (leave empty, if you allow free access)'), '', EstatsGUI::FIELD_VALUE),
+	'AccessPassword' => array(EstatsLocale::translate('Password for viewing statistics (leave empty, if you allow free access)'), '', EstatsGUI::FIELD_VALUE),
 	'VisitTime' => array(EstatsLocale::translate('Time after that visit is count again (seconds)'), EstatsCore::option('VisitTime'), EstatsGUI::FIELD_VALUE),
 	'StatsEnabled' => array(EstatsLocale::translate('Enable data collecting'), EstatsCore::option('StatsEnabled'), EstatsGUI::FIELD_BOOLEAN),
 	'Maintenance' => array(EstatsLocale::translate('Enable maintenance mode'), EstatsCore::option('Maintenance'), EstatsGUI::FIELD_BOOLEAN),
@@ -307,7 +307,7 @@ else
 
 	foreach ($Options as $Key => $Value)
 	{
-		EstatsTheme::append('page', EstatsGUI::optionRowWidget($Value[0].(($Key == 'Pass')?' <strong>['.(EstatsCore::option('Pass')?EstatsLocale::translate('Currently enabled'):EstatsLocale::translate('Currently disabled')).']</strong>':''), '', $Key, $Value[1], $Value[2]));
+		EstatsTheme::append('page', EstatsGUI::optionRowWidget($Value[0].(($Key == 'AccessPassword')?' <strong>['.(EstatsCore::option('AccessPassword')?EstatsLocale::translate('Currently enabled'):EstatsLocale::translate('Currently disabled')).']</strong>':''), '', $Key, $Value[1], $Value[2]));
 	}
 
 	$AntipixelSelect = $CurrentDirectory = '';

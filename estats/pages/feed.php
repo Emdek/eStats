@@ -2,10 +2,10 @@
 /**
  * Feed for eStats
  * @author Emdek <http://emdek.pl>
- * @version 4.9.50
+ * @version 5.0.00
  */
 
-if (!defined('eStats') || EstatsCore::option('Pass') || !include ('./lib/group.class.php'))
+if (!defined('eStats') || EstatsCore::option('AccessPassword') || !include ('./lib/group.class.php'))
 {
 	die();
 }
