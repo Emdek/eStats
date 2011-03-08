@@ -67,7 +67,7 @@ class EstatsGeolocation
 			$Data = (isset($Result[0])?$Result[0]:array());
 		}
 
-		if (!$Data || $Data['continent_code'] == '--')
+		if (!$Data || empty($Data['continent_code']) || $Data['continent_code'] == '--')
 		{
 			return array();
 		}
