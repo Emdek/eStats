@@ -118,10 +118,10 @@ class EstatsGraphics
  * Generates pie chart
  * @param string ID
  * @param array Data
- * @param string ID
+ * @param string Category
  */
 
-	static function chartPie($ID, $Data, $ID)
+	static function chartPie($ID, $Data, $Category)
 	{
 		arsort($Data['data']);
 
@@ -233,7 +233,7 @@ class EstatsGraphics
 
 			if (isset($Names[$i]))
 			{
-				$Icon = EstatsGUI::iconPath($Names[$i], $ID);
+				$Icon = EstatsGUI::iconPath($Names[$i], $Category);
 
 				if ($Icon && is_file('./'.$Icon))
 				{
@@ -269,12 +269,11 @@ class EstatsGraphics
  * @param string ID
  * @param array Data
  * @param array Summary
- * @param string ID
  * @param string Type
  * @param boolean Join
  */
 
-	static function chartTime($ID, $Data, $Summary, $ID, $Type, $Join)
+	static function chartTime($ID, $Data, $Summary, $Type, $Join)
 	{
 		if (!$Summary['maxall'])
 		{
@@ -395,15 +394,15 @@ class EstatsGraphics
 
 /**
  * Generates map
- * @param string MapType
- * @param array Data
  * @param string ID
+ * @param array Data
+ * @param array Type
  */
 
-	static function map($MapType, $Data, $ID)
+	static function map($ID, $Data, $Type)
 	{
 		$Continents = isset($Data['continents']);
-		$Map = EstatsCore::loadData('share/maps/'.$MapType[0].'/map.ini', TRUE);
+		$Map = EstatsCore::loadData('share/maps/'.$Type[0].'/map.ini', TRUE);
 		$Colours = explode('|', EstatsTheme::option('MapColours'));
 		$Start = self::colour($Colours[0]);
 		$End = self::colour($Colours[1]);
@@ -414,7 +413,7 @@ class EstatsGraphics
 			$ColoursStep[$i] = (($Start[$i] - $End[$i]) / 100);
 		}
 
-		$Image = imagecreatefrompng('./share/maps/'.$MapType[0].'/map.png');
+		$Image = imagecreatefrompng('./share/maps/'.$Type[0].'/map.png');
 
 		if ($Data['max'])
 		{
@@ -429,9 +428,9 @@ class EstatsGraphics
 			{
 				$Key = trim($Key, '\\');
 
-				if ($MapType[0] != 'world')
+				if ($Type[0] != 'world')
 				{
-					$Key = $MapType[0].'-'.$Key;
+					$Key = $Type[0].'-'.$Key;
 				}
 
 				if ($Continents)
