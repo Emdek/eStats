@@ -1213,6 +1213,7 @@ class EstatsCore
  * Returns visitor ID
  * @return integer
  */
+
 	static function visitorID()
 	{
 		if (self::$VisitorID == -2)
