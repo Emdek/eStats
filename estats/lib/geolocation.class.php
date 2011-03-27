@@ -9,6 +9,12 @@ class EstatsGeolocation
 {
 
 /**
+ * Geolocation availability indicator
+ */
+
+	static private $Available = NULL;
+
+/**
  * PDO object
  */
 
@@ -21,7 +27,12 @@ class EstatsGeolocation
 
 	static function isAvailable()
 	{
-		return ((function_exists('geoip_record_by_name') && geoip_db_avail(GEOIP_CITY_EDITION_REV0)) || (is_readable(EstatsCore::path(TRUE).'geoip_'.EstatsCore::security().'.sqlite') && class_exists('PDO')));
+		if (self::$Available === NULL)
+		{
+			self::$Available = ((function_exists('geoip_record_by_name') && geoip_db_avail(GEOIP_CITY_EDITION_REV0)) || (is_readable(EstatsCore::path(TRUE).'geoip_'.EstatsCore::security().'.sqlite') && class_exists('PDO')));
+		}
+
+		return self::$Available;
 	}
 
 /**
@@ -67,7 +78,7 @@ class EstatsGeolocation
 			$Data = (isset($Result[0])?$Result[0]:array());
 		}
 
-		if (!$Data || empty($Data['continent_code']) || $Data['continent_code'] == '--')
+		if (!$Data || $Data['continent_code'] == '--')
 		{
 			return array();
 		}
