@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import os, sys, string
+import os, sys, string, tempfile
 
 if len(sys.argv) < 2:
 	print 'You must specify path to source PO file!'
@@ -59,16 +59,10 @@ for line in data:
 buffer = buffer[:-2]
 buffer += '\n);\n\nksort($Array);\necho serialize($Array);\n?>'
 
-try:
-	output = open('tmp.php', 'w')
-except:
-	print 'Can not create temporary file!'
-
-	exit()
-
+output = tempfile.NamedTemporaryFile(delete = False)
 output.write(buffer)
 output.close()
 
-print string.join(os.popen('php ./tmp.php').readlines())
+print string.join(os.popen('php ' + output.name).readlines())
 
-os.remove('tmp.php')
+os.unlink(output.name)
