@@ -542,7 +542,7 @@ class EstatsGroup
 		EstatsTheme::add('group_'.$ID.'_information', (EstatsCore::option('GroupAmount|'.$ID) && $Data['amount'] > EstatsCore::option('GroupAmount|'.$ID)));
 		EstatsTheme::add('group_difference', (EstatsCore::option('AmountDifferences') && $Date[0]));
 
-		if ($Extended)
+		if ($Extended && isset($Data['amount']) && $Data['amount'])
 		{
 			if (EstatsGraphics::isAvailable() && $Page == 1)
 			{
