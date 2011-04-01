@@ -740,7 +740,7 @@ class EstatsGroup
 				}
 
 				$AdminOptions = '
-<a href="{selfpath}{separator}'.(($ID == 'referrers')?'referrer='.urlencode($Referrer['host']):'keyword='.urlencode($Name)).'" class="red" tabindex="'.EstatsGUI::tabindex().'" title="'.(($ID == 'referrers')?EstatsLocale::translate('Block counting of this referrer'):EstatsLocale::translate('Block counting of this keyword / phrase')).'" onclick="if (!confirm(\''.(($ID == 'referrers')?EstatsLocale::translate('Do you really want to exclude this referrer?'):EstatsLocale::translate('Do you really want to exclude thiskeyword / phrase?')).'\')) return false">
+<a href="{selfpath}{separator}'.(($ID == 'referrers')?'referrer='.urlencode($Referrer['host']):'keyword='.urlencode($Name)).'" class="red" tabindex="'.EstatsGUI::tabindex().'" title="'.(($ID == 'referrers')?EstatsLocale::translate('Block counting of this referrer'):EstatsLocale::translate('Block counting of this keyword / phrase')).'" onclick="if (!confirm(\''.(($ID == 'referrers')?EstatsLocale::translate('Do you really want to exclude this referrer?'):EstatsLocale::translate('Do you really want to exclude this keyword / phrase?')).'\')) return false">
 <strong>&#187;</strong>
 </a>';
 			}
