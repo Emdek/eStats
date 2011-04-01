@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: estats\n"
-"POT-Creation-Date: 2011-01-29 20:45+0100\n"
-"PO-Revision-Date: 2011-01-29 20:48+0100\n"
+"POT-Creation-Date: 2011-04-01 14:29+0100\n"
+"PO-Revision-Date: 2011-04-01 22:45+0100\n"
 "Last-Translator: Michał D. aka Emdek <emdeck@gmail.com>\n"
 "Language-Team: \n"
 "Language: \n"
@@ -10,15 +10,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: pages/visits.php
+#: pages/visits.php:347
 msgid " - page %d. of %d"
 msgstr ""
 
-#: index.php
-msgid "24 hours"
-msgstr "24 Stünden"
-
-#: index.php
+#: index.php:1152
 msgid ""
 "<em>PHP safe mode</em> has been activated on this server!<br />\n"
 "That could cause problems in case of automatic creation of files and directories.<br />\n"
@@ -28,11 +24,7 @@ msgstr ""
 "Das kann zu Probleme führen beim automatische erstellen von Ordner und Dateien.<br />\n"
 "Das Problem kann durch Änderung des Besitzers oder manuelle Erstellung von Ordnern und Dateien gelöst werden."
 
-#: plugins/tools/summary/plugin.php
-msgid "<em>eStats</em> version"
-msgstr "<em>eStats</em> Version"
-
-#: install.php
+#: install.php:524
 msgid ""
 "<strong>Welcome in eStats installer!</strong><br /><br />\n"
 "This script allows to install eStats easy and fast on your server.<br />\n"
@@ -41,2883 +33,14 @@ msgid ""
 "After you fill all fields click <em>Continue</em> button to configure the script."
 msgstr ""
 
-#: share/data/languages.ini
-msgid "Abkhazian"
-msgstr "Abchasien"
-
-#: index.php
-msgid "Access denied"
-msgstr "Zugriff verboten"
-
-#: plugins/tools/summary/plugin.php
-msgid "Actions"
-msgstr "Abläufe"
-
-#: plugins/tools/configuration/plugin.php
-#, fuzzy
-msgid "Add robots visits to visits"
-msgstr "Besuche von Webcrawlers zu Besuche beifügen"
-
-#: plugins/tools/configuration/plugin.php
-msgid "Address prefix"
-msgstr "Adresse Vorspann"
-
-#: plugins/tools/configuration/plugin.php
-msgid "Address suffix"
-msgstr "Adresse Anhang"
-
-#: share/data/events.ini
-msgid "Administrator logged in"
-msgstr "Administrator hat sich angemeldet"
-
-#: install.php plugins/tools/configuration/plugin.php
-msgid "Administrator password"
-msgstr "Administratorkennwort"
-
-#: plugins/tools/configuration/plugin.php
-#, fuzzy
-msgid "Administrator password changed successfully."
-msgstr "Administratorkennwort wurde geändert"
-
-#: install.php
-msgid "Administrator password has less than five characters, you should choose longer password for greater security!"
-msgstr ""
-
-#: share/data/events.ini
-msgid "Administrator password was changed"
-msgstr "Administratorkennwort wurde geändert"
-
-#: install.php plugins/tools/configuration/plugin.php
-msgid "Advanced"
-msgstr "Erweiterte"
-
-#: install.php
-#, fuzzy
-msgid "Advanced settings"
-msgstr "Erweiterte"
-
-#: share/data/languages.ini
-msgid "Afar"
-msgstr "Afar"
-
-#: share/data/countries.ini
-msgid "Afghanistan"
-msgstr "Afghanistan"
-
-#: share/data/continents.ini
-msgid "Africa"
-msgstr "Afrika"
-
-#: share/data/languages.ini
-msgid "Afrikaans"
-msgstr "Afrikaans"
-
-#: share/data/countries.ini
-msgid "Albania"
-msgstr "Albanien"
-
-#: share/data/languages.ini
-msgid "Albanian"
-msgstr "Albanisch"
-
-#: share/data/countries.ini
-msgid "Algeria"
-msgstr "Algerien"
-
-#: index.php
-msgid "All"
-msgstr "Alle"
-
-#: share/data/events.ini
-msgid "All data were deleted"
-msgstr "Gesamte Daten wurden erfolgreich gelöscht"
-
-#: share/data/countries.ini
-msgid "American Samoa"
-msgstr "Amerikanisch-Samoa"
-
-#: share/data/languages.ini
-msgid "Amharic"
-msgstr "Amharisch"
-
-#: plugins/tools/summary/plugin.php
-msgid "Amount of available backups"
-msgstr "Sicherheitskopien insgesamt"
-
-#: plugins/tools/configuration/plugin.php
-#, fuzzy
-msgid "Amount of days from which visits data are displayed (0 - display all)"
-msgstr "Anzahl der Tage, aus denen die detaillierte Statistik angezeigt werden soll. (0 - alle anzeigen)"
-
-#: plugins/tools/configuration/plugin.php
-msgid "Amount of entries per page in Visit details"
-msgstr "Anzahl der Einträge pro Seite in Besucheinzelheiten"
-
-#: plugins/tools/configuration/plugin.php
-#, fuzzy
-msgid "Amount of entries per page in Visits"
-msgstr "Anzahl der Einträge pro Seite in Besucheinzelheiten"
-
-#: pages/visits.php
-#, fuzzy
-msgid "Amount of views"
-msgstr "Anzahl der Besuche"
-
-#: plugins/tools/blacklist/plugin.php
-msgid "Amount of visits"
-msgstr "Anzahl der Besuche"
-
-#: plugins/tools/backups/plugin.php plugins/tools/reset/plugin.php
-#, fuzzy
-msgid "An error occured during backup create attempt!"
-msgstr "Erstellung einer Sicherheitskopie fehlgeschlagen"
-
-#: plugins/tools/backups/plugin.php
-#, fuzzy
-msgid "An error occured during backup delete attempt!"
-msgstr "Löschen von einer Sicherheitskopie fehlgeschlagen"
-
-#: plugins/tools/backups/plugin.php
-#, fuzzy
-msgid "An error occured during backup restore attempt!"
-msgstr "Wiederherstellung von einer Sicherheitskopie fehlgeschlagen"
-
-#: install.php
-msgid "An error occured during database connection attempt!"
-msgstr ""
-
-#: install.php
-msgid "An error occured during saving of configuration file!"
-msgstr ""
-
-#: share/data/countries.ini
-msgid "Andorra"
-msgstr "Andorra"
-
-#: share/data/countries.ini
-msgid "Angola"
-msgstr "Angola"
-
-#: share/data/countries.ini
-msgid "Anguilla"
-msgstr "Anguilla"
-
-#: share/data/continents.ini share/data/countries.ini
-msgid "Antarctica"
-msgstr "Antarktis"
-
-#: share/data/countries.ini
-msgid "Antigua and Barbuda"
-msgstr "Antigua und Barbuda"
-
-#: plugins/tools/summary/plugin.php
-msgid "Apache modules"
-msgstr "Apache Module"
-
-#: share/data/languages.ini
-msgid "Arabic"
-msgstr "Arabisch"
-
-#: share/data/countries.ini
-msgid "Argentina"
-msgstr "Argentinien"
-
-#: share/data/countries.ini
-msgid "Armenia"
-msgstr "Armenien"
-
-#: share/data/languages.ini
-msgid "Armenian"
-msgstr "Armenisch"
-
-#: lib/gui.class.php
-msgid "Array, elements separated by |"
-msgstr "Tabelle, Elemente durch | getrennt"
-
-#: share/data/countries.ini
-msgid "Aruba"
-msgstr "Aruba"
-
-#: share/data/countries.ini
-msgid "Ascension Island"
-msgstr "Himmelfahrtsinsel"
-
-#: share/data/continents.ini
-msgid "Asia"
-msgstr "Asien"
-
-#: share/data/languages.ini
-msgid "Assamese"
-msgstr "Asamiya"
-
-#: share/data/continents.ini share/data/countries.ini
-msgid "Australia"
-msgstr "Australien"
-
-#: share/data/countries.ini
-msgid "Austria"
-msgstr "Österreich"
-
-#: install.php pages/geolocation.php plugins/tools/summary/plugin.php
-msgid "Author"
-msgstr "Autor"
-
-#: install.php
-#, fuzzy
-msgid "Available"
-msgstr "Daten nicht verfügbar"
-
-#: lib/group.class.php pages/feed.php pages/time.php
-msgid "Average"
-msgstr "Durchschnittlich"
-
-#: pages/general.php
-msgid "Average per day"
-msgstr "Durchschnittlich innerhalb eines Tages"
-
-#: pages/general.php
-msgid "Average per hour"
-msgstr "Durchschnittlich innerhalb einer Stunde"
-
-#: share/data/languages.ini
-msgid "Aymara"
-msgstr "Aymara"
-
-#: share/data/countries.ini
-msgid "Azerbaijan"
-msgstr "Aserbaidschan"
-
-#: share/data/languages.ini
-msgid "Azerbaijani"
-msgstr "Aserbaidschanisch"
-
-#: plugins/tools/backups/plugin.php
-#, fuzzy
-msgid "Backup copy"
-msgstr "Sicherheitskopien"
-
-#: plugins/tools/backups/plugin.php plugins/tools/reset/plugin.php
-#, fuzzy
-msgid "Backup created successfully."
-msgstr "Sicherheitskopien wurde erfolgreich erstellt"
-
-#: plugins/tools/configuration/plugin.php
-msgid "Backup creating profile"
-msgstr "Sicherheitskopie Erstellung-Modus auswählen"
-
-#: plugins/tools/backups/plugin.php
-#, fuzzy
-msgid "Backup creation profile"
-msgstr "Sicherheitskopie Erstellung-Modus auswählen"
-
-#: plugins/tools/backups/plugin.php
-#, fuzzy
-msgid "Backup deleted successfully."
-msgstr "Sicherheitskopie wurde erfolgreich gelöscht"
-
-#: plugins/tools/backups/plugin.php
-msgid "Backup restored successfully."
-msgstr ""
-
-#: share/data/events.ini
-msgid "Backup was created"
-msgstr "Sicherheitskopien wurde erfolgreich erstellt"
-
-#: share/data/events.ini
-msgid "Backup was deleted"
-msgstr "Sicherheitskopie wurde erfolgreich gelöscht"
-
-#: plugins/tools/summary/plugin.php
-msgid "Backups"
-msgstr "Sicherheitskopien"
-
-#: plugins/tools/configuration/plugin.php
-#, fuzzy
-msgid "Backups creation system configuration"
-msgstr "Werkzeug für Sicherheitskopien konfigurieren."
-
-#: plugins/tools/reset/plugin.php
-#, fuzzy
-msgid "Backups deleted successfully."
-msgstr "Sicherheitskopie wurde erfolgreich gelöscht"
-
-#: plugins/tools/backups/plugin.php
-#, fuzzy
-msgid "Backups management"
-msgstr "Sicherheitskopie wurde erfolgreich gelöscht"
-
-#: share/data/events.ini
-msgid "Backups were deleted"
-msgstr "Sicherheitskopien wurden erfolgreich gelöscht"
-
-#: share/data/countries.ini
-msgid "Bahamas"
-msgstr "Bahamas"
-
-#: share/data/countries.ini
-msgid "Bahrain"
-msgstr "Bahrain"
-
-#: share/data/countries.ini
-msgid "Bangladesh"
-msgstr "Bangladesch"
-
-#: share/data/countries.ini
-msgid "Barbados"
-msgstr "Barbados"
-
-#: share/data/languages.ini
-msgid "Bashkir"
-msgstr "Baschkirisch"
-
-#: share/data/languages.ini
-msgid "Basque"
-msgstr "Baskisch"
-
-#: share/data/countries.ini
-msgid "Belarus"
-msgstr "Weißrussland"
-
-#: share/data/countries.ini
-msgid "Belgium"
-msgstr "Belgien"
-
-#: share/data/countries.ini
-msgid "Belize"
-msgstr "Belize"
-
-#: share/data/languages.ini
-msgid "Bengali"
-msgstr "Bengalisch"
-
-#: share/data/countries.ini
-msgid "Benin"
-msgstr "Benin"
-
-#: share/data/countries.ini
-msgid "Bermuda"
-msgstr "Bermuda"
-
-#: share/data/countries.ini
-msgid "Bhutan"
-msgstr "Bhutan"
-
-#: share/data/languages.ini
-msgid "Bhutani"
-msgstr "Bhutani"
-
-#: share/data/languages.ini
-msgid "Bihari"
-msgstr "Bihari"
-
-#: share/data/languages.ini
-msgid "Bislama"
-msgstr "Bislama"
-
-#: lib/group.class.php
-msgid "Block counting of this keyword / phrase"
-msgstr "Dieses Schlagwort aus Statistik ausschließen"
-
-#: lib/group.class.php pages/visits.php
-msgid "Block counting of this referrer"
-msgstr "Diesen Referrer aus Statistik ausschließen"
-
-#: plugins/tools/blacklist/plugin.php
-msgid "Blocked"
-msgstr "Blockiert"
-
-#: share/data/countries.ini
-msgid "Bolivia"
-msgstr "Bolivien"
-
-#: share/data/countries.ini
-msgid "Bosnia and Herzegovina"
-msgstr "Bosnien und Herzegowina"
-
-#: share/data/countries.ini
-msgid "Botswana"
-msgstr "Botsuana"
-
-#: share/data/countries.ini
-msgid "Bouvet Island"
-msgstr "Bouvetinsel"
-
-#: share/data/countries.ini
-msgid "Brazil"
-msgstr "Brasilien"
-
-#: share/data/languages.ini
-msgid "Breton"
-msgstr "Bretonisch"
-
-#: share/data/countries.ini
-msgid "British Indian Ocean Territory"
-msgstr "Britisches Territorium im Indischen Ozean"
-
-#: share/data/countries.ini
-msgid "British Virgin Islands"
-msgstr "Britische Jungferninseln"
-
-#: plugins/tools/logs/plugin.php
-msgid "Browse"
-msgstr "Durchsuchen"
-
-#: pages/visits.php plugins/tools/blacklist/plugin.php
-msgid "Browser"
-msgstr "Webbrowser"
-
-#: index.php
-msgid "Browser versions"
-msgstr "Webbrowser-Versionen"
-
-#: index.php
-msgid "Browsers"
-msgstr "Webbrowser"
-
-#: share/data/countries.ini
-msgid "Brunei Darussalam"
-msgstr "Brunei Darussalam"
-
-#: share/data/countries.ini
-msgid "Bulgaria"
-msgstr "Bulgarien"
-
-#: share/data/languages.ini
-msgid "Bulgarian"
-msgstr "Bulgarisch"
-
-#: share/data/countries.ini
-msgid "Burkina Faso"
-msgstr "Burkina Faso"
-
-#: share/data/languages.ini
-msgid "Burmese"
-msgstr "Birmanisch"
-
-#: share/data/countries.ini
-msgid "Burundi"
-msgstr "Burundi"
-
-#: share/data/languages.ini
-msgid "Byelorussian"
-msgstr "Weißrussisch"
-
-#: install.php
-msgid "Bzip compression support"
-msgstr ""
-
-#: plugins/tools/summary/plugin.php
-msgid "Cache"
-msgstr "Cache"
-
-#: plugins/tools/configuration/plugin.php
-msgid "Cache time for other data (seconds)"
-msgstr ""
-
-#: plugins/tools/configuration/plugin.php
-msgid "Cache time for time statistics data (seconds)"
-msgstr ""
-
-#: plugins/tools/configuration/plugin.php
-msgid "Cache time for visitors list (seconds)"
-msgstr ""
-
-#: share/data/countries.ini
-msgid "Cambodia"
-msgstr "Kambodscha"
-
-#: share/data/languages.ini
-msgid "Cambodian"
-msgstr "Khmer-Sprache"
-
-#: share/data/countries.ini
-msgid "Cameroon"
-msgstr "Kamerun"
-
-#: install.php
-#, fuzzy
-msgid "Can not connect to database!"
-msgstr "Keine Verbindung zur Datenbank!"
-
-#: install.php
-msgid "Can not found class %s!"
-msgstr ""
-
-#: index.php
-msgid "Can not load theme %s!"
-msgstr ""
-
-#: install.php
-msgid "Can you use <em>PHP</em> code on your page?"
-msgstr ""
-
-#: share/data/countries.ini
-msgid "Canada"
-msgstr "Kanada"
-
-#: share/data/countries.ini
-msgid "Canary Islands"
-msgstr "Kanarische Inseln"
-
-#: share/data/countries.ini
-msgid "Cape Verde"
-msgstr "Kap Verde"
-
-#: share/data/languages.ini
-msgid "Catalan"
-msgstr "Katalanisch"
-
-#: share/data/countries.ini
-msgid "Cayman Islands"
-msgstr "Kaimaninseln"
-
-#: share/data/countries.ini
-msgid "Central African Republic"
-msgstr "Zentralafrikanische Republik"
-
-#: share/data/countries.ini
-msgid "Ceuta and Melilla"
-msgstr "Plaza de soberanía"
-
-#: share/data/countries.ini
-msgid "Chad"
-msgstr "Tschad"
-
-#: index.php
-msgid "Change"
-msgstr "Ändern"
-
-#: plugins/tools/configuration/plugin.php
-msgid "Change password"
-msgstr "Kennwort ändern"
-
-#: pages/general.php pages/geolocation.php pages/technical.php
-msgid "Chart"
-msgstr "Diagramm"
-
-#: plugins/tools/configuration/plugin.php
-msgid "Chart type in Time stats"
-msgstr "Diagrammtyp für zeitliche Statistik"
-
-#: plugins/tools/summary/plugin.php
-msgid "Check for upgrade"
-msgstr ""
-
-#: share/data/countries.ini
-msgid "Chile"
-msgstr "Republik Chile"
-
-#: share/data/countries.ini
-msgid "China"
-msgstr "China"
-
-#: share/data/languages.ini
-msgid "Chinese"
-msgstr "Chinesisch"
-
-#: index.php
-msgid "Choose language"
-msgstr "Sprache auswählen"
-
-#: index.php
-msgid "Choose theme"
-msgstr "Motiv auswählen"
-
-#: share/data/countries.ini
-msgid "Christmas Island"
-msgstr "Weihnachtsinsel "
-
-#: index.php
-msgid "Cities"
-msgstr "Städte"
-
-#: pages/visits.php
-msgid "City"
-msgstr "Stadt"
-
-#: share/data/countries.ini
-msgid "Clipperton Island"
-msgstr "Clipperton-Insel"
-
-#: pages/visits.php
-msgid "Co-ordinates"
-msgstr "Koordinaten"
-
-#: share/data/countries.ini
-msgid "Cocos Islands"
-msgstr "Kokosinseln"
-
-#: plugins/tools/configuration/plugin.php
-#, fuzzy
-msgid "Collect visit details "
-msgstr "Alte Einzelheiten zu Besuche löschen"
-
-#: share/data/countries.ini
-msgid "Colombia"
-msgstr "Kolumbien"
-
-#: share/data/countries.ini
-msgid "Comoros"
-msgstr "Komoren"
-
-#: pages/time.php
-#, fuzzy
-msgid "Compare with previous period"
-msgstr "Vorherige Seite"
-
-#: plugins/tools/backups/plugin.php
-msgid "Compression"
-msgstr "Datenkomprimierung"
-
-#: pages/visits.php
-msgid "Configuration"
-msgstr "Einstellungen"
-
-#: install.php
-#, fuzzy
-msgid "Configuration file could not be saved!"
-msgstr "Einstellungen wurden geändert"
-
-#: install.php
-#, fuzzy
-msgid "Configuration file saved successfully."
-msgstr "Einstellungen wurden geändert"
-
-#: plugins/tools/configuration/plugin.php
-msgid "Configuration of visits information"
-msgstr ""
-
-#: lib/gui.class.php plugins/tools/backups/plugin.php
-#, fuzzy
-msgid "Configuration saved successfully."
-msgstr "Einstellungen wurden geändert"
-
-#: share/data/events.ini
-msgid "Configuration was saved"
-msgstr "Einstellungen wurden geändert"
-
-#: share/data/countries.ini
-msgid "Congo"
-msgstr "Kongo"
-
-#: install.php
-msgid "Connection established successfully."
-msgstr ""
-
-#: pages/visits.php
-msgid "Continent"
-msgstr "Kontinent"
-
-#: index.php pages/geolocation.php
-msgid "Continents"
-msgstr "Kontinente"
-
-#: install.php
-msgid ""
-"Continuation despite errors threatens unexpected results!\n"
-"You continue on your own risk!"
-msgstr ""
-
-#: install.php
-#, fuzzy
-msgid "Continue"
-msgstr "Kontinent"
-
-#: install.php
-#, fuzzy
-msgid "Continue anyway"
-msgstr "Kontinent"
-
-#: share/data/countries.ini
-msgid "Cook Islands"
-msgstr "Cookinseln"
-
-#: index.php pages/visits.php
-msgid "Cookies"
-msgstr "Cookies"
-
-#: pages/visits.php
-msgid "Cookies enabled"
-msgstr "Cookies aktiviert"
-
-#: install.php
-msgid "Copy following code and save it as file <em>conf/config.php</em>"
-msgstr ""
-
-#: share/data/languages.ini
-msgid "Corsican"
-msgstr "Korsisch"
-
-#: share/data/countries.ini
-msgid "Costa Rica"
-msgstr "Costa Rica"
-
-#: index.php
-#, fuzzy
-msgid "Could not check for new version availability."
-msgstr "Informationen über neue Version können nicht aufgerufen werden!"
-
-#: install.php
-#, fuzzy
-msgid "Could not continue!"
-msgstr "Datei kann nicht hochgeladen werden!"
-
-#: plugins/tools/configuration/plugin.php
-msgid "Count whole phrases instead of keywords"
-msgstr "Ausdrücke anstatt Schlagwörter sammeln"
-
-#: index.php pages/geolocation.php
-msgid "Countries"
-msgstr "Länder"
-
-#: pages/visits.php
-msgid "Country"
-msgstr "Land"
-
-#: plugins/tools/backups/plugin.php plugins/tools/reset/plugin.php
-msgid "Create backup"
-msgstr "Sicherheitskopie erstellen"
-
-#: plugins/tools/backups/plugin.php
-msgid "Create backups after specified time (s)"
-msgstr "Sicherheitskopie automatisch nach einer bestimmten Zeit erstellen (Zeitangabe in Sekunden)"
-
-#: plugins/tools/configuration/plugin.php
-#, fuzzy
-msgid "Create backups after specified time (seconds)"
-msgstr "Sicherheitskopie automatisch nach einer bestimmten Zeit erstellen (Zeitangabe in Sekunden)"
-
-#: share/data/countries.ini
-msgid "Croatia"
-msgstr "Kroatien"
-
-#: share/data/languages.ini
-msgid "Croatian"
-msgstr "Kroatisch"
-
-#: share/data/countries.ini
-msgid "Cuba"
-msgstr "Kuba"
-
-#: plugins/tools/configuration/plugin.php
-#, fuzzy
-msgid "Current password"
-msgstr "Aktueles Kennwort"
-
-#: lib/gui.class.php
-#, fuzzy
-msgid "Current period"
-msgstr "Aktueles Kennwort"
-
-#: plugins/tools/configuration/plugin.php
-msgid "Currently disabled"
-msgstr "Derzeit deaktiviert"
-
-#: plugins/tools/configuration/plugin.php
-msgid "Currently enabled"
-msgstr "Derzeit aktiviert"
-
-#: share/data/countries.ini
-msgid "Cyprus"
-msgstr "Republik Zypern"
-
-#: share/data/languages.ini
-msgid "Czech"
-msgstr "Tschechisch"
-
-#: share/data/countries.ini
-msgid "Czech Republic"
-msgstr "Tschechische Republik"
-
-#: share/data/languages.ini
-msgid "Danish"
-msgstr "Dänisch"
-
-#: plugins/tools/summary/plugin.php
-msgid "Data"
-msgstr "Daten"
-
-#: index.php plugins/tools/summary/plugin.php
-msgid "Data collected from"
-msgstr "Daten gesammelt ab"
-
-#: lib/group.class.php
-msgid "Data collecting for this group was disabled!"
-msgstr "Datensammlung für diese Gruppe wurde deaktiviert!"
-
-#: plugins/tools/configuration/plugin.php
-#, fuzzy
-msgid "Data collecting frequency"
-msgstr "Häufigkeit der Datensammlung"
-
-#: plugins/tools/reset/plugin.php
-msgid "Data deleted successfully."
-msgstr ""
-
-#: install.php
-#, fuzzy
-msgid "Data directory"
-msgstr "Daten Größe"
-
-#: lib/chart.class.php lib/group.class.php pages/visits.php
-msgid "Data from <em>cache</em>, refreshed: %s."
-msgstr "Daten aus <em>Cachespeicher</em>, aktualisiert: %s."
-
-#: share/data/events.ini
-msgid "Data from selected tables were deleted"
-msgstr "Daten aus ausgewählte Tabelle wurden erfolgreich gelöscht"
-
-#: plugins/tools/summary/plugin.php
-msgid "Data size"
-msgstr "Daten Größe"
-
-#: share/data/events.ini
-msgid "Data was restored from backup"
-msgstr "Sicherheitskopie wurde erfolgreich wiederhergestellt"
-
-#: plugins/tools/summary/plugin.php
-msgid "Database"
-msgstr "Datenbank"
-
-#: install.php
-#, fuzzy
-msgid "Database address"
-msgstr "Datenbankmodul"
-
-#: plugins/tools/configuration/plugin.php
-#, fuzzy
-msgid "Database cache settings"
-msgstr "Datenbank Cache Konfiguration (Zeitangabe in Sekunden)."
-
-#: install.php
-#, fuzzy
-msgid "Database host"
-msgstr "Datenbank"
-
-#: install.php plugins/tools/summary/plugin.php
-msgid "Database module"
-msgstr "Datenbankmodul"
-
-#: install.php
-#, fuzzy
-msgid "Database name"
-msgstr "Datenbankmodul"
-
-#: install.php
-#, fuzzy
-msgid "Database port"
-msgstr "Datenbank"
-
-#: install.php
-#, fuzzy
-msgid "Database settings"
-msgstr "Datenbank"
-
-#: install.php
-msgid "Database structure created successfully."
-msgstr ""
-
-#: install.php
-msgid "Database tables already exists: <em>%s</em>!"
-msgstr ""
-
-#: install.php
-msgid "Database tables prefix"
-msgstr ""
-
-#: install.php
-#, fuzzy
-msgid "Database user name"
-msgstr "Datenbankmodul"
-
-#: install.php
-#, fuzzy
-msgid "Database user password"
-msgstr "Angemeldet bleiben?"
-
-#: pages/feed.php pages/visits.php plugins/tools/logs/plugin.php
-msgid "Date"
-msgstr "Datum"
-
-#: plugins/tools/summary/plugin.php
-msgid "Date of last backup creation"
-msgstr "Letzte Sicherheitskopie-Datum"
-
-#: index.php
-msgid "Day"
-msgstr "Tag"
-
-#: index.php
-msgid "Days of week"
-msgstr "Wochentage"
-
-#: index.php
-msgid "Debug"
-msgstr "Debugen"
-
-#: lib/gui.class.php
-msgid "Default"
-msgstr "Standardeinstellung"
-
-#: plugins/tools/configuration/plugin.php
-msgid "Default theme"
-msgstr "Standardmotiv"
-
-#: lib/gui.class.php
-msgid "Default value"
-msgstr "Standardwert"
-
-#: plugins/tools/backups/plugin.php plugins/tools/blacklist/plugin.php
-#: plugins/tools/configuration/plugin.php
-msgid "Defaults"
-msgstr "Standardeinstellung"
-
-#: plugins/tools/backups/plugin.php
-msgid "Delete"
-msgstr "Löschen"
-
-#: share/data/countries.ini
-msgid "Denmark"
-msgstr "Dänemark"
-
-#: pages/visits.php
-msgid "Details"
-msgstr "Einzelheiten"
-
-#: share/data/countries.ini
-msgid "Diego Garcia"
-msgstr "Diego Garcia"
-
-#: lib/gui.class.php
-msgid "Direct entries"
-msgstr "Direkte Zugänge"
-
-#: index.php plugins/tools/summary/plugin.php
-msgid "Disable maintenance mode"
-msgstr "Wartungsmodus deaktiviren"
-
-#: plugins/tools/summary/plugin.php
-msgid "Disable statistics"
-msgstr "Statistik deaktivieren"
-
-#: plugins/tools/blacklist/plugin.php
-#, fuzzy
-msgid "Disallow statistics viewing for selected IP addresses"
-msgstr "Zugriff auf Besucherstatistik für bestimmte IP-Adressen nicht zulassen"
-
-#: plugins/tools/configuration/plugin.php
-msgid "Disallow stats viewing for selected IP addresses"
-msgstr "Zugriff auf Besucherstatistik für bestimmte IP-Adressen nicht zulassen"
-
-#: share/data/countries.ini
-msgid "Djibouti"
-msgstr "Dschibuti"
-
-#: lib/gui.class.php
-msgid "Do You really want to ban this IP address?"
-msgstr "wollen Sie wirklich diese IP-Adresse bannen?"
-
-#: plugins/tools/backups/plugin.php plugins/tools/reset/plugin.php
-msgid "Do You really want to delete data?"
-msgstr "Wollen Sie wirklich gewählte Daten löschen?"
-
-#: pages/visits.php
-msgid "Do You really want to exclude this referrer?"
-msgstr "Wollen Sie wirklich gewälte Referrer ausschlißen?"
-
-#: plugins/tools/backups/plugin.php
-msgid "Do You really want to restore data?"
-msgstr "Wollen Sie wirklich gewählte Daten widerherstellen?"
-
-#: plugins/tools/backups/plugin.php plugins/tools/blacklist/plugin.php
-#: plugins/tools/configuration/plugin.php
-msgid "Do You really want to restore defaults?"
-msgstr "Wollen Sie wirklich Standardeinstellungen wiederherstellen?"
-
-#: plugins/tools/backups/plugin.php plugins/tools/blacklist/plugin.php
-#: plugins/tools/configuration/plugin.php
-msgid "Do You really want to save?"
-msgstr "Wollen Sie wirklich alle Änderungen speichern?"
-
-#: lib/group.class.php
-#, fuzzy
-msgid "Do you really want to exclude this referrer?"
-msgstr "Wollen Sie wirklich gewälte Referrer ausschlißen?"
-
-#: lib/group.class.php
-#, fuzzy
-msgid "Do you really want to exclude thiskeyword / phrase?"
-msgstr "Wollen sie wirklich gewählte Schlagwort / Ausdruck ausschließen?"
-
-#: plugins/tools/summary/plugin.php
-msgid "Documentation"
-msgstr "Dokumentation"
-
-#: share/data/countries.ini
-msgid "Dominica"
-msgstr "Dominica"
-
-#: share/data/countries.ini
-msgid "Dominican Republic"
-msgstr "Dominikanische Republik"
-
-#: plugins/tools/backups/plugin.php
-msgid "Download"
-msgstr "Herunterladen"
-
-#: install.php
-#, fuzzy
-msgid "Driver information"
-msgstr "Information"
-
-#: share/data/languages.ini
-msgid "Dutch"
-msgstr "Niederländisch"
-
-#: share/data/countries.ini
-msgid "Ecuador"
-msgstr "Ecuador"
-
-#: share/data/countries.ini
-msgid "Egypt"
-msgstr "Ägypten"
-
-#: share/data/countries.ini
-msgid "El Salvador"
-msgstr "El Salvador"
-
-#: plugins/tools/configuration/plugin.php
-msgid "Enable caching for administrator"
-msgstr ""
-
-#: install.php
-msgid "Enable generation of maps and graphical charts (<em>GD</em> extension)"
-msgstr ""
-
-#: plugins/tools/summary/plugin.php
-msgid "Enable maintenance mode"
-msgstr "Wartungsmodus aktiviren"
-
-#: index.php plugins/tools/summary/plugin.php
-msgid "Enable statistics"
-msgstr "statistik aktivieren"
-
-#: plugins/tools/configuration/plugin.php
-msgid "Enabled JavaScript is required for correct work of this tool!"
-msgstr "Dieses Werkzeug funktioniert nur dann, wenn Sie JavaScript aktivieren!"
-
-#: install.php
-#, fuzzy
-msgid "End of installation"
-msgstr "Administration"
-
-#: share/data/languages.ini
-msgid "English"
-msgstr "Englisch"
-
-#: plugins/tools/logs/plugin.php
-msgid "Entries amount"
-msgstr "Eintrage insgesamt"
-
-#: share/data/countries.ini
-msgid "Equatorial Guinea"
-msgstr "Äquatorialguinea"
-
-#: share/data/countries.ini
-msgid "Eritrea"
-msgstr "Eritrea"
-
-#: lib/gui.class.php
-msgid "Error"
-msgstr "Fehler"
-
-#: install.php
-msgid "Errors occured during database structure creation!"
-msgstr ""
-
-#: share/data/languages.ini
-msgid "Esperanto"
-msgstr "Esperanto"
-
-#: share/data/countries.ini
-msgid "Estonia"
-msgstr "Estland"
-
-#: share/data/languages.ini
-msgid "Estonian"
-msgstr "Estnisch"
-
-#: share/data/countries.ini
-msgid "Ethiopia"
-msgstr "Äthiopien"
-
-#: share/data/continents.ini
-msgid "Europe"
-msgstr "Europa"
-
-#: share/data/countries.ini
-msgid "European Union"
-msgstr "Europäische Union"
-
-#: pages/general.php
-msgid "Excluded"
-msgstr "Nicht gespeicherte"
-
-#: plugins/tools/reset/plugin.php
-msgid "Execute"
-msgstr "Anwenden"
-
-#: plugins/tools/logs/plugin.php
-msgid "Export"
-msgstr "Exportieren"
-
-#: share/data/countries.ini
-msgid "Falkland Islands"
-msgstr "Falklandinseln"
-
-#: share/data/countries.ini
-msgid "Faroe Islands"
-msgstr "Färöer"
-
-#: share/data/languages.ini
-msgid "Faroese"
-msgstr "Färöisch"
-
-#: share/data/countries.ini
-msgid "Federated States of Micronesia"
-msgstr "Föderierte Staaten von Mikronesien"
-
-#: pages/feed.php
-msgid "Feed channel for {servername}"
-msgstr "Informationskanal für {servername}"
-
-#: lib/gui.class.php plugins/tools/configuration/plugin.php
-msgid "Field value is other than default"
-msgstr "Wert des Feldes weicht von dem Standard-Wert ab"
-
-#: share/data/countries.ini share/data/languages.ini
-msgid "Fiji"
-msgstr "Fidschi"
-
-#: plugins/tools/configuration/plugin.php plugins/tools/logs/plugin.php
-msgid "Filter"
-msgstr "Filter"
-
-#: plugins/tools/logs/plugin.php
-msgid "Find entry (search in all fields)"
-msgstr "Eintrag suchen (alle felder durchsuchen)"
-
-#: install.php
-#, fuzzy
-msgid "Fine tune configuration"
-msgstr "Einstellungen"
-
-#: share/data/countries.ini
-msgid "Finland"
-msgstr "Finnland"
-
-#: share/data/languages.ini
-msgid "Finnish"
-msgstr "Finnisch"
-
-#: pages/visits.php
-#, fuzzy
-msgid "First view"
-msgstr "Erste Besuch"
-
-#: plugins/tools/blacklist/plugin.php
-msgid "First visit"
-msgstr "Erste Besuch"
-
-#: index.php
-msgid "Flash plugin"
-msgstr "Flash Plugin"
-
-#: pages/visits.php
-msgid "Flash plugin version"
-msgstr "Flash Plugin-Version"
-
-#: share/data/countries.ini
-msgid "France"
-msgstr "Frankreich"
-
-#: share/data/countries.ini
-msgid "France, Metropolitan"
-msgstr "Metropolitan-Frankreich "
-
-#: share/data/languages.ini
-msgid "French"
-msgstr "Französich"
-
-#: share/data/countries.ini
-msgid "French Guiana"
-msgstr "Französisch-Guayana"
-
-#: share/data/countries.ini
-msgid "French Polynesia"
-msgstr "Französisch-Polynesien"
-
-#: share/data/countries.ini
-msgid "French Southern Territories"
-msgstr "Französische Süd- und Antarktisgebiete"
-
-#: install.php
-msgid "Frequency of data collecting for other data"
-msgstr ""
-
-#: install.php
-msgid "Frequency of data collecting for time statistics"
-msgstr ""
-
-#: share/data/languages.ini
-msgid "Frisian"
-msgstr "Friesisch"
-
-#: plugins/tools/logs/plugin.php
-msgid "From"
-msgstr "Von"
-
-#: plugins/tools/backups/plugin.php
-msgid "Full"
-msgstr "Vollständig"
-
-#: pages/general.php pages/geolocation.php pages/technical.php
-msgid "Full list"
-msgstr "Vollständige Liste"
-
-#: share/data/countries.ini
-msgid "Gabon"
-msgstr "Gabun"
-
-#: share/data/languages.ini
-msgid "Galician"
-msgstr "Galicisch"
-
-#: share/data/countries.ini
-msgid "Gambia"
-msgstr "Gambia"
-
-#: index.php
-msgid "General"
-msgstr "Allgemeine"
-
-#: index.php
-msgid "Geolocation"
-msgstr "Geolocation"
-
-#: install.php
-#, fuzzy
-msgid "Geolocation support"
-msgstr "Geolocation"
-
-#: share/data/countries.ini
-msgid "Georgia"
-msgstr "Georgien"
-
-#: share/data/languages.ini
-msgid "Georgian"
-msgstr "Georgisch"
-
-#: share/data/languages.ini
-msgid "German"
-msgstr "Deutsch"
-
-#: share/data/countries.ini
-msgid "Germany"
-msgstr "Deutschland"
-
-#: share/data/countries.ini
-msgid "Ghana"
-msgstr "Ghana"
-
-#: share/data/countries.ini
-msgid "Gibraltar"
-msgstr "Gibraltar"
-
-#: install.php plugins/tools/configuration/plugin.php
-msgid "Given passwords are not the same!"
-msgstr "Kennwort stimmt nicht überein!"
-
-#: lib/gui.class.php
-#, fuzzy
-msgid "Go to first page (%d.)"
-msgstr "Erste Seite"
-
-#: lib/gui.class.php
-#, fuzzy
-msgid "Go to last page (%d.)"
-msgstr "Letzte Seite"
-
-#: lib/gui.class.php
-#, fuzzy
-msgid "Go to next page (%d.)"
-msgstr "Nächste Seite"
-
-#: lib/gui.class.php
-#, fuzzy
-msgid "Go to page %d."
-msgstr "Gehe zu"
-
-#: lib/gui.class.php
-#, fuzzy
-msgid "Go to previous page (%d.)"
-msgstr "Vorherige Seite"
-
-#: index.php
-msgid "Go to top"
-msgstr "Nach oben"
-
-#: install.php
-msgid "Graphics generation support"
-msgstr ""
-
-#: share/data/countries.ini
-msgid "Great Britain"
-msgstr "Großbritannien"
-
-#: share/data/countries.ini
-msgid "Greece"
-msgstr "Griechenland"
-
-#: share/data/languages.ini
-msgid "Greek"
-msgstr "Griechisch"
-
-#: share/data/countries.ini
-msgid "Greenland"
-msgstr "Grönland"
-
-#: share/data/languages.ini
-msgid "Greenlandic"
-msgstr "Grönländisch"
-
-#: share/data/countries.ini
-msgid "Grenada"
-msgstr "Grenada"
-
-#: share/data/countries.ini
-msgid "Guadeloupe"
-msgstr "Guadeloupe"
-
-#: share/data/countries.ini
-msgid "Guam"
-msgstr "Guam"
-
-#: share/data/languages.ini
-msgid "Guarani"
-msgstr "Guaraní"
-
-#: share/data/countries.ini
-msgid "Guatemala"
-msgstr "Guatemala"
-
-#: share/data/countries.ini
-msgid "Guernsey"
-msgstr "Guernsey"
-
-#: share/data/countries.ini
-msgid "Guinea"
-msgstr "Guinea"
-
-#: share/data/countries.ini
-msgid "Guinea-Bissau"
-msgstr "Guinea-Bissau"
-
-#: share/data/languages.ini
-msgid "Gujarati"
-msgstr "Gujarati"
-
-#: share/data/countries.ini
-msgid "Guyana"
-msgstr "Guyana"
-
-#: install.php
-msgid "Gzip compression support"
-msgstr ""
-
-#: share/data/countries.ini
-msgid "Haiti"
-msgstr "Haiti"
-
-#: share/data/languages.ini
-msgid "Hausa"
-msgstr "Hausa"
-
-#: share/data/countries.ini
-msgid "Heard and McDonald Islands"
-msgstr "Heard und McDonaldinseln"
-
-#: share/data/languages.ini
-msgid "Hebrew"
-msgstr "Hebräisch"
-
-#: share/data/languages.ini
-msgid "Hindi"
-msgstr "Hindi"
-
-#: share/data/countries.ini
-msgid "Honduras"
-msgstr "Honduras"
-
-#: share/data/countries.ini
-msgid "Hong Kong"
-msgstr "Hongkong"
-
-#: pages/visits.php
-msgid "Host"
-msgstr "Host"
-
-#: index.php
-msgid "Hosts"
-msgstr "Hosts"
-
-#: index.php
-msgid "Hour"
-msgstr "Stunde"
-
-#: index.php
-msgid "Hours"
-msgstr "Stünden"
-
-#: share/data/languages.ini
-msgid "Hungarian"
-msgstr "Ungarisch"
-
-#: share/data/countries.ini
-msgid "Hungary"
-msgstr "Ungarn"
-
-#: pages/visits.php plugins/tools/blacklist/plugin.php
-msgid "IP"
-msgstr "IP"
-
-#: share/data/countries.ini
-msgid "Iceland"
-msgstr "Island"
-
-#: share/data/languages.ini
-msgid "Icelandic"
-msgstr "Isländisch"
-
-#: install.php
-msgid "If no actions remain for execution go to <a href=\"%s\" tabindex=\"%d\"><strong>configuration</strong></a> page and perform after installation setup."
-msgstr ""
-
-#: plugins/tools/blacklist/plugin.php
-msgid "Ignore visits from this browser (using <em>cookies</em>)"
-msgstr ""
-
-#: plugins/tools/blacklist/plugin.php
-msgid "Ignored"
-msgstr "Ignoriert"
-
-#: plugins/tools/blacklist/plugin.php plugins/tools/configuration/plugin.php
-msgid "Ignored IPs"
-msgstr "Geblockte IP-Adressen"
-
-#: plugins/tools/blacklist/plugin.php
-msgid "Ignored and blocked visits"
-msgstr "Ignorierte und blockierte besuche"
-
-#: plugins/tools/blacklist/plugin.php plugins/tools/configuration/plugin.php
-msgid "Ignored keywords"
-msgstr "Geblockte Schlagwörter"
-
-#: plugins/tools/blacklist/plugin.php plugins/tools/configuration/plugin.php
-msgid "Ignored referrers"
-msgstr "Geblockte Referrer"
-
-#: plugins/tools/summary/plugin.php
-msgid "Important links"
-msgstr ""
-
-#: plugins/tools/logs/plugin.php
-msgid "In period"
-msgstr "Zeitraum"
-
-#: share/data/countries.ini
-msgid "India"
-msgstr "Indien"
-
-#: share/data/countries.ini
-msgid "Indonesia"
-msgstr "Indonesien"
-
-#: share/data/languages.ini
-msgid "Indonesian"
-msgstr "Indonesisch"
-
-#: lib/gui.class.php plugins/tools/logs/plugin.php
-msgid "Information"
-msgstr "Information"
-
-#: index.php install.php
-msgid "Installer"
-msgstr "Installieren"
-
-#: share/data/languages.ini
-msgid "Interlingua"
-msgstr "Interlingua"
-
-#: share/data/languages.ini
-msgid "Interlingue"
-msgstr "Interlingue"
-
-#: plugins/tools/configuration/plugin.php
-msgid "Interval of full cache clearing (days)"
-msgstr ""
-
-#: install.php
-#, fuzzy
-msgid "Introduction"
-msgstr "Information"
-
-#: share/data/languages.ini
-msgid "Inuktitut"
-msgstr "Inuktitut"
-
-#: share/data/languages.ini
-msgid "Inupiak"
-msgstr "Inupiaq"
-
-#: pages/visits.php
-msgid "Invalid visit identifier!"
-msgstr ""
-
-#: share/data/countries.ini
-msgid "Iraq"
-msgstr "Irak"
-
-#: share/data/countries.ini
-msgid "Ireland"
-msgstr "Irland"
-
-#: share/data/languages.ini
-msgid "Irish"
-msgstr "Irisch"
-
-#: share/data/countries.ini
-msgid "Islamic Republic of Iran"
-msgstr "Islamische Republik Iran"
-
-#: share/data/countries.ini
-msgid "Isle of Man"
-msgstr "Isle of Man"
-
-#: share/data/countries.ini
-msgid "Israel"
-msgstr "Israel"
-
-#: share/data/languages.ini
-msgid "Italian"
-msgstr "Italienisch"
-
-#: share/data/countries.ini
-msgid "Italy"
-msgstr "Italien"
-
-#: share/data/countries.ini
-msgid "Ivory Coast"
-msgstr "Elfenbeinküste"
-
-#: share/data/countries.ini
-msgid "Jamaica"
-msgstr "Jamaika"
-
-#: share/data/countries.ini
-msgid "Japan"
-msgstr "Japan"
-
-#: share/data/languages.ini
-msgid "Japanese"
-msgstr "Japanisch"
-
-#: index.php pages/visits.php
-msgid "Java"
-msgstr "Java"
-
-#: pages/visits.php
-msgid "Java enabled"
-msgstr "Java aktivirt"
-
-#: index.php pages/visits.php
-msgid "JavaScript"
-msgstr "JavaScript"
-
-#: install.php
-#, fuzzy
-msgid "JavaScript code"
-msgstr "JavaScript"
-
-#: pages/visits.php
-msgid "JavaScript enabled"
-msgstr "JavaScript aktivirt"
-
-#: share/data/languages.ini
-msgid "Javanese"
-msgstr "Javanisch"
-
-#: share/data/countries.ini
-msgid "Jersey"
-msgstr "Jersey"
-
-#: share/data/countries.ini
-msgid "Jordan"
-msgstr "Jordanien"
-
-#: share/data/languages.ini
-msgid "Kannada"
-msgstr "Kannada"
-
-#: share/data/languages.ini
-msgid "Kashmiri"
-msgstr "Kashmiri"
-
-#: share/data/languages.ini
-msgid "Kazakh"
-msgstr "Kasachisch"
-
-#: share/data/countries.ini
-msgid "Kazakhstan"
-msgstr "Kasachstan"
-
-#: share/data/countries.ini
-msgid "Kenya"
-msgstr "Kenia"
-
-#: index.php pages/visits.php
-msgid "Keywords"
-msgstr "Schlagwörter"
-
-#: share/data/languages.ini
-msgid "Kinyarwanda"
-msgstr "Kinyarwanda"
-
-#: share/data/languages.ini
-msgid "Kirghiz"
-msgstr "Kirgisisch"
-
-#: share/data/countries.ini
-msgid "Kiribati"
-msgstr "Kiribati"
-
-#: share/data/languages.ini
-msgid "Kirundi"
-msgstr "Kirundi"
-
-#: share/data/languages.ini
-msgid "Korean"
-msgstr "Koreanisch"
-
-#: share/data/languages.ini
-msgid "Kurdish"
-msgstr "Kurdisch"
-
-#: share/data/countries.ini
-msgid "Kuwait"
-msgstr "Kuwait"
-
-#: share/data/countries.ini
-msgid "Kyrgyzstan"
-msgstr "Kirgisistan"
-
-#: pages/visits.php
-msgid "Lack"
-msgstr ""
-
-#: install.php
-msgid "Lack of support for any of available modules!"
-msgstr ""
-
-#: pages/visits.php
-msgid "Language"
-msgstr "Sprache"
-
-#: index.php
-msgid "Languages"
-msgstr "Sprachen"
-
-#: share/data/countries.ini
-msgid "Laos"
-msgstr "Laos"
-
-#: share/data/languages.ini
-msgid "Laothian"
-msgstr "Laotisch"
-
-#: pages/general.php
-msgid "Last hour"
-msgstr "Letzte Stunde"
-
-#: pages/general.php
-msgid "Last month"
-msgstr "Der Letzte Monat"
-
-#: pages/general.php
-msgid "Last twenty - four hours"
-msgstr "Der letzte Tag"
-
-#: pages/visits.php
-#, fuzzy
-msgid "Last view"
-msgstr "Letzter Besuch"
-
-#: plugins/tools/blacklist/plugin.php
-msgid "Last visit"
-msgstr "Letzter Besuch"
-
-#: pages/general.php
-msgid "Last week"
-msgstr "Letzte Woche"
-
-#: pages/general.php
-msgid "Last year"
-msgstr "Das letzte Jahr"
-
-#: share/data/languages.ini
-msgid "Latin"
-msgstr "Latein"
-
-#: share/data/countries.ini
-msgid "Latvia"
-msgstr "Lettland"
-
-#: share/data/languages.ini
-msgid "Latvian"
-msgstr "Lettisch"
-
-#: lib/group.class.php pages/feed.php pages/time.php
-msgid "Least"
-msgstr "Am wenigsten"
-
-#: share/data/countries.ini
-msgid "Lebanon"
-msgstr "Libanon"
-
-#: pages/visits.php
-msgid "Legend"
-msgstr "Erklärung"
-
-#: share/data/countries.ini
-msgid "Lesotho"
-msgstr "Lesotho"
-
-#: share/data/countries.ini
-msgid "Liberia"
-msgstr "Liberia"
-
-#: share/data/countries.ini
-msgid "Libya"
-msgstr "Libyen"
-
-#: share/data/countries.ini
-msgid "Liechtenstein"
-msgstr "Liechtenstein"
-
-#: share/data/languages.ini
-msgid "Lingala"
-msgstr "Lingála"
-
-#: plugins/tools/configuration/plugin.php
-msgid "Link for showing locations on map"
-msgstr "Link zum anzeigen von Positionen auf Landkarte"
-
-#: plugins/tools/configuration/plugin.php
-msgid "Link to Whois service"
-msgstr "Link zum Whois Dienst"
-
-#: share/data/countries.ini
-msgid "Lithuania"
-msgstr "Litauen"
-
-#: share/data/languages.ini
-msgid "Lithuanian"
-msgstr "Litauisch"
-
-#: lib/gui.class.php
-msgid "Loading..."
-msgstr ""
-
-#: pages/visits.php
-msgid "Location"
-msgstr "Ort"
-
-#: plugins/tools/logs/plugin.php
-msgid "Log"
-msgstr "Protokoll"
-
-#: plugins/tools/configuration/plugin.php
-#, fuzzy
-msgid "Log errors and important information"
-msgstr "Fehler und wichtige Mitteilungen speichern"
-
-#: install.php
-#, fuzzy
-msgid "Log events to text file"
-msgstr "Protokolle auch als Textdateien speichern"
-
-#: index.php
-#, fuzzy
-msgid "Log in"
-msgstr "Anmelden"
-
-#: index.php
-msgid "Log into"
-msgstr "Anmelden"
-
-#: index.php
-msgid "Log out"
-msgstr "Abmelden"
-
-#: index.php
-msgid "Login"
-msgstr "Anmeldung"
-
-#: share/data/countries.ini
-msgid "Luxembourg"
-msgstr "Luxemburg"
-
-#: share/data/countries.ini
-msgid "Macao"
-msgstr "Macao"
-
-#: share/data/countries.ini
-msgid "Macedonia"
-msgstr "Mazedonien"
-
-#: share/data/languages.ini
-msgid "Macedonian"
-msgstr "Mazedonisch"
-
-#: share/data/countries.ini
-msgid "Madagascar"
-msgstr "Madagaskar"
-
-#: index.php
-msgid "Maintenance"
-msgstr "Wartungsarbeiten"
-
-#: index.php
-msgid "Maintenance mode is active!"
-msgstr "Wartungsmodus aktiviert!"
-
-#: share/data/languages.ini
-msgid "Malagasy"
-msgstr "Malagasy"
-
-#: share/data/countries.ini
-msgid "Malawi"
-msgstr "Malawi"
-
-#: share/data/languages.ini
-msgid "Malay"
-msgstr "Malaiisch"
-
-#: share/data/languages.ini
-msgid "Malayalam"
-msgstr "Malayalam"
-
-#: share/data/countries.ini
-msgid "Malaysia"
-msgstr "Malaysia"
-
-#: share/data/countries.ini
-msgid "Maldives"
-msgstr "Malediven"
-
-#: share/data/countries.ini
-msgid "Mali"
-msgstr "Mali"
-
-#: share/data/countries.ini
-msgid "Malta"
-msgstr "Malta"
-
-#: share/data/languages.ini
-msgid "Maltese"
-msgstr "Maltesisch"
-
-#: share/data/languages.ini
-msgid "Maori"
-msgstr "Maorisch"
-
-#: pages/geolocation.php
-msgid "Map"
-msgstr "Karte"
-
-#: pages/geolocation.php
-msgid "Map view"
-msgstr "Kartenansicht."
-
-#: share/data/languages.ini
-msgid "Marathi"
-msgstr "Marathi"
-
-#: share/data/countries.ini
-msgid "Marshall Islands"
-msgstr "Marshallinseln"
-
-#: share/data/countries.ini
-msgid "Martinique"
-msgstr "Martinique"
-
-#: share/data/countries.ini
-msgid "Mauritania"
-msgstr "Mauretanien"
-
-#: share/data/countries.ini
-msgid "Mauritius"
-msgstr "Mauritius"
-
-#: plugins/tools/configuration/plugin.php
-msgid "Max amount of pages available for user (0 - all available)"
-msgstr "Maximale Anzahl der Statistikseiten, die den Benutzer angezeigt werden. (0 - alle anzeigen)"
-
-#: share/data/countries.ini
-msgid "Mayotte"
-msgstr "Mayotte"
-
-#: plugins/tools/configuration/plugin.php plugins/tools/logs/plugin.php
-msgid "Meeting conditions"
-msgstr "Beiträge, die Ihren Kriterien entsprechen"
-
-#: share/data/countries.ini
-msgid "Mexico"
-msgstr "Mexiko"
-
-#: lib/gui.class.php
-msgid "Mobile devices"
-msgstr "Mobile Geräte"
-
-#: install.php plugins/tools/configuration/plugin.php
-msgid "Mode of passing data in the path"
-msgstr "<em>Friendly URLs</em> verwenden (setzt richtige definieren von <em>PATH_INFO</em> voraus)"
-
-#: share/data/languages.ini
-msgid "Moldavian"
-msgstr "Moldauisch"
-
-#: share/data/countries.ini
-msgid "Moldova"
-msgstr "Moldawien"
-
-#: share/data/countries.ini
-msgid "Monaco"
-msgstr "Monaco"
-
-#: share/data/countries.ini
-msgid "Mongolia"
-msgstr "Mongolei"
-
-#: share/data/languages.ini
-msgid "Mongolian"
-msgstr "Mongolisch"
-
-#: share/data/countries.ini
-msgid "Montenegro"
-msgstr "Montenegro"
-
-#: index.php lib/group.class.php
-msgid "Month"
-msgstr "Monat"
-
-#: share/data/countries.ini
-msgid "Montserrat"
-msgstr "Montserrat"
-
-#: share/data/countries.ini
-msgid "Morocco"
-msgstr "Marokko"
-
-#: lib/group.class.php pages/feed.php pages/general.php pages/time.php
-msgid "Most"
-msgstr "Höchst"
-
-#: share/data/countries.ini
-msgid "Mozambique"
-msgstr "Mosambik"
-
-#: share/data/countries.ini
-msgid "Myanmar"
-msgstr "Myanmar"
-
-#: plugins/tools/summary/plugin.php
-msgid "N/A"
-msgstr "N/A"
-
-#: share/data/countries.ini
-msgid "Namibia"
-msgstr "Namibia"
-
-#: share/data/countries.ini share/data/languages.ini
-msgid "Nauru"
-msgstr "Nauru"
-
-#: share/data/countries.ini
-msgid "Nepal"
-msgstr "Nepal"
-
-#: share/data/languages.ini
-msgid "Nepali"
-msgstr "Nepali"
-
-#: share/data/countries.ini
-msgid "Netherlands"
-msgstr "Niederlande"
-
-#: share/data/countries.ini
-msgid "Netherlands Antilles"
-msgstr "Niederländische Antillen"
-
-#: plugins/tools/blacklist/plugin.php
-#, fuzzy
-msgid "Network bot"
-msgstr "Webcrawlers"
-
-#: pages/visits.php
-msgid "Network robot"
-msgstr "Webcrawlers"
-
-#: index.php pages/visits.php
-#, fuzzy
-msgid "Network robots"
-msgstr "Webcrawlers"
-
-#: share/data/countries.ini
-msgid "New Caledonia"
-msgstr "Neukaledonien"
-
-#: plugins/tools/configuration/plugin.php
-msgid "New password"
-msgstr "Neues Kennwort"
-
-#: share/data/countries.ini
-msgid "New Zealand"
-msgstr "Neuseeland"
-
-#: index.php
-msgid "New version is available (%s)!"
-msgstr "Neue Version verfügbar (%s)!"
-
-#: plugins/tools/summary/plugin.php
-msgid "New version is available!"
-msgstr "Neue version erhältlich!"
-
-#: index.php
-msgid "Next"
-msgstr ""
-
-#: share/data/countries.ini
-msgid "Nicaragua"
-msgstr "Nicaragua"
-
-#: share/data/countries.ini
-msgid "Niger"
-msgstr "Niger"
-
-#: share/data/countries.ini
-msgid "Nigeria"
-msgstr "Nigeria"
-
-#: share/data/countries.ini
-msgid "Niue"
-msgstr "Niue"
-
-#: install.php lib/gui.class.php pages/visits.php
-msgid "No"
-msgstr "Nein"
-
-#: lib/group.class.php pages/time.php
-msgid "No data to display!"
-msgstr "Keine Daten vorhanden!"
-
-#: pages/visits.php
-#, fuzzy
-msgid "No plugin"
-msgstr "Flash Plugin"
-
-#: lib/group.class.php pages/feed.php pages/visits.php
-#: plugins/tools/backups/plugin.php plugins/tools/blacklist/plugin.php
-#: plugins/tools/logs/plugin.php
-msgid "None"
-msgstr "Keine"
-
-#: share/data/countries.ini
-msgid "Norfolk Island"
-msgstr "Norfolkinsel"
-
-#: share/data/continents.ini
-msgid "North America"
-msgstr "Nordamerika"
-
-#: share/data/countries.ini
-msgid "North Korea"
-msgstr "Nordkorea"
-
-#: share/data/countries.ini
-msgid "Northern Mariana Islands"
-msgstr "Nördliche Marianen"
-
-#: share/data/languages.ini
-msgid "Norwegian"
-msgstr "Norwegisch"
-
-#: install.php
-#, fuzzy
-msgid "Not available"
-msgstr "Daten nicht verfügbar"
-
-#: install.php
-msgid "Not exists"
-msgstr ""
-
-#: install.php
-msgid "Not writeable"
-msgstr ""
-
-#: install.php
-msgid "OK"
-msgstr ""
-
-#: share/data/languages.ini
-msgid "Occitan"
-msgstr "Okzitanisch"
-
-#: share/data/countries.ini
-msgid "Oman"
-msgstr "Oman"
-
-#: pages/general.php
-msgid "On-line"
-msgstr "Online"
-
-#: plugins/tools/configuration/plugin.php
-#, fuzzy
-msgid "On-line visit time"
-msgstr "Gäste online (innerhalb letzten 5 Minuten)"
-
-#: pages/visits.php
-#, fuzzy
-msgid "On-line visitors (last %d seconds)"
-msgstr "Gäste online (innerhalb letzten 5 Minuten)"
-
-#: plugins/tools/backups/plugin.php
-msgid "Only collected data"
-msgstr "Nur gesammelte Daten"
-
-#: pages/visits.php plugins/tools/blacklist/plugin.php
-#: plugins/tools/summary/plugin.php
-msgid "Operating system"
-msgstr "Betriebssystem"
-
-#: index.php
-#, fuzzy
-msgid "Operating system versions"
-msgstr "Betriebssystem"
-
-#: index.php
-#, fuzzy
-msgid "Operating systems"
-msgstr "Betriebssystem"
-
-#: share/data/languages.ini
-msgid "Oriya"
-msgstr "Oriya"
-
-#: share/data/languages.ini
-msgid "Oromo"
-msgstr "Oromo"
-
-#: pages/visits.php
-#, fuzzy
-msgid "Other visits of this visitor"
-msgstr "Sonstige Besuche"
-
-#: install.php
-msgid "Overwrite existing tables (if they exist with the same name already)"
-msgstr ""
-
-#: install.php
-#, fuzzy
-msgid "PHP code"
-msgstr "PHP Safe-Mode"
-
-#: plugins/tools/summary/plugin.php
-msgid "PHP loaded extensions"
-msgstr "Geladene PHP-Erweiterungen"
-
-#: plugins/tools/summary/plugin.php
-msgid "PHP safe mode"
-msgstr "PHP Safe-Mode"
-
-#: plugins/tools/summary/plugin.php
-msgid "PHP version"
-msgstr "PHP-Version"
-
-#: index.php
-msgid "Page generation time: %.3lf (s)"
-msgstr "Seite generiert in: %.3lf (s)"
-
-#: plugins/tools/configuration/plugin.php
-msgid "Page header syntax"
-msgstr "Header-Variablen (Syntax)"
-
-#: install.php
-msgid "Page title (optional, should be unique for each page, if set)"
-msgstr ""
-
-#: index.php
-#, fuzzy
-msgid "Page unavailable due to maintenance."
-msgstr "Zur Zeit ist diese Seite wegen Wartungsarbeiten nicht verfügbar."
-
-#: share/data/countries.ini
-msgid "Pakistan"
-msgstr "Pakistan"
-
-#: share/data/countries.ini
-msgid "Palau"
-msgstr "Palau"
-
-#: share/data/countries.ini
-msgid "Palestinian Territory, Occupied"
-msgstr "Israelisch besetzte Gebiete"
-
-#: share/data/countries.ini
-msgid "Panama"
-msgstr "Panama"
-
-#: share/data/countries.ini
-msgid "Papua New Guinea"
-msgstr "Papua-Neuguinea"
-
-#: share/data/countries.ini
-msgid "Paraguay"
-msgstr "Paraguay"
-
-#: share/data/languages.ini
-msgid "Pashto"
-msgstr "Paschtunisch"
-
-#: index.php
-msgid "Password"
-msgstr "Benutzerkennwort"
-
-#: plugins/tools/configuration/plugin.php
-#, fuzzy
-msgid "Password for viewing statistics (leave empty, if you allow free access)"
-msgstr "Besucherstatistik mit Kennwort schützen (leer lassen um deaktivieren)"
-
-#: install.php
-msgid "Permissions test"
-msgstr ""
-
-#: share/data/languages.ini
-msgid "Persian"
-msgstr "Persisch"
-
-#: share/data/countries.ini
-msgid "Peru"
-msgstr "Peru"
-
-#: share/data/countries.ini
-msgid "Philippines"
-msgstr "Philippinen"
-
-#: share/data/countries.ini
-msgid "Pitcairn"
-msgstr "Pitcairninseln"
-
-#: install.php
-msgid "Place activation code on your page"
-msgstr ""
-
-#: install.php
-msgid "Place the <em>JavaScript</em> code somewhere between <em>BODY</em> tags on your page. There will be shown an image that will collect the data."
-msgstr ""
-
-#: install.php
-msgid "Place the <em>PHP</em> code somewhere at start of code of your page. Script will collect the most part of data, technical information (such as screen resolution) will be handled by <em>JavaScript</em> code."
-msgstr ""
-
-#: share/data/countries.ini
-msgid "Poland"
-msgstr "Polen"
-
-#: plugins/tools/configuration/plugin.php
-msgid "Policy what to do with old visits data"
-msgstr ""
-
-#: share/data/languages.ini
-msgid "Polish"
-msgstr "Polnisch"
-
-#: share/data/countries.ini
-msgid "Portugal"
-msgstr "Portugal"
-
-#: share/data/languages.ini
-msgid "Portuguese"
-msgstr "Portugiesisch"
-
-#: index.php
-#, fuzzy
-msgid "Previous"
-msgstr "Ansicht"
-
-#: lib/gui.class.php
-msgid "Previous period"
-msgstr ""
-
-#: plugins/tools/summary/plugin.php
-msgid "Project's forum"
-msgstr "Forum des Projektes"
-
-#: index.php pages/visits.php
-msgid "Proxy"
-msgstr "Proxy"
-
-#: share/data/countries.ini
-msgid "Puerto Rico"
-msgstr "Puerto Rico"
-
-#: share/data/languages.ini
-msgid "Punjabi"
-msgstr "Panjabi"
-
-#: share/data/countries.ini
-msgid "Qatar"
-msgstr "Katar"
-
-#: share/data/languages.ini
-msgid "Quechua"
-msgstr "Quechua"
-
-#: pages/visits.php
-msgid "Referrer website"
-msgstr "Verweisseite"
-
-#: index.php
-msgid "Referrers"
-msgstr "Referrer (Verweise)"
-
-#: pages/visits.php
-msgid "Region"
-msgstr "Gebiet"
-
-#: index.php
-msgid "Regions"
-msgstr "Gebiete"
-
-#: install.php
-msgid "Reliable Unicode support"
-msgstr ""
-
-#: install.php
-msgid "Reliable translations support"
-msgstr ""
-
-#: index.php
-msgid "Remember password"
-msgstr "Angemeldet bleiben?"
-
-#: install.php
-msgid "Repeat password"
-msgstr "Neues Kennwort wiederholen"
-
-#: plugins/tools/backups/plugin.php
-#, fuzzy
-msgid "Replace existing data"
-msgstr "Daten, die schon existieren überschreiben (Benutzerdefinierte Einstellungen)"
-
-#: plugins/tools/configuration/plugin.php
-msgid "Replace existing data (user profile)"
-msgstr "Daten, die schon existieren überschreiben (Benutzerdefinierte Einstellungen)"
-
-#: install.php
-msgid "Requirements"
-msgstr ""
-
-#: install.php plugins/tools/backups/plugin.php
-#: plugins/tools/blacklist/plugin.php plugins/tools/configuration/plugin.php
-#: plugins/tools/logs/plugin.php plugins/tools/reset/plugin.php
-msgid "Reset"
-msgstr "Rücksetzen"
-
-#: plugins/tools/reset/plugin.php
-msgid "Reset selected tables"
-msgstr "Ausgewählte Tabellen löschen"
-
-#: plugins/tools/backups/plugin.php
-msgid "Restore"
-msgstr "Wiederherstellen"
-
-#: plugins/tools/backups/plugin.php
-msgid "Restore backup saved on hard disc"
-msgstr "Sicherheitskopie aus der lokalen Festplatte laden"
-
-#: plugins/tools/logs/plugin.php
-msgid "Results per page"
-msgstr "Ergebnisse pro Seite"
-
-#: lib/gui.class.php pages/feed.php pages/general.php
-msgid "Returns"
-msgstr "Rückbesuche"
-
-#: pages/visits.php
-msgid "Returns visitors"
-msgstr "Zurückgekehrte Besucher"
-
-#: share/data/countries.ini
-msgid "Reunion"
-msgstr "Réunion"
-
-#: share/data/languages.ini
-msgid "Rhaeto-Romance"
-msgstr "Rätoromanisch"
-
-#: share/data/countries.ini
-msgid "Romania"
-msgstr "Rumänien"
-
-#: share/data/languages.ini
-msgid "Romanian"
-msgstr "Rumänisch"
-
-#: share/data/languages.ini
-msgid "Russian"
-msgstr "Russisch"
-
-#: share/data/countries.ini
-msgid "Russian Federation"
-msgstr "Russische Föderation"
-
-#: share/data/countries.ini
-msgid "Rwanda"
-msgstr "Ruanda"
-
-#: share/data/countries.ini
-msgid "Saint Helena"
-msgstr "St. Helena"
-
-#: share/data/countries.ini
-msgid "Saint Kitts and Nevis"
-msgstr "St. Kitts und Nevis"
-
-#: share/data/countries.ini
-msgid "Saint Lucia"
-msgstr "St. Lucia"
-
-#: share/data/countries.ini
-msgid "Saint Pierre and Miquelon"
-msgstr "Saint-Pierre und Miquelon"
-
-#: share/data/countries.ini
-msgid "Saint Vincent and the Grenadines"
-msgstr "St. Vincent und die Grenadinen"
-
-#: share/data/countries.ini
-msgid "Samoa"
-msgstr "Samoa"
-
-#: share/data/languages.ini
-msgid "Samoan"
-msgstr "Samoisch"
-
-#: share/data/countries.ini
-msgid "San Marino"
-msgstr "San Marino"
-
-#: share/data/languages.ini
-msgid "Sangho"
-msgstr "Sango"
-
-#: share/data/languages.ini
-msgid "Sanskrit"
-msgstr "Sanskrit"
-
-#: share/data/countries.ini
-msgid "Sao Tome and Principe"
-msgstr "São Tomé und Príncipe"
-
-#: share/data/countries.ini
-msgid "Saudi Arabia"
-msgstr "Saudi-Arabien"
-
-#: plugins/tools/backups/plugin.php plugins/tools/blacklist/plugin.php
-#: plugins/tools/configuration/plugin.php
-msgid "Save"
-msgstr "Speichern"
-
-#: install.php
-#, fuzzy
-msgid "Save configuration file"
-msgstr "Einstellungen"
-
-#: plugins/tools/blacklist/plugin.php plugins/tools/configuration/plugin.php
-#, fuzzy
-msgid "Save information about ignored and blocked visits"
-msgstr "Informationen über die geblockte und ignorierte Besuche speichern"
-
-#: share/data/languages.ini
-msgid "Scots Gaelic"
-msgstr "Schottisch-Gälisch"
-
-#: pages/visits.php
-msgid "Screen resolution"
-msgstr "Bildschirmgröße"
-
-#: index.php
-msgid "Screen resolutions"
-msgstr "Bildschirmgröße"
-
-#: plugins/tools/configuration/plugin.php plugins/tools/logs/plugin.php
-msgid "Search"
-msgstr "Suchen"
-
-#: install.php
-#, fuzzy
-msgid "Select"
-msgstr "Auswahlliste"
-
-#: plugins/tools/reset/plugin.php
-msgid "Selected tables emptied successfully."
-msgstr ""
-
-#: plugins/tools/backups/plugin.php
-msgid "Send"
-msgstr "Senden"
-
-#: share/data/countries.ini
-msgid "Senegal"
-msgstr "Senegal"
-
-#: plugins/tools/configuration/plugin.php
-msgid "Separator between address and GET query"
-msgstr "Trennzeichen zwischen Adresse und GET-Abfrage"
-
-#: share/data/countries.ini
-msgid "Serbia"
-msgstr "Serbien"
-
-#: share/data/languages.ini
-msgid "Serbian"
-msgstr "Serbisch"
-
-#: share/data/languages.ini
-msgid "Serbo-Croatian"
-msgstr "Serbokroatisch"
-
-#: plugins/tools/summary/plugin.php
-msgid "Server load"
-msgstr "Serverbelastung"
-
-#: plugins/tools/summary/plugin.php
-msgid "Server software"
-msgstr "Server Software"
-
-#: share/data/languages.ini
-msgid "Sesotho"
-msgstr "Süd-Sotho"
-
-#: share/data/languages.ini
-msgid "Setswana"
-msgstr "Setswana"
-
-#: install.php plugins/tools/backups/plugin.php
-#: plugins/tools/blacklist/plugin.php plugins/tools/configuration/plugin.php
-msgid "Settings"
-msgstr "Einstellungen"
-
-#: plugins/tools/configuration/plugin.php
-msgid "Settings of amounts of displayed elements"
-msgstr ""
-
-#: plugins/tools/configuration/plugin.php
-#, fuzzy
-msgid "Settings of passing variables in address"
-msgstr "Weitergabe von Variablen konfigurieren."
-
-#: plugins/tools/configuration/plugin.php
-#, fuzzy
-msgid "Settings requeired for correct data collecting"
-msgstr "Einstellungen, die zum fehlerfreien Sammeln von Daten nötig sind."
-
-#: share/data/countries.ini
-msgid "Seychelles"
-msgstr "Seychellen"
-
-#: share/data/languages.ini
-msgid "Shona"
-msgstr "Shona"
-
-#: pages/feed.php
-msgid "Short summary of collected data from 24 hours, week or month."
-msgstr "Kurzfassung von gesammelten Daten, die innerhalb 24 Stünden, einer Woche oder einem Monat gesammelt wurden."
-
-#: index.php plugins/tools/logs/plugin.php
-msgid "Show"
-msgstr "Anzeigen"
-
-#: lib/chart.class.php
-msgid "Show / hide levels of maximum, average and minimum"
-msgstr "Zeigen / verbergen die Stuffen: das Maximum, der Durchschnitt und das Minimum"
-
-#: plugins/tools/configuration/plugin.php
-msgid "Show all"
-msgstr "Alle anzeigen"
-
-#: index.php
-msgid "Show data for"
-msgstr "Zeige Daten aus"
-
-#: pages/visits.php
-msgid "Show location on map"
-msgstr "Position auf Karte anzeigen"
-
-#: pages/visits.php
-#, fuzzy
-msgid "Show network robots"
-msgstr "Webcrawlers"
-
-#: plugins/tools/configuration/plugin.php
-msgid "Show only modified"
-msgstr "Nur geäderte anzeigen"
-
-#: plugins/tools/logs/plugin.php
-msgid "Showed"
-msgstr "Angezeigte"
-
-#: share/data/countries.ini
-msgid "Sierra Leone"
-msgstr "Sierra Leone"
-
-#: share/data/languages.ini
-msgid "Sindhi"
-msgstr "Sindhi"
-
-#: share/data/countries.ini
-msgid "Singapore"
-msgstr "Singapur"
-
-#: share/data/languages.ini
-msgid "Sinhalese"
-msgstr "Singhalesisch"
-
-#: share/data/languages.ini
-msgid "Siswati"
-msgstr "Siswati"
-
-#: pages/visits.php
-msgid "Site"
-msgstr "Seite"
-
-#: index.php
-msgid "Sites"
-msgstr "Seitenpopularität"
-
-#: share/data/languages.ini
-msgid "Slovak"
-msgstr "Slowakisch"
-
-#: share/data/countries.ini
-msgid "Slovak Republic"
-msgstr "Slowakei"
-
-#: share/data/countries.ini
-msgid "Slovenia"
-msgstr "Slowenien"
-
-#: share/data/languages.ini
-msgid "Slovenian"
-msgstr "Slowenisch"
-
-#: share/data/countries.ini
-msgid "Solomon Islands"
-msgstr "Salomonen"
-
-#: share/data/languages.ini
-msgid "Somali"
-msgstr "Somali"
-
-#: share/data/countries.ini
-msgid "Somalia"
-msgstr "Somalia"
-
-#: share/data/countries.ini
-msgid "South Africa"
-msgstr "Südafrika"
-
-#: share/data/continents.ini
-msgid "South America"
-msgstr "Südamerika"
-
-#: share/data/countries.ini
-msgid "South Georgia and the South Sandwich Islands"
-msgstr "Südgeorgien und die Südlichen Sandwichinseln"
-
-#: share/data/countries.ini
-msgid "South Korea"
-msgstr "Südkorea"
-
-#: share/data/countries.ini
-msgid "Spain"
-msgstr "Spanien"
-
-#: share/data/languages.ini
-msgid "Spanish"
-msgstr "Spanisch"
-
-#: share/data/countries.ini
-msgid "Sri Lanka"
-msgstr "Sri Lanka"
-
-#: plugins/tools/configuration/plugin.php
-msgid "Statistics antipixel"
-msgstr "Antipixel"
-
-#: index.php
-msgid "Statistics are disabled."
-msgstr "Statistik is deaktiviert"
-
-#: index.php
-msgid "Statistics for"
-msgstr "Statistik für"
-
-#: install.php
-msgid "Step %d of 3"
-msgstr ""
-
-#: lib/gui.class.php
-msgid "Success"
-msgstr "Erfolg"
-
-#: share/data/countries.ini
-msgid "Sudan"
-msgstr "Sudan"
-
-#: lib/group.class.php pages/feed.php pages/time.php
-msgid "Sum"
-msgstr "Zusammen"
-
-#: index.php lib/chart.class.php pages/feed.php
-#: plugins/tools/summary/plugin.php
-msgid "Summary"
-msgstr "Zusammenfassung"
-
-#: share/data/languages.ini
-msgid "Sundanese"
-msgstr "Sundanesisch"
-
-#: share/data/countries.ini
-msgid "Suriname"
-msgstr "Suriname"
-
-#: share/data/countries.ini
-msgid "Svalbard and Jan Mayen Islands"
-msgstr "Svalbard und Jan Mayen Inseln"
-
-#: share/data/languages.ini
-msgid "Swahili"
-msgstr "Suaheli"
-
-#: share/data/countries.ini
-msgid "Swaziland"
-msgstr "Swasiland"
-
-#: share/data/countries.ini
-msgid "Sweden"
-msgstr "Schweden"
-
-#: share/data/languages.ini
-msgid "Swedish"
-msgstr "Schwedisch"
-
-#: share/data/countries.ini
-msgid "Switzerland"
-msgstr "Schweiz"
-
-#: share/data/countries.ini
-msgid "Syria"
-msgstr "Syrien"
-
-#: plugins/tools/backups/plugin.php
-#, fuzzy
-msgid "Tables to archivize"
-msgstr "Tabelle auswählen (Benutzerdefinierte Einstellungen)"
-
-#: plugins/tools/configuration/plugin.php
-msgid "Tables to archivize (user profile)"
-msgstr "Tabelle auswählen (Benutzerdefinierte Einstellungen)"
-
-#: share/data/languages.ini
-msgid "Tagalog"
-msgstr "Tagalog"
-
-#: share/data/countries.ini
-msgid "Taiwan"
-msgstr "Taiwan"
-
-#: share/data/languages.ini
-msgid "Tajik"
-msgstr "Tadschikisch"
-
-#: share/data/countries.ini
-msgid "Tajikistan"
-msgstr "Tadschikistan"
-
-#: share/data/languages.ini
-msgid "Tamil"
-msgstr "Tamil"
-
-#: share/data/countries.ini
-msgid "Tanzania"
-msgstr "Tansania"
-
-#: share/data/languages.ini
-msgid "Tatar"
-msgstr "Tatarisch"
-
-#: index.php
-msgid "Technical"
-msgstr "Technische"
-
-#: share/data/languages.ini
-msgid "Telugu"
-msgstr "Telugu"
-
-#: install.php
-#, fuzzy
-msgid "Test database connection"
-msgstr "Datensammlung aktivieren"
-
-#: share/data/languages.ini
-msgid "Thai"
-msgstr "Thailändisch"
-
-#: share/data/countries.ini
-msgid "Thailand"
-msgstr "Thailand"
-
-#: share/data/countries.ini
-msgid "The Democratic Republic of Congo"
-msgstr "Demokratische Republik Kongo"
-
-#: index.php
-msgid "This IP address was blocked!"
-msgstr "Diese IP-Adresse wurde geblockt!"
-
-#: install.php
+#: install.php:50
+#: install.php:185
 msgid ""
 "This database module is not supported on this server!<br />\n"
 "Continuation of installation can cause unexpected results!"
 msgstr ""
 
-#: lib/group.class.php
-msgid "This group is disabled!"
-msgstr "Diese Gruppe ist nicht aktiv!"
-
-#: index.php
+#: index.php:1145
 msgid ""
 "This is a test version of <em>eStats</em> (status: <em>%s</em>).<br />\n"
 "Its functionality could be incomplete, could work incorrect and be incompatible with newest versions!<br />\n"
@@ -2927,433 +50,3482 @@ msgstr ""
 "Diese Version wurde nicht auf Funktionalität geprüft!<br />\n"
 "<strong style=\"text-decoration:underline;\">Nutzen nur auf eigene Gefahr!</strong>"
 
-#: index.php
+#: index.php:602
+msgid "24 hours"
+msgstr "24 Stünden"
+
+#: plugins/tools/summary/plugin.php:62
+msgid "<em>eStats</em> version"
+msgstr "<em>eStats</em> Version"
+
+#: share/data/languages.ini:2
+msgid "Abkhazian"
+msgstr "Abchasien"
+
+#: index.php:1062
+#: index.php:1085
+msgid "Access denied"
+msgstr "Zugriff verboten"
+
+#: plugins/tools/summary/plugin.php:50
+msgid "Actions"
+msgstr "Abläufe"
+
+#: plugins/tools/configuration/plugin.php:46
+#, fuzzy
+msgid "Add robots visits to visits"
+msgstr "Besuche von Webcrawlers zu Besuche beifügen"
+
+#: plugins/tools/configuration/plugin.php:43
+msgid "Address prefix"
+msgstr "Adresse Vorspann"
+
+#: plugins/tools/configuration/plugin.php:45
+msgid "Address suffix"
+msgstr "Adresse Anhang"
+
+#: share/data/events.ini:4
+msgid "Administrator logged in"
+msgstr "Administrator hat sich angemeldet"
+
+#: install.php:548
+#: plugins/tools/configuration/plugin.php:273
+msgid "Administrator password"
+msgstr "Administratorkennwort"
+
+#: plugins/tools/configuration/plugin.php:251
+#, fuzzy
+msgid "Administrator password changed successfully."
+msgstr "Administratorkennwort wurde geändert"
+
+#: install.php:56
+msgid "Administrator password has less than five characters, you should choose longer password for greater security!"
+msgstr ""
+
+#: share/data/events.ini:6
+msgid "Administrator password was changed"
+msgstr "Administratorkennwort wurde geändert"
+
+#: install.php:156
+#: plugins/tools/configuration/plugin.php:345
+msgid "Advanced"
+msgstr "Erweiterte"
+
+#: install.php:131
+#, fuzzy
+msgid "Advanced settings"
+msgstr "Erweiterte"
+
+#: share/data/languages.ini:1
+msgid "Afar"
+msgstr "Afar"
+
+#: share/data/countries.ini:4
+msgid "Afghanistan"
+msgstr "Afghanistan"
+
+#: share/data/continents.ini:1
+msgid "Africa"
+msgstr "Afrika"
+
+#: share/data/languages.ini:3
+msgid "Afrikaans"
+msgstr "Afrikaans"
+
+#: share/data/countries.ini:7
+msgid "Albania"
+msgstr "Albanien"
+
+#: share/data/languages.ini:107
+msgid "Albanian"
+msgstr "Albanisch"
+
+#: share/data/countries.ini:63
+msgid "Algeria"
+msgstr "Algerien"
+
+#: index.php:988
+#: index.php:999
+#: index.php:1010
+#: index.php:1021
+msgid "All"
+msgstr "Alle"
+
+#: share/data/events.ini:15
+msgid "All data were deleted"
+msgstr "Gesamte Daten wurden erfolgreich gelöscht"
+
+#: share/data/countries.ini:13
+msgid "American Samoa"
+msgstr "Amerikanisch-Samoa"
+
+#: share/data/languages.ini:4
+msgid "Amharic"
+msgstr "Amharisch"
+
+#: plugins/tools/summary/plugin.php:114
+msgid "Amount of available backups"
+msgstr "Sicherheitskopien insgesamt"
+
+#: plugins/tools/configuration/plugin.php:41
+#, fuzzy
+msgid "Amount of days from which visits data are displayed (0 - display all)"
+msgstr "Anzahl der Tage, aus denen die detaillierte Statistik angezeigt werden soll. (0 - alle anzeigen)"
+
+#: plugins/tools/configuration/plugin.php:38
+msgid "Amount of entries per page in Visit details"
+msgstr "Anzahl der Einträge pro Seite in Besucheinzelheiten"
+
+#: plugins/tools/configuration/plugin.php:37
+#, fuzzy
+msgid "Amount of entries per page in Visits"
+msgstr "Anzahl der Einträge pro Seite in Besucheinzelheiten"
+
+#: pages/visits.php:429
+#, fuzzy
+msgid "Amount of views"
+msgstr "Anzahl der Besuche"
+
+#: plugins/tools/blacklist/plugin.php:60
+msgid "Amount of visits"
+msgstr "Anzahl der Besuche"
+
+#: plugins/tools/backups/plugin.php:86
+#: plugins/tools/reset/plugin.php:40
+#, fuzzy
+msgid "An error occured during backup create attempt!"
+msgstr "Erstellung einer Sicherheitskopie fehlgeschlagen"
+
+#: plugins/tools/backups/plugin.php:67
+#, fuzzy
+msgid "An error occured during backup delete attempt!"
+msgstr "Löschen von einer Sicherheitskopie fehlgeschlagen"
+
+#: plugins/tools/backups/plugin.php:107
+#, fuzzy
+msgid "An error occured during backup restore attempt!"
+msgstr "Wiederherstellung von einer Sicherheitskopie fehlgeschlagen"
+
+#: install.php:67
+msgid "An error occured during database connection attempt!"
+msgstr ""
+
+#: install.php:308
+msgid "An error occured during saving of configuration file!"
+msgstr ""
+
+#: share/data/countries.ini:2
+msgid "Andorra"
+msgstr "Andorra"
+
+#: share/data/countries.ini:10
+msgid "Angola"
+msgstr "Angola"
+
+#: share/data/countries.ini:6
+msgid "Anguilla"
+msgstr "Anguilla"
+
+#: share/data/continents.ini:7
+#: share/data/countries.ini:11
+msgid "Antarctica"
+msgstr "Antarktis"
+
+#: share/data/countries.ini:5
+msgid "Antigua and Barbuda"
+msgstr "Antigua und Barbuda"
+
+#: plugins/tools/summary/plugin.php:90
+msgid "Apache modules"
+msgstr "Apache Module"
+
+#: share/data/languages.ini:5
+msgid "Arabic"
+msgstr "Arabisch"
+
+#: share/data/countries.ini:12
+msgid "Argentina"
+msgstr "Argentinien"
+
+#: share/data/countries.ini:8
+msgid "Armenia"
+msgstr "Armenien"
+
+#: share/data/languages.ini:46
+msgid "Armenian"
+msgstr "Armenisch"
+
+#: lib/gui.class.php:723
+msgid "Array, elements separated by |"
+msgstr "Tabelle, Elemente durch | getrennt"
+
+#: share/data/countries.ini:16
+msgid "Aruba"
+msgstr "Aruba"
+
+#: share/data/countries.ini:1
+msgid "Ascension Island"
+msgstr "Himmelfahrtsinsel"
+
+#: share/data/continents.ini:2
+msgid "Asia"
+msgstr "Asien"
+
+#: share/data/languages.ini:6
+msgid "Assamese"
+msgstr "Asamiya"
+
+#: share/data/continents.ini:3
+#: share/data/countries.ini:15
+msgid "Australia"
+msgstr "Australien"
+
+#: share/data/countries.ini:14
+msgid "Austria"
+msgstr "Österreich"
+
+#: install.php:76
+#: plugins/tools/summary/plugin.php:67
+#: pages/geolocation.php:189
+msgid "Author"
+msgstr "Autor"
+
+#: install.php:580
+#, fuzzy
+msgid "Available"
+msgstr "Daten nicht verfügbar"
+
+#: lib/group.class.php:652
+#: pages/feed.php:309
+#: pages/time.php:277
+msgid "Average"
+msgstr "Durchschnittlich"
+
+#: pages/general.php:50
+msgid "Average per day"
+msgstr "Durchschnittlich innerhalb eines Tages"
+
+#: pages/general.php:51
+msgid "Average per hour"
+msgstr "Durchschnittlich innerhalb einer Stunde"
+
+#: share/data/languages.ini:7
+msgid "Aymara"
+msgstr "Aymara"
+
+#: share/data/countries.ini:18
+msgid "Azerbaijan"
+msgstr "Aserbaidschan"
+
+#: share/data/languages.ini:8
+msgid "Azerbaijani"
+msgstr "Aserbaidschanisch"
+
+#: plugins/tools/backups/plugin.php:151
+#, fuzzy
+msgid "Backup copy"
+msgstr "Sicherheitskopien"
+
+#: plugins/tools/backups/plugin.php:78
+#: plugins/tools/reset/plugin.php:34
+#, fuzzy
+msgid "Backup created successfully."
+msgstr "Sicherheitskopien wurde erfolgreich erstellt"
+
+#: plugins/tools/configuration/plugin.php:27
+msgid "Backup creating profile"
+msgstr "Sicherheitskopie Erstellung-Modus auswählen"
+
+#: plugins/tools/backups/plugin.php:170
+#, fuzzy
+msgid "Backup creation profile"
+msgstr "Sicherheitskopie Erstellung-Modus auswählen"
+
+#: plugins/tools/backups/plugin.php:62
+#, fuzzy
+msgid "Backup deleted successfully."
+msgstr "Sicherheitskopie wurde erfolgreich gelöscht"
+
+#: plugins/tools/backups/plugin.php:103
+msgid "Backup restored successfully."
+msgstr ""
+
+#: share/data/events.ini:10
+msgid "Backup was created"
+msgstr "Sicherheitskopien wurde erfolgreich erstellt"
+
+#: share/data/events.ini:12
+msgid "Backup was deleted"
+msgstr "Sicherheitskopie wurde erfolgreich gelöscht"
+
+#: plugins/tools/summary/plugin.php:107
+msgid "Backups"
+msgstr "Sicherheitskopien"
+
+#: plugins/tools/configuration/plugin.php:18
+#, fuzzy
+msgid "Backups creation system configuration"
+msgstr "Werkzeug für Sicherheitskopien konfigurieren."
+
+#: plugins/tools/reset/plugin.php:19
+#, fuzzy
+msgid "Backups deleted successfully."
+msgstr "Sicherheitskopie wurde erfolgreich gelöscht"
+
+#: plugins/tools/backups/plugin.php:148
+#, fuzzy
+msgid "Backups management"
+msgstr "Sicherheitskopie wurde erfolgreich gelöscht"
+
+#: share/data/events.ini:17
+msgid "Backups were deleted"
+msgstr "Sicherheitskopien wurden erfolgreich gelöscht"
+
+#: share/data/countries.ini:32
+msgid "Bahamas"
+msgstr "Bahamas"
+
+#: share/data/countries.ini:25
+msgid "Bahrain"
+msgstr "Bahrain"
+
+#: share/data/countries.ini:21
+msgid "Bangladesh"
+msgstr "Bangladesch"
+
+#: share/data/countries.ini:20
+msgid "Barbados"
+msgstr "Barbados"
+
+#: share/data/languages.ini:9
+msgid "Bashkir"
+msgstr "Baschkirisch"
+
+#: share/data/languages.ini:29
+msgid "Basque"
+msgstr "Baskisch"
+
+#: share/data/countries.ini:36
+msgid "Belarus"
+msgstr "Weißrussland"
+
+#: share/data/countries.ini:22
+msgid "Belgium"
+msgstr "Belgien"
+
+#: share/data/countries.ini:37
+msgid "Belize"
+msgstr "Belize"
+
+#: share/data/languages.ini:14
+msgid "Bengali"
+msgstr "Bengalisch"
+
+#: share/data/countries.ini:27
+msgid "Benin"
+msgstr "Benin"
+
+#: share/data/countries.ini:28
+msgid "Bermuda"
+msgstr "Bermuda"
+
+#: share/data/countries.ini:33
+msgid "Bhutan"
+msgstr "Bhutan"
+
+#: share/data/languages.ini:23
+msgid "Bhutani"
+msgstr "Bhutani"
+
+#: share/data/languages.ini:12
+msgid "Bihari"
+msgstr "Bihari"
+
+#: share/data/languages.ini:13
+msgid "Bislama"
+msgstr "Bislama"
+
+#: lib/group.class.php:743
+msgid "Block counting of this keyword / phrase"
+msgstr "Dieses Schlagwort aus Statistik ausschließen"
+
+#: lib/group.class.php:743
+#: pages/visits.php:233
+msgid "Block counting of this referrer"
+msgstr "Diesen Referrer aus Statistik ausschließen"
+
+#: lib/gui.class.php:429
+msgid "Block this IP"
+msgstr "IP blockieren"
+
+#: plugins/tools/blacklist/plugin.php:137
+msgid "Blocked"
+msgstr "Blockiert"
+
+#: share/data/countries.ini:30
+msgid "Bolivia"
+msgstr "Bolivien"
+
+#: share/data/countries.ini:19
+msgid "Bosnia and Herzegovina"
+msgstr "Bosnien und Herzegowina"
+
+#: share/data/countries.ini:35
+msgid "Botswana"
+msgstr "Botsuana"
+
+#: share/data/countries.ini:34
+msgid "Bouvet Island"
+msgstr "Bouvetinsel"
+
+#: share/data/countries.ini:31
+msgid "Brazil"
+msgstr "Brasilien"
+
+#: share/data/languages.ini:16
+msgid "Breton"
+msgstr "Bretonisch"
+
+#: share/data/countries.ini:111
+msgid "British Indian Ocean Territory"
+msgstr "Britisches Territorium im Indischen Ozean"
+
+#: share/data/countries.ini:242
+msgid "British Virgin Islands"
+msgstr "Britische Jungferninseln"
+
+#: plugins/tools/logs/plugin.php:173
+msgid "Browse"
+msgstr "Durchsuchen"
+
+#: plugins/tools/blacklist/plugin.php:131
+#: pages/visits.php:190
+#: pages/visits.php:280
+#: pages/visits.php:437
+msgid "Browser"
+msgstr "Webbrowser"
+
+#: index.php:590
+msgid "Browser versions"
+msgstr "Webbrowser-Versionen"
+
+#: index.php:589
+msgid "Browsers"
+msgstr "Webbrowser"
+
+#: share/data/countries.ini:29
+msgid "Brunei Darussalam"
+msgstr "Brunei Darussalam"
+
+#: share/data/countries.ini:24
+msgid "Bulgaria"
+msgstr "Bulgarien"
+
+#: share/data/languages.ini:11
+msgid "Bulgarian"
+msgstr "Bulgarisch"
+
+#: share/data/countries.ini:23
+msgid "Burkina Faso"
+msgstr "Burkina Faso"
+
+#: share/data/languages.ini:79
+msgid "Burmese"
+msgstr "Birmanisch"
+
+#: share/data/countries.ini:26
+msgid "Burundi"
+msgstr "Burundi"
+
+#: share/data/languages.ini:10
+msgid "Byelorussian"
+msgstr "Weißrussisch"
+
+#: install.php:480
+msgid "Bzip compression support"
+msgstr ""
+
+#: plugins/tools/summary/plugin.php:107
+msgid "Cache"
+msgstr "Cache"
+
+#: plugins/tools/configuration/plugin.php:35
+msgid "Cache time for other data (seconds)"
+msgstr ""
+
+#: plugins/tools/configuration/plugin.php:36
+msgid "Cache time for time statistics data (seconds)"
+msgstr ""
+
+#: plugins/tools/configuration/plugin.php:33
+msgid "Cache time for visitors list (seconds)"
+msgstr ""
+
+#: share/data/countries.ini:122
+msgid "Cambodia"
+msgstr "Kambodscha"
+
+#: share/data/languages.ini:59
+msgid "Cambodian"
+msgstr "Khmer-Sprache"
+
+#: share/data/countries.ini:47
+msgid "Cameroon"
+msgstr "Kamerun"
+
+#: install.php:190
+#, fuzzy
+msgid "Can not connect to database!"
+msgstr "Keine Verbindung zur Datenbank!"
+
+#: install.php:164
+#: install.php:444
+msgid "Can not found class %s!"
+msgstr ""
+
+#: index.php:367
+msgid "Can not load theme %s!"
+msgstr ""
+
+#: install.php:353
+msgid "Can you use <em>PHP</em> code on your page?"
+msgstr ""
+
+#: share/data/countries.ini:38
+msgid "Canada"
+msgstr "Kanada"
+
+#: share/data/countries.ini:105
+msgid "Canary Islands"
+msgstr "Kanarische Inseln"
+
+#: share/data/countries.ini:53
+msgid "Cape Verde"
+msgstr "Kap Verde"
+
+#: share/data/languages.ini:17
+msgid "Catalan"
+msgstr "Katalanisch"
+
+#: share/data/countries.ini:129
+msgid "Cayman Islands"
+msgstr "Kaimaninseln"
+
+#: share/data/countries.ini:41
+msgid "Central African Republic"
+msgstr "Zentralafrikanische Republik"
+
+#: share/data/countries.ini:64
+msgid "Ceuta and Melilla"
+msgstr "Plaza de soberanía"
+
+#: share/data/countries.ini:218
+msgid "Chad"
+msgstr "Tschad"
+
+#: index.php:462
+msgid "Change"
+msgstr "Ändern"
+
+#: plugins/tools/configuration/plugin.php:289
+msgid "Change password"
+msgstr "Kennwort ändern"
+
+#: pages/geolocation.php:187
+#: pages/technical.php:30
+#: pages/general.php:37
+msgid "Chart"
+msgstr "Diagramm"
+
+#: plugins/tools/configuration/plugin.php:60
+msgid "Chart type in Time stats"
+msgstr "Diagrammtyp für zeitliche Statistik"
+
+#: plugins/tools/summary/plugin.php:63
+msgid "Check for upgrade"
+msgstr ""
+
+#: share/data/countries.ini:46
+msgid "Chile"
+msgstr "Republik Chile"
+
+#: share/data/countries.ini:48
+msgid "China"
+msgstr "China"
+
+#: share/data/languages.ini:138
+msgid "Chinese"
+msgstr "Chinesisch"
+
+#: index.php:464
+msgid "Choose language"
+msgstr "Sprache auswählen"
+
+#: index.php:467
+msgid "Choose theme"
+msgstr "Motiv auswählen"
+
+#: share/data/countries.ini:54
+msgid "Christmas Island"
+msgstr "Weihnachtsinsel "
+
+#: index.php:585
+msgid "Cities"
+msgstr "Städte"
+
+#: pages/visits.php:294
+msgid "City"
+msgstr "Stadt"
+
+#: share/data/countries.ini:50
+msgid "Clipperton Island"
+msgstr "Clipperton-Insel"
+
+#: pages/visits.php:298
+msgid "Co-ordinates"
+msgstr "Koordinaten"
+
+#: share/data/countries.ini:39
+msgid "Cocos Islands"
+msgstr "Kokosinseln"
+
+#: plugins/tools/configuration/plugin.php:47
+#, fuzzy
+msgid "Collect visit details "
+msgstr "Alte Einzelheiten zu Besuche löschen"
+
+#: share/data/countries.ini:49
+msgid "Colombia"
+msgstr "Kolumbien"
+
+#: share/data/countries.ini:124
+msgid "Comoros"
+msgstr "Komoren"
+
+#: pages/time.php:274
+#, fuzzy
+msgid "Compare with previous period"
+msgstr "Vorherige Seite"
+
+#: plugins/tools/backups/plugin.php:154
+msgid "Compression"
+msgstr "Datenkomprimierung"
+
+#: pages/visits.php:433
+msgid "Configuration"
+msgstr "Einstellungen"
+
+#: install.php:290
+#, fuzzy
+msgid "Configuration file could not be saved!"
+msgstr "Einstellungen wurden geändert"
+
+#: install.php:314
+#, fuzzy
+msgid "Configuration file saved successfully."
+msgstr "Einstellungen wurden geändert"
+
+#: plugins/tools/configuration/plugin.php:22
+msgid "Configuration of visits information"
+msgstr ""
+
+#: lib/gui.class.php:811
+#: plugins/tools/backups/plugin.php:16
+#, fuzzy
+msgid "Configuration saved successfully."
+msgstr "Einstellungen wurden geändert"
+
+#: share/data/events.ini:3
+msgid "Configuration was saved"
+msgstr "Einstellungen wurden geändert"
+
+#: share/data/countries.ini:42
+msgid "Congo"
+msgstr "Kongo"
+
+#: install.php:63
+msgid "Connection established successfully."
+msgstr ""
+
+#: pages/visits.php:297
+msgid "Continent"
+msgstr "Kontinent"
+
+#: index.php:587
+#: pages/geolocation.php:41
+msgid "Continents"
+msgstr "Kontinente"
+
+#: install.php:586
+msgid ""
+"Continuation despite errors threatens unexpected results!\n"
+"You continue on your own risk!"
+msgstr ""
+
+#: install.php:154
+#: install.php:586
+#, fuzzy
+msgid "Continue"
+msgstr "Kontinent"
+
+#: install.php:586
+#, fuzzy
+msgid "Continue anyway"
+msgstr "Kontinent"
+
+#: share/data/countries.ini:45
+msgid "Cook Islands"
+msgstr "Cookinseln"
+
+#: index.php:601
+#: pages/visits.php:287
+#: pages/visits.php:445
+msgid "Cookies"
+msgstr "Cookies"
+
+#: pages/visits.php:202
+msgid "Cookies enabled"
+msgstr "Cookies aktiviert"
+
+#: install.php:326
+msgid "Copy following code and save it as file <em>conf/config.php</em>"
+msgstr ""
+
+#: share/data/languages.ini:18
+msgid "Corsican"
+msgstr "Korsisch"
+
+#: share/data/countries.ini:51
+msgid "Costa Rica"
+msgstr "Costa Rica"
+
+#: index.php:1137
+#, fuzzy
+msgid "Could not check for new version availability."
+msgstr "Informationen über neue Version können nicht aufgerufen werden!"
+
+#: install.php:517
+#, fuzzy
+msgid "Could not continue!"
+msgstr "Datei kann nicht hochgeladen werden!"
+
+#: plugins/tools/configuration/plugin.php:56
+#: plugins/tools/configuration/plugin.php:302
+msgid "Count whole phrases instead of keywords"
+msgstr "Ausdrücke anstatt Schlagwörter sammeln"
+
+#: index.php:586
+#: pages/geolocation.php:40
+#: pages/geolocation.php:43
+msgid "Countries"
+msgstr "Länder"
+
+#: pages/visits.php:296
+msgid "Country"
+msgstr "Land"
+
+#: plugins/tools/backups/plugin.php:174
+#: plugins/tools/reset/plugin.php:106
+msgid "Create backup"
+msgstr "Sicherheitskopie erstellen"
+
+#: plugins/tools/backups/plugin.php:170
+msgid "Create backups after specified time (s)"
+msgstr "Sicherheitskopie automatisch nach einer bestimmten Zeit erstellen (Zeitangabe in Sekunden)"
+
+#: plugins/tools/configuration/plugin.php:29
+#, fuzzy
+msgid "Create backups after specified time (seconds)"
+msgstr "Sicherheitskopie automatisch nach einer bestimmten Zeit erstellen (Zeitangabe in Sekunden)"
+
+#: share/data/countries.ini:102
+msgid "Croatia"
+msgstr "Kroatien"
+
+#: share/data/languages.ini:44
+msgid "Croatian"
+msgstr "Kroatisch"
+
+#: share/data/countries.ini:52
+msgid "Cuba"
+msgstr "Kuba"
+
+#: plugins/tools/configuration/plugin.php:278
+#, fuzzy
+msgid "Current password"
+msgstr "Aktueles Kennwort"
+
+#: lib/gui.class.php:263
+#, fuzzy
+msgid "Current period"
+msgstr "Aktueles Kennwort"
+
+#: plugins/tools/configuration/plugin.php:307
+msgid "Currently disabled"
+msgstr "Derzeit deaktiviert"
+
+#: plugins/tools/configuration/plugin.php:307
+msgid "Currently enabled"
+msgstr "Derzeit aktiviert"
+
+#: share/data/countries.ini:55
+msgid "Cyprus"
+msgstr "Republik Zypern"
+
+#: share/data/languages.ini:19
+msgid "Czech"
+msgstr "Tschechisch"
+
+#: share/data/countries.ini:56
+msgid "Czech Republic"
+msgstr "Tschechische Republik"
+
+#: share/data/languages.ini:21
+msgid "Danish"
+msgstr "Dänisch"
+
+#: plugins/tools/summary/plugin.php:107
+msgid "Data"
+msgstr "Daten"
+
+#: index.php:571
+#: plugins/tools/summary/plugin.php:102
+msgid "Data collected from"
+msgstr "Daten gesammelt ab"
+
+#: lib/group.class.php:490
+msgid "Data collecting for this group was disabled!"
+msgstr "Datensammlung für diese Gruppe wurde deaktiviert!"
+
+#: plugins/tools/configuration/plugin.php:19
+#, fuzzy
+msgid "Data collecting frequency"
+msgstr "Häufigkeit der Datensammlung"
+
+#: plugins/tools/reset/plugin.php:55
+msgid "Data deleted successfully."
+msgstr ""
+
+#: install.php:96
+#, fuzzy
+msgid "Data directory"
+msgstr "Daten Größe"
+
+#: lib/group.class.php:519
+#: lib/chart.class.php:703
+#: pages/visits.php:76
+msgid "Data from <em>cache</em>, refreshed: %s."
+msgstr "Daten aus <em>Cachespeicher</em>, aktualisiert: %s."
+
+#: share/data/events.ini:16
+msgid "Data from selected tables were deleted"
+msgstr "Daten aus ausgewählte Tabelle wurden erfolgreich gelöscht"
+
+#: plugins/tools/summary/plugin.php:106
+msgid "Data size"
+msgstr "Daten Größe"
+
+#: share/data/events.ini:14
+msgid "Data was restored from backup"
+msgstr "Sicherheitskopie wurde erfolgreich wiederhergestellt"
+
+#: plugins/tools/summary/plugin.php:70
+msgid "Database"
+msgstr "Datenbank"
+
+#: install.php:89
+#, fuzzy
+msgid "Database address"
+msgstr "Datenbankmodul"
+
+#: plugins/tools/configuration/plugin.php:21
+#, fuzzy
+msgid "Database cache settings"
+msgstr "Datenbank Cache Konfiguration (Zeitangabe in Sekunden)."
+
+#: install.php:88
+#, fuzzy
+msgid "Database host"
+msgstr "Datenbank"
+
+#: install.php:540
+#: plugins/tools/summary/plugin.php:66
+msgid "Database module"
+msgstr "Datenbankmodul"
+
+#: install.php:93
+#, fuzzy
+msgid "Database name"
+msgstr "Datenbankmodul"
+
+#: install.php:90
+#, fuzzy
+msgid "Database port"
+msgstr "Datenbank"
+
+#: install.php:120
+#, fuzzy
+msgid "Database settings"
+msgstr "Datenbank"
+
+#: install.php:296
+msgid "Database structure created successfully."
+msgstr ""
+
+#: install.php:253
+msgid "Database tables already exists: <em>%s</em>!"
+msgstr ""
+
+#: install.php:94
+msgid "Database tables prefix"
+msgstr ""
+
+#: install.php:91
+#, fuzzy
+msgid "Database user name"
+msgstr "Datenbankmodul"
+
+#: install.php:92
+#, fuzzy
+msgid "Database user password"
+msgstr "Angemeldet bleiben?"
+
+#: plugins/tools/logs/plugin.php:184
+#: pages/feed.php:202
+#: pages/visits.php:419
+msgid "Date"
+msgstr "Datum"
+
+#: plugins/tools/summary/plugin.php:110
+msgid "Date of last backup creation"
+msgstr "Letzte Sicherheitskopie-Datum"
+
+#: index.php:998
+msgid "Day"
+msgstr "Tag"
+
+#: index.php:608
+msgid "Days of week"
+msgstr "Wochentage"
+
+#: index.php:1223
+msgid "Debug"
+msgstr "Debugen"
+
+#: lib/gui.class.php:733
+msgid "Default"
+msgstr "Standardeinstellung"
+
+#: plugins/tools/configuration/plugin.php:58
+#: plugins/tools/configuration/plugin.php:341
+msgid "Default theme"
+msgstr "Standardmotiv"
+
+#: lib/gui.class.php:733
+msgid "Default value"
+msgstr "Standardwert"
+
+#: plugins/tools/backups/plugin.php:172
+#: plugins/tools/configuration/plugin.php:173
+#: plugins/tools/configuration/plugin.php:343
+#: plugins/tools/blacklist/plugin.php:41
+msgid "Defaults"
+msgstr "Standardeinstellung"
+
+#: plugins/tools/backups/plugin.php:164
+msgid "Delete"
+msgstr "Löschen"
+
+#: share/data/countries.ini:60
+msgid "Denmark"
+msgstr "Dänemark"
+
+#: pages/visits.php:421
+msgid "Details"
+msgstr "Einzelheiten"
+
+#: share/data/countries.ini:58
+msgid "Diego Garcia"
+msgstr "Diego Garcia"
+
+#: lib/gui.class.php:243
+msgid "Direct entries"
+msgstr "Direkte Zugänge"
+
+#: index.php:1160
+#: plugins/tools/summary/plugin.php:55
+msgid "Disable maintenance mode"
+msgstr "Wartungsmodus deaktiviren"
+
+#: plugins/tools/summary/plugin.php:54
+msgid "Disable statistics"
+msgstr "Statistik deaktivieren"
+
+#: plugins/tools/blacklist/plugin.php:36
+#, fuzzy
+msgid "Disallow statistics viewing for selected IP addresses"
+msgstr "Zugriff auf Besucherstatistik für bestimmte IP-Adressen nicht zulassen"
+
+#: plugins/tools/configuration/plugin.php:49
+msgid "Disallow stats viewing for selected IP addresses"
+msgstr "Zugriff auf Besucherstatistik für bestimmte IP-Adressen nicht zulassen"
+
+#: share/data/countries.ini:59
+msgid "Djibouti"
+msgstr "Dschibuti"
+
+#: lib/gui.class.php:429
+msgid "Do You really want to ban this IP address?"
+msgstr "wollen Sie wirklich diese IP-Adresse bannen?"
+
+#: plugins/tools/backups/plugin.php:164
+#: plugins/tools/reset/plugin.php:107
+msgid "Do You really want to delete data?"
+msgstr "Wollen Sie wirklich gewählte Daten löschen?"
+
+#: pages/visits.php:233
+msgid "Do You really want to exclude this referrer?"
+msgstr "Wollen Sie wirklich gewälte Referrer ausschlißen?"
+
+#: plugins/tools/backups/plugin.php:163
+msgid "Do You really want to restore data?"
+msgstr "Wollen Sie wirklich gewählte Daten widerherstellen?"
+
+#: plugins/tools/backups/plugin.php:172
+#: plugins/tools/configuration/plugin.php:173
+#: plugins/tools/configuration/plugin.php:343
+#: plugins/tools/blacklist/plugin.php:41
+msgid "Do You really want to restore defaults?"
+msgstr "Wollen Sie wirklich Standardeinstellungen wiederherstellen?"
+
+#: plugins/tools/backups/plugin.php:171
+#: plugins/tools/configuration/plugin.php:172
+#: plugins/tools/configuration/plugin.php:342
+#: plugins/tools/blacklist/plugin.php:40
+msgid "Do You really want to save?"
+msgstr "Wollen Sie wirklich alle Änderungen speichern?"
+
+#: lib/group.class.php:743
+#, fuzzy
+msgid "Do you really want to exclude this keyword / phrase?"
+msgstr "Wollen sie wirklich gewählte Schlagwort / Ausdruck ausschließen?"
+
+#: lib/group.class.php:743
+#, fuzzy
+msgid "Do you really want to exclude this referrer?"
+msgstr "Wollen Sie wirklich gewälte Referrer ausschlißen?"
+
+#: plugins/tools/summary/plugin.php:121
+msgid "Documentation"
+msgstr "Dokumentation"
+
+#: share/data/countries.ini:61
+msgid "Dominica"
+msgstr "Dominica"
+
+#: share/data/countries.ini:62
+msgid "Dominican Republic"
+msgstr "Dominikanische Republik"
+
+#: plugins/tools/backups/plugin.php:162
+msgid "Download"
+msgstr "Herunterladen"
+
+#: install.php:73
+#, fuzzy
+msgid "Driver information"
+msgstr "Information"
+
+#: share/data/languages.ini:82
+msgid "Dutch"
+msgstr "Niederländisch"
+
+#: share/data/countries.ini:65
+msgid "Ecuador"
+msgstr "Ecuador"
+
+#: share/data/countries.ini:67
+msgid "Egypt"
+msgstr "Ägypten"
+
+#: share/data/countries.ini:213
+msgid "El Salvador"
+msgstr "El Salvador"
+
+#: plugins/tools/configuration/plugin.php:34
+msgid "Enable caching for administrator"
+msgstr ""
+
+#: install.php:102
+msgid "Enable generation of maps and graphical charts (<em>GD</em> extension)"
+msgstr ""
+
+#: plugins/tools/summary/plugin.php:55
+msgid "Enable maintenance mode"
+msgstr "Wartungsmodus aktiviren"
+
+#: index.php:1166
+#: plugins/tools/summary/plugin.php:54
+msgid "Enable statistics"
+msgstr "statistik aktivieren"
+
+#: plugins/tools/configuration/plugin.php:96
+msgid "Enabled JavaScript is required for correct work of this tool!"
+msgstr "Dieses Werkzeug funktioniert nur dann, wenn Sie JavaScript aktivieren!"
+
+#: install.php:319
+#, fuzzy
+msgid "End of installation"
+msgstr "Administration"
+
+#: share/data/languages.ini:25
+msgid "English"
+msgstr "Englisch"
+
+#: plugins/tools/logs/plugin.php:176
+msgid "Entries amount"
+msgstr "Eintrage insgesamt"
+
+#: share/data/countries.ini:92
+msgid "Equatorial Guinea"
+msgstr "Äquatorialguinea"
+
+#: share/data/countries.ini:69
+msgid "Eritrea"
+msgstr "Eritrea"
+
+#: lib/gui.class.php:647
+msgid "Error"
+msgstr "Fehler"
+
+#: install.php:289
+msgid "Errors occured during database structure creation!"
+msgstr ""
+
+#: share/data/languages.ini:26
+msgid "Esperanto"
+msgstr "Esperanto"
+
+#: share/data/countries.ini:66
+msgid "Estonia"
+msgstr "Estland"
+
+#: share/data/languages.ini:28
+msgid "Estonian"
+msgstr "Estnisch"
+
+#: share/data/countries.ini:71
+msgid "Ethiopia"
+msgstr "Äthiopien"
+
+#: share/data/continents.ini:4
+msgid "Europe"
+msgstr "Europa"
+
+#: share/data/countries.ini:72
+msgid "European Union"
+msgstr "Europäische Union"
+
+#: pages/general.php:42
+msgid "Excluded"
+msgstr "Nicht gespeicherte"
+
+#: plugins/tools/reset/plugin.php:107
+msgid "Execute"
+msgstr "Anwenden"
+
+#: plugins/tools/logs/plugin.php:169
+msgid "Export"
+msgstr "Exportieren"
+
+#: share/data/countries.ini:75
+msgid "Falkland Islands"
+msgstr "Falklandinseln"
+
+#: share/data/countries.ini:77
+msgid "Faroe Islands"
+msgstr "Färöer"
+
+#: share/data/languages.ini:33
+msgid "Faroese"
+msgstr "Färöisch"
+
+#: share/data/countries.ini:76
+msgid "Federated States of Micronesia"
+msgstr "Föderierte Staaten von Mikronesien"
+
+#: pages/feed.php:371
+msgid "Feed channel for {servername}"
+msgstr "Informationskanal für {servername}"
+
+#: lib/gui.class.php:737
+#: plugins/tools/configuration/plugin.php:182
+msgid "Field value is other than default"
+msgstr "Wert des Feldes weicht von dem Standard-Wert ab"
+
+#: share/data/countries.ini:74
+#: share/data/languages.ini:32
+msgid "Fiji"
+msgstr "Fidschi"
+
+#: plugins/tools/logs/plugin.php:165
+#: plugins/tools/configuration/plugin.php:99
+msgid "Filter"
+msgstr "Filter"
+
+#: plugins/tools/logs/plugin.php:165
+msgid "Find entry (search in all fields)"
+msgstr "Eintrag suchen (alle felder durchsuchen)"
+
+#: install.php:334
+#, fuzzy
+msgid "Fine tune configuration"
+msgstr "Einstellungen"
+
+#: share/data/countries.ini:73
+msgid "Finland"
+msgstr "Finnland"
+
+#: share/data/languages.ini:31
+msgid "Finnish"
+msgstr "Finnisch"
+
+#: pages/visits.php:427
+#, fuzzy
+msgid "First view"
+msgstr "Erste Besuch"
+
+#: plugins/tools/blacklist/plugin.php:54
+msgid "First visit"
+msgstr "Erste Besuch"
+
+#: index.php:598
+msgid "Flash plugin"
+msgstr "Flash Plugin"
+
+#: pages/visits.php:196
+#: pages/visits.php:284
+#: pages/visits.php:442
+msgid "Flash plugin version"
+msgstr "Flash Plugin-Version"
+
+#: share/data/countries.ini:78
+msgid "France"
+msgstr "Frankreich"
+
+#: share/data/countries.ini:79
+msgid "France, Metropolitan"
+msgstr "Metropolitan-Frankreich "
+
+#: share/data/languages.ini:34
+msgid "French"
+msgstr "Französich"
+
+#: share/data/countries.ini:84
+msgid "French Guiana"
+msgstr "Französisch-Guayana"
+
+#: share/data/countries.ini:179
+msgid "French Polynesia"
+msgstr "Französisch-Polynesien"
+
+#: share/data/countries.ini:219
+msgid "French Southern Territories"
+msgstr "Französische Süd- und Antarktisgebiete"
+
+#: install.php:100
+msgid "Frequency of data collecting for other data"
+msgstr ""
+
+#: install.php:99
+msgid "Frequency of data collecting for time statistics"
+msgstr ""
+
+#: share/data/languages.ini:35
+msgid "Frisian"
+msgstr "Friesisch"
+
+#: plugins/tools/logs/plugin.php:165
+msgid "From"
+msgstr "Von"
+
+#: plugins/tools/backups/plugin.php:114
+msgid "Full"
+msgstr "Vollständig"
+
+#: pages/geolocation.php:186
+#: pages/technical.php:29
+#: pages/general.php:36
+msgid "Full list"
+msgstr "Vollständige Liste"
+
+#: share/data/countries.ini:80
+msgid "Gabon"
+msgstr "Gabun"
+
+#: share/data/languages.ini:38
+msgid "Galician"
+msgstr "Galicisch"
+
+#: share/data/countries.ini:89
+msgid "Gambia"
+msgstr "Gambia"
+
+#: index.php:574
+msgid "General"
+msgstr "Allgemeine"
+
+#: index.php:576
+msgid "Geolocation"
+msgstr "Geolocation"
+
+#: install.php:477
+#, fuzzy
+msgid "Geolocation support"
+msgstr "Geolocation"
+
+#: share/data/countries.ini:83
+msgid "Georgia"
+msgstr "Georgien"
+
+#: share/data/languages.ini:56
+msgid "Georgian"
+msgstr "Georgisch"
+
+#: share/data/languages.ini:22
+msgid "German"
+msgstr "Deutsch"
+
+#: share/data/countries.ini:57
+msgid "Germany"
+msgstr "Deutschland"
+
+#: share/data/countries.ini:86
+msgid "Ghana"
+msgstr "Ghana"
+
+#: share/data/countries.ini:87
+msgid "Gibraltar"
+msgstr "Gibraltar"
+
+#: install.php:29
+#: plugins/tools/configuration/plugin.php:266
+msgid "Given passwords are not the same!"
+msgstr "Kennwort stimmt nicht überein!"
+
+#: lib/gui.class.php:590
+#, fuzzy
+msgid "Go to first page (%d.)"
+msgstr "Erste Seite"
+
+#: lib/gui.class.php:593
+#, fuzzy
+msgid "Go to last page (%d.)"
+msgstr "Letzte Seite"
+
+#: lib/gui.class.php:592
+#, fuzzy
+msgid "Go to next page (%d.)"
+msgstr "Nächste Seite"
+
+#: lib/gui.class.php:594
+#, fuzzy
+msgid "Go to page %d."
+msgstr "Gehe zu"
+
+#: lib/gui.class.php:591
+#, fuzzy
+msgid "Go to previous page (%d.)"
+msgstr "Vorherige Seite"
+
+#: index.php:461
+msgid "Go to top"
+msgstr "Nach oben"
+
+#: install.php:476
+msgid "Graphics generation support"
+msgstr ""
+
+#: share/data/countries.ini:81
+msgid "Great Britain"
+msgstr "Großbritannien"
+
+#: share/data/countries.ini:93
+msgid "Greece"
+msgstr "Griechenland"
+
+#: share/data/languages.ini:24
+msgid "Greek"
+msgstr "Griechisch"
+
+#: share/data/countries.ini:88
+msgid "Greenland"
+msgstr "Grönland"
+
+#: share/data/languages.ini:58
+msgid "Greenlandic"
+msgstr "Grönländisch"
+
+#: share/data/countries.ini:82
+msgid "Grenada"
+msgstr "Grenada"
+
+#: share/data/countries.ini:91
+msgid "Guadeloupe"
+msgstr "Guadeloupe"
+
+#: share/data/countries.ini:96
+msgid "Guam"
+msgstr "Guam"
+
+#: share/data/languages.ini:39
+msgid "Guarani"
+msgstr "Guaraní"
+
+#: share/data/countries.ini:95
+msgid "Guatemala"
+msgstr "Guatemala"
+
+#: share/data/countries.ini:85
+msgid "Guernsey"
+msgstr "Guernsey"
+
+#: share/data/countries.ini:90
+msgid "Guinea"
+msgstr "Guinea"
+
+#: share/data/countries.ini:97
+msgid "Guinea-Bissau"
+msgstr "Guinea-Bissau"
+
+#: share/data/languages.ini:40
+msgid "Gujarati"
+msgstr "Gujarati"
+
+#: share/data/countries.ini:98
+msgid "Guyana"
+msgstr "Guyana"
+
+#: install.php:481
+msgid "Gzip compression support"
+msgstr ""
+
+#: share/data/countries.ini:103
+msgid "Haiti"
+msgstr "Haiti"
+
+#: share/data/languages.ini:41
+msgid "Hausa"
+msgstr "Hausa"
+
+#: share/data/countries.ini:100
+msgid "Heard and McDonald Islands"
+msgstr "Heard und McDonaldinseln"
+
+#: share/data/languages.ini:42
+msgid "Hebrew"
+msgstr "Hebräisch"
+
+#: share/data/languages.ini:43
+msgid "Hindi"
+msgstr "Hindi"
+
+#: share/data/countries.ini:101
+msgid "Honduras"
+msgstr "Honduras"
+
+#: share/data/countries.ini:99
+msgid "Hong Kong"
+msgstr "Hongkong"
+
+#: pages/visits.php:432
+msgid "Host"
+msgstr "Host"
+
+#: index.php:582
+msgid "Hosts"
+msgstr "Hosts"
+
+#: index.php:987
+msgid "Hour"
+msgstr "Stunde"
+
+#: index.php:607
+msgid "Hours"
+msgstr "Stünden"
+
+#: share/data/languages.ini:45
+msgid "Hungarian"
+msgstr "Ungarisch"
+
+#: share/data/countries.ini:104
+msgid "Hungary"
+msgstr "Ungarn"
+
+#: plugins/tools/blacklist/plugin.php:51
+#: pages/visits.php:435
+msgid "IP"
+msgstr "IP"
+
+#: share/data/countries.ini:114
+msgid "Iceland"
+msgstr "Island"
+
+#: share/data/languages.ini:51
+msgid "Icelandic"
+msgstr "Isländisch"
+
+#: install.php:337
+msgid "If no actions remain for execution go to <a href=\"%s\" tabindex=\"%d\"><strong>configuration</strong></a> page and perform after installation setup."
+msgstr ""
+
+#: plugins/tools/blacklist/plugin.php:36
+msgid "Ignore visits from this browser (using <em>cookies</em>)"
+msgstr ""
+
+#: plugins/tools/blacklist/plugin.php:137
+msgid "Ignored"
+msgstr "Ignoriert"
+
+#: plugins/tools/configuration/plugin.php:50
+#: plugins/tools/blacklist/plugin.php:36
+msgid "Ignored IPs"
+msgstr "Geblockte IP-Adressen"
+
+#: plugins/tools/blacklist/plugin.php:46
+msgid "Ignored and blocked visits"
+msgstr "Ignorierte und blockierte besuche"
+
+#: plugins/tools/configuration/plugin.php:51
+#: plugins/tools/blacklist/plugin.php:36
+msgid "Ignored keywords"
+msgstr "Geblockte Schlagwörter"
+
+#: plugins/tools/configuration/plugin.php:53
+#: plugins/tools/blacklist/plugin.php:36
+msgid "Ignored referrers"
+msgstr "Geblockte Referrer"
+
+#: plugins/tools/summary/plugin.php:118
+msgid "Important links"
+msgstr ""
+
+#: plugins/tools/logs/plugin.php:165
+msgid "In period"
+msgstr "Zeitraum"
+
+#: share/data/countries.ini:110
+msgid "India"
+msgstr "Indien"
+
+#: share/data/countries.ini:106
+msgid "Indonesia"
+msgstr "Indonesien"
+
+#: share/data/languages.ini:48
+msgid "Indonesian"
+msgstr "Indonesisch"
+
+#: lib/gui.class.php:648
+#: plugins/tools/logs/plugin.php:190
+msgid "Information"
+msgstr "Information"
+
+#: index.php:463
+#: install.php:592
+msgid "Installer"
+msgstr "Installieren"
+
+#: share/data/languages.ini:47
+msgid "Interlingua"
+msgstr "Interlingua"
+
+#: share/data/languages.ini:49
+msgid "Interlingue"
+msgstr "Interlingue"
+
+#: plugins/tools/configuration/plugin.php:32
+msgid "Interval of full cache clearing (days)"
+msgstr ""
+
+#: install.php:521
+#, fuzzy
+msgid "Introduction"
+msgstr "Information"
+
+#: share/data/languages.ini:53
+msgid "Inuktitut"
+msgstr "Inuktitut"
+
+#: share/data/languages.ini:50
+msgid "Inupiak"
+msgstr "Inupiaq"
+
+#: pages/visits.php:32
+msgid "Invalid visit identifier!"
+msgstr ""
+
+#: share/data/countries.ini:112
+msgid "Iraq"
+msgstr "Irak"
+
+#: share/data/countries.ini:107
+msgid "Ireland"
+msgstr "Irland"
+
+#: share/data/languages.ini:36
+msgid "Irish"
+msgstr "Irisch"
+
+#: share/data/countries.ini:113
+msgid "Islamic Republic of Iran"
+msgstr "Islamische Republik Iran"
+
+#: share/data/countries.ini:109
+msgid "Isle of Man"
+msgstr "Isle of Man"
+
+#: share/data/countries.ini:108
+msgid "Israel"
+msgstr "Israel"
+
+#: share/data/languages.ini:52
+msgid "Italian"
+msgstr "Italienisch"
+
+#: share/data/countries.ini:115
+msgid "Italy"
+msgstr "Italien"
+
+#: share/data/countries.ini:44
+msgid "Ivory Coast"
+msgstr "Elfenbeinküste"
+
+#: share/data/countries.ini:117
+msgid "Jamaica"
+msgstr "Jamaika"
+
+#: share/data/countries.ini:119
+msgid "Japan"
+msgstr "Japan"
+
+#: share/data/languages.ini:54
+msgid "Japanese"
+msgstr "Japanisch"
+
+#: index.php:599
+#: pages/visits.php:285
+#: pages/visits.php:443
+msgid "Java"
+msgstr "Java"
+
+#: pages/visits.php:198
+msgid "Java enabled"
+msgstr "Java aktivirt"
+
+#: index.php:600
+#: pages/visits.php:286
+#: pages/visits.php:444
+msgid "JavaScript"
+msgstr "JavaScript"
+
+#: install.php:383
+#: install.php:407
+#, fuzzy
+msgid "JavaScript code"
+msgstr "JavaScript"
+
+#: pages/visits.php:200
+msgid "JavaScript enabled"
+msgstr "JavaScript aktivirt"
+
+#: share/data/languages.ini:55
+msgid "Javanese"
+msgstr "Javanisch"
+
+#: share/data/countries.ini:116
+msgid "Jersey"
+msgstr "Jersey"
+
+#: share/data/countries.ini:118
+msgid "Jordan"
+msgstr "Jordanien"
+
+#: share/data/languages.ini:60
+msgid "Kannada"
+msgstr "Kannada"
+
+#: share/data/languages.ini:62
+msgid "Kashmiri"
+msgstr "Kashmiri"
+
+#: share/data/languages.ini:57
+msgid "Kazakh"
+msgstr "Kasachisch"
+
+#: share/data/countries.ini:130
+msgid "Kazakhstan"
+msgstr "Kasachstan"
+
+#: share/data/countries.ini:120
+msgid "Kenya"
+msgstr "Kenia"
+
+#: index.php:583
+#: pages/visits.php:226
+#: pages/visits.php:229
+#: pages/visits.php:431
+msgid "Keywords"
+msgstr "Schlagwörter"
+
+#: share/data/languages.ini:96
+msgid "Kinyarwanda"
+msgstr "Kinyarwanda"
+
+#: share/data/languages.ini:64
+msgid "Kirghiz"
+msgstr "Kirgisisch"
+
+#: share/data/countries.ini:123
+msgid "Kiribati"
+msgstr "Kiribati"
+
+#: share/data/languages.ini:93
+msgid "Kirundi"
+msgstr "Kirundi"
+
+#: share/data/languages.ini:61
+msgid "Korean"
+msgstr "Koreanisch"
+
+#: share/data/languages.ini:63
+msgid "Kurdish"
+msgstr "Kurdisch"
+
+#: share/data/countries.ini:128
+msgid "Kuwait"
+msgstr "Kuwait"
+
+#: share/data/countries.ini:121
+msgid "Kyrgyzstan"
+msgstr "Kirgisistan"
+
+#: pages/visits.php:284
+msgid "Lack"
+msgstr ""
+
+#: install.php:510
+msgid "Lack of support for any of available modules!"
+msgstr ""
+
+#: pages/visits.php:192
+#: pages/visits.php:282
+#: pages/visits.php:440
+msgid "Language"
+msgstr "Sprache"
+
+#: index.php:584
+msgid "Languages"
+msgstr "Sprachen"
+
+#: share/data/countries.ini:131
+msgid "Laos"
+msgstr "Laos"
+
+#: share/data/languages.ini:67
+msgid "Laothian"
+msgstr "Laotisch"
+
+#: pages/general.php:44
+msgid "Last hour"
+msgstr "Letzte Stunde"
+
+#: pages/general.php:47
+msgid "Last month"
+msgstr "Der Letzte Monat"
+
+#: pages/general.php:45
+msgid "Last twenty - four hours"
+msgstr "Der letzte Tag"
+
+#: pages/visits.php:428
+#, fuzzy
+msgid "Last view"
+msgstr "Letzter Besuch"
+
+#: plugins/tools/blacklist/plugin.php:57
+msgid "Last visit"
+msgstr "Letzter Besuch"
+
+#: pages/general.php:46
+msgid "Last week"
+msgstr "Letzte Woche"
+
+#: pages/general.php:48
+msgid "Last year"
+msgstr "Das letzte Jahr"
+
+#: share/data/languages.ini:65
+msgid "Latin"
+msgstr "Latein"
+
+#: share/data/countries.ini:140
+msgid "Latvia"
+msgstr "Lettland"
+
+#: share/data/languages.ini:69
+msgid "Latvian"
+msgstr "Lettisch"
+
+#: lib/group.class.php:653
+#: pages/feed.php:323
+#: pages/time.php:278
+msgid "Least"
+msgstr "Am wenigsten"
+
+#: share/data/countries.ini:132
+msgid "Lebanon"
+msgstr "Libanon"
+
+#: pages/visits.php:422
+msgid "Legend"
+msgstr "Erklärung"
+
+#: share/data/countries.ini:137
+msgid "Lesotho"
+msgstr "Lesotho"
+
+#: share/data/countries.ini:136
+msgid "Liberia"
+msgstr "Liberia"
+
+#: share/data/countries.ini:141
+msgid "Libya"
+msgstr "Libyen"
+
+#: share/data/countries.ini:134
+msgid "Liechtenstein"
+msgstr "Liechtenstein"
+
+#: share/data/languages.ini:66
+msgid "Lingala"
+msgstr "Lingála"
+
+#: plugins/tools/configuration/plugin.php:63
+msgid "Link for showing locations on map"
+msgstr "Link zum anzeigen von Positionen auf Landkarte"
+
+#: plugins/tools/configuration/plugin.php:64
+msgid "Link to Whois service"
+msgstr "Link zum Whois Dienst"
+
+#: share/data/countries.ini:138
+msgid "Lithuania"
+msgstr "Litauen"
+
+#: share/data/languages.ini:68
+msgid "Lithuanian"
+msgstr "Litauisch"
+
+#: lib/gui.class.php:649
+msgid "Loading..."
+msgstr ""
+
+#: pages/visits.php:293
+#: pages/visits.php:441
+msgid "Location"
+msgstr "Ort"
+
+#: plugins/tools/logs/plugin.php:187
+msgid "Log"
+msgstr "Protokoll"
+
+#: plugins/tools/configuration/plugin.php:55
+#: plugins/tools/configuration/plugin.php:301
+#, fuzzy
+msgid "Log errors and important information"
+msgstr "Fehler und wichtige Mitteilungen speichern"
+
+#: install.php:103
+#, fuzzy
+msgid "Log events to text file"
+msgstr "Protokolle auch als Textdateien speichern"
+
+#: index.php:570
+#, fuzzy
+msgid "Log in"
+msgstr "Anmelden"
+
+#: index.php:1077
+msgid "Log into"
+msgstr "Anmelden"
+
+#: index.php:569
+msgid "Log out"
+msgstr "Abmelden"
+
+#: index.php:1074
+msgid "Login"
+msgstr "Anmeldung"
+
+#: share/data/countries.ini:139
+msgid "Luxembourg"
+msgstr "Luxemburg"
+
+#: share/data/countries.ini:152
+msgid "Macao"
+msgstr "Macao"
+
+#: share/data/countries.ini:148
+msgid "Macedonia"
+msgstr "Mazedonien"
+
+#: share/data/languages.ini:72
+msgid "Macedonian"
+msgstr "Mazedonisch"
+
+#: share/data/countries.ini:146
+msgid "Madagascar"
+msgstr "Madagaskar"
+
+#: index.php:1056
+msgid "Maintenance"
+msgstr "Wartungsarbeiten"
+
+#: index.php:1159
+msgid "Maintenance mode is active!"
+msgstr "Wartungsmodus aktiviert!"
+
+#: share/data/languages.ini:70
+msgid "Malagasy"
+msgstr "Malagasy"
+
+#: share/data/countries.ini:160
+msgid "Malawi"
+msgstr "Malawi"
+
+#: share/data/languages.ini:77
+msgid "Malay"
+msgstr "Malaiisch"
+
+#: share/data/languages.ini:73
+msgid "Malayalam"
+msgstr "Malayalam"
+
+#: share/data/countries.ini:162
+msgid "Malaysia"
+msgstr "Malaysia"
+
+#: share/data/countries.ini:159
+msgid "Maldives"
+msgstr "Malediven"
+
+#: share/data/countries.ini:149
+msgid "Mali"
+msgstr "Mali"
+
+#: share/data/countries.ini:157
+msgid "Malta"
+msgstr "Malta"
+
+#: share/data/languages.ini:78
+msgid "Maltese"
+msgstr "Maltesisch"
+
+#: share/data/languages.ini:71
+msgid "Maori"
+msgstr "Maorisch"
+
+#: pages/geolocation.php:34
+#: pages/geolocation.php:40
+#: pages/geolocation.php:41
+#: pages/geolocation.php:188
+msgid "Map"
+msgstr "Karte"
+
+#: pages/geolocation.php:38
+msgid "Map view"
+msgstr "Kartenansicht."
+
+#: share/data/languages.ini:76
+msgid "Marathi"
+msgstr "Marathi"
+
+#: share/data/countries.ini:147
+msgid "Marshall Islands"
+msgstr "Marshallinseln"
+
+#: share/data/countries.ini:154
+msgid "Martinique"
+msgstr "Martinique"
+
+#: share/data/countries.ini:155
+msgid "Mauritania"
+msgstr "Mauretanien"
+
+#: share/data/countries.ini:158
+msgid "Mauritius"
+msgstr "Mauritius"
+
+#: plugins/tools/configuration/plugin.php:39
+msgid "Max amount of pages available for user (0 - all available)"
+msgstr "Maximale Anzahl der Statistikseiten, die den Benutzer angezeigt werden. (0 - alle anzeigen)"
+
+#: share/data/countries.ini:249
+msgid "Mayotte"
+msgstr "Mayotte"
+
+#: plugins/tools/logs/plugin.php:176
+#: plugins/tools/configuration/plugin.php:102
+msgid "Meeting conditions"
+msgstr "Beiträge, die Ihren Kriterien entsprechen"
+
+#: share/data/countries.ini:161
+msgid "Mexico"
+msgstr "Mexiko"
+
+#: lib/gui.class.php:304
+msgid "Mobile devices"
+msgstr "Mobile Geräte"
+
+#: install.php:101
+#: plugins/tools/configuration/plugin.php:42
+#: plugins/tools/configuration/plugin.php:341
+msgid "Mode of passing data in the path"
+msgstr "<em>Friendly URLs</em> verwenden (setzt richtige definieren von <em>PATH_INFO</em> voraus)"
+
+#: share/data/languages.ini:75
+msgid "Moldavian"
+msgstr "Moldauisch"
+
+#: share/data/countries.ini:144
+msgid "Moldova"
+msgstr "Moldawien"
+
+#: share/data/countries.ini:143
+msgid "Monaco"
+msgstr "Monaco"
+
+#: share/data/countries.ini:151
+msgid "Mongolia"
+msgstr "Mongolei"
+
+#: share/data/languages.ini:74
+msgid "Mongolian"
+msgstr "Mongolisch"
+
+#: share/data/countries.ini:145
+msgid "Montenegro"
+msgstr "Montenegro"
+
+#: index.php:604
+#: index.php:1009
+#: lib/group.class.php:565
+msgid "Month"
+msgstr "Monat"
+
+#: share/data/countries.ini:156
+msgid "Montserrat"
+msgstr "Montserrat"
+
+#: share/data/countries.ini:142
+msgid "Morocco"
+msgstr "Marokko"
+
+#: lib/group.class.php:651
+#: pages/feed.php:295
+#: pages/general.php:43
+#: pages/time.php:276
+msgid "Most"
+msgstr "Höchst"
+
+#: share/data/countries.ini:163
+msgid "Mozambique"
+msgstr "Mosambik"
+
+#: share/data/countries.ini:150
+msgid "Myanmar"
+msgstr "Myanmar"
+
+#: plugins/tools/summary/plugin.php:83
+#: plugins/tools/summary/plugin.php:87
+#: plugins/tools/summary/plugin.php:99
+msgid "N/A"
+msgstr "N/A"
+
+#: share/data/countries.ini:164
+msgid "Namibia"
+msgstr "Namibia"
+
+#: share/data/countries.ini:173
+#: share/data/languages.ini:80
+msgid "Nauru"
+msgstr "Nauru"
+
+#: share/data/countries.ini:172
+msgid "Nepal"
+msgstr "Nepal"
+
+#: share/data/languages.ini:81
+msgid "Nepali"
+msgstr "Nepali"
+
+#: share/data/countries.ini:170
+msgid "Netherlands"
+msgstr "Niederlande"
+
+#: share/data/countries.ini:9
+msgid "Netherlands Antilles"
+msgstr "Niederländische Antillen"
+
+#: plugins/tools/blacklist/plugin.php:130
+#, fuzzy
+msgid "Network bot"
+msgstr "Webcrawlers"
+
+#: pages/visits.php:186
+#: pages/visits.php:279
+#: pages/visits.php:446
+msgid "Network robot"
+msgstr "Webcrawlers"
+
+#: index.php:595
+#: pages/visits.php:447
+#, fuzzy
+msgid "Network robots"
+msgstr "Webcrawlers"
+
+#: share/data/countries.ini:165
+msgid "New Caledonia"
+msgstr "Neukaledonien"
+
+#: share/data/countries.ini:175
+msgid "New Zealand"
+msgstr "Neuseeland"
+
+#: plugins/tools/configuration/plugin.php:279
+msgid "New password"
+msgstr "Neues Kennwort"
+
+#: index.php:1133
+msgid "New version is available (%s)!"
+msgstr "Neue Version verfügbar (%s)!"
+
+#: plugins/tools/summary/plugin.php:63
+msgid "New version is available!"
+msgstr "Neue version erhältlich!"
+
+#: index.php:1037
+msgid "Next"
+msgstr ""
+
+#: share/data/countries.ini:169
+msgid "Nicaragua"
+msgstr "Nicaragua"
+
+#: share/data/countries.ini:166
+msgid "Niger"
+msgstr "Niger"
+
+#: share/data/countries.ini:168
+msgid "Nigeria"
+msgstr "Nigeria"
+
+#: share/data/countries.ini:174
+msgid "Niue"
+msgstr "Niue"
+
+#: install.php:350
+#: lib/gui.class.php:247
+#: lib/gui.class.php:251
+#: pages/visits.php:197
+#: pages/visits.php:199
+#: pages/visits.php:201
+msgid "No"
+msgstr "Nein"
+
+#: lib/group.class.php:529
+#: pages/time.php:268
+msgid "No data to display!"
+msgstr "Keine Daten vorhanden!"
+
+#: pages/visits.php:195
+#, fuzzy
+msgid "No plugin"
+msgstr "Flash Plugin"
+
+#: lib/group.class.php:815
+#: plugins/tools/logs/plugin.php:225
+#: plugins/tools/backups/plugin.php:156
+#: plugins/tools/blacklist/plugin.php:146
+#: pages/feed.php:183
+#: pages/visits.php:434
+msgid "None"
+msgstr "Keine"
+
+#: share/data/countries.ini:167
+msgid "Norfolk Island"
+msgstr "Norfolkinsel"
+
+#: share/data/continents.ini:5
+msgid "North America"
+msgstr "Nordamerika"
+
+#: share/data/countries.ini:126
+msgid "North Korea"
+msgstr "Nordkorea"
+
+#: share/data/countries.ini:153
+msgid "Northern Mariana Islands"
+msgstr "Nördliche Marianen"
+
+#: share/data/countries.ini:171
+msgid "Norway"
+msgstr "Norwegen"
+
+#: share/data/languages.ini:83
+msgid "Norwegian"
+msgstr "Norwegisch"
+
+#: install.php:580
+#, fuzzy
+msgid "Not available"
+msgstr "Daten nicht verfügbar"
+
+#: install.php:567
+msgid "Not exists"
+msgstr ""
+
+#: install.php:567
+msgid "Not writeable"
+msgstr ""
+
+#: install.php:567
+msgid "OK"
+msgstr ""
+
+#: share/data/languages.ini:84
+msgid "Occitan"
+msgstr "Okzitanisch"
+
+#: share/data/countries.ini:176
+msgid "Oman"
+msgstr "Oman"
+
+#: pages/general.php:49
+msgid "On-line"
+msgstr "Online"
+
+#: plugins/tools/configuration/plugin.php:52
+#, fuzzy
+msgid "On-line visit time"
+msgstr "Gäste online (innerhalb letzten 5 Minuten)"
+
+#: pages/visits.php:424
+#, fuzzy
+msgid "On-line visitors (last %d seconds)"
+msgstr "Gäste online (innerhalb letzten 5 Minuten)"
+
+#: plugins/tools/backups/plugin.php:114
+msgid "Only collected data"
+msgstr "Nur gesammelte Daten"
+
+#: plugins/tools/summary/plugin.php:94
+#: plugins/tools/blacklist/plugin.php:132
+#: pages/visits.php:188
+#: pages/visits.php:281
+#: pages/visits.php:438
+msgid "Operating system"
+msgstr "Betriebssystem"
+
+#: index.php:593
+#, fuzzy
+msgid "Operating system versions"
+msgstr "Betriebssystem"
+
+#: index.php:591
+#: index.php:592
+#, fuzzy
+msgid "Operating systems"
+msgstr "Betriebssystem"
+
+#: share/data/languages.ini:86
+msgid "Oriya"
+msgstr "Oriya"
+
+#: share/data/languages.ini:85
+msgid "Oromo"
+msgstr "Oromo"
+
+#: pages/visits.php:450
+#, fuzzy
+msgid "Other visits of this visitor"
+msgstr "Sonstige Besuche"
+
+#: install.php:98
+msgid "Overwrite existing tables (if they exist with the same name already)"
+msgstr ""
+
+#: install.php:368
+#, fuzzy
+msgid "PHP code"
+msgstr "PHP Safe-Mode"
+
+#: plugins/tools/summary/plugin.php:78
+msgid "PHP loaded extensions"
+msgstr "Geladene PHP-Erweiterungen"
+
+#: plugins/tools/summary/plugin.php:82
+msgid "PHP safe mode"
+msgstr "PHP Safe-Mode"
+
+#: plugins/tools/summary/plugin.php:74
+msgid "PHP version"
+msgstr "PHP-Version"
+
+#: index.php:1219
+msgid "Page generation time: %.3lf (s)"
+msgstr "Seite generiert in: %.3lf (s)"
+
+#: plugins/tools/configuration/plugin.php:61
+msgid "Page header syntax"
+msgstr "Header-Variablen (Syntax)"
+
+#: install.php:363
+msgid "Page title (optional, should be unique for each page, if set)"
+msgstr ""
+
+#: index.php:1055
+#, fuzzy
+msgid "Page unavailable due to maintenance."
+msgstr "Zur Zeit ist diese Seite wegen Wartungsarbeiten nicht verfügbar."
+
+#: share/data/countries.ini:182
+msgid "Pakistan"
+msgstr "Pakistan"
+
+#: share/data/countries.ini:189
+msgid "Palau"
+msgstr "Palau"
+
+#: share/data/countries.ini:187
+msgid "Palestinian Territory, Occupied"
+msgstr "Israelisch besetzte Gebiete"
+
+#: share/data/countries.ini:177
+msgid "Panama"
+msgstr "Panama"
+
+#: share/data/countries.ini:180
+msgid "Papua New Guinea"
+msgstr "Papua-Neuguinea"
+
+#: share/data/countries.ini:190
+msgid "Paraguay"
+msgstr "Paraguay"
+
+#: share/data/languages.ini:89
+msgid "Pashto"
+msgstr "Paschtunisch"
+
+#: index.php:1075
+msgid "Password"
+msgstr "Benutzerkennwort"
+
+#: plugins/tools/configuration/plugin.php:299
+#, fuzzy
+msgid "Password for viewing statistics (leave empty, if you allow free access)"
+msgstr "Besucherstatistik mit Kennwort schützen (leer lassen um deaktivieren)"
+
+#: install.php:560
+msgid "Permissions test"
+msgstr ""
+
+#: share/data/languages.ini:30
+msgid "Persian"
+msgstr "Persisch"
+
+#: share/data/countries.ini:178
+msgid "Peru"
+msgstr "Peru"
+
+#: share/data/countries.ini:181
+msgid "Philippines"
+msgstr "Philippinen"
+
+#: share/data/countries.ini:185
+msgid "Pitcairn"
+msgstr "Pitcairninseln"
+
+#: install.php:340
+msgid "Place activation code on your page"
+msgstr ""
+
+#: install.php:437
+msgid "Place the <em>JavaScript</em> code somewhere between <em>BODY</em> tags on your page. There will be shown an image that will collect the data."
+msgstr ""
+
+#: install.php:379
+msgid "Place the <em>PHP</em> code somewhere at start of code of your page. Script will collect the most part of data, technical information (such as screen resolution) will be handled by <em>JavaScript</em> code."
+msgstr ""
+
+#: share/data/countries.ini:183
+msgid "Poland"
+msgstr "Polen"
+
+#: plugins/tools/configuration/plugin.php:40
+msgid "Policy what to do with old visits data"
+msgstr ""
+
+#: share/data/languages.ini:88
+msgid "Polish"
+msgstr "Polnisch"
+
+#: share/data/countries.ini:188
+msgid "Portugal"
+msgstr "Portugal"
+
+#: share/data/languages.ini:90
+msgid "Portuguese"
+msgstr "Portugiesisch"
+
+#: index.php:1035
+#, fuzzy
+msgid "Previous"
+msgstr "Ansicht"
+
+#: lib/gui.class.php:264
+msgid "Previous period"
+msgstr ""
+
+#: plugins/tools/summary/plugin.php:124
+msgid "Project's forum"
+msgstr "Forum des Projektes"
+
+#: index.php:596
+#: pages/visits.php:203
+#: pages/visits.php:205
+msgid "Proxy"
+msgstr "Proxy"
+
+#: share/data/countries.ini:186
+msgid "Puerto Rico"
+msgstr "Puerto Rico"
+
+#: share/data/languages.ini:87
+msgid "Punjabi"
+msgstr "Panjabi"
+
+#: share/data/countries.ini:191
+msgid "Qatar"
+msgstr "Katar"
+
+#: share/data/languages.ini:91
+msgid "Quechua"
+msgstr "Quechua"
+
+#: pages/visits.php:430
+msgid "Referrer website"
+msgstr "Verweisseite"
+
+#: index.php:581
+msgid "Referrers"
+msgstr "Referrer (Verweise)"
+
+#: pages/visits.php:295
+msgid "Region"
+msgstr "Gebiet"
+
+#: index.php:588
+msgid "Regions"
+msgstr "Gebiete"
+
+#: install.php:479
+msgid "Reliable Unicode support"
+msgstr ""
+
+#: install.php:478
+msgid "Reliable translations support"
+msgstr ""
+
+#: index.php:1076
+msgid "Remember password"
+msgstr "Angemeldet bleiben?"
+
+#: install.php:556
+#: plugins/tools/configuration/plugin.php:280
+msgid "Repeat password"
+msgstr "Neues Kennwort wiederholen"
+
+#: plugins/tools/backups/plugin.php:170
+#, fuzzy
+msgid "Replace existing data"
+msgstr "Daten, die schon existieren überschreiben (Benutzerdefinierte Einstellungen)"
+
+#: plugins/tools/configuration/plugin.php:30
+msgid "Replace existing data (user profile)"
+msgstr "Daten, die schon existieren überschreiben (Benutzerdefinierte Einstellungen)"
+
+#: install.php:573
+msgid "Requirements"
+msgstr ""
+
+#: install.php:155
+#: install.php:361
+#: plugins/tools/logs/plugin.php:170
+#: plugins/tools/backups/plugin.php:173
+#: plugins/tools/configuration/plugin.php:174
+#: plugins/tools/configuration/plugin.php:344
+#: plugins/tools/blacklist/plugin.php:42
+#: plugins/tools/reset/plugin.php:108
+msgid "Reset"
+msgstr "Rücksetzen"
+
+#: plugins/tools/reset/plugin.php:106
+msgid "Reset selected tables"
+msgstr "Ausgewählte Tabellen löschen"
+
+#: plugins/tools/backups/plugin.php:163
+msgid "Restore"
+msgstr "Wiederherstellen"
+
+#: plugins/tools/backups/plugin.php:164
+msgid "Restore backup saved on hard disc"
+msgstr "Sicherheitskopie aus der lokalen Festplatte laden"
+
+#: plugins/tools/logs/plugin.php:165
+msgid "Results per page"
+msgstr "Ergebnisse pro Seite"
+
+#: lib/gui.class.php:261
+#: pages/feed.php:211
+#: pages/general.php:41
+msgid "Returns"
+msgstr "Rückbesuche"
+
+#: pages/visits.php:425
+msgid "Returns visitors"
+msgstr "Zurückgekehrte Besucher"
+
+#: share/data/countries.ini:192
+msgid "Reunion"
+msgstr "Réunion"
+
+#: share/data/languages.ini:92
+msgid "Rhaeto-Romance"
+msgstr "Rätoromanisch"
+
+#: share/data/countries.ini:193
+msgid "Romania"
+msgstr "Rumänien"
+
+#: share/data/languages.ini:94
+msgid "Romanian"
+msgstr "Rumänisch"
+
+#: share/data/languages.ini:95
+msgid "Russian"
+msgstr "Russisch"
+
+#: share/data/countries.ini:195
+msgid "Russian Federation"
+msgstr "Russische Föderation"
+
+#: share/data/countries.ini:196
+msgid "Rwanda"
+msgstr "Ruanda"
+
+#: share/data/countries.ini:203
+msgid "Saint Helena"
+msgstr "St. Helena"
+
+#: share/data/countries.ini:125
+msgid "Saint Kitts and Nevis"
+msgstr "St. Kitts und Nevis"
+
+#: share/data/countries.ini:133
+msgid "Saint Lucia"
+msgstr "St. Lucia"
+
+#: share/data/countries.ini:184
+msgid "Saint Pierre and Miquelon"
+msgstr "Saint-Pierre und Miquelon"
+
+#: share/data/countries.ini:240
+msgid "Saint Vincent and the Grenadines"
+msgstr "St. Vincent und die Grenadinen"
+
+#: share/data/countries.ini:247
+msgid "Samoa"
+msgstr "Samoa"
+
+#: share/data/languages.ini:104
+msgid "Samoan"
+msgstr "Samoisch"
+
+#: share/data/countries.ini:208
+msgid "San Marino"
+msgstr "San Marino"
+
+#: share/data/languages.ini:99
+msgid "Sangho"
+msgstr "Sango"
+
+#: share/data/languages.ini:97
+msgid "Sanskrit"
+msgstr "Sanskrit"
+
+#: share/data/countries.ini:212
+msgid "Sao Tome and Principe"
+msgstr "São Tomé und Príncipe"
+
+#: share/data/countries.ini:197
+msgid "Saudi Arabia"
+msgstr "Saudi-Arabien"
+
+#: plugins/tools/backups/plugin.php:171
+#: plugins/tools/configuration/plugin.php:172
+#: plugins/tools/configuration/plugin.php:342
+#: plugins/tools/blacklist/plugin.php:40
+msgid "Save"
+msgstr "Speichern"
+
+#: install.php:323
+#, fuzzy
+msgid "Save configuration file"
+msgstr "Einstellungen"
+
+#: plugins/tools/configuration/plugin.php:54
+#: plugins/tools/blacklist/plugin.php:36
+#, fuzzy
+msgid "Save information about ignored and blocked visits"
+msgstr "Informationen über die geblockte und ignorierte Besuche speichern"
+
+#: share/data/languages.ini:37
+msgid "Scots Gaelic"
+msgstr "Schottisch-Gälisch"
+
+#: pages/visits.php:194
+#: pages/visits.php:283
+#: pages/visits.php:439
+msgid "Screen resolution"
+msgstr "Bildschirmgröße"
+
+#: index.php:597
+msgid "Screen resolutions"
+msgstr "Bildschirmgröße"
+
+#: plugins/tools/logs/plugin.php:163
+#: plugins/tools/configuration/plugin.php:100
+#: plugins/tools/configuration/plugin.php:101
+#: plugins/tools/configuration/plugin.php:183
+msgid "Search"
+msgstr "Suchen"
+
+#: install.php:331
+#: install.php:376
+#: install.php:402
+#: install.php:425
+#, fuzzy
+msgid "Select"
+msgstr "Auswahlliste"
+
+#: plugins/tools/reset/plugin.php:70
+msgid "Selected tables emptied successfully."
+msgstr ""
+
+#: plugins/tools/backups/plugin.php:165
+msgid "Send"
+msgstr "Senden"
+
+#: share/data/countries.ini:209
+msgid "Senegal"
+msgstr "Senegal"
+
+#: plugins/tools/configuration/plugin.php:44
+msgid "Separator between address and GET query"
+msgstr "Trennzeichen zwischen Adresse und GET-Abfrage"
+
+#: share/data/countries.ini:194
+msgid "Serbia"
+msgstr "Serbien"
+
+#: share/data/languages.ini:108
+msgid "Serbian"
+msgstr "Serbisch"
+
+#: share/data/languages.ini:100
+msgid "Serbo-Croatian"
+msgstr "Serbokroatisch"
+
+#: plugins/tools/summary/plugin.php:98
+msgid "Server load"
+msgstr "Serverbelastung"
+
+#: plugins/tools/summary/plugin.php:86
+msgid "Server software"
+msgstr "Server Software"
+
+#: share/data/languages.ini:110
+msgid "Sesotho"
+msgstr "Süd-Sotho"
+
+#: share/data/languages.ini:121
+msgid "Setswana"
+msgstr "Setswana"
+
+#: install.php:532
+#: plugins/tools/backups/plugin.php:167
+#: plugins/tools/configuration/plugin.php:294
+#: plugins/tools/blacklist/plugin.php:34
+msgid "Settings"
+msgstr "Einstellungen"
+
+#: plugins/tools/configuration/plugin.php:23
+msgid "Settings of amounts of displayed elements"
+msgstr ""
+
+#: plugins/tools/configuration/plugin.php:24
+#, fuzzy
+msgid "Settings of passing variables in address"
+msgstr "Weitergabe von Variablen konfigurieren."
+
+#: plugins/tools/configuration/plugin.php:17
+#, fuzzy
+msgid "Settings requeired for correct data collecting"
+msgstr "Einstellungen, die zum fehlerfreien Sammeln von Daten nötig sind."
+
+#: share/data/countries.ini:199
+msgid "Seychelles"
+msgstr "Seychellen"
+
+#: share/data/languages.ini:105
+msgid "Shona"
+msgstr "Shona"
+
+#: pages/feed.php:374
+msgid "Short summary of collected data from 24 hours, week or month."
+msgstr "Kurzfassung von gesammelten Daten, die innerhalb 24 Stünden, einer Woche oder einem Monat gesammelt wurden."
+
+#: index.php:1031
+#: plugins/tools/logs/plugin.php:168
+msgid "Show"
+msgstr "Anzeigen"
+
+#: lib/chart.class.php:657
+msgid "Show / hide levels of maximum, average and minimum"
+msgstr "Zeigen / verbergen die Stuffen: das Maximum, der Durchschnitt und das Minimum"
+
+#: plugins/tools/configuration/plugin.php:105
+msgid "Show all"
+msgstr "Alle anzeigen"
+
+#: index.php:1030
+msgid "Show data for"
+msgstr "Zeige Daten aus"
+
+#: pages/visits.php:291
+msgid "Show location on map"
+msgstr "Position auf Karte anzeigen"
+
+#: pages/visits.php:426
+#, fuzzy
+msgid "Show network robots"
+msgstr "Webcrawlers"
+
+#: plugins/tools/configuration/plugin.php:107
+msgid "Show only modified"
+msgstr "Nur geäderte anzeigen"
+
+#: plugins/tools/logs/plugin.php:176
+msgid "Showed"
+msgstr "Angezeigte"
+
+#: share/data/countries.ini:207
+msgid "Sierra Leone"
+msgstr "Sierra Leone"
+
+#: share/data/languages.ini:98
+msgid "Sindhi"
+msgstr "Sindhi"
+
+#: share/data/countries.ini:202
+msgid "Singapore"
+msgstr "Singapur"
+
+#: share/data/languages.ini:101
+msgid "Sinhalese"
+msgstr "Singhalesisch"
+
+#: share/data/languages.ini:109
+msgid "Siswati"
+msgstr "Siswati"
+
+#: pages/visits.php:420
+msgid "Site"
+msgstr "Seite"
+
+#: index.php:580
+msgid "Sites"
+msgstr "Seitenpopularität"
+
+#: share/data/languages.ini:102
+msgid "Slovak"
+msgstr "Slowakisch"
+
+#: share/data/countries.ini:206
+msgid "Slovak Republic"
+msgstr "Slowakei"
+
+#: share/data/countries.ini:204
+msgid "Slovenia"
+msgstr "Slowenien"
+
+#: share/data/languages.ini:103
+msgid "Slovenian"
+msgstr "Slowenisch"
+
+#: share/data/countries.ini:198
+msgid "Solomon Islands"
+msgstr "Salomonen"
+
+#: share/data/languages.ini:106
+msgid "Somali"
+msgstr "Somali"
+
+#: share/data/countries.ini:210
+msgid "Somalia"
+msgstr "Somalia"
+
+#: share/data/countries.ini:250
+msgid "South Africa"
+msgstr "Südafrika"
+
+#: share/data/continents.ini:6
+msgid "South America"
+msgstr "Südamerika"
+
+#: share/data/countries.ini:94
+msgid "South Georgia and the South Sandwich Islands"
+msgstr "Südgeorgien und die Südlichen Sandwichinseln"
+
+#: share/data/countries.ini:127
+msgid "South Korea"
+msgstr "Südkorea"
+
+#: share/data/countries.ini:70
+msgid "Spain"
+msgstr "Spanien"
+
+#: share/data/languages.ini:27
+msgid "Spanish"
+msgstr "Spanisch"
+
+#: share/data/countries.ini:135
+msgid "Sri Lanka"
+msgstr "Sri Lanka"
+
+#: plugins/tools/configuration/plugin.php:57
+#: plugins/tools/configuration/plugin.php:339
+msgid "Statistics antipixel"
+msgstr "Antipixel"
+
+#: index.php:1165
+msgid "Statistics are disabled."
+msgstr "Statistik is deaktiviert"
+
+#: index.php:568
+msgid "Statistics for"
+msgstr "Statistik für"
+
+#: install.php:592
+msgid "Step %d of 3"
+msgstr ""
+
+#: lib/gui.class.php:646
+msgid "Success"
+msgstr "Erfolg"
+
+#: share/data/countries.ini:200
+msgid "Sudan"
+msgstr "Sudan"
+
+#: lib/group.class.php:650
+#: lib/group.class.php:813
+#: pages/feed.php:189
+#: pages/feed.php:281
+#: pages/time.php:275
+msgid "Sum"
+msgstr "Zusammen"
+
+#: index.php:1048
+#: lib/chart.class.php:708
+#: plugins/tools/summary/plugin.php:59
+#: pages/feed.php:131
+msgid "Summary"
+msgstr "Zusammenfassung"
+
+#: share/data/languages.ini:111
+msgid "Sundanese"
+msgstr "Sundanesisch"
+
+#: share/data/countries.ini:211
+msgid "Suriname"
+msgstr "Suriname"
+
+#: share/data/countries.ini:205
+msgid "Svalbard and Jan Mayen Islands"
+msgstr "Svalbard und Jan Mayen Inseln"
+
+#: share/data/languages.ini:113
+msgid "Swahili"
+msgstr "Suaheli"
+
+#: share/data/countries.ini:215
+msgid "Swaziland"
+msgstr "Swasiland"
+
+#: share/data/countries.ini:201
+msgid "Sweden"
+msgstr "Schweden"
+
+#: share/data/languages.ini:112
+msgid "Swedish"
+msgstr "Schwedisch"
+
+#: share/data/countries.ini:43
+msgid "Switzerland"
+msgstr "Schweiz"
+
+#: share/data/countries.ini:214
+msgid "Syria"
+msgstr "Syrien"
+
+#: plugins/tools/backups/plugin.php:170
+#, fuzzy
+msgid "Tables to archivize"
+msgstr "Tabelle auswählen (Benutzerdefinierte Einstellungen)"
+
+#: plugins/tools/configuration/plugin.php:28
+msgid "Tables to archivize (user profile)"
+msgstr "Tabelle auswählen (Benutzerdefinierte Einstellungen)"
+
+#: share/data/languages.ini:120
+msgid "Tagalog"
+msgstr "Tagalog"
+
+#: share/data/countries.ini:231
+msgid "Taiwan"
+msgstr "Taiwan"
+
+#: share/data/languages.ini:116
+msgid "Tajik"
+msgstr "Tadschikisch"
+
+#: share/data/countries.ini:222
+msgid "Tajikistan"
+msgstr "Tadschikistan"
+
+#: share/data/languages.ini:114
+msgid "Tamil"
+msgstr "Tamil"
+
+#: share/data/countries.ini:232
+msgid "Tanzania"
+msgstr "Tansania"
+
+#: share/data/languages.ini:125
+msgid "Tatar"
+msgstr "Tatarisch"
+
+#: index.php:575
+msgid "Technical"
+msgstr "Technische"
+
+#: share/data/languages.ini:115
+msgid "Telugu"
+msgstr "Telugu"
+
+#: install.php:153
+#, fuzzy
+msgid "Test database connection"
+msgstr "Datensammlung aktivieren"
+
+#: share/data/languages.ini:117
+msgid "Thai"
+msgstr "Thailändisch"
+
+#: share/data/countries.ini:221
+msgid "Thailand"
+msgstr "Thailand"
+
+#: share/data/countries.ini:40
+msgid "The Democratic Republic of Congo"
+msgstr "Demokratische Republik Kongo"
+
+#: index.php:1061
+msgid "This IP address was blocked!"
+msgstr "Diese IP-Adresse wurde geblockt!"
+
+#: lib/group.class.php:490
+msgid "This group is disabled!"
+msgstr "Diese Gruppe ist nicht aktiv!"
+
+#: index.php:406
 msgid "This translation (%s) is not complete!"
 msgstr "Die Übersetzung (%s) ist nicht komplett!"
 
-#: share/data/languages.ini
+#: share/data/languages.ini:15
 msgid "Tibetan"
 msgstr "Tibetisch"
 
-#: share/data/languages.ini
+#: share/data/languages.ini:118
 msgid "Tigrinya"
 msgstr "Tigrinya"
 
-#: index.php pages/feed.php
+#: index.php:577
+#: pages/feed.php:197
 msgid "Time"
 msgstr "Zeitliche"
 
-#: plugins/tools/configuration/plugin.php
+#: plugins/tools/configuration/plugin.php:48
+#: plugins/tools/configuration/plugin.php:300
 #, fuzzy
 msgid "Time after that visit is count again (seconds)"
 msgstr "Zeit nach dem der Besuch neue gezählt wird (s)"
 
-#: plugins/tools/configuration/plugin.php
+#: plugins/tools/configuration/plugin.php:62
 #, fuzzy
 msgid "Time interval between checking for new version availability (0 to disable) (seconds)"
 msgstr "Zeitverzögerung zwischen Abfragen nach aktuelle Version in Sekunden (0 um deaktivieren)"
 
-#: pages/time.php
+#: pages/time.php:270
 msgid "Time statistics"
 msgstr "Zeitliche Statistik"
 
-#: share/data/countries.ini
+#: share/data/countries.ini:224
 msgid "Timor-Leste"
 msgstr "Osttimor"
 
-#: plugins/tools/logs/plugin.php
+#: plugins/tools/logs/plugin.php:166
 msgid "To"
 msgstr "Bis"
 
-#: install.php
+#: install.php:343
 msgid "To enable collecting of statistics you must place activation code on each page."
 msgstr ""
 
-#: share/data/countries.ini
+#: share/data/countries.ini:220
 msgid "Togo"
 msgstr "Togo"
 
-#: share/data/countries.ini
+#: share/data/countries.ini:223
 msgid "Tokelau"
 msgstr "Tokelau"
 
-#: share/data/countries.ini share/data/languages.ini
+#: share/data/countries.ini:227
+#: share/data/languages.ini:122
 msgid "Tonga"
 msgstr "Tonga"
 
-#: install.php
+#: install.php:453
 #, fuzzy
 msgid "Too old PHP version!"
 msgstr "PHP-Version"
 
-#: index.php
+#: index.php:579
 msgid "Tools"
 msgstr ""
 
-#: share/data/countries.ini
+#: share/data/countries.ini:229
 msgid "Trinidad and Tobago"
 msgstr "Trinidad und Tobago"
 
-#: share/data/countries.ini
+#: share/data/countries.ini:216
 msgid "Tristan da Cunha"
 msgstr "Tristan da Cunha"
 
-#: share/data/languages.ini
+#: share/data/languages.ini:124
 msgid "Tsonga"
 msgstr "Xitsonga"
 
-#: share/data/countries.ini
+#: share/data/countries.ini:226
 msgid "Tunisia"
 msgstr "Tunesien"
 
-#: share/data/countries.ini
+#: share/data/countries.ini:228
 msgid "Turkey"
 msgstr "Türkei"
 
-#: share/data/languages.ini
+#: share/data/languages.ini:123
 msgid "Turkish"
 msgstr "Türkisch"
 
-#: share/data/languages.ini
+#: share/data/languages.ini:119
 msgid "Turkmen"
 msgstr "Turkmenisch"
 
-#: share/data/countries.ini
+#: share/data/countries.ini:225
 msgid "Turkmenistan"
 msgstr "Turkmenistan"
 
-#: share/data/countries.ini
+#: share/data/countries.ini:217
 msgid "Turks and Caicos Islands"
 msgstr "Turks- und Caicosinseln"
 
-#: share/data/countries.ini
+#: share/data/countries.ini:230
 msgid "Tuvalu"
 msgstr "Tuvalu"
 
-#: share/data/languages.ini
+#: share/data/languages.ini:126
 msgid "Twi"
 msgstr "Twi"
 
-#: plugins/tools/blacklist/plugin.php
+#: plugins/tools/blacklist/plugin.php:66
 msgid "Type"
 msgstr "Typ"
 
-#: plugins/tools/backups/plugin.php
+#: plugins/tools/backups/plugin.php:155
 msgid "Type of compression of file for download"
 msgstr "Art der Datenkomprimierung"
 
-#: share/data/countries.ini
+#: share/data/countries.ini:235
 msgid "US Minor Outlying Islands"
 msgstr "United States Minor Outlying Islands"
 
-#: share/data/countries.ini
+#: share/data/countries.ini:243
 msgid "US Virgin Islands"
 msgstr "Amerikanische Jungferninseln"
 
-#: share/data/countries.ini
+#: share/data/countries.ini:234
 msgid "Uganda"
 msgstr "Uganda"
 
-#: share/data/languages.ini
+#: share/data/languages.ini:127
 msgid "Uighur"
 msgstr "Uigurisch"
 
-#: share/data/countries.ini
+#: share/data/countries.ini:233
 msgid "Ukraine"
 msgstr "Ukraine"
 
-#: share/data/languages.ini
+#: share/data/languages.ini:128
 msgid "Ukrainian"
 msgstr "Ukrainisch"
 
-#: lib/gui.class.php
+#: lib/gui.class.php:425
 msgid "Unblock IP"
 msgstr "IP entsperren"
 
-#: lib/gui.class.php
+#: lib/gui.class.php:425
 msgid "Unblock IPs range"
 msgstr "IP-Bereich entsperren"
 
-#: pages/visits.php
+#: pages/visits.php:233
 msgid "Unblock counting of this referrer"
 msgstr "Diesen Refferer zur Statistik zurechnen"
 
-#: lib/gui.class.php pages/feed.php pages/general.php
-#: plugins/tools/blacklist/plugin.php
+#: lib/gui.class.php:262
+#: plugins/tools/blacklist/plugin.php:118
+#: pages/feed.php:205
+#: pages/general.php:40
 msgid "Unique"
 msgstr "Individuelle Besuche"
 
-#: share/data/countries.ini
+#: share/data/countries.ini:3
 msgid "United Arab Emirates"
 msgstr "Vereinigte Arabische Emirate"
 
-#: share/data/countries.ini
+#: share/data/countries.ini:236
 msgid "United States"
 msgstr "Vereinigten Staaten von Amerika"
 
-#: lib/gui.class.php pages/visits.php
+#: lib/gui.class.php:243
+#: lib/gui.class.php:277
+#: lib/gui.class.php:281
+#: lib/gui.class.php:298
+#: lib/gui.class.php:310
+#: pages/visits.php:185
+#: pages/visits.php:235
+#: pages/visits.php:236
 msgid "Unknown"
 msgstr "Keine Daten vorhanden"
 
-#: share/data/events.ini
+#: share/data/events.ini:7
 msgid "Unsuccessful administrator password change attempt"
 msgstr "Fehlgeschlagene Änderung des Administratorkennworts"
 
-#: share/data/events.ini
+#: share/data/events.ini:11
 msgid "Unsuccessful backup create attempt"
 msgstr "Erstellung einer Sicherheitskopie fehlgeschlagen"
 
-#: share/data/events.ini
+#: share/data/events.ini:13
 msgid "Unsuccessful backup delete attempt"
 msgstr "Löschen von einer Sicherheitskopie fehlgeschlagen"
 
-#: share/data/events.ini
+#: share/data/events.ini:5
 msgid "Unsuccessful log into admin board attempt"
 msgstr "Fehlgeschlagene Anmeldevorgang des Administrators"
 
-#: share/data/events.ini
+#: share/data/events.ini:9
 msgid "Unsuccessful user login attempt"
 msgstr "Fehlgeschlagene Anmeldevorgang des Benutzers"
 
-#: share/data/languages.ini
+#: share/data/languages.ini:129
 msgid "Urdu"
 msgstr "Urdu"
 
-#: share/data/countries.ini
+#: share/data/countries.ini:237
 msgid "Uruguay"
 msgstr "Uruguay"
 
-#: plugins/tools/blacklist/plugin.php
+#: plugins/tools/blacklist/plugin.php:37
 msgid "Use * for replace end part of address."
 msgstr "Mit Zeichen * Ende der Adresse ersetzen."
 
-#: plugins/tools/configuration/plugin.php
+#: plugins/tools/configuration/plugin.php:31
 msgid "Use SQL format (user profile)"
 msgstr "SQL-Format benutzen (Benutzerprofil)"
 
-#: plugins/tools/configuration/plugin.php
+#: plugins/tools/configuration/plugin.php:59
 msgid "Use graphical charts and maps if possible"
 msgstr ""
 
-#: install.php
+#: install.php:97
 #, fuzzy
 msgid "Use gzip compression"
 msgstr "Datenkomprimierung"
 
-#: install.php
+#: install.php:95
 #, fuzzy
 msgid "Use persistent connection with database"
 msgstr "Keine Verbindung zur Datenbank!"
 
-#: pages/visits.php plugins/tools/blacklist/plugin.php
+#: plugins/tools/blacklist/plugin.php:63
+#: pages/visits.php:278
+#: pages/visits.php:436
 msgid "User Agent"
 msgstr "User Agent"
 
-#: plugins/tools/backups/plugin.php
+#: plugins/tools/backups/plugin.php:114
 msgid "User definied"
 msgstr "Benutzereinstellungen"
 
-#: plugins/tools/configuration/plugin.php
+#: plugins/tools/configuration/plugin.php:20
 #, fuzzy
 msgid "User interface behavior settings"
 msgstr "Einstellungen der Benutzeroberfläche."
 
-#: share/data/events.ini
+#: share/data/events.ini:8
 msgid "User logged in"
 msgstr "Benutzer hat sich angemeldet"
 
-#: share/data/languages.ini
+#: share/data/languages.ini:130
 msgid "Uzbek"
 msgstr "Usbekisch"
 
-#: share/data/countries.ini
+#: share/data/countries.ini:238
 msgid "Uzbekistan"
 msgstr "Usbekistan"
 
-#: share/data/countries.ini
+#: share/data/countries.ini:245
 msgid "Vanuatu"
 msgstr "Vanuatu"
 
-#: share/data/countries.ini
+#: share/data/countries.ini:239
 msgid "Vatican City"
 msgstr "Vatikanstadt"
 
-#: share/data/countries.ini
+#: share/data/countries.ini:241
 msgid "Venezuela"
 msgstr "Venezuela"
 
-#: share/data/countries.ini
+#: share/data/countries.ini:244
 msgid "Viet Nam"
 msgstr "Vietnam"
 
-#: share/data/languages.ini
+#: share/data/languages.ini:131
 msgid "Vietnamese"
 msgstr "Vietnamesisch"
 
-#: pages/time.php
+#: pages/time.php:273
 msgid "View of visits charts"
 msgstr "Diagramm-Ansichte"
 
-#: lib/gui.class.php pages/feed.php pages/general.php
-#: plugins/tools/blacklist/plugin.php
+#: lib/gui.class.php:260
+#: plugins/tools/blacklist/plugin.php:120
+#: pages/feed.php:208
+#: pages/general.php:39
 msgid "Views"
 msgstr "Wiederholte Besuche"
 
-#: pages/visits.php
+#: pages/visits.php:320
 msgid "Visit details #%d"
 msgstr "Besuch Einzelheiten #%d"
 
-#: pages/visits.php
+#: pages/visits.php:448
 #, fuzzy
 msgid "Visit time"
 msgstr "Besuche"
 
-#: pages/visits.php
+#: pages/visits.php:449
 msgid "Visited pages"
 msgstr "Besuchte Seiten"
 
-#: index.php pages/general.php
+#: index.php:578
+#: pages/general.php:38
 msgid "Visits"
 msgstr "Besuche"
 
-#: share/data/languages.ini
+#: share/data/languages.ini:132
 msgid "Volapuk"
 msgstr "Volapük"
 
-#: share/data/countries.ini
+#: share/data/countries.ini:246
 msgid "Wallis and Futuna Islands"
 msgstr "Wallis und Futuna"
 
-#: lib/gui.class.php
+#: lib/gui.class.php:645
 msgid "Warning"
 msgstr "Warnung"
 
-#: index.php
+#: index.php:594
 msgid "Web searchers"
 msgstr "Suchmaschinen"
 
-#: index.php
+#: index.php:603
 msgid "Week"
 msgstr "Woche"
 
-#: share/data/languages.ini
+#: share/data/languages.ini:20
 msgid "Welsh"
 msgstr "Walisisch"
 
-#: share/data/countries.ini
+#: share/data/countries.ini:68
 msgid "Western Sahara"
 msgstr "Westsahara"
 
-#: lib/gui.class.php
+#: lib/gui.class.php:441
 msgid "Whois"
 msgstr "Whois"
 
-#: share/data/languages.ini
+#: share/data/languages.ini:133
 msgid "Wolof"
 msgstr "Wolof"
 
-#: pages/geolocation.php
+#: pages/geolocation.php:39
+#: pages/geolocation.php:63
 msgid "World"
 msgstr "Welt"
 
-#: index.php
+#: index.php:1069
 msgid "Wrong password!"
 msgstr "Falsches Kennwort!"
 
-#: share/data/languages.ini
+#: share/data/languages.ini:134
 msgid "Xhosa"
 msgstr "isiXhosa"
 
-#: index.php lib/group.class.php
+#: index.php:605
+#: index.php:1020
+#: lib/group.class.php:571
 msgid "Year"
 msgstr "Jahr"
 
-#: index.php lib/group.class.php
+#: index.php:606
+#: lib/group.class.php:577
 msgid "Years"
 msgstr "Jahre"
 
-#: share/data/countries.ini
+#: share/data/countries.ini:248
 msgid "Yemen"
 msgstr "Jemen"
 
-#: install.php lib/gui.class.php pages/visits.php
+#: install.php:349
+#: lib/gui.class.php:247
+#: pages/visits.php:197
+#: pages/visits.php:199
+#: pages/visits.php:201
 msgid "Yes"
 msgstr "Ja"
 
-#: share/data/languages.ini
+#: share/data/languages.ini:135
 msgid "Yiddish"
 msgstr "Jiddisch"
 
-#: share/data/languages.ini
+#: share/data/languages.ini:136
 msgid "Yoruba"
 msgstr "Yoruba"
 
-#: index.php
+#: index.php:1098
 msgid "You are not allowed to use this tool!"
 msgstr ""
 
-#: plugins/tools/summary/plugin.php
+#: plugins/tools/summary/plugin.php:46
 msgid "You are using newest available version."
 msgstr ""
 
-#: index.php
+#: index.php:1084
 #, fuzzy
 msgid "You can not refresh page so quickly!"
 msgstr "Die Seite kann nicht aktualisiert werden. Versuchen Sie es bitte nach paar Minuten erneut."
 
-#: lib/chart.class.php pages/visits.php
+#: lib/chart.class.php:606
+#: pages/visits.php:423
 msgid "Your visits"
 msgstr "Ihr Besuch"
 
-#: install.php
+#: install.php:482
 msgid "ZIP compression support"
 msgstr ""
 
-#: share/data/countries.ini
+#: share/data/countries.ini:251
 msgid "Zambia"
 msgstr "Sambia"
 
-#: share/data/languages.ini
+#: share/data/languages.ini:137
 msgid "Zhuang"
 msgstr "Zhuang"
 
-#: share/data/countries.ini
+#: share/data/countries.ini:252
 msgid "Zimbabwe"
 msgstr "Simbabwe"
 
-#: share/data/languages.ini
+#: share/data/languages.ini:139
 msgid "Zulu"
 msgstr "isiZulu"
 
-#: lib/chart.class.php
+#: lib/chart.class.php:265
 msgid "average"
 msgstr "Durchschnittlich"
 
-#: share/data/events.ini
+#: share/data/events.ini:2
 msgid "eStats version was changed"
 msgstr "eStats-Version wurde geändert"
 
-#: share/data/events.ini
+#: share/data/events.ini:1
 msgid "eStats was installed"
 msgstr "eStats wurde installiert"
 
-#: lib/chart.class.php
+#: lib/chart.class.php:265
 msgid "maximum"
 msgstr "maximum"
 
-#: lib/chart.class.php
+#: lib/chart.class.php:265
 msgid "minimum"
 msgstr "minimum"
 
-#: lib/group.class.php pages/feed.php pages/visits.php
+#: lib/group.class.php:814
+#: pages/feed.php:145
+#: pages/visits.php:408
 msgid "of"
 msgstr "aus"
 
-#: pages/visits.php
+#: pages/visits.php:408
 msgid "page"
 msgstr "Seite"
 
-#: share/data/countries.ini
+#: share/data/countries.ini:17
 msgid "Åland Islands"
 msgstr "Åland"
 
@@ -3449,9 +3621,6 @@ msgstr "Åland"
 #~ msgid "Directory <em>install/</em> should be removed after installation!"
 #~ msgstr "Ordner <em>install</em> soll nach der Installation gelöscht werden"
 
-#~ msgid "Norway"
-#~ msgstr "Norwegen"
-
 #~ msgid "United Kingdom"
 #~ msgstr "Vereinigtes Königreich"
 
@@ -3478,9 +3647,6 @@ msgstr "Åland"
 
 #~ msgid "Hide"
 #~ msgstr "Asublenden"
-
-#~ msgid "Block this IP"
-#~ msgstr "IP blockieren"
 
 #~ msgid "Others"
 #~ msgstr "sonstige"
