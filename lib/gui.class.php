@@ -426,7 +426,7 @@ class EstatsGUI
 			}
 		}
 
-		return '<a href="{selfpath}{separator}'.($Ignored?'ignored':'blocked').'IP='.$IP.'" class="red" title="'.EstatsLocale::translate ('Block this IP').'" onclick="if (!confirm (\''.EstatsLocale::translate('Do You really want to ban this IP address?').'\')) return false" tabindex="'.self::tabindex().'"><strong>&#187;</strong></a>';
+		return '<a href="{selfpath}{separator}'.($Ignored?'ignored':'blocked').'IP='.$IP.'" class="red" title="'.EstatsLocale::translate('Block this IP').'" onclick="if (!confirm (\''.EstatsLocale::translate('Do You really want to ban this IP address?').'\')) return false" tabindex="'.self::tabindex().'"><strong>&#187;</strong></a>';
 	}
 
 /**
