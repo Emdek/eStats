@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import os, sys, string, tempfile
+import sys, string
 
 if len(sys.argv) < 2:
 	print 'You must specify path to source PO file!'
@@ -19,7 +19,7 @@ ignore = True
 source = False
 message = ''
 translation = ''
-buffer = '<?php\nerror_reporting(0);\n\n$Array = array(\n'
+messages = {}
 
 for line in data:
 	i += 1
@@ -35,7 +35,7 @@ for line in data:
 		continue
 	elif line[:5] == 'msgid':
 		if len(message) > 0:
-			buffer += '\t"' + message + '" => "' + translation + '",\n'
+			messages[string.replace(string.replace(message, '\\"', '"'), '\\n', '\n')] = string.replace(string.replace(translation, '\\"', '"'), '\\n', '\n')
 
 		if line != 'msgid ""' and ignore == False:
 			message = line[7:-1]
@@ -56,13 +56,14 @@ for line in data:
 		elif source == False and len(message) > 0:
 			translation += line[1:-1]
 
-buffer = buffer[:-2]
-buffer += '\n);\n\nksort($Array);\necho serialize($Array);\n?>'
+buffer = 'a:' + str(len(messages)) + ':{'
 
-output = tempfile.NamedTemporaryFile(delete = False)
-output.write(buffer)
-output.close()
+keys = messages.keys()
+keys.sort()
 
-print string.join(os.popen('php ' + output.name).readlines())
+for key in keys:
+	buffer += 's:' + str(len(key)) + ':"' + key + '";s:' + str(len(messages[key])) + ':"' + messages[key] + '";'
 
-os.unlink(output.name)
+buffer += '}'
+
+print buffer
