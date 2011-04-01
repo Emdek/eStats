@@ -2,7 +2,7 @@
 /**
  * Locale class for eStats
  * @author Emdek <http://emdek.pl>
- * @version 0.9.05
+ * @version 0.9.10
  */
 
 class EstatsLocale
@@ -94,14 +94,14 @@ class EstatsLocale
 				return;
 			}
 
-			$Path = $Directory.($Directory?'':'./locale/').self::$Locale.($Directory?'':'/locale').'.php';
+			$Path = $Directory.($Directory?'':'./locale/').self::$Locale.($Directory?'':'/locale').'.dat';
 
 			if (!is_file($Path))
 			{
 				return;
 			}
 
-			include ($Path);
+			$Translation = unserialize(file_get_contents($Path));
 
 			if (self::$Translation !== NULL)
 			{
