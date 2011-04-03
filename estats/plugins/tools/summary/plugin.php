@@ -59,7 +59,7 @@ EstatsTheme::add('page', '<h3>
 </p>
 <p>
 '.EstatsLocale::translate('Database').':
-<em>'.EstatsCore::driver()->option('Database').((EstatsCore::driver()->option('DatabaseVersion') != '?')?' '.htmlspecialchars(EstatsCore::driver()->option('DatabaseVersion')):'').'</em>;
+<em>'.EstatsCore::driver()->option('Database').((EstatsCore::driver()->option('DatabaseVersion') != '' && EstatsCore::driver()->option('DatabaseVersion') != '?')?' '.htmlspecialchars(EstatsCore::driver()->option('DatabaseVersion')):'').'</em>;
 </p>
 <p>
 '.EstatsLocale::translate('PHP version').':
@@ -95,7 +95,7 @@ EstatsTheme::add('page', '<h3>
 </p>
 <p>
 '.EstatsLocale::translate('Data size').':
-<em>'.EstatsGUI::formatSize($DatabaseSize + $CacheSize + $BackupsSize).'(<em title="'.EstatsLocale::translate('Data').'">'.EstatsGUI::formatSize($DatabaseSize).'</em> / <em title="'.EstatsLocale::translate('Cache').'">'.EstatsGUI::formatSize($CacheSize).'</em> / <em title="'.EstatsLocale::translate('Backups').'">'.EstatsGUI::formatSize($BackupsSize).'</em>)</em>;
+<em>'.EstatsGUI::formatSize($DatabaseSize + $CacheSize + $BackupsSize).' (<em title="'.EstatsLocale::translate('Data').'">'.EstatsGUI::formatSize($DatabaseSize).'</em> / <em title="'.EstatsLocale::translate('Cache').'">'.EstatsGUI::formatSize($CacheSize).'</em> / <em title="'.EstatsLocale::translate('Backups').'">'.EstatsGUI::formatSize($BackupsSize).'</em>)</em>;
 </p>
 <p>
 '.EstatsLocale::translate('Date of last backup creation').':
