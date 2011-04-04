@@ -12,15 +12,22 @@ if (!defined('eStats'))
 
 if (isset($_POST['SaveConfiguration']) || isset($_POST['Defaults']))
 {
-	EstatsGUI::saveConfiguration(array('IgnoredIPs', 'BlockedIPs', 'Keywords', 'Referrers', 'BlacklistMonitor'), $_POST, isset($_POST['Defaults']));
-
-	if (isset($_POST['IgnoreCookie']))
+	if (defined('ESTATS_DEMO'))
 	{
-		EstatsCookie::set('ignore', 1);
+		EstatsGUI::notify(EstatsLocale::translate('This functionality is disabled in demo mode!'), 'warning');
 	}
 	else
 	{
-		EstatsCookie::delete('ignore');
+		EstatsGUI::saveConfiguration(array('IgnoredIPs', 'BlockedIPs', 'Keywords', 'Referrers', 'BlacklistMonitor'), $_POST, isset($_POST['Defaults']));
+
+		if (isset($_POST['IgnoreCookie']))
+		{
+			EstatsCookie::set('ignore', 1);
+		}
+		else
+		{
+			EstatsCookie::delete('ignore');
+		}
 	}
 }
 

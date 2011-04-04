@@ -14,60 +14,95 @@ $DatabaseTables = array_keys(EstatsCore::loadData('share/data/database.ini'));
 
 if (isset($_POST['ResetBackups']))
 {
-	EstatsBackups::delete();
-	EstatsCore::logEvent(EstatsCore::EVENT_BACKUPSDELETED);
-	EstatsGUI::notify(EstatsLocale::translate('Backups deleted successfully.'), 'success');
+	if (defined('ESTATS_DEMO'))
+	{
+		EstatsGUI::notify(EstatsLocale::translate('This functionality is disabled in demo mode!'), 'warning');
+	}
+	else
+	{
+		EstatsBackups::delete();
+		EstatsCore::logEvent(EstatsCore::EVENT_BACKUPSDELETED);
+		EstatsGUI::notify(EstatsLocale::translate('Backups deleted successfully.'), 'success');
+	}
 }
 
 if (isset($_POST['ResetCache']))
 {
-	EstatsCache::delete();
+	if (defined('ESTATS_DEMO'))
+	{
+		EstatsGUI::notify(EstatsLocale::translate('This functionality is disabled in demo mode!'), 'warning');
+	}
+	else
+	{
+		EstatsCache::delete();
+	}
 }
 
 if (isset($_POST['CreateBackup']))
 {
-	$BackupID = EstatsBackups::create(ESTATS_VERSIONSTRING, 'data');
-
-	if ($BackupID)
+	if (defined('ESTATS_DEMO'))
 	{
-		EstatsCore::logEvent(EstatsCore::EVENT_BACKUPCREATED, 'ID: '.$BackupID);
-		EstatsGUI::notify(EstatsLocale::translate('Backup created successfully.'), 'success');
-		EstatsCore::setConfiguration(array('LastBackup' => $_SERVER['REQUEST_TIME']), 0);
+		EstatsGUI::notify(EstatsLocale::translate('This functionality is disabled in demo mode!'), 'warning');
 	}
 	else
 	{
-		EstatsCore::logEvent(EstatsCore::EVENT_FAILEDBACKUPCREATION, 'ID: '.$BackupID);
-		EstatsGUI::notify(EstatsLocale::translate('An error occured during backup create attempt!'), 'error');
+		$BackupID = EstatsBackups::create(ESTATS_VERSIONSTRING, 'data');
+
+		if ($BackupID)
+		{
+			EstatsCore::logEvent(EstatsCore::EVENT_BACKUPCREATED, 'ID: '.$BackupID);
+			EstatsGUI::notify(EstatsLocale::translate('Backup created successfully.'), 'success');
+			EstatsCore::setConfiguration(array('LastBackup' => $_SERVER['REQUEST_TIME']), 0);
+		}
+		else
+		{
+			EstatsCore::logEvent(EstatsCore::EVENT_FAILEDBACKUPCREATION, 'ID: '.$BackupID);
+			EstatsGUI::notify(EstatsLocale::translate('An error occured during backup create attempt!'), 'error');
+		}
 	}
 }
 
 if (isset($_POST['ResetData']))
 {
-	for ($i = 0, $c = count($DatabaseTables); $i < $c; ++$i)
+	if (defined('ESTATS_DEMO'))
 	{
-		if (!in_array($DatabaseTables[$i], array('configuration', 'logs')))
-		{
-			EstatsCore::driver()->deleteData($DatabaseTables[$i]);
-		}
+		EstatsGUI::notify(EstatsLocale::translate('This functionality is disabled in demo mode!'), 'warning');
 	}
+	else
+	{
+		for ($i = 0, $c = count($DatabaseTables); $i < $c; ++$i)
+		{
+			if (!in_array($DatabaseTables[$i], array('configuration', 'logs')))
+			{
+				EstatsCore::driver()->deleteData($DatabaseTables[$i]);
+			}
+		}
 
-	EstatsCore::logEvent(EstatsCore::EVENT_DATADELETED);
-	EstatsGUI::notify(EstatsLocale::translate('Data deleted successfully.'), 'success');
-	EstatsCore::setConfiguration(array('CollectedFrom' => $_SERVER['REQUEST_TIME']), 0);
+		EstatsCore::logEvent(EstatsCore::EVENT_DATADELETED);
+		EstatsGUI::notify(EstatsLocale::translate('Data deleted successfully.'), 'success');
+		EstatsCore::setConfiguration(array('CollectedFrom' => $_SERVER['REQUEST_TIME']), 0);
+	}
 }
 
 if (isset($_POST['ResetTables']) && !array_diff($_POST['Tables'], $DatabaseTables) && !in_array('configuration', $_POST['Tables']) && !in_array('logs', $_POST['Tables']))
 {
-	for ($i = 0, $c = count($_POST['Tables']); $i < $c; ++$i)
+	if (defined('ESTATS_DEMO'))
 	{
-		if (!in_array($DatabaseTables[$i], array('configuration', 'logs')) && in_array($_POST['Tables'][$i], $DatabaseTables))
-		{
-			EstatsCore::driver()->deleteData($_POST['Tables'][$i]);
-		}
+		EstatsGUI::notify(EstatsLocale::translate('This functionality is disabled in demo mode!'), 'warning');
 	}
+	else
+	{
+		for ($i = 0, $c = count($_POST['Tables']); $i < $c; ++$i)
+		{
+			if (!in_array($DatabaseTables[$i], array('configuration', 'logs')) && in_array($_POST['Tables'][$i], $DatabaseTables))
+			{
+				EstatsCore::driver()->deleteData($_POST['Tables'][$i]);
+			}
+		}
 
-	EstatsCore::logEvent(EstatsCore::EVENT_TABLESEMPTIED, implode(', ', $_POST['Tables']));
-	EstatsGUI::notify(EstatsLocale::translate('Selected tables emptied successfully.'), 'success');
+		EstatsCore::logEvent(EstatsCore::EVENT_TABLESEMPTIED, implode(', ', $_POST['Tables']));
+		EstatsGUI::notify(EstatsLocale::translate('Selected tables emptied successfully.'), 'success');
+	}
 }
 
 $DatabaseSize = 0;

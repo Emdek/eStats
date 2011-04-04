@@ -331,7 +331,14 @@ if ((!isset($_SESSION[EstatsCore::session()]['password']) || !$_SESSION[EstatsCo
 
 if (isset($_POST['Password']) && !defined('ESTATS_INSTALL'))
 {
-	$_SESSION[EstatsCore::session()]['password'] = md5($_POST['Password']);
+	if (defined('ESTATS_DEMO'))
+	{
+		$_SESSION[EstatsCore::session()]['password'] = EstatsCore::option('AdminPass');
+	}
+	else
+	{
+		$_SESSION[EstatsCore::session()]['password'] = md5($_POST['Password']);
+	}
 
 	if (isset($_POST['Remember']))
 	{
@@ -399,6 +406,26 @@ foreach ($Locales as $Key => $Value)
 {
 	$SelectLocale.= '<option value="'.$Key.'"'.(($Key == $Path[0])?' selected="selected"':'').'>'.$Value.'</option>
 ';
+}
+
+if (defined('ESTATS_DEMO'))
+{
+	EstatsGUI::notify(EstatsLocale::translate('This is a demo version of <em>eStats</em>.<br />
+Therefore parts of its functionality are disabled.'), 'information');
+}
+
+if (ESTATS_VERSIONSTATUS != 'stable')
+{
+	EstatsGUI::notify(sprintf(EstatsLocale::translate('This is a test version of <em>eStats</em> (status: <em>%s</em>).<br />
+Its functionality could be incomplete, could work incorrect and be incompatible with newest versions!<br />
+<strong style="text-decoration:underline;">Use at own risk!</strong>'), ESTATS_VERSIONSTATUS), 'warning');
+}
+
+if ((ESTATS_USERLEVEL == 2 || defined('ESTATS_INSTALL')) && ini_get('safe_mode'))
+{
+	EstatsGUI::notify(EstatsLocale::translate('<em>PHP safe mode</em> has been activated on this server!<br />
+That could cause problems in case of automatic creation of files and directories.<br />
+Solution is change of their owner or manual creation.'), 'warning');
 }
 
 if (!EstatsLocale::option('Status'))
@@ -485,36 +512,69 @@ if (ESTATS_USERLEVEL == 2)
 		{
 			if (isset($_GET[$Key]))
 			{
-				$TmpArray = $$Value;
-
-				if (in_array($_GET[$Key], $TmpArray))
+				if (defined('ESTATS_DEMO'))
 				{
-					unset($TmpArray[array_search($_GET[$Key], $TmpArray)]);
+					EstatsGUI::notify(EstatsLocale::translate('This functionality is disabled in demo mode!'), 'warning');
 				}
 				else
 				{
-					$TmpArray[] = $_GET[$Key];
+					$TmpArray = $$Value;
 
-					if ($Key == 'keyword' || $Key == 'referrer')
+					if (in_array($_GET[$Key], $TmpArray))
 					{
-						EstatsCore::driver()->deleteData($Key.'s', array(array(EstatsDriver::ELEMENT_OPERATION, array('name', EstatsDriver::OPERATOR_EQUAL, array(EstatsDriver::ELEMENT_VALUE, urldecode($_GET[$Key]))))));
+						unset($TmpArray[array_search($_GET[$Key], $TmpArray)]);
 					}
-				}
+					else
+					{
+						$TmpArray[] = $_GET[$Key];
 
-				EstatsCore::setConfiguration(array($Value => implode('|', $TmpArray)));
+						if ($Key == 'keyword' || $Key == 'referrer')
+						{
+							EstatsCore::driver()->deleteData($Key.'s', array(array(EstatsDriver::ELEMENT_OPERATION, array('name', EstatsDriver::OPERATOR_EQUAL, array(EstatsDriver::ELEMENT_VALUE, urldecode($_GET[$Key]))))));
+						}
+					}
+
+					EstatsCore::setConfiguration(array($Value => implode('|', $TmpArray)));
+				}
 			}
 		}
 	}
 
 	if (isset($_GET['statsenabled']) || isset($_POST['statsenabled']))
 	{
-		EstatsCore::setConfiguration(array('StatsEnabled' => !EstatsCore::option('StatsEnabled')));
+		if (defined('ESTATS_DEMO'))
+		{
+			EstatsGUI::notify(EstatsLocale::translate('This functionality is disabled in demo mode!'), 'warning');
+		}
+		else
+		{
+			EstatsCore::setConfiguration(array('StatsEnabled' => !EstatsCore::option('StatsEnabled')));
+		}
 	}
 
 	if (isset($_GET['maintenance']) || isset($_POST['maintenance']))
 	{
-		EstatsCore::setConfiguration(array('Maintenance' => !EstatsCore::option('Maintenance')));
+		if (defined('ESTATS_DEMO'))
+		{
+			EstatsGUI::notify(EstatsLocale::translate('This functionality is disabled in demo mode!'), 'warning');
+		}
+		else
+		{
+			EstatsCore::setConfiguration(array('Maintenance' => !EstatsCore::option('Maintenance')));
+		}
 	}
+}
+
+if (EstatsCore::option('Maintenance') && ESTATS_USERLEVEL == 2)
+{
+	EstatsGUI::notify(EstatsLocale::translate('Maintenance mode is active!').'<br />
+<a href="{selfpath}{separator}maintenance" tabindex="'.EstatsGUI::tabindex().'"><strong>'.EstatsLocale::translate('Disable maintenance mode').'</strong></a>.', 'warning');
+}
+
+if (!EstatsCore::option('StatsEnabled') && !defined('ESTATS_INSTALL'))
+{
+	EstatsGUI::notify(EstatsLocale::translate('Statistics are disabled.').((ESTATS_USERLEVEL == 2)?'<br />
+<a href="{selfpath}{separator}statsenabled" tabindex="'.EstatsGUI::tabindex().'"><strong>'.EstatsLocale::translate('Enable statistics').'</strong></a>.':''), 'information');
 }
 
 if (defined('ESTATS_INSTALL'))
@@ -1140,32 +1200,6 @@ if (ESTATS_USERLEVEL == 2 || defined('ESTATS_INSTALL'))
 	}
 }
 
-if (ESTATS_VERSIONSTATUS != 'stable')
-{
-	EstatsGUI::notify(sprintf(EstatsLocale::translate('This is a test version of <em>eStats</em> (status: <em>%s</em>).<br />
-Its functionality could be incomplete, could work incorrect and be incompatible with newest versions!<br />
-<strong style="text-decoration:underline;">Use at own risk!</strong>'), ESTATS_VERSIONSTATUS), 'warning');
-}
-
-if ((ESTATS_USERLEVEL == 2 || defined('ESTATS_INSTALL')) && ini_get('safe_mode'))
-{
-	EstatsGUI::notify(EstatsLocale::translate('<em>PHP safe mode</em> has been activated on this server!<br />
-That could cause problems in case of automatic creation of files and directories.<br />
-Solution is change of their owner or manual creation.'), 'warning');
-}
-
-if (EstatsCore::option('Maintenance') && ESTATS_USERLEVEL == 2)
-{
-	EstatsGUI::notify(EstatsLocale::translate('Maintenance mode is active!').'<br />
-<a href="{selfpath}{separator}maintenance" tabindex="'.EstatsGUI::tabindex().'"><strong>'.EstatsLocale::translate('Disable maintenance mode').'</strong></a>.', 'warning');
-}
-
-if (!EstatsCore::option('StatsEnabled') && !defined('ESTATS_INSTALL'))
-{
-	EstatsGUI::notify(EstatsLocale::translate('Statistics are disabled.').((ESTATS_USERLEVEL == 2)?'<br />
-<a href="{selfpath}{separator}statsenabled" tabindex="'.EstatsGUI::tabindex().'"><strong>'.EstatsLocale::translate('Enable statistics').'</strong></a>.':''), 'information');
-}
-
 if (EstatsTheme::contains('css'))
 {
 	EstatsTheme::add('css', '<style type="text/css">
@@ -1218,7 +1252,7 @@ if (is_file('./share/themes/'.$_SESSION[EstatsCore::session()]['theme'].'/theme.
 
 $Page = EstatsTheme::parse(EstatsTheme::parse(EstatsTheme::parse(EstatsTheme::get('index'), array('page' => EstatsTheme::get('page')))), array('pagegeneration' => sprintf(EstatsLocale::translate('Page generation time: %.3lf (s)'), (microtime(TRUE) - $Start))), TRUE);
 
-if ($_SESSION['ERRORS'] && (ESTATS_USERLEVEL == 2 || defined('ESTATS_INSTALL')))
+if ($_SESSION['ERRORS'] && !defined('ESTATS_DEMO') && (ESTATS_USERLEVEL == 2 || defined('ESTATS_INSTALL')))
 {
 	$Debug = EstatsGUI::notificationWidget('<h4 id="debug_header" onclick="document.getElementById(\'debug\').style.display = ((document.getElementById(\'debug\').style.display == \'none\')?\'block\':\'none\')">'.EstatsLocale::translate('Debug').' ('.count($_SESSION['ERRORS']).')</h4>
 <div id="debug">

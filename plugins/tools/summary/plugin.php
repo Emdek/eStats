@@ -12,7 +12,14 @@ if (!defined('eStats'))
 
 if (isset($Path[3]) && $Path[3] == 'phpinfo')
 {
-	die(phpinfo());
+	if (defined('ESTATS_DEMO'))
+	{
+		EstatsGUI::notify(EstatsLocale::translate('This functionality is disabled in demo mode!'), 'warning');
+	}
+	else
+	{
+		die(phpinfo());
+	}
 }
 
 $CacheSize = EstatsCache::size();

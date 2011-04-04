@@ -88,7 +88,14 @@ if (isset($Path[3]) && $Path[3] == 'advanced')
 
 	if (isset($_POST['SaveConfiguration']) || isset($_POST['Defaults']))
 	{
-		EstatsGUI::saveConfiguration(array_keys(array_merge($Configuration['Core'], $Configuration['GUI'])), $_POST, isset($_POST['Defaults']));
+		if (defined('ESTATS_DEMO'))
+		{
+			EstatsGUI::notify(EstatsLocale::translate('This functionality is disabled in demo mode!'), 'warning');
+		}
+		else
+		{
+			EstatsGUI::saveConfiguration(array_keys(array_merge($Configuration['Core'], $Configuration['GUI'])), $_POST, isset($_POST['Defaults']));
+		}
 	}
 
 	EstatsTheme::add('page', '<div id="advanced">
@@ -201,69 +208,83 @@ else
 {
 	if (isset($_POST['SaveConfiguration']) || isset($_POST['Defaults']))
 	{
-		if (isset($_POST['SaveConfiguration']))
+		if (defined('ESTATS_DEMO'))
 		{
-			if (isset($_POST['Pass']) && $_POST['Pass'] !== '')
-			{
-				$_POST['Pass'] = md5($_POST['Pass']);
-			}
-
-			if ($_POST['PathMode'] == 1)
-			{
-				$_POST['Path|mode'] = 1;
-				$_POST['Path|prefix'] = 'index.php/';
-				$_POST['Path|suffix'] = '';
-				$_POST['Path|separator'] = '?';
-			}
-			else if ($_POST['PathMode'] == 2)
-			{
-				$_POST['Path|mode'] = 0;
-				$_POST['Path|prefix'] = '';
-				$_POST['Path|suffix'] = '/';
-				$_POST['Path|separator'] = '&';
-			}
-			else
-			{
-				$_POST['Path|mode'] = 0;
-				$_POST['Path|prefix'] = 'index.php?path=';
-				$_POST['Path|suffix'] = '';
-				$_POST['Path|separator'] = '&';
-			}
+			EstatsGUI::notify(EstatsLocale::translate('This functionality is disabled in demo mode!'), 'warning');
 		}
+		else
+		{
+			if (isset($_POST['SaveConfiguration']))
+			{
+				if (isset($_POST['Pass']) && $_POST['Pass'] !== '')
+				{
+					$_POST['Pass'] = md5($_POST['Pass']);
+				}
 
-		EstatsGUI::saveConfiguration(array('Pass', 'VisitTime', 'LogEnabled', 'CountPhrases', 'Antipixel', 'DefaultTheme', 'Path|mode', 'Path|prefix', 'Path|suffix', 'Path|separator'), $_POST, isset($_POST['Defaults']));
+				if ($_POST['PathMode'] == 1)
+				{
+					$_POST['Path|mode'] = 1;
+					$_POST['Path|prefix'] = 'index.php/';
+					$_POST['Path|suffix'] = '';
+					$_POST['Path|separator'] = '?';
+				}
+				else if ($_POST['PathMode'] == 2)
+				{
+					$_POST['Path|mode'] = 0;
+					$_POST['Path|prefix'] = '';
+					$_POST['Path|suffix'] = '/';
+					$_POST['Path|separator'] = '&';
+				}
+				else
+				{
+					$_POST['Path|mode'] = 0;
+					$_POST['Path|prefix'] = 'index.php?path=';
+					$_POST['Path|suffix'] = '';
+					$_POST['Path|separator'] = '&';
+				}
+			}
+
+			EstatsGUI::saveConfiguration(array('Pass', 'VisitTime', 'LogEnabled', 'CountPhrases', 'Antipixel', 'DefaultTheme', 'Path|mode', 'Path|prefix', 'Path|suffix', 'Path|separator'), $_POST, isset($_POST['Defaults']));
+		}
 	}
 
 	if (isset($_POST['ChangePassword']))
 	{
-		if (md5($_POST['CurrentPassword']) == EstatsCore::option('AdminPass') && $_POST['NewPassword'] == $_POST['RepeatPassword'])
+		if (defined('ESTATS_DEMO'))
 		{
-			EstatsCore::logEvent(EstatsCore::EVENT_ADMINISTRATORPASSWORDCHANGED);
-
-			$_SESSION[EstatsCore::session()]['password'] = md5($_POST['NewPassword']);
-
-			if (EstatsCookie::get('password'))
-			{
-				EstatsCookie::set('password', md5($_SESSION[EstatsCore::session()]['password'].$UniqueID), 1209600);
-			}
-
-			EstatsCore::setConfiguration(array('AdminPass' => $_SESSION[EstatsCore::session()]['password']));
-			EstatsGUI::notify(EstatsLocale::translate('Administrator password changed successfully.'), 'success');
+			EstatsGUI::notify(EstatsLocale::translate('This functionality is disabled in demo mode!'), 'warning');
 		}
 		else
 		{
-			EstatsCore::logEvent(EstatsCore::EVENT_FAILEDADMISNISTRATORPASSWORDCHANGE);
-
-			if (md5($_POST['CurrentPassword']) !== EstatsCore::option('AdminPass'))
+			if (md5($_POST['CurrentPassword']) == EstatsCore::option('AdminPass') && $_POST['NewPassword'] == $_POST['RepeatPassword'])
 			{
-				EstatsCookie::delete('password');
+				EstatsCore::logEvent(EstatsCore::EVENT_ADMINISTRATORPASSWORDCHANGED);
 
-				unset($_SESSION[EstatsCore::session()]['password']);
-				die(header('Location: '.$_SERVER['REQUEST_URI']));
+				$_SESSION[EstatsCore::session()]['password'] = md5($_POST['NewPassword']);
+
+				if (EstatsCookie::get('password'))
+				{
+					EstatsCookie::set('password', md5($_SESSION[EstatsCore::session()]['password'].$UniqueID), 1209600);
+				}
+
+				EstatsCore::setConfiguration(array('AdminPass' => $_SESSION[EstatsCore::session()]['password']));
+				EstatsGUI::notify(EstatsLocale::translate('Administrator password changed successfully.'), 'success');
 			}
 			else
 			{
-				EstatsGUI::notify(EstatsLocale::translate('Given passwords are not the same!'), 0);
+				EstatsCore::logEvent(EstatsCore::EVENT_FAILEDADMISNISTRATORPASSWORDCHANGE);
+
+				if (md5($_POST['CurrentPassword']) !== EstatsCore::option('AdminPass'))
+				{
+					EstatsCookie::delete('password');
+
+					unset($_SESSION[EstatsCore::session()]['password']);
+					die(header('Location: '.$_SERVER['REQUEST_URI']));
+				}
+				else
+				{
+					EstatsGUI::notify(EstatsLocale::translate('Given passwords are not the same!'), 0);
+				}
 			}
 		}
 	}
@@ -341,7 +362,7 @@ else
 '.$AntipixelSelect.'</select>', EstatsGUI::FIELD_CUSTOM).EstatsGUI::optionRowWidget(EstatsLocale::translate('Default theme'), '', 'DefaultTheme', EstatsCore::option('DefaultTheme'), EstatsGUI::FIELD_SELECT, array_keys($Themes)).EstatsGUI::optionRowWidget(EstatsLocale::translate('Mode of passing data in the path'), '', 'PathMode', EstatsCore::option('Path|mode'), EstatsGUI::FIELD_SELECT, array('GET', 'PATH_INFO', 'Rewrite')).'<div class="buttons">
 <input type="submit" onclick="if (!confirm(\''.EstatsLocale::translate('Do You really want to save?').'\')) return false" value="'.EstatsLocale::translate('Save').'" name="SaveConfiguration" tabindex="'.EstatsGUI::tabindex().'" />
 <input type="submit" onclick="if (!confirm(\''.EstatsLocale::translate('Do You really want to restore defaults?').'\')) return false" value="'.EstatsLocale::translate('Defaults').'" name="Defaults" tabindex="'.EstatsGUI::tabindex().'" />
-<input type="reset" value="'.EstatsLocale::translate('Reset').'" tabindex="'.EstatsGUI::tabindex().'" />
+<input type="reset" value="'.EstatsLocale::translate('Reset').'" tabindex="'.EstatsGUI::tabindex().'" /><br />
 <input type="button" onclick="location.href = \'{path}tools/configuration/advanced{suffix}\'" value="'.EstatsLocale::translate('Advanced').'" />
 </div>
 </form>

@@ -12,8 +12,15 @@ if (!defined('eStats'))
 
 if (isset($_POST['SaveConfiguration']) || isset($_POST['Defaults']))
 {
-	EstatsGUI::saveConfiguration(array('Backups|profile', 'Backups|creationinterval', 'Backups|usertables', 'Backups|replacedata'), $_POST, isset($_POST['Defaults']));
-	EstatsGUI::notify(EstatsLocale::translate('Configuration saved successfully.'), 'success');
+	if (defined('ESTATS_DEMO'))
+	{
+		EstatsGUI::notify(EstatsLocale::translate('This functionality is disabled in demo mode!'), 'warning');
+	}
+	else
+	{
+		EstatsGUI::saveConfiguration(array('Backups|profile', 'Backups|creationinterval', 'Backups|usertables', 'Backups|replacedata'), $_POST, isset($_POST['Defaults']));
+		EstatsGUI::notify(EstatsLocale::translate('Configuration saved successfully.'), 'success');
+	}
 }
 
 if (isset($_POST['DownloadBackup']))
@@ -53,58 +60,85 @@ if (isset($_POST['DownloadBackup']))
 
 if (isset($_POST['DeleteBackup']))
 {
-	$Status = EstatsBackups::delete($_POST['BackupID']);
-
-
-	if ($Status)
+	if (defined('ESTATS_DEMO'))
 	{
-		EstatsCore::logEvent(EstatsCore::EVENT_BACKUPDELETED, 'ID: '.$_POST['BackupID']);
-		EstatsGUI::notify(EstatsLocale::translate('Backup deleted successfully.'), 'success');
+		EstatsGUI::notify(EstatsLocale::translate('This functionality is disabled in demo mode!'), 'warning');
 	}
 	else
 	{
-		EstatsCore::logEvent(EstatsCore::EVENT_FAILEDBACKUPDELETION, 'ID: '.$_POST['BackupID']);
-		EstatsGUI::notify(EstatsLocale::translate('An error occured during backup delete attempt!'), 'error');
+		$Status = EstatsBackups::delete($_POST['BackupID']);
+
+		if ($Status)
+		{
+			EstatsCore::logEvent(EstatsCore::EVENT_BACKUPDELETED, 'ID: '.$_POST['BackupID']);
+			EstatsGUI::notify(EstatsLocale::translate('Backup deleted successfully.'), 'success');
+		}
+		else
+		{
+			EstatsCore::logEvent(EstatsCore::EVENT_FAILEDBACKUPDELETION, 'ID: '.$_POST['BackupID']);
+			EstatsGUI::notify(EstatsLocale::translate('An error occured during backup delete attempt!'), 'error');
+		}
 	}
 }
 
 if (isset($_POST['CreateBackup']))
 {
-	$BackupID = EstatsBackups::create(ESTATS_VERSIONSTRING, (($_POST['Backups|profile'] == 'user')?'manual':$_POST['Backups|profile']), (isset($_POST['Backups|usertables'])?$_POST['Backups|usertables']:array()), isset($_POST['Backups|replacedata']));
-
-	if ($BackupID)
+	if (defined('ESTATS_DEMO'))
 	{
-		EstatsCore::logEvent(EstatsCore::EVENT_BACKUPCREATED, 'ID: '.$BackupID);
-		EstatsGUI::notify(EstatsLocale::translate('Backup created successfully.'), 'success');
-		EstatsCore::setConfiguration(array('LastBackup' => $_SERVER['REQUEST_TIME']), 0);
-
-		clearstatcache();
+		EstatsGUI::notify(EstatsLocale::translate('This functionality is disabled in demo mode!'), 'warning');
 	}
 	else
 	{
-		EstatsCore::logEvent(EstatsCore::EVENT_FAILEDBACKUPCREATION, 'ID: '.$BackupID);
-		EstatsGUI::notify(EstatsLocale::translate('An error occured during backup create attempt!'), 'error');
+		$BackupID = EstatsBackups::create(ESTATS_VERSIONSTRING, (($_POST['Backups|profile'] == 'user')?'manual':$_POST['Backups|profile']), (isset($_POST['Backups|usertables'])?$_POST['Backups|usertables']:array()), isset($_POST['Backups|replacedata']));
+
+		if ($BackupID)
+		{
+			EstatsCore::logEvent(EstatsCore::EVENT_BACKUPCREATED, 'ID: '.$BackupID);
+			EstatsGUI::notify(EstatsLocale::translate('Backup created successfully.'), 'success');
+			EstatsCore::setConfiguration(array('LastBackup' => $_SERVER['REQUEST_TIME']), 0);
+
+			clearstatcache();
+		}
+		else
+		{
+			EstatsCore::logEvent(EstatsCore::EVENT_FAILEDBACKUPCREATION, 'ID: '.$BackupID);
+			EstatsGUI::notify(EstatsLocale::translate('An error occured during backup create attempt!'), 'error');
+		}
 	}
 }
 
 if (isset($_FILES['UploadBackup']) && is_uploaded_file($_FILES['UploadBackup']['tmp_name']))
 {
-	$_POST['BackupID'] = 'Upload-'.$_SERVER['REQUEST_TIME'].'.user';
-	$_POST['RestoreBackup'] = TRUE;
+	if (defined('ESTATS_DEMO'))
+	{
+		EstatsGUI::notify(EstatsLocale::translate('This functionality is disabled in demo mode!'), 'warning');
+	}
+	else
+	{
+		$_POST['BackupID'] = 'Upload-'.$_SERVER['REQUEST_TIME'].'.user';
+		$_POST['RestoreBackup'] = TRUE;
 
-	move_uploaded_file($_FILES['UploadBackup']['tmp_name'], $DataDir.'backups/'.$_POST['BackupID'].'.estats.bak');
+		move_uploaded_file($_FILES['UploadBackup']['tmp_name'], $DataDir.'backups/'.$_POST['BackupID'].'.estats.bak');
+	}
 }
 
 if (isset($_POST['RestoreBackup']))
 {
-	if (EstatsBackups::restore($_POST['BackupID']))
+	if (defined('ESTATS_DEMO'))
 	{
-		EstatsCore::logEvent(EstatsCore::EVENT_DATARESTORED, 'ID: '.$_POST['BackupID']);
-		EstatsGUI::notify(EstatsLocale::translate('Backup restored successfully.'), 'success');
+		EstatsGUI::notify(EstatsLocale::translate('This functionality is disabled in demo mode!'), 'warning');
 	}
 	else
 	{
-		EstatsGUI::notify(EstatsLocale::translate('An error occured during backup restore attempt!'), 'error');
+		if (EstatsBackups::restore($_POST['BackupID']))
+		{
+			EstatsCore::logEvent(EstatsCore::EVENT_DATARESTORED, 'ID: '.$_POST['BackupID']);
+			EstatsGUI::notify(EstatsLocale::translate('Backup restored successfully.'), 'success');
+		}
+		else
+		{
+			EstatsGUI::notify(EstatsLocale::translate('An error occured during backup restore attempt!'), 'error');
+		}
 	}
 }
 
@@ -118,7 +152,7 @@ for ($i = 0; $i < 3; ++$i)
 	$Profiles[] = array($BackupTypes[$i], $BackupTypesNames[$i]);
 	$AvailableBackups = EstatsBackups::available($BackupTypes[$i]);
 
-	 if ($AvailableBackups)
+	if ($AvailableBackups)
 	{
 		$c = count($AvailableBackups);
 		$AvailableBackups = array_reverse($AvailableBackups);
@@ -170,7 +204,7 @@ EstatsTheme::add('page', '<h3>
 '.EstatsGUI::optionRowWidget(EstatsLocale::translate('Backup creation profile'), '', 'Backups|profile', EstatsCore::option('Backups|profile'), EstatsGUI::FIELD_SELECT, $Profiles).EstatsGUI::optionRowWidget(EstatsLocale::translate('Create backups after specified time (s)'), '', 'Backups|creationinterval', EstatsCore::option('Backups|creationinterval')).EstatsGUI::optionRowWidget(EstatsLocale::translate('Tables to archivize'), '', 'Backups|usertables[]', EstatsCore::option('Backups|usertables'), EstatsGUI::FIELD_SELECT, array_keys(EstatsCore::loadData('share/data/database.ini'))).EstatsGUI::optionRowWidget(EstatsLocale::translate('Replace existing data'), '', 'Backups|replacedata', EstatsCore::option('Backups|replacedata'), EstatsGUI::FIELD_BOOLEAN).'<div class="buttons">
 <input type="submit" onclick="if (!confirm(\''.EstatsLocale::translate('Do You really want to save?').'\')) return false" value="'.EstatsLocale::translate('Save').'" name="SaveConfiguration" tabindex="'.EstatsGUI::tabindex().'" />
 <input type="submit" onclick="if (!confirm(\''.EstatsLocale::translate('Do You really want to restore defaults?').'\')) return false" value="'.EstatsLocale::translate('Defaults').'" name="Defaults" tabindex="'.EstatsGUI::tabindex().'" />
-<input type="reset" value="'.EstatsLocale::translate('Reset').'" tabindex="'.EstatsGUI::tabindex().'" />
+<input type="reset" value="'.EstatsLocale::translate('Reset').'" tabindex="'.EstatsGUI::tabindex().'" /><br />
 <input type="submit" name="CreateBackup" value="'.EstatsLocale::translate('Create backup').'" tabindex="'.EstatsGUI::tabindex().'" />
 </div>
 </form>
