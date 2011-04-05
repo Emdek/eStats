@@ -44,10 +44,7 @@
 <thead>
 <tr>
 <th colspan="<!--start:group_difference-->5<!--end:group_difference--><!--start:!group_difference-->4<!--end:!group_difference-->">
-<a href="{link}" tabindex="{tabindex}">
-{title}<!--start:group_{id}_information-->
-({displayed} {lang_of} {amount})<!--end:group_{id}_information-->
-</a>
+<a href="{link}" tabindex="{tabindex}">{title}</a>
 </th>
 </tr>
 </thead>

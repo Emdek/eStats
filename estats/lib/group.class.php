@@ -539,7 +539,6 @@ class EstatsGroup
 		}
 
 		EstatsTheme::add('group_chart', ($Extended && isset($Data['amount']) && $Data['amount'] && EstatsGraphics::isAvailable() && $Page == 1));
-		EstatsTheme::add('group_'.$ID.'_information', (EstatsCore::option('GroupAmount/'.$ID) && $Data['amount'] > EstatsCore::option('GroupAmount/'.$ID)));
 		EstatsTheme::add('group_difference', (EstatsCore::option('AmountDifferences') && $Date[0]));
 
 		if ($Extended && isset($Data['amount']) && $Data['amount'])
@@ -799,10 +798,7 @@ class EstatsGroup
 		}
 
 		return EstatsTheme::parse(EstatsTheme::get('group'), array(
-	'amount' => (int) $Data['amount'],
-	'displayed' => (int) ((EstatsCore::option('GroupAmount/'.$ID) > $Data['amount'])?$Data['amount']:EstatsCore::option('GroupAmount/'.$ID)),
-	'limit' => (int) EstatsCore::option('GroupAmount/'.$ID),
-	'title' => $Title,
+	'title' => ((!$Extended && EstatsCore::option('GroupAmount/'.$ID) && $Data['amount'] > EstatsCore::option('GroupAmount/'.$ID))?sprintf(EstatsLocale::translate('%s (%d of %d)'), $Title, (int) ((EstatsCore::option('GroupAmount/'.$ID) > $Data['amount'])?$Data['amount']:EstatsCore::option('GroupAmount/'.$ID)), (int) $Data['amount']):$Title),
 	'link' => ($Link?str_replace('{date}', '{period}', $Link):''),
 	'links' => (($PagesAmount > 1)?EstatsGUI::linksWidget($Page, $PagesAmount, str_replace('{date}', '{period}/{page}', $Link)):''),
 	'tabindex' => EstatsGUI::tabindex(),
@@ -811,7 +807,6 @@ class EstatsGroup
 	'summary' => $Summary,
 	'id' => $ID,
 	'lang_sum' => EstatsLocale::translate('Sum'),
-	'lang_of' => EstatsLocale::translate('of'),
 	'lang_none' => EstatsLocale::translate('None'),
 	));
 	}

@@ -5,7 +5,7 @@
  * @version 5.0.00
  */
 
-if (!defined('eStats') || EstatsCore::option('AccessPassword') || !include ('./lib/group.class.php'))
+if (!defined('eStats') || EstatsCore::option('AccessPassword'))
 {
 	die();
 }
@@ -125,8 +125,8 @@ foreach ($Feeds as $Key => $Value)
 		}
 
 		$Date = date('Y-m-d\TH:i:s\Z', $TimeStamp);
-		$Title = sprintf(EstatsLocale::translate(ucfirst($Key).' visits summary for %s.'), date('Y-m-d', $TimeStamp));
-		$Summary = sprintf(EstatsLocale::translate($NewData[$TimeStamp]['summary']['views']?'Between %s and %s there were %d unique visits (%d views), which %d were returns.':'Between %s and %s there were no visits.'), date('Y-m-d H:00', ($TimeStamp - $Step)), date('Y-m-d H:i', $TimeStamp), $NewData[$TimeStamp]['summary']['unique'], $NewData[$TimeStamp]['summary']['views'], $NewData[$TimeStamp]['summary']['returns']);
+		$Title = sprintf(EstatsLocale::translate('%s visits summary for %s.'), ucfirst($Key), date('Y-m-d', $TimeStamp));
+		$Summary = sprintf(($NewData[$TimeStamp]['summary']['views']?EstatsLocale::translate('Between %s and %s there were %d unique visits (%d views), which %d were returns.'):EstatsLocale::translate('Between %s and %s there were no visits.')), date('Y-m-d H:00', ($TimeStamp - $Step)), date('Y-m-d H:i', $TimeStamp), $NewData[$TimeStamp]['summary']['unique'], $NewData[$TimeStamp]['summary']['views'], $NewData[$TimeStamp]['summary']['returns']);
 		$Content = '<h1>
 '.EstatsLocale::translate('Summary').'
 </h1>
@@ -142,7 +142,7 @@ foreach ($Feeds as $Key => $Value)
 				}
 
 				$Content.= '<h2>
-'.EstatsLocale::translate($Titles[$Table]).(($GroupData['amount'] && $GroupData['amount'] != (($Groups[$Key][$Table] > $GroupData['amount'])?$GroupData['amount']:$Groups[$Key][$Table]))?' ('.count($GroupData['data']).' '.EstatsLocale::translate('of').' '.$GroupData['amount'].')':'').'
+'.(($GroupData['amount'] && $GroupData['amount'] != (($Groups[$Key][$Table] > $GroupData['amount'])?$GroupData['amount']:$Groups[$Key][$Table]))?sprintf(EstatsLocale::translate('%s (%d of %d)'), $Titles[$Table], count($GroupData['data']), $GroupData['amount']):$Titles[$Table]).'
 </h2>
 <ol>
 ';
@@ -191,10 +191,10 @@ foreach ($Feeds as $Key => $Value)
 			}
 		}
 
-		if ((EstatsCore::option('CollectFrequency/time') == 'hourly' || $Key != '24hours') && $NewData[$TimeStamp]['time'])
+		if ((EstatsCore::option('CollectFrequency|time') == 'hourly' || $Key != '24hours') && $NewData[$TimeStamp]['time'])
 		{
 			$Content.= '<h2>
-'.EstatsLocale::translate('Time').' ('.EstatsLocale::translate($Titles[$Diagrams[$Key][0]]).')
+'.EstatsLocale::translate('Time').' ('.$Titles[$Diagrams[$Key][0]].')
 </h2>
 <table cellpadding="2px" cellspacing="0" border="1px" width="100%">
 <tr>

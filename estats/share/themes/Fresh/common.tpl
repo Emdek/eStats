@@ -55,10 +55,7 @@
 <img src="{datapath}/share/icons/pages/{id}.png" alt="" class="icon" />
 </th>
 <th colspan="<!--start:group_difference-->4<!--end:group_difference--><!--start:!group_difference-->3<!--end:!group_difference-->" class="title">
-<a href="{link}" tabindex="{tabindex}">
-{title}<!--start:group_{id}_information-->
-({displayed} {lang_of} {amount})<!--end:group_{id}_information-->
-</a>
+<a href="{link}" tabindex="{tabindex}">{title}</a>
 </th>
 </tr>
 {information}{rows}{summary}</table>
