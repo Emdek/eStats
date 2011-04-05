@@ -34,10 +34,7 @@
 
 [start:group]<tr>
 <th colspan="4">
-<a href="{link}" tabindex="{tabindex}">
-{title}<!--start:group_{id}_information-->
-({displayed} {lang_of} {amount})<!--end:group_{id}_information-->
-</a>
+<a href="{link}" tabindex="{tabindex}">{title}</a>
 </th>
 </tr>
 {information}{rows}{summary}[/end]

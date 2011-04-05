@@ -344,7 +344,7 @@ if ($ShowDetails)
 
 	if ($PagesAmount > 1)
 	{
-		EstatsTheme::append('title', sprintf(EstatsLocale::translate(' - page %d. of %d'), $Page, $PagesAmount));
+		EstatsTheme::add('title', sprintf(EstatsLocale::translate('%s - page %d. of %d'), EstatsTheme::get('title'), $Page, $PagesAmount));
 	}
 
 	$OtherIDs = array();
@@ -405,7 +405,7 @@ else
 
 	if ($PagesAmount > 1 && EstatsCore::option('Visits|maxpages') > 1)
 	{
-		EstatsTheme::append('title', ' - '.EstatsLocale::translate('page').' '.$Page.'. '.EstatsLocale::translate('of').' '.$PagesAmount);
+		EstatsTheme::add('title', sprintf(EstatsLocale::translate('%s - page %d. of %d'), EstatsTheme::get('title'), $Page, $PagesAmount));
 	}
 
 	EstatsTheme::add('links', (($PagesAmount > 1)?EstatsGUI::linksWIdget($Page, $PagesAmount, '{path}visits/'.$ShowRobots.'/{page}{suffix}'):''));
