@@ -109,7 +109,7 @@ class EstatsGUI
 
 	static function iconPath($Icon, $Category)
 	{
-		$Icon = trim($Icon);
+		$Icon = str_replace('/', '', strtolower(trim($Icon)));
 
 		switch ($Category)
 		{
@@ -190,7 +190,15 @@ class EstatsGUI
 				else if (strstr(trim($Icon), ' '))
 				{
 					$Array = explode(' ', $Icon);
-					$Icon = &$Array[1];
+
+					if (is_file('./share/icons/operatingsystems/'.$Array[1].'.png'))
+					{
+						$Icon = &$Array[1];
+					}
+					else
+					{
+						$Icon = &$Array[0];
+					}
 				}
 			break;
 			case 'robots':
@@ -213,7 +221,7 @@ class EstatsGUI
 				return '';
 		}
 
-		$Icon = str_replace(array(' ', '/'), '', strtolower($Icon));
+		$Icon = str_replace(' ', '', $Icon);
 
 		if ($Icon == '?' || !is_file('./share/icons/'.$Category.'/'.$Icon.'.png'))
 		{
@@ -310,7 +318,11 @@ class EstatsGUI
 				$String = (isset($Regions[$Region[0]][$Region[1]])?$Regions[$Region[0]][$Region[1]]:EstatsLocale::translate('Unknown'));
 			break;
 			case 'operatingsystem-versions':
-				if (substr($String, 0, 6) == 'mobile')
+				if ($String == 'mobile')
+				{
+					$String = EstatsLocale::translate('Mobile devices');
+				}
+				else if (substr($String, 0, 6) == 'mobile')
 				{
 					$String = substr($String, 7);
 				}
