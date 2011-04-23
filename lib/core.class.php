@@ -365,7 +365,7 @@ class EstatsCore
 		self::$Session = md5('estats_'.substr(self::option('UniqueID'), 0, 10));
 		self::$VisitorID = -2;
 		self::$IsNewVisit = FALSE;
-		self::$HasJSInformation = FALSE;
+		self::$HasJSInformation = TRUE;
 		self::$PreviousVisitorID = 0;
 		self::$Robot = '';
 		self::$Timestamps = array(
@@ -1015,16 +1015,36 @@ class EstatsCore
 
 	static function collectData($Count = TRUE, $Address = NULL, $Title = NULL, $Data = array())
 	{
-		self::visitorID();
-
-		if ($Count && self::$VisitorID >= 0)
+		if (self::visitorID() < 1)
 		{
-			if (!self::$VisitorID)
+			return;
+		}
+
+		if (!empty($Data['info']))
+		{
+			if (!self::$IsNewVisit)
 			{
-				self::$VisitorID = (max(self::$Driver->selectField('visitors', array(EstatsDriver::ELEMENT_FUNCTION, array(EstatsDriver::FUNCTION_MAX, 'id'))), self::visitsAmount('unique')) + 1);
-				self::$IsNewVisit = TRUE;
+				self::$Driver->updateData('visitors', $Data, array(array(EstatsDriver::ELEMENT_OPERATION, array('id', EstatsDriver::OPERATOR_EQUAL, array(EstatsDriver::ELEMENT_VALUE, self::$VisitorID)))));
 			}
 
+			if (self::$IsNewVisit || !self::$HasJSInformation)
+			{
+				$Keys = array('javascript', 'cookies', 'flash', 'java', 'screen');
+
+				for ($i = 0, $c = count($Keys); $i < $c; ++$i)
+				{
+					$Key = $Keys[$i].(($Keys[$i] == 'screen')?'s':'');
+
+					if (self::option('CollectFrequency|'.$Key) !== 'disabled')
+					{
+						self::increaseAmount($Key, array('name' => (isset($Data[$Keys[$i]])?$Data[$Keys[$i]]:0)));
+					}
+				}
+			}
+		}
+
+		if ($Count)
+		{
 			if (isset($_SESSION[self::$Session]['visits']) && count($_SESSION[self::$Session]['visits']) > 0)
 			{
 				self::$PreviousVisitorID = max(array_keys($_SESSION[self::$Session]['visits']));
@@ -1202,20 +1222,6 @@ class EstatsCore
 				}
 			}
 		}
-		else if ($Data && self::$VisitorID > 0 && !self::$HasJSInformation)
-		{
-			self::$Driver->updateData('visitors', array_merge(array('info' => TRUE), $Data), array(array(EstatsDriver::ELEMENT_OPERATION, array('id', EstatsDriver::OPERATOR_EQUAL, array(EstatsDriver::ELEMENT_VALUE, self::$VisitorID)))));
-
-			foreach ($Data as $Key => $Value)
-			{
-				if ($Key == 'screen')
-				{
-					$Key.= 's';
-				}
-
-				self::increaseAmount($Key, array('name' => $Value));
-			}
-		}
 	}
 
 /**
@@ -1276,9 +1282,14 @@ class EstatsCore
 					self::$VisitorID = (int) self::$Driver->selectField('visitors', 'id', array(array(EstatsDriver::ELEMENT_OPERATION, array('firstvisit', EstatsDriver::OPERATOR_GREATER, array(EstatsDriver::ELEMENT_VALUE, date('Y-m-d H:i:s', ($_SERVER['REQUEST_TIME'] - (self::option('VisitTime') / 2)))))), EstatsDriver::OPERATOR_AND, array(EstatsDriver::ELEMENT_OPERATION, array('ip', EstatsDriver::OPERATOR_EQUAL, array(EstatsDriver::ELEMENT_VALUE, self::$IP)))), 0, array('id'), FALSE);
 				}
 
-				if (self::$VisitorID > 0)
+				if (self::$VisitorID)
 				{
 					self::$HasJSInformation = self::$Driver->selectField('visitors', 'info', array(array(EstatsDriver::ELEMENT_OPERATION, array('id', EstatsDriver::OPERATOR_EQUAL, array(EstatsDriver::ELEMENT_VALUE, self::$VisitorID)))));
+				}
+				else
+				{
+					self::$IsNewVisit = TRUE;
+					self::$VisitorID = (max(self::$Driver->selectField('visitors', array(EstatsDriver::ELEMENT_FUNCTION, array(EstatsDriver::FUNCTION_MAX, 'id'))), self::visitsAmount('unique')) + 1);
 				}
 			}
 		}
