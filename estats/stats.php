@@ -31,7 +31,7 @@ function estats_error_message($Message, $File, $Line, $NotFile = FALSE, $Warning
 		define('ESTATS_CRITICAL', TRUE);
 	}
 
-	if (!defined('ESTATS_JSINFORMATION'))
+	if (!defined('ESTATS_ANTIPIXEL'))
 	{
 		echo '<b>eStats '.($Warning?'warning':'error').':</b> <i>'.($NotFile?$Message:'Could not load file: <b>'.$Message.'</b>!').'</i> (<b>'.$File.': '.$Line.'</b>)<br />
 ';

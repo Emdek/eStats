@@ -7,6 +7,8 @@
 
 error_reporting(E_ALL);
 
+define('ESTATS_ANTIPIXEL', TRUE);
+
 if (isset($_GET['count']))
 {
 	if ($_GET['count'])
@@ -30,6 +32,7 @@ if (isset($_GET['count']))
 
 	$JSInformation = array
 	(
+	'info' => 1,
 	'javascript' => (isset($_GET['javascript']) && $_GET['javascript']),
 	'java' => (isset($_GET['java']) && $_GET['java']),
 	'cookies' => (isset($_GET['cookies']) && $_GET['cookies']),
