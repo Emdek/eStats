@@ -2,13 +2,13 @@
 /**
  * eStats - statistics for web pages
  * @author Emdek <http://emdek.pl>
- * @version 4.9.52
- * @date 2011-04-01 10:44:59
+ * @version 4.9.60
+ * @date 2011-05-01 22:52:56
  */
 
-define('ESTATS_VERSIONSTRING', '4.9.52');
+define('ESTATS_VERSIONSTRING', '4.9.60');
 define('ESTATS_VERSIONSTATUS', 'stable');
-define('ESTATS_VERSIONTIME', 1301647499);
+define('ESTATS_VERSIONTIME', 1304283176);
 
 /**
  * Error handler
