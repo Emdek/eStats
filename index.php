@@ -874,9 +874,9 @@ else
 
 		if (isset($Path[2]) && isset($Groups[$Path[1]]) && in_array($Path[2], $Groups[$Path[1]]))
 		{
-			if ($Path[2] == 'operatingsystem-versions')
+			if ($Path[2] == 'operatingsystems' || $Path[2] == 'operatingsystem-versions')
 			{
-				$Frequency = $Weights[EstatsCore::option('CollectFrequency|operatingsystems')];
+				$Frequency = $Weights[EstatsCore::option('CollectFrequency|oses')];
 			}
 			else if ($Path[2] == 'browser-versions')
 			{
@@ -897,7 +897,7 @@ else
 				{
 					$Key = 'browsers';
 				}
-				else if ($Key == 'operatingsystem-versions' || $Key == 'operatingsystems')
+				else if ($Key == 'operatingsystems' || $Key == 'operatingsystem-versions')
 				{
 					$Key = 'oses';
 				}
