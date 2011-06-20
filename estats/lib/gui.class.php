@@ -69,7 +69,7 @@ class EstatsGUI
 			{
 				if (isset($Value['icon']))
 				{
-					$Data[str_replace('.', ' ', $Key)] = $Value['icon'];
+					$Data[strtolower(str_replace('.', ' ', $Key))] = $Value['icon'];
 				}
 			}
 
