@@ -631,7 +631,6 @@ else
 	'regions' => EstatsLocale::translate('Regions'),
 	'browsers' => EstatsLocale::translate('Browsers'),
 	'browser-versions' => EstatsLocale::translate('Browser versions'),
-	'oses' => EstatsLocale::translate('Operating systems'),
 	'operatingsystems' => EstatsLocale::translate('Operating systems'),
 	'operatingsystem-versions' => EstatsLocale::translate('Operating system versions'),
 	'websearchers' => EstatsLocale::translate('Web searchers'),
@@ -857,13 +856,13 @@ else
 
 		if (isset($Path[2]) && isset($Groups[$Path[1]]) && in_array($Path[2], $Groups[$Path[1]]))
 		{
-			if ($Path[2] == 'operatingsystem-versions')
-			{
-				$Frequency = $Weights[EstatsCore::option('CollectFrequency/operatingsystems')];
-			}
-			else if ($Path[2] == 'browser-versions')
+			if ($Path[2] == 'browser-versions')
 			{
 				$Frequency = $Weights[EstatsCore::option('CollectFrequency/browsers')];
+			}
+			else if ($Path[2] == 'operatingsystem-versions')
+			{
+				$Frequency = $Weights[EstatsCore::option('CollectFrequency/operatingsystems')];
 			}
 			else
 			{
@@ -880,9 +879,9 @@ else
 				{
 					$Key = 'browsers';
 				}
-				else if ($Key == 'operatingsystem-versions' || $Key == 'operatingsystems')
+				else if ($Key == 'operatingsystem-versions')
 				{
-					$Key = 'oses';
+					$Key = 'operatingsystems';
 				}
 
 				if ($Weights[EstatsCore::option('CollectFrequency/'.$Key)] < $Frequency)

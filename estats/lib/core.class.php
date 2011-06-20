@@ -1113,9 +1113,9 @@ class EstatsCore
 						self::increaseAmount('browsers', array_combine(array('name', 'version'), self::detectBrowser($_SERVER['HTTP_USER_AGENT'])));
 					}
 
-					if (self::option('CollectFrequency/oses') !== 'disabled')
+					if (self::option('CollectFrequency/operatingsystems') !== 'disabled')
 					{
-						self::increaseAmount('oses', array_combine(array('name', 'version'), self::detectOperatingSystem($_SERVER['HTTP_USER_AGENT'])));
+						self::increaseAmount('operatingsystems', array_combine(array('name', 'version'), self::detectOperatingSystem($_SERVER['HTTP_USER_AGENT'])));
 					}
 
 					if (self::option('CollectFrequency/hosts') !== 'disabled')
