@@ -101,7 +101,6 @@ Module: '.EstatsCore::driver()->option('Name').' v'.EstatsCore::driver()->option
 					$Status = FALSE;
 				}
 
-
 				while ($Result && ($Row = $Result->fetch(PDO::FETCH_NUM)))
 				{
 					$Values = array();
@@ -113,7 +112,7 @@ Module: '.EstatsCore::driver()->option('Name').' v'.EstatsCore::driver()->option
 	"\n" => '\n',
 	chr(30) => ''
 	));
-						}
+					}
 
 					if (!file_put_contents($FileName, implode(chr(30), $Values).'
 ', FILE_APPEND))
