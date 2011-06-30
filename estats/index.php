@@ -173,7 +173,7 @@ if (!defined('ESTATS_INSTALL'))
 
 	EstatsCore::init(1, ESTATS_SECURITY, './', ESTATS_DATA, ESTATS_DATABASE_DRIVER, ESTATS_DATABASE_PREFIX, ESTATS_DATABASE_CONNECTION, ESTATS_DATABASE_USER, ESTATS_DATABASE_PASSWORD, ESTATS_DATABASE_PERSISTENT);
 
-	if (EstatsCore::option('Version') != ESTATS_VERSIONSTRING)
+	if (EstatsCore::option('Version') !== ESTATS_VERSIONSTRING)
 	{
 		EstatsCore::logEvent(EstatsCore::EVENT_SCRIPTVERSIONCHANGED, 'From: '.EstatsCore::option('Version').', to: '.ESTATS_VERSIONSTRING);
 		EstatsCore::setConfiguration(array('Version' => ESTATS_VERSIONSTRING), 0);
@@ -198,7 +198,7 @@ if (defined('ESTATS_INSTALL'))
 {
 	$Path[1] = 'install';
 }
-else if (!isset($Path[1]) || (!is_file('pages/'.$Path[1].'.php') && $Path[1] != 'tools' && $Path[1] != 'login'))
+else if (!isset($Path[1]) || (!is_file('pages/'.$Path[1].'.php') && $Path[1] !== 'tools' && $Path[1] !== 'login'))
 {
 	$Path[1] = 'general';
 }
@@ -254,7 +254,7 @@ if (isset($_POST['year']))
 
 	EstatsCookie::set('date', $Date);
 
-	die(header('Location: '.EstatsTheme::get('datapath').EstatsCore::option('Path/prefix').$Path[0].'/'.$Path[1].(($Path[1] == 'geolocation')?'/'.$_POST['map']:'').(($Path[1] != 'time' && isset($Path[($Path[1] == 'geolocation')?4:3]))?'/'.$Path[($Path[1] == 'geolocation')?3:2]:'').(($Path[1] == 'time')?((isset($Path[2]) && in_array($Path[2], $Groups['time']))?'/'.$Path[2]:'').((isset($_POST['TimeView']))?'/'.implode('+', $_POST['TimeView']):''):'').'/'.$Date.(($Path[1] == 'time' && isset($_POST['TimeCompare']))?'/compare':'').EstatsCore::option('Path/suffix')));
+	die(header('Location: '.EstatsTheme::get('datapath').EstatsCore::option('Path/prefix').$Path[0].'/'.$Path[1].(($Path[1] == 'geolocation')?'/'.$_POST['map']:'').(($Path[1] !== 'time' && isset($Path[($Path[1] == 'geolocation')?4:3]))?'/'.$Path[($Path[1] == 'geolocation')?3:2]:'').(($Path[1] == 'time')?((isset($Path[2]) && in_array($Path[2], $Groups['time']))?'/'.$Path[2]:'').((isset($_POST['TimeView']))?'/'.implode('+', $_POST['TimeView']):''):'').'/'.$Date.(($Path[1] == 'time' && isset($_POST['TimeCompare']))?'/compare':'').EstatsCore::option('Path/suffix')));
 }
 
 if (EstatsCookie::exists('theme'))
@@ -311,7 +311,7 @@ else
 
 			if ($Data && EstatsCookie::get('password') == md5($Data['password'].EstatsCore::option('UniqueID')))
 			{
-				if (!isset($_SESSION[EstatsCore::session()]['password']) || $_SESSION[EstatsCore::session()]['password'] != $Data['password'])
+				if (!isset($_SESSION[EstatsCore::session()]['password']) || $_SESSION[EstatsCore::session()]['password'] !== $Data['password'])
 				{
 					EstatsCore::logEvent((($Data['level'] < 3)?EstatsCore::EVENT_USERLOGGEDIN:EstatsCore::EVENT_ADMINISTRATORLOGGEDIN), 'IP: '.EstatsCore::IP());
 				}
@@ -578,7 +578,7 @@ else
 		EstatsCache::delete();
 	}
 
-	if (EstatsCore::option('LastCheck') != date('Ymd') && (EstatsCore::option('Visits/oldvisitspolicy') == 'compact' || EstatsCore::option('Visits/oldvisitspolicy') == 'delete'))
+	if (EstatsCore::option('LastCheck') !== date('Ymd') && (EstatsCore::option('Visits/oldvisitspolicy') == 'compact' || EstatsCore::option('Visits/oldvisitspolicy') == 'delete'))
 	{
 		EstatsCore::setConfiguration(array('LastCheck' => date('Ymd')));
 
@@ -939,7 +939,7 @@ else
 
 	for ($i = 0, $c = count($Menu); $i < $c; ++$i)
 	{
-		if (($Menu[$i] == 'geolocation' && !EstatsGeolocation::isAvailable()) || ($Menu[$i] == 'time' && EstatsCore::option('CollectFrequency/time') != 'disabled' && !EstatsCore::driver()->selectAmount('time')))
+		if (($Menu[$i] == 'geolocation' && !EstatsGeolocation::isAvailable()) || ($Menu[$i] == 'time' && EstatsCore::option('CollectFrequency/time') !== 'disabled' && !EstatsCore::driver()->selectAmount('time')))
 		{
 			continue;
 		}
@@ -977,7 +977,7 @@ else
 			{
 				EstatsTheme::add('submenu-'.$Menu[$i].'_'.$Groups[$Menu[$i]][$j], FALSE);
 
-				if ((isset($GroupAmount[$Groups[$Menu[$i]][$j]]) && !$GroupAmount[$Groups[$Menu[$i]][$j]]) || ($Menu[$i] == 'time' && EstatsCore::option('CollectFrequency/time') != 'hourly' && in_array($Groups[$Menu[$i]][$j], array('24hours', 'hourspopularity'))))
+				if ((isset($GroupAmount[$Groups[$Menu[$i]][$j]]) && !$GroupAmount[$Groups[$Menu[$i]][$j]]) || ($Menu[$i] == 'time' && EstatsCore::option('CollectFrequency/time') !== 'hourly' && in_array($Groups[$Menu[$i]][$j], array('24hours', 'hourspopularity'))))
 				{
 					continue;
 				}
@@ -1083,11 +1083,15 @@ else
 
 	if (!EstatsCore::option('AccessPassword'))
 	{
-		$Modes = array('daily+weekly+monthly', 'daily+monthly', 'daily', 'weekly', 'monthly');
+		$Feeds = array(
+	'daily' => EstatsLocale::translate('Daily summary'),
+	'weekly' => EstatsLocale::translate('Weekly summary'),
+	'monthly' => EstatsLocale::translate('Monthly summary')
+	);
 
-		for ($i = 0, $c = count($Modes); $i < $c; ++$i)
-		{
-			EstatsTheme::append('meta', '<link rel="alternate" type="application/atom+xml" href="{path}feed/'.$Modes[$i].'{suffix}" title="'.EstatsLocale::translate('Summary').' ('.$Modes[$i].')" />
+		foreach ($Feeds as $Key => $Value)
+ 		{
+			EstatsTheme::append('meta', '<link rel="alternate" type="application/atom+xml" href="{path}feed/'.$Key.'{suffix}" title="'.$Value.'" />
 ');
 		}
 	}
@@ -1113,11 +1117,10 @@ else
 		EstatsTheme::add('lang_remember', EstatsLocale::translate('Remember password'));
 		EstatsTheme::add('lang_loginto', EstatsLocale::translate('Log into'));
 	}
-	else if (($_SERVER['REQUEST_TIME'] - $_SESSION[EstatsCore::session()]['viewTime']) < 2 && !ESTATS_USERLEVEL && $Path[1] != 'image')
+	else if (($_SERVER['REQUEST_TIME'] - $_SESSION[EstatsCore::session()]['viewTime']) < 2 && !ESTATS_USERLEVEL && $Path[1] !== 'image')
 	{
 		EstatsTheme::append('meta', '<meta http-equiv="Refresh" content="2" />
 ');
-
 		EstatsGUI::notify(EstatsLocale::translate('You can not refresh page so quickly!'), 'error');
 		EstatsTheme::add('title', EstatsLocale::translate('Access denied'));
 	}
@@ -1142,7 +1145,7 @@ else
 			EstatsTheme::link((EstatsTheme::contains($Path[1])?$Path[1]:''), 'page');
 		}
 
-		if ($Path[1] != 'image' && $Path[1] != 'feed')
+		if ($Path[1] !== 'image' && $Path[1] !== 'feed')
 		{
 			EstatsTheme::add('title', EstatsLocale::translate($Titles[$Path[1]]).(($Path[1] == 'tools')?' - '.$ToolInformation[$Path[2]]['title'][isset($ToolInformation[$Path[2]]['title'][$_SESSION[EstatsCore::session()]['locale']])?$_SESSION[EstatsCore::session()]['locale']:'en']:''));
 		}
@@ -1160,7 +1163,7 @@ else
 
 if (ESTATS_USERLEVEL == 2 || defined('ESTATS_INSTALL'))
 {
-	if (isset($_SESSION[EstatsCore::session()]['NewerVersion']) && $_SESSION[EstatsCore::session()]['NewerVersion'] != ESTATS_VERSIONSTRING)
+	if (isset($_SESSION[EstatsCore::session()]['NewerVersion']) && $_SESSION[EstatsCore::session()]['NewerVersion'] !== ESTATS_VERSIONSTRING)
 	{
 		EstatsGUI::notify(sprintf(EstatsLocale::translate('New version is available (%s)!'), $_SESSION[EstatsCore::session()]['NewerVersion']), 'information');
 	}
@@ -1172,7 +1175,7 @@ if (ESTATS_USERLEVEL == 2 || defined('ESTATS_INSTALL'))
 	}
 }
 
-if (ESTATS_VERSIONSTATUS != 'stable')
+if (ESTATS_VERSIONSTATUS !== 'stable')
 {
 	EstatsGUI::notify(sprintf(EstatsLocale::translate('This is a test version of <em>eStats</em> (status: <em>%s</em>).<br />
 Its functionality could be incomplete, could work incorrect and be incompatible with newest versions!<br />
@@ -1269,7 +1272,7 @@ else
 
 $Page = str_replace('{debug}', $Debug, EstatsTheme::parse($Page));
 
-if (EstatsTheme::option('Type') != 'xhtml')
+if (EstatsTheme::option('Type') !== 'xhtml')
 {
 	$Page = str_replace(' />', '>', $Page);
 }
