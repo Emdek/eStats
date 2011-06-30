@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: estats\n"
-"POT-Creation-Date: 2011-04-04 22:09+0100\n"
-"PO-Revision-Date: 2011-04-04 22:14+0100\n"
+"POT-Creation-Date: 2011-06-30 23:55+0100\n"
+"PO-Revision-Date: 2011-07-01 00:01+0100\n"
 "Last-Translator: Michał D. aka Emdek <emdeck@gmail.com>\n"
 "Language-Team: \n"
 "Language: \n"
@@ -64,8 +64,8 @@ msgstr ""
 "Jej funkcjonalność może być niepełna, może także działać nieprawidłowo i być niekompatybilna z nowszymi wersjami!<br />\n"
 "<strong style=\"text-decoration:underline;\">Używasz jej na własne ryzyko!</strong>"
 
-#: lib/group.class.php:802
-#: pages/feed.php:145
+#: pages/feed.php:241
+#: lib/group.class.php:801
 msgid "%s (%d of %d)"
 msgstr "%s (%d z %d)"
 
@@ -73,10 +73,6 @@ msgstr "%s (%d z %d)"
 #: pages/visits.php:408
 msgid "%s - page %d. of %d"
 msgstr "%s - strona %d. z %d"
-
-#: pages/feed.php:128
-msgid "%s visits summary for %s."
-msgstr "% podsumowanie wizyt dla %s."
 
 #: index.php:662
 msgid "24 hours"
@@ -90,8 +86,8 @@ msgstr "Wersja <em>eStats</em>"
 msgid "Abkhazian"
 msgstr "Abchaski"
 
-#: index.php:1122
-#: index.php:1145
+#: index.php:1126
+#: index.php:1148
 msgid "Access denied"
 msgstr "Brak dostępu"
 
@@ -274,7 +270,7 @@ msgstr "Armenia"
 msgid "Armenian"
 msgstr "Armeński"
 
-#: lib/gui.class.php:723
+#: lib/gui.class.php:735
 msgid "Array, elements separated by |"
 msgstr "Tablica, elementy rozdzielone przez |"
 
@@ -304,8 +300,8 @@ msgid "Austria"
 msgstr "Austria"
 
 #: install.php:76
-#: plugins/tools/summary/plugin.php:74
 #: pages/geolocation.php:189
+#: plugins/tools/summary/plugin.php:74
 msgid "Author"
 msgstr "Autor"
 
@@ -313,9 +309,9 @@ msgstr "Autor"
 msgid "Available"
 msgstr "Dostępne"
 
-#: lib/group.class.php:651
-#: pages/feed.php:309
 #: pages/time.php:277
+#: pages/feed.php:77
+#: lib/group.class.php:651
 msgid "Average"
 msgstr "Średnio"
 
@@ -440,11 +436,11 @@ msgstr "Benin"
 msgid "Bermuda"
 msgstr "Bermudy"
 
-#: pages/feed.php:129
-msgid "Between %s and %s there were %d unique visits (%d views), which %d were returns."
-msgstr "Pomiędzy %s oraz %s było %d unikalnych odwiedzin (%d odsłon) z czego %d było powrotami."
+#: pages/feed.php:149
+msgid "Between %s and %s there were %d unique visits (%d views), of which %d were returns."
+msgstr "W okresie od %s do %s było %d unikalnych odwiedzin (%d odsłon), z czego %d było powrotami."
 
-#: pages/feed.php:129
+#: pages/feed.php:149
 msgid "Between %s and %s there were no visits."
 msgstr "Pomiędzy %s oraz %s nie było żadnych wizyt."
 
@@ -468,12 +464,12 @@ msgstr "Bislama"
 msgid "Block counting of this keyword / phrase"
 msgstr "Zablokuj zliczanie tego słowa kluczowego / frazy"
 
-#: lib/group.class.php:742
 #: pages/visits.php:233
+#: lib/group.class.php:742
 msgid "Block counting of this referrer"
 msgstr "Zablokuj zliczanie tego źródła"
 
-#: lib/gui.class.php:429
+#: lib/gui.class.php:441
 msgid "Block this IP"
 msgstr "Zablokuj ten IP"
 
@@ -517,10 +513,10 @@ msgstr "Brytyjskie Wyspy Dziewicze"
 msgid "Browse"
 msgstr "Przeglądaj"
 
-#: plugins/tools/blacklist/plugin.php:138
 #: pages/visits.php:190
 #: pages/visits.php:280
 #: pages/visits.php:437
+#: plugins/tools/blacklist/plugin.php:138
 msgid "Browser"
 msgstr "Przeglądarka"
 
@@ -650,8 +646,8 @@ msgid "Change password"
 msgstr "Zmień hasło"
 
 #: pages/geolocation.php:187
-#: pages/technical.php:30
 #: pages/general.php:37
+#: pages/technical.php:30
 msgid "Chart"
 msgstr "Wykres"
 
@@ -743,8 +739,8 @@ msgstr "Plik konfiguracyjny pomyślnie zapisany."
 msgid "Configuration of visits information"
 msgstr "Konfiguracja informacji o wizytach"
 
-#: lib/gui.class.php:811
 #: plugins/tools/backups/plugin.php:22
+#: lib/gui.class.php:823
 msgid "Configuration saved successfully."
 msgstr "Konfiguracja została zapisana pomyślnie."
 
@@ -813,7 +809,7 @@ msgstr "Korsykański"
 msgid "Costa Rica"
 msgstr "Kostaryka"
 
-#: index.php:1197
+#: index.php:1200
 msgid "Could not check for new version availability."
 msgstr "Nie można sprawdzić dostępności nowej wersji."
 
@@ -865,7 +861,7 @@ msgstr "Kuba"
 msgid "Current password"
 msgstr "Obecne hasło"
 
-#: lib/gui.class.php:263
+#: lib/gui.class.php:271
 msgid "Current period"
 msgstr "Obecny okres"
 
@@ -888,6 +884,14 @@ msgstr "Czeski"
 #: share/data/countries.ini:56
 msgid "Czech Republic"
 msgstr "Czechy"
+
+#: index.php:1105
+msgid "Daily summary"
+msgstr "Podsumowanie dzienne"
+
+#: pages/feed.php:26
+msgid "Daily visits summary for %A, %e %B %Y."
+msgstr "Podsumowanie dzienne wizyt dla %A, %e %B %Y."
 
 #: share/data/languages.ini:21
 msgid "Danish"
@@ -918,9 +922,9 @@ msgstr "Dane pomyślnie usunięte."
 msgid "Data directory"
 msgstr "Katalog danych"
 
-#: lib/group.class.php:519
-#: lib/chart.class.php:703
 #: pages/visits.php:76
+#: lib/chart.class.php:703
+#: lib/group.class.php:519
 msgid "Data from <em>cache</em>, refreshed: %s."
 msgstr "Dane pochodzą z <em>cache</em>, odświeżone: %s."
 
@@ -989,9 +993,9 @@ msgstr "Nazwa użytkownika bazy danych"
 msgid "Database user password"
 msgstr "Hasło użytkownika bazy danych"
 
-#: plugins/tools/logs/plugin.php:184
-#: pages/feed.php:202
 #: pages/visits.php:419
+#: pages/feed.php:160
+#: plugins/tools/logs/plugin.php:184
 msgid "Date"
 msgstr "Data"
 
@@ -1007,11 +1011,11 @@ msgstr "Dzień"
 msgid "Days of week"
 msgstr "Dni tygodnia"
 
-#: index.php:1257
+#: index.php:1260
 msgid "Debug"
 msgstr "Debugowanie"
 
-#: lib/gui.class.php:733
+#: lib/gui.class.php:745
 msgid "Default"
 msgstr "Domyślnie"
 
@@ -1020,14 +1024,14 @@ msgstr "Domyślnie"
 msgid "Default theme"
 msgstr "Domyślny motyw"
 
-#: lib/gui.class.php:733
+#: lib/gui.class.php:745
 msgid "Default value"
 msgstr "Wartość domyślna"
 
-#: plugins/tools/backups/plugin.php:206
 #: plugins/tools/configuration/plugin.php:180
 #: plugins/tools/configuration/plugin.php:364
 #: plugins/tools/blacklist/plugin.php:48
+#: plugins/tools/backups/plugin.php:206
 msgid "Defaults"
 msgstr "Domyślne"
 
@@ -1047,7 +1051,7 @@ msgstr "Szczegóły"
 msgid "Diego Garcia"
 msgstr "Diego Garcia"
 
-#: lib/gui.class.php:243
+#: lib/gui.class.php:251
 msgid "Direct entries"
 msgstr "Wejścia bezpośrednie"
 
@@ -1072,7 +1076,7 @@ msgstr "Zabroń przeglądania statystyk dla wybranych adresów IP"
 msgid "Djibouti"
 msgstr "Dżibutti"
 
-#: lib/gui.class.php:429
+#: lib/gui.class.php:441
 msgid "Do You really want to ban this IP address?"
 msgstr "Czy na pewno chcesz zbanować ten adres IP?"
 
@@ -1089,17 +1093,17 @@ msgstr "Czy na pewno chcesz wykluczyć to źródło?"
 msgid "Do You really want to restore data?"
 msgstr "Czy na pewno chcesz przywrócić dane?"
 
-#: plugins/tools/backups/plugin.php:206
 #: plugins/tools/configuration/plugin.php:180
 #: plugins/tools/configuration/plugin.php:364
 #: plugins/tools/blacklist/plugin.php:48
+#: plugins/tools/backups/plugin.php:206
 msgid "Do You really want to restore defaults?"
 msgstr "Czy na pewno chcesz przywrócić domyślne?"
 
-#: plugins/tools/backups/plugin.php:205
 #: plugins/tools/configuration/plugin.php:179
 #: plugins/tools/configuration/plugin.php:363
 #: plugins/tools/blacklist/plugin.php:47
+#: plugins/tools/backups/plugin.php:205
 msgid "Do You really want to save?"
 msgstr "Czy na pewno chcesz zapisać zmiany?"
 
@@ -1188,7 +1192,7 @@ msgstr "Gwinea Równikowa"
 msgid "Eritrea"
 msgstr "Erytrea"
 
-#: lib/gui.class.php:647
+#: lib/gui.class.php:659
 msgid "Error"
 msgstr "Błąd"
 
@@ -1248,12 +1252,12 @@ msgstr "Faroese"
 msgid "Federated States of Micronesia"
 msgstr "Mikronezja"
 
-#: pages/feed.php:371
+#: pages/feed.php:288
 msgid "Feed channel for {servername}"
 msgstr "Kanał informacyjny dla {servername}"
 
-#: lib/gui.class.php:737
 #: plugins/tools/configuration/plugin.php:189
+#: lib/gui.class.php:749
 msgid "Field value is other than default"
 msgstr "Wartość pola jest różna od domyślnej"
 
@@ -1262,8 +1266,8 @@ msgstr "Wartość pola jest różna od domyślnej"
 msgid "Fiji"
 msgstr "Fidżi"
 
-#: plugins/tools/logs/plugin.php:165
 #: plugins/tools/configuration/plugin.php:106
+#: plugins/tools/logs/plugin.php:165
 msgid "Filter"
 msgstr "Filtr"
 
@@ -1346,8 +1350,8 @@ msgid "Full"
 msgstr "Pełny"
 
 #: pages/geolocation.php:186
-#: pages/technical.php:29
 #: pages/general.php:36
+#: pages/technical.php:29
 msgid "Full list"
 msgstr "Pełna lista"
 
@@ -1404,23 +1408,23 @@ msgstr "Gibraltar"
 msgid "Given passwords are not the same!"
 msgstr "Podane hasła różnią się!"
 
-#: lib/gui.class.php:590
+#: lib/gui.class.php:602
 msgid "Go to first page (%d.)"
 msgstr "Idź do pierwszej strony (%d.)"
 
-#: lib/gui.class.php:593
+#: lib/gui.class.php:605
 msgid "Go to last page (%d.)"
 msgstr "Idź do ostatniej strony (%d.)"
 
-#: lib/gui.class.php:592
+#: lib/gui.class.php:604
 msgid "Go to next page (%d.)"
 msgstr "Idź do następnej strony (%d.)"
 
-#: lib/gui.class.php:594
+#: lib/gui.class.php:606
 msgid "Go to page %d."
 msgstr "Idź do strony %d."
 
-#: lib/gui.class.php:591
+#: lib/gui.class.php:603
 msgid "Go to previous page (%d.)"
 msgstr "Idź do poprzedniej strony (%d.)"
 
@@ -1548,8 +1552,8 @@ msgstr "Węgierski"
 msgid "Hungary"
 msgstr "Węgry"
 
-#: plugins/tools/blacklist/plugin.php:58
 #: pages/visits.php:435
+#: plugins/tools/blacklist/plugin.php:58
 msgid "IP"
 msgstr "IP"
 
@@ -1612,8 +1616,8 @@ msgstr "Indonezja"
 msgid "Indonesian"
 msgstr "Indonezyjski"
 
-#: lib/gui.class.php:648
 #: plugins/tools/logs/plugin.php:190
+#: lib/gui.class.php:660
 msgid "Information"
 msgstr "Informacja"
 
@@ -1860,9 +1864,9 @@ msgstr "Łotwa"
 msgid "Latvian"
 msgstr "Łotewski"
 
-#: lib/group.class.php:652
-#: pages/feed.php:323
 #: pages/time.php:278
+#: pages/feed.php:78
+#: lib/group.class.php:652
 msgid "Least"
 msgstr "Najmniej"
 
@@ -1910,7 +1914,7 @@ msgstr "Litwa"
 msgid "Lithuanian"
 msgstr "Litewski"
 
-#: lib/gui.class.php:649
+#: lib/gui.class.php:661
 msgid "Loading..."
 msgstr "Ładowanie..."
 
@@ -1936,7 +1940,7 @@ msgstr "Zapisuj logi do pliku tekstowego"
 msgid "Log in"
 msgstr "Zaloguj się"
 
-#: index.php:1137
+#: index.php:1141
 msgid "Log into"
 msgstr "Zaloguj"
 
@@ -1944,7 +1948,7 @@ msgstr "Zaloguj"
 msgid "Log out"
 msgstr "Wyloguj się"
 
-#: index.php:1134
+#: index.php:1138
 msgid "Login"
 msgstr "Logowanie"
 
@@ -1968,7 +1972,7 @@ msgstr "Macedoński"
 msgid "Madagascar"
 msgstr "Madagaskar"
 
-#: index.php:1116
+#: index.php:1120
 msgid "Maintenance"
 msgstr "Konserwacja strony"
 
@@ -2055,8 +2059,8 @@ msgstr "Maksymalna ilość stron z danymi dostępna dla użytkownika (0 - wszyst
 msgid "Mayotte"
 msgstr "Majetta"
 
-#: plugins/tools/logs/plugin.php:176
 #: plugins/tools/configuration/plugin.php:109
+#: plugins/tools/logs/plugin.php:176
 msgid "Meeting conditions"
 msgstr "Spełniających warunki"
 
@@ -2064,7 +2068,8 @@ msgstr "Spełniających warunki"
 msgid "Mexico"
 msgstr "Meksyk"
 
-#: lib/gui.class.php:304
+#: lib/gui.class.php:312
+#: lib/gui.class.php:323
 msgid "Mobile devices"
 msgstr "Urządzenia przenośne"
 
@@ -2104,6 +2109,14 @@ msgstr "Czarnogóra"
 msgid "Month"
 msgstr "Miesiąc"
 
+#: index.php:1107
+msgid "Monthly summary"
+msgstr "Podsumowanie miesięczne"
+
+#: pages/feed.php:51
+msgid "Monthly visits summary for %B %Y."
+msgstr "Podsumowanie miesięczne wizyt dla %B %Y."
+
 #: share/data/countries.ini:156
 msgid "Montserrat"
 msgstr "Montserrat"
@@ -2112,10 +2125,10 @@ msgstr "Montserrat"
 msgid "Morocco"
 msgstr "Moroko"
 
-#: lib/group.class.php:650
-#: pages/feed.php:295
 #: pages/general.php:43
 #: pages/time.php:276
+#: pages/feed.php:76
+#: lib/group.class.php:650
 msgid "Most"
 msgstr "Najwięcej"
 
@@ -2185,7 +2198,7 @@ msgstr "Nowa Zelandia"
 msgid "New password"
 msgstr "Nowe hasło"
 
-#: index.php:1193
+#: index.php:1196
 msgid "New version is available (%s)!"
 msgstr "Dostępna jest nowa wersja (%s)!"
 
@@ -2214,16 +2227,16 @@ msgid "Niue"
 msgstr "Niue"
 
 #: install.php:350
-#: lib/gui.class.php:247
-#: lib/gui.class.php:251
 #: pages/visits.php:197
 #: pages/visits.php:199
 #: pages/visits.php:201
+#: lib/gui.class.php:255
+#: lib/gui.class.php:259
 msgid "No"
 msgstr "Nie"
 
-#: lib/group.class.php:529
 #: pages/time.php:268
+#: lib/group.class.php:529
 msgid "No data to display!"
 msgstr "Brak danych do wyświetlenia!"
 
@@ -2231,12 +2244,11 @@ msgstr "Brak danych do wyświetlenia!"
 msgid "No plugin"
 msgstr "Brak wtyczki"
 
-#: lib/group.class.php:811
+#: pages/visits.php:434
+#: plugins/tools/blacklist/plugin.php:153
 #: plugins/tools/logs/plugin.php:225
 #: plugins/tools/backups/plugin.php:190
-#: plugins/tools/blacklist/plugin.php:153
-#: pages/feed.php:183
-#: pages/visits.php:434
+#: lib/group.class.php:810
 msgid "None"
 msgstr "Brak"
 
@@ -2304,11 +2316,11 @@ msgstr "Goście online (ostatnie %d sekund)"
 msgid "Only collected data"
 msgstr "Tylko zebrane dane"
 
-#: plugins/tools/summary/plugin.php:101
-#: plugins/tools/blacklist/plugin.php:139
 #: pages/visits.php:188
 #: pages/visits.php:281
 #: pages/visits.php:438
+#: plugins/tools/blacklist/plugin.php:139
+#: plugins/tools/summary/plugin.php:101
 msgid "Operating system"
 msgstr "System operacyjny"
 
@@ -2353,7 +2365,7 @@ msgstr "Tryb bezpieczny PHP"
 msgid "PHP version"
 msgstr "Wersja PHP"
 
-#: index.php:1253
+#: index.php:1256
 msgid "Page generation time: %.3lf (s)"
 msgstr "Czas generowania strony: %.3lf (s)"
 
@@ -2365,7 +2377,7 @@ msgstr "Składnia nagłówka strony"
 msgid "Page title (optional, should be unique for each page, if set)"
 msgstr "Tytuł strony (opcjonalny, powinien być unikalny dla każdej strony, jeśli ustawiony)"
 
-#: index.php:1115
+#: index.php:1119
 msgid "Page unavailable due to maintenance."
 msgstr "Strona niedostępna z powodu konserwacji."
 
@@ -2397,7 +2409,7 @@ msgstr "Paragwaj"
 msgid "Pashto"
 msgstr "Pasztu"
 
-#: index.php:1135
+#: index.php:1139
 msgid "Password"
 msgstr "Hasło"
 
@@ -2461,7 +2473,7 @@ msgstr "Portugalski"
 msgid "Previous"
 msgstr "Poprzedni"
 
-#: lib/gui.class.php:264
+#: lib/gui.class.php:272
 msgid "Previous period"
 msgstr "Poprzedni okres"
 
@@ -2515,7 +2527,7 @@ msgstr "Porządne wsparcie dla Unicode"
 msgid "Reliable translations support"
 msgstr "Porządne wsparcie dla tłumaczeń"
 
-#: index.php:1136
+#: index.php:1140
 msgid "Remember password"
 msgstr "Zapamiętaj"
 
@@ -2538,11 +2550,11 @@ msgstr "Wymagania"
 
 #: install.php:155
 #: install.php:361
-#: plugins/tools/logs/plugin.php:170
-#: plugins/tools/backups/plugin.php:207
 #: plugins/tools/configuration/plugin.php:181
 #: plugins/tools/configuration/plugin.php:365
 #: plugins/tools/blacklist/plugin.php:49
+#: plugins/tools/logs/plugin.php:170
+#: plugins/tools/backups/plugin.php:207
 #: plugins/tools/reset/plugin.php:143
 msgid "Reset"
 msgstr "Resetuj"
@@ -2563,9 +2575,9 @@ msgstr "Przywróć kopię zapasową zapisaną na dysku"
 msgid "Results per page"
 msgstr "Wyników na stronę"
 
-#: lib/gui.class.php:261
-#: pages/feed.php:211
 #: pages/general.php:41
+#: pages/feed.php:169
+#: lib/gui.class.php:269
 msgid "Returns"
 msgstr "Powroty"
 
@@ -2649,10 +2661,10 @@ msgstr "Wyspy Świętego Tomasza i Książęca"
 msgid "Saudi Arabia"
 msgstr "Arabia Saudyjska"
 
-#: plugins/tools/backups/plugin.php:205
 #: plugins/tools/configuration/plugin.php:179
 #: plugins/tools/configuration/plugin.php:363
 #: plugins/tools/blacklist/plugin.php:47
+#: plugins/tools/backups/plugin.php:205
 msgid "Save"
 msgstr "Zapisz"
 
@@ -2679,10 +2691,10 @@ msgstr "Rozdzielczość ekranu"
 msgid "Screen resolutions"
 msgstr "Rozdzielczości ekranu"
 
-#: plugins/tools/logs/plugin.php:163
 #: plugins/tools/configuration/plugin.php:107
 #: plugins/tools/configuration/plugin.php:108
 #: plugins/tools/configuration/plugin.php:190
+#: plugins/tools/logs/plugin.php:163
 msgid "Search"
 msgstr "Szukaj"
 
@@ -2738,9 +2750,9 @@ msgid "Setswana"
 msgstr "Tswana"
 
 #: install.php:532
-#: plugins/tools/backups/plugin.php:201
 #: plugins/tools/configuration/plugin.php:315
 #: plugins/tools/blacklist/plugin.php:41
+#: plugins/tools/backups/plugin.php:201
 msgid "Settings"
 msgstr "Ustawienia"
 
@@ -2764,9 +2776,9 @@ msgstr "Szeszele"
 msgid "Shona"
 msgstr "Shona"
 
-#: pages/feed.php:374
-msgid "Short summary of collected data from 24 hours, week or month."
-msgstr "Krótkie podsumowanie danych zebranych w czasie doby, tygodnia lub miesiąca."
+#: pages/feed.php:291
+msgid "Short summary of collected data."
+msgstr "Krótkie podsumowanie zebranych danych."
 
 #: index.php:1091
 #: plugins/tools/logs/plugin.php:168
@@ -2902,7 +2914,7 @@ msgstr "Statystyki dla"
 msgid "Step %d of 3"
 msgstr "Krok %d z 3"
 
-#: lib/gui.class.php:646
+#: lib/gui.class.php:658
 msgid "Success"
 msgstr "Sukces"
 
@@ -2910,18 +2922,17 @@ msgstr "Sukces"
 msgid "Sudan"
 msgstr "Sudan"
 
-#: lib/group.class.php:649
-#: lib/group.class.php:810
-#: pages/feed.php:189
-#: pages/feed.php:281
 #: pages/time.php:275
+#: pages/feed.php:75
+#: pages/feed.php:254
+#: lib/group.class.php:649
+#: lib/group.class.php:809
 msgid "Sum"
 msgstr "Razem"
 
-#: index.php:1108
-#: lib/chart.class.php:708
+#: pages/feed.php:150
 #: plugins/tools/summary/plugin.php:66
-#: pages/feed.php:131
+#: lib/chart.class.php:708
 msgid "Summary"
 msgstr "Podsumowanie"
 
@@ -3021,23 +3032,23 @@ msgstr "Tajlandia"
 msgid "The Democratic Republic of Congo"
 msgstr "Demokratyczna Republika Kongo"
 
-#: index.php:1121
+#: index.php:1125
 msgid "This IP address was blocked!"
 msgstr "Ten adres IP został zablokowany!"
 
 #: index.php:517
 #: index.php:547
 #: index.php:559
+#: plugins/tools/configuration/plugin.php:93
+#: plugins/tools/configuration/plugin.php:213
+#: plugins/tools/configuration/plugin.php:255
+#: plugins/tools/blacklist/plugin.php:17
+#: plugins/tools/summary/plugin.php:17
 #: plugins/tools/backups/plugin.php:17
 #: plugins/tools/backups/plugin.php:65
 #: plugins/tools/backups/plugin.php:88
 #: plugins/tools/backups/plugin.php:114
 #: plugins/tools/backups/plugin.php:129
-#: plugins/tools/summary/plugin.php:17
-#: plugins/tools/configuration/plugin.php:93
-#: plugins/tools/configuration/plugin.php:213
-#: plugins/tools/configuration/plugin.php:255
-#: plugins/tools/blacklist/plugin.php:17
 #: plugins/tools/reset/plugin.php:19
 #: plugins/tools/reset/plugin.php:33
 #: plugins/tools/reset/plugin.php:45
@@ -3063,7 +3074,6 @@ msgid "Tigrinya"
 msgstr "Tigrinia"
 
 #: index.php:637
-#: pages/feed.php:197
 msgid "Time"
 msgstr "Czasowe"
 
@@ -3189,11 +3199,11 @@ msgstr "Ukraina"
 msgid "Ukrainian"
 msgstr "Ukraiński"
 
-#: lib/gui.class.php:425
+#: lib/gui.class.php:437
 msgid "Unblock IP"
 msgstr "Odblokuj IP"
 
-#: lib/gui.class.php:425
+#: lib/gui.class.php:437
 msgid "Unblock IPs range"
 msgstr "Odblokuj zakres IP"
 
@@ -3201,10 +3211,10 @@ msgstr "Odblokuj zakres IP"
 msgid "Unblock counting of this referrer"
 msgstr "Odblokuj zliczanie tego źródła"
 
-#: lib/gui.class.php:262
-#: plugins/tools/blacklist/plugin.php:125
-#: pages/feed.php:205
 #: pages/general.php:40
+#: pages/feed.php:163
+#: plugins/tools/blacklist/plugin.php:125
+#: lib/gui.class.php:270
 msgid "Unique"
 msgstr "Unikalne"
 
@@ -3216,14 +3226,14 @@ msgstr "Zjednoczone Emiraty Arabskie"
 msgid "United States"
 msgstr "Stany Zjednoczone"
 
-#: lib/gui.class.php:243
-#: lib/gui.class.php:277
-#: lib/gui.class.php:281
-#: lib/gui.class.php:298
-#: lib/gui.class.php:310
 #: pages/visits.php:185
 #: pages/visits.php:235
 #: pages/visits.php:236
+#: lib/gui.class.php:251
+#: lib/gui.class.php:285
+#: lib/gui.class.php:289
+#: lib/gui.class.php:306
+#: lib/gui.class.php:318
 msgid "Unknown"
 msgstr "Brak danych"
 
@@ -3275,9 +3285,9 @@ msgstr "Używaj kompresji gzip"
 msgid "Use persistent connection with database"
 msgstr "Używaj stałego połączenia z bazą danych"
 
-#: plugins/tools/blacklist/plugin.php:70
 #: pages/visits.php:278
 #: pages/visits.php:436
+#: plugins/tools/blacklist/plugin.php:70
 msgid "User Agent"
 msgstr "User Agent"
 
@@ -3325,10 +3335,10 @@ msgstr "Wietnamski"
 msgid "View of visits charts"
 msgstr "Widok wykresów odwiedzin"
 
-#: lib/gui.class.php:260
-#: plugins/tools/blacklist/plugin.php:127
-#: pages/feed.php:208
 #: pages/general.php:39
+#: pages/feed.php:166
+#: plugins/tools/blacklist/plugin.php:127
+#: lib/gui.class.php:268
 msgid "Views"
 msgstr "Odsłony"
 
@@ -3346,6 +3356,7 @@ msgstr "Odwiedzone strony"
 
 #: index.php:638
 #: pages/general.php:38
+#: pages/feed.php:156
 msgid "Visits"
 msgstr "Wizyty"
 
@@ -3357,7 +3368,7 @@ msgstr "Volapuk"
 msgid "Wallis and Futuna Islands"
 msgstr "Wyspy Wallis i Futuna"
 
-#: lib/gui.class.php:645
+#: lib/gui.class.php:657
 msgid "Warning"
 msgstr "Ostrzeżenie"
 
@@ -3369,6 +3380,14 @@ msgstr "Wyszukiwarki"
 msgid "Week"
 msgstr "Tydzień"
 
+#: index.php:1106
+msgid "Weekly summary"
+msgstr "Podsumowanie tygodniowe"
+
+#: pages/feed.php:38
+msgid "Weekly visits summary for %W week of %Y."
+msgstr "Podsumowanie tygodniowe wizyt dla %W tygodnia %Y."
+
 #: share/data/languages.ini:20
 msgid "Welsh"
 msgstr "Walijski"
@@ -3377,7 +3396,7 @@ msgstr "Walijski"
 msgid "Western Sahara"
 msgstr "Sahara Zachodnia"
 
-#: lib/gui.class.php:441
+#: lib/gui.class.php:453
 msgid "Whois"
 msgstr "Whois"
 
@@ -3390,7 +3409,7 @@ msgstr "Wolof"
 msgid "World"
 msgstr "Świat"
 
-#: index.php:1129
+#: index.php:1133
 msgid "Wrong password!"
 msgstr "Błędne hasło!"
 
@@ -3414,10 +3433,10 @@ msgid "Yemen"
 msgstr "Jemen"
 
 #: install.php:349
-#: lib/gui.class.php:247
 #: pages/visits.php:197
 #: pages/visits.php:199
 #: pages/visits.php:201
+#: lib/gui.class.php:255
 msgid "Yes"
 msgstr "Tak"
 
@@ -3429,7 +3448,7 @@ msgstr "Jidisz"
 msgid "Yoruba"
 msgstr "Joruba"
 
-#: index.php:1158
+#: index.php:1161
 msgid "You are not allowed to use this tool!"
 msgstr "Nie masz uprawnień do używania tego narzędzia!"
 
@@ -3437,12 +3456,12 @@ msgstr "Nie masz uprawnień do używania tego narzędzia!"
 msgid "You are using newest available version."
 msgstr "Używasz najnowszej dostępnej wersji."
 
-#: index.php:1144
+#: index.php:1147
 msgid "You can not refresh page so quickly!"
 msgstr "Nie możesz tak szybko przeładowywać strony!"
 
-#: lib/chart.class.php:606
 #: pages/visits.php:423
+#: lib/chart.class.php:606
 msgid "Your visits"
 msgstr "Twoje wizyty"
 
@@ -3489,3 +3508,4 @@ msgstr "minimum"
 #: share/data/countries.ini:17
 msgid "Åland Islands"
 msgstr "Wyspy Alandzkie"
+
