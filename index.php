@@ -369,13 +369,6 @@ if (!isset($_SESSION[EstatsCore::session()]['theme']) || !EstatsTheme::exists($_
 	}
 }
 
-if (!EstatsTheme::set($_SESSION[EstatsCore::session()]['theme']))
-{
-	estats_error_message(sprintf(EstatsLocale::translate('Can not load theme %s!'), $_SESSION[EstatsCore::session()]['theme']), __FILE__, __LINE__, TRUE);
-}
-
-EstatsTheme::load('common');
-
 $Locales = EstatsLocale::available();
 
 if (!isset($_SESSION[EstatsCore::session()]['locale']))
@@ -407,6 +400,13 @@ foreach ($Locales as $Key => $Value)
 	$SelectLocale.= '<option value="'.$Key.'"'.(($Key == $Path[0])?' selected="selected"':'').'>'.$Value.'</option>
 ';
 }
+
+if (!EstatsTheme::set($_SESSION[EstatsCore::session()]['theme']))
+{
+	estats_error_message(sprintf(EstatsLocale::translate('Can not load theme %s!'), $_SESSION[EstatsCore::session()]['theme']), __FILE__, __LINE__, TRUE);
+}
+
+EstatsTheme::load('common');
 
 if (defined('ESTATS_DEMO'))
 {
