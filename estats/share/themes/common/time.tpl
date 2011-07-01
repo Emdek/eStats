@@ -1,5 +1,5 @@
 [start:time]<form action="{selfpath}" method="post" id="dateform">
-<!--start:dateform--><p>
+<p>
 <label>
 <span>
 {selecthour}{selectday}{selectmonth}{selectyear}{selectmap}<input type="submit" value="{lang_show}" tabindex="{dateformindex}"  />{dateprevious}{datenext}
@@ -7,7 +7,7 @@
 {lang_showdatafor}:
 </label>
 </p>
-<!--end:dateform--><p>
+<p>
 <label>
 <span>
 <select name="TimeView[]" multiple="multiple" size="3" tabindex="{selectviewindex}">

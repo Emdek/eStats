@@ -842,68 +842,6 @@ else
 		$Date = explode('-', $Path[$Var]);
 	}
 
-	$Weights = array(
-	'none' => 0,
-	'yearly' => 1,
-	'monthly' => 2,
-	'daily' => 3,
-	'hourly' => 4
-	);
-
-	if ($Path[1] == 'general' || $Path[1] == 'technical')
-	{
-		$Frequency = 4;
-
-		if (isset($Path[2]) && isset($Groups[$Path[1]]) && in_array($Path[2], $Groups[$Path[1]]))
-		{
-			if ($Path[2] == 'browser-versions')
-			{
-				$Frequency = $Weights[EstatsCore::option('CollectFrequency/browsers')];
-			}
-			else if ($Path[2] == 'operatingsystem-versions')
-			{
-				$Frequency = $Weights[EstatsCore::option('CollectFrequency/operatingsystems')];
-			}
-			else
-			{
-				$Frequency = $Weights[EstatsCore::option('CollectFrequency/'.$Path[2])];
-			}
-		}
-		else
-		{
-			for ($i = 0, $c = count($Groups[$Path[1]]); $i < $c; ++$i)
-			{
-				$Key = $Groups[$Path[1]][$i];
-
-				if ($Key == 'browser-versions')
-				{
-					$Key = 'browsers';
-				}
-				else if ($Key == 'operatingsystem-versions')
-				{
-					$Key = 'operatingsystems';
-				}
-
-				if ($Weights[EstatsCore::option('CollectFrequency/'.$Key)] < $Frequency)
-				{
-					$Frequency = $Weights[EstatsCore::option('CollectFrequency/'.$Key)];
-				}
-			}
-		}
-	}
-	else if ($Path[1] == 'geolocation')
-	{
-		$Frequency = $Weights[EstatsCore::option('CollectFrequency/geolocation')];
-	}
-	else if ($Path[1] == 'time')
-	{
-		$Frequency = $Weights[(EstatsCore::option('CollectFrequency/time') == 'hourly')?'daily':EstatsCore::option('CollectFrequency/time')];
-	}
-	else
-	{
-		$Frequency = -1;
-	}
-
 	if (empty($Date[0]) || !in_array($Date[0], range(date('Y', EstatsCore::option('CollectedFrom')), date('Y'))))
 	{
 		$Date = array_fill(0, 4, 0);
@@ -939,7 +877,7 @@ else
 
 	for ($i = 0, $c = count($Menu); $i < $c; ++$i)
 	{
-		if (($Menu[$i] == 'geolocation' && !EstatsGeolocation::isAvailable()) || ($Menu[$i] == 'time' && EstatsCore::option('CollectFrequency/time') !== 'disabled' && !EstatsCore::driver()->selectAmount('time')))
+		if (($Menu[$i] == 'geolocation' && !EstatsGeolocation::isAvailable()) || ($Menu[$i] == 'time' && !EstatsCore::driver()->selectAmount('time')))
 		{
 			continue;
 		}
@@ -977,7 +915,7 @@ else
 			{
 				EstatsTheme::add('submenu-'.$Menu[$i].'_'.$Groups[$Menu[$i]][$j], FALSE);
 
-				if ((isset($GroupAmount[$Groups[$Menu[$i]][$j]]) && !$GroupAmount[$Groups[$Menu[$i]][$j]]) || ($Menu[$i] == 'time' && EstatsCore::option('CollectFrequency/time') !== 'hourly' && in_array($Groups[$Menu[$i]][$j], array('24hours', 'hourspopularity'))))
+				if (isset($GroupAmount[$Groups[$Menu[$i]][$j]]) && !$GroupAmount[$Groups[$Menu[$i]][$j]])
 				{
 					continue;
 				}
@@ -1017,68 +955,58 @@ else
 		EstatsTheme::append('menu', str_replace('{submenu}', EstatsTheme::get('submenu-'.$Menu[$i]), EstatsTheme::get('menu-'.$Menu[$i])));
 	}
 
-	switch ($Frequency)
+	if (in_array($Path[1], array('general', 'technical', 'geolocation', 'time')))
 	{
-		case 4:
-			for ($Hour = 0; $Hour < 24; ++$Hour)
-			{
-				$SelectHours.= '<option'.(((int) $Date[3] == $Hour && $Date[2])?' selected="selected"':'').'>'.$Hour.'</option>
+		for ($Hour = 0; $Hour < 24; ++$Hour)
+		{
+			$SelectHours.= '<option'.(((int) $Date[3] == $Hour && $Date[2])?' selected="selected"':'').'>'.$Hour.'</option>
 ';
-			}
+		}
 
-			EstatsTheme::add('selecthour', '<select name="hour" id="hour" title="'.EstatsLocale::translate('Hour').'" tabindex="'.EstatsGUI::tabindex().'">
+		EstatsTheme::add('selecthour', '<select name="hour" id="hour" title="'.EstatsLocale::translate('Hour').'" tabindex="'.EstatsGUI::tabindex().'">
 <option'.(($Date[3] && $Date[2])?'':' selected="selected"').' value="0">'.EstatsLocale::translate('All').'</option>
 '.$SelectHours.'</select>
 ');
-		case 3:
-			for ($Day = 1; $Day <= 31; ++$Day)
-			{
-				$SelectDays.= '<option'.(((int) $Date[2] == $Day)?' selected="selected"':'').'>'.$Day.'</option>
-';
-			}
 
-			EstatsTheme::add('selectday', '<select name="day" id="day" title="'.EstatsLocale::translate('Day').'" tabindex="'.EstatsGUI::tabindex().'">
+		for ($Day = 1; $Day <= 31; ++$Day)
+		{
+			$SelectDays.= '<option'.(((int) $Date[2] == $Day)?' selected="selected"':'').'>'.$Day.'</option>
+';
+		}
+
+		EstatsTheme::add('selectday', '<select name="day" id="day" title="'.EstatsLocale::translate('Day').'" tabindex="'.EstatsGUI::tabindex().'">
 <option'.($Date[2]?'':' selected="selected"').' value="0">'.EstatsLocale::translate('All').'</option>
 '.$SelectDays.'</select>
 ');
-		case 2:
-			for ($Month = 1; $Month <= 12; ++$Month)
-			{
-				$SelectMonths.= '<option value="'.$Month.'"'.(((int) $Date[1] == $Month)?' selected="selected"':'').'>'.ucfirst(strftime('%B', (mktime(0, 0, 0, $Month, 1)))).'</option>
-';
-			}
 
-			EstatsTheme::add('selectmonth', '<select name="month" id="month" title="'.EstatsLocale::translate('Month').'" tabindex="'.EstatsGUI::tabindex().'">
+		for ($Month = 1; $Month <= 12; ++$Month)
+		{
+			$SelectMonths.= '<option value="'.$Month.'"'.(((int) $Date[1] == $Month)?' selected="selected"':'').'>'.ucfirst(strftime('%B', (mktime(0, 0, 0, $Month, 1)))).'</option>
+';
+		}
+
+		EstatsTheme::add('selectmonth', '<select name="month" id="month" title="'.EstatsLocale::translate('Month').'" tabindex="'.EstatsGUI::tabindex().'">
 <option'.($Date[1]?'':' selected="selected"').' value="0">'.EstatsLocale::translate('All').'</option>
 '.$SelectMonths.'</select>
 ');
-		case 1:
-			for ($Year = date('Y', EstatsCore::option('CollectedFrom')); $Year <= date('Y'); ++$Year)
-			{
-				$SelectYears.= '<option value="'.$Year.'"'.(($Date[0] == $Year)?' selected="selected"':'').'>'.$Year.'</option>
-';
-			}
 
-			EstatsTheme::add('selectyear', '<select name="year" id="year" title="'.EstatsLocale::translate('Year').'" tabindex="'.EstatsGUI::tabindex().'">
+		for ($Year = date('Y', EstatsCore::option('CollectedFrom')); $Year <= date('Y'); ++$Year)
+		{
+			$SelectYears.= '<option value="'.$Year.'"'.(($Date[0] == $Year)?' selected="selected"':'').'>'.$Year.'</option>
+';
+		}
+
+		EstatsTheme::add('selectyear', '<select name="year" id="year" title="'.EstatsLocale::translate('Year').'" tabindex="'.EstatsGUI::tabindex().'">
 <option'.($Date[0]?'':' selected="selected"').' value="0">'.EstatsLocale::translate('All').'</option>
 '.$SelectYears.'</select>
 ');
-	}
-
-	if ($Frequency >= 0)
-	{
-		EstatsTheme::add('dateform', (boolean) $Frequency);
 		EstatsTheme::add('dateformindex', EstatsGUI::tabindex());
 		EstatsTheme::add('lang_showdatafor', EstatsLocale::translate('Show data for'));
 		EstatsTheme::add('lang_show', EstatsLocale::translate('Show'));
-
-		if ($Frequency)
-		{
-			EstatsTheme::add('dateprevious', '<input type="submit" name="previous" value="'.EstatsLocale::translate('Previous').'" tabindex="'.EstatsGUI::tabindex().'" />
+		EstatsTheme::add('dateprevious', '<input type="submit" name="previous" value="'.EstatsLocale::translate('Previous').'" tabindex="'.EstatsGUI::tabindex().'" />
 ');
-			EstatsTheme::add('datenext', '<input type="submit" name="next" value="'.EstatsLocale::translate('Next').'" tabindex="'.EstatsGUI::tabindex().'" />
+		EstatsTheme::add('datenext', '<input type="submit" name="next" value="'.EstatsLocale::translate('Next').'" tabindex="'.EstatsGUI::tabindex().'" />
 ');
-		}
 	}
 
 	if (!EstatsCore::option('AccessPassword'))

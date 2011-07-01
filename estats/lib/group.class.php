@@ -485,9 +485,9 @@ class EstatsGroup
 
 		if (EstatsCache::status($FileName, EstatsCore::option('Cache/others')))
 		{
-			if (ESTATS_USERLEVEL > 1)
+			if (ESTATS_USERLEVEL > 1 && EstatsCore::option('GroupAmount/'.$ID) == 0)
 			{
-				$Information.= (EstatsCore::option('GroupAmount/'.$ID)?'':EstatsGUI::notificationWidget(EstatsLocale::translate('This group is disabled!'), 'warning')).((!in_array($ID, array('browser-versions', 'operatingsystem-versions', 'cities', 'countries', 'regions', 'continents')) && EstatsCore::option('CollectFrequency/'.$ID) == 'disabled')?EstatsGUI::notificationWidget(EstatsLocale::translate('Data collecting for this group was disabled!'), 'warning'):'');
+				$Information.= EstatsGUI::notificationWidget(EstatsLocale::translate('This group is disabled!'), 'warning');
 			}
 
 			$Amount = self::selectAmount($Group, EstatsCore::option('GroupAmount/'.$ID), $Range[0], $Range[1]);

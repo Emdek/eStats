@@ -23,7 +23,7 @@
 <p>
 <label>
 <span>
-{selecthour}{selectday}{selectmonth}{selectyear}{selectmap}<input type="submit" value="{lang_show}" tabindex="{dateformindex}"  />{dateprevious}{datenext}</span>
+{selecthour}{selectday}{selectmonth}{selectyear}{selectmap}<input type="submit" value="{lang_show}" tabindex="{dateformindex}" />{dateprevious}{datenext}</span>
 {lang_showdatafor}:
 </label>
 </p>

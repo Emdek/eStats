@@ -16,7 +16,6 @@ if (isset($Path[3]) && $Path[3] == 'advanced')
 	$GroupNames = array(
 	'Core' => EstatsLocale::translate('Settings requeired for correct data collecting'),
 	'Backups' => EstatsLocale::translate('Backups creation system configuration'),
-	'CollectFrequency' => EstatsLocale::translate('Data collecting frequency'),
 	'GUI' => EstatsLocale::translate('User interface behavior settings'),
 	'Cache' => EstatsLocale::translate('Database cache settings'),
 	'Visits' => EstatsLocale::translate('Configuration of visits information'),
@@ -70,17 +69,8 @@ if (isset($Path[3]) && $Path[3] == 'advanced')
 	$OptionSelects['ChartsType'] = array('areas', 'bars', 'html', 'lines');
 	$OptionSelects['Visits/oldvisitspolicy'] = array('keep', 'compact', 'delete');
 	$OptionSelects['Path/mode'] = range(0, 2);
-	$OptionSelects['CollectFrequency/time'] = array('disable', 'daily', 'hourly');
 	$OptionSelects['DefaultTheme'] = array_keys(EstatsTheme::available());
 	$OptionSelects['Antipixel'] = glob('share/antipixels/*/*.{png,gif,jpg}', GLOB_BRACE);
-
-	foreach ($Configuration['Core'] as $Key => $Value)
-	{
-		if (strstr($Key, 'CollectFrequency'))
-		{
-			$OptionSelects[str_replace('/', '|', $Key)] = array('disable', 'yearly', 'monthly', 'daily', 'hourly', 'none');
-		}
-	}
 
 	for ($i = 0, $c = count($OptionSelects['Antipixel']); $i < $c; ++$i)
 	{
@@ -130,7 +120,7 @@ if (isset($Path[3]) && $Path[3] == 'advanced')
 				$Array = explode('|', $Option);
 				$SubGroup = reset($Array);
 				$OptionName = end($Array);
-				$Description = ((in_array($SubGroup, array('GroupAmount', 'CollectFrequency')))?EstatsLocale::translate(($OptionName != 'details')?$Titles[$OptionName]:'Details'):(isset($OptionsNames[$Option])?$OptionsNames[$Option]:''));
+				$Description = ((($SubGroup == 'GroupAmount'))?EstatsLocale::translate(($OptionName !== 'details')?$Titles[$OptionName]:'Details'):(isset($OptionsNames[$Option])?$OptionsNames[$Option]:''));
 			}
 			else
 			{

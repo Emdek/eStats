@@ -1,4 +1,4 @@
-[start:general]<!--start:dateform-->{dateform}<!--end:dateform--><div align="center">
+[start:general]{dateform}<div align="center">
 <table cellpadding="0" cellspacing="0" border="1" width="100%">
 {sites}{referrers}{websearchers}{keywords}{languages}{robots}{hosts}{proxy}</table>
 <table cellpadding="0" cellspacing="0" border="1" width="100%">

@@ -294,8 +294,7 @@ class EstatsCore
 
 	static private function increaseAmount($Table, $Values)
 	{
-		$Timestamp = self::option('CollectFrequency/'.$Table);
-		$Values['time'] = self::$Timestamps[empty(self::$Timestamps[$Timestamp])?'daily':$Timestamp];
+		$Values['time'] = self::$Timestamps['daily'];
 		$Where = array();
 
 		foreach ($Values as $Key => $Value)
@@ -1026,10 +1025,7 @@ class EstatsCore
 				{
 					$Key = $Keys[$i].(($Keys[$i] == 'screen')?'s':'');
 
-					if (self::option('CollectFrequency/'.$Key) !== 'disabled')
-					{
-						self::increaseAmount($Key, array('name' => (isset($Data[$Keys[$i]])?$Data[$Keys[$i]]:0)));
-					}
+					self::increaseAmount($Key, array('name' => (isset($Data[$Keys[$i]])?$Data[$Keys[$i]]:0)));
 				}
 			}
 		}
@@ -1103,66 +1099,45 @@ class EstatsCore
 
 				if (!self::$Robot)
 				{
-					if (self::option('CollectFrequency/languages') !== 'disabled')
-					{
-						self::increaseAmount('languages', array('name' => $Data['language']));
-					}
+					self::increaseAmount('languages', array('name' => $Data['language']));
+					self::increaseAmount('browsers', array_combine(array('name', 'version'), self::detectBrowser($_SERVER['HTTP_USER_AGENT'])));
+					self::increaseAmount('operatingsystems', array_combine(array('name', 'version'), self::detectOperatingSystem($_SERVER['HTTP_USER_AGENT'])));
+					self::increaseAmount('hosts', array('name' => $Data['host']));
 
-					if (self::option('CollectFrequency/browsers') !== 'disabled')
-					{
-						self::increaseAmount('browsers', array_combine(array('name', 'version'), self::detectBrowser($_SERVER['HTTP_USER_AGENT'])));
-					}
-
-					if (self::option('CollectFrequency/operatingsystems') !== 'disabled')
-					{
-						self::increaseAmount('operatingsystems', array_combine(array('name', 'version'), self::detectOperatingSystem($_SERVER['HTTP_USER_AGENT'])));
-					}
-
-					if (self::option('CollectFrequency/hosts') !== 'disabled')
-					{
- 						self::increaseAmount('hosts', array('name' => $Data['host']));
-					}
-
-					if (self::option('CollectFrequency/proxy') !== 'disabled' && $Data['proxy'])
+					if ($Data['proxy'])
 					{
 						self::increaseAmount('proxy', array('name' => $Data['proxy']));
 					}
 
-					if (self::option('CollectFrequency/geolocation') !== 'disabled' && EstatsGeolocation::isAvailable() && ($GeoData = EstatsGeolocation::information(self::$IP)))
+					if (EstatsGeolocation::isAvailable() && ($GeoData = EstatsGeolocation::information(self::$IP)))
 					{
 						self::increaseAmount('geoip', $GeoData);
 					}
 
-					if (self::option('CollectFrequency/referrers') !== 'disabled' && $Data['referrer'])
+					if ($Data['referrer'])
 					{
 						self::increaseAmount('referrers', array('name' => 'http://'.strtolower($Referrer['host'])));
 					}
 
-					if ($Data['referrer'] && (self::option('CollectFrequency/websearchers') !== 'disabled' || self::option('CollectFrequency/keywords') !== 'disabled'))
+					if ($Data['referrer'])
 					{
 						$WebSearch = self::detectWebsearcher($Data['referrer'], self::option('CountPhrases'));
 
 						if ($WebSearch)
 						{
-							if (self::option('CollectFrequency/websearchers') !== 'disabled')
-							{
-								self::increaseAmount('websearchers', array('name' => $WebSearch[0]));
-							}
+							self::increaseAmount('websearchers', array('name' => $WebSearch[0]));
 
-							if (self::option('CollectFrequency/keywords') !== 'disabled')
+							for ($i = 0, $c = count($WebSearch[1]); $i < $c; ++$i)
 							{
-								for ($i = 0, $c = count($WebSearch[1]); $i < $c; ++$i)
+								if ($WebSearch[1][$i])
 								{
-									if ($WebSearch[1][$i])
-									{
-										self::increaseAmount('keywords', array('name' => $WebSearch[1][$i]));
-									}
+									self::increaseAmount('keywords', array('name' => $WebSearch[1][$i]));
 								}
 							}
 						}
 					}
 				}
-				else if (self::option('CollectFrequency/robots') !== 'disabled')
+				else
 				{
 					self::increaseAmount('robots', array('name' => self::$Robot));
 				}
@@ -1179,38 +1154,32 @@ class EstatsCore
 				self::$Driver->insertData('details', array('id' => self::$VisitorID, 'address' => $Address, 'time' => self::$Timestamps['full']));
 			}
 
-			if (self::option('CollectFrequency/sites') !== 'disabled')
-			{
-				self::increaseAmount('sites', array('name' => $Title, 'address' => $Address));
-			}
+			self::increaseAmount('sites', array('name' => $Title, 'address' => $Address));
 
 			if (self::$Robot && !self::option('CountRobots'))
 			{
 				return;
 			}
 
-			if (self::option('CollectFrequency/time') !== 'disabled')
+			if (self::$IsNewVisit)
 			{
-				if (self::$IsNewVisit)
+				if (self::$PreviousVisitorID)
 				{
-					if (self::$PreviousVisitorID)
-					{
-						$Type = 'returns';
-					}
-					else
-					{
-						$Type = 'unique';
-					}
+					$Type = 'returns';
 				}
 				else
 				{
-					$Type = 'views';
+					$Type = 'unique';
 				}
+			}
+			else
+			{
+				$Type = 'views';
+			}
 
-				if (!self::$Driver->updateData('time', array($Type => array(EstatsDriver::ELEMENT_EXPRESSION, array($Type, EstatsDriver::OPERATOR_INCREASE))), array(array(EstatsDriver::ELEMENT_OPERATION, array('time', EstatsDriver::OPERATOR_EQUAL, array(EstatsDriver::ELEMENT_VALUE, self::$Timestamps[self::option('CollectFrequency/time')]))))))
-				{
-					self::$Driver->insertData('time', array('time' => self::$Timestamps[self::option('CollectFrequency/time')], 'views' => (($Type == 'views')?1:0), 'unique' => (($Type == 'unique')?1:0), 'returns' => (($Type == 'returns')?1:0)));
-				}
+			if (!self::$Driver->updateData('time', array($Type => array(EstatsDriver::ELEMENT_EXPRESSION, array($Type, EstatsDriver::OPERATOR_INCREASE))), array(array(EstatsDriver::ELEMENT_OPERATION, array('time', EstatsDriver::OPERATOR_EQUAL, array(EstatsDriver::ELEMENT_VALUE, self::$Timestamps['daily']))))))
+			{
+				self::$Driver->insertData('time', array('time' => self::$Timestamps['daily'], 'views' => (($Type == 'views')?1:0), 'unique' => (($Type == 'unique')?1:0), 'returns' => (($Type == 'returns')?1:0)));
 			}
 		}
 	}

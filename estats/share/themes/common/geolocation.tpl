@@ -1,4 +1,4 @@
-[start:geolocation]<!--start:dateform-->{dateform}<!--end:dateform--><!--start:singlecountry--><table cellpadding="0" cellspacing="0" id="geolocation">
+[start:geolocation]{dateform}<!--start:singlecountry--><table cellpadding="0" cellspacing="0" id="geolocation">
 <tr>
 <td>
 {cities}</td>

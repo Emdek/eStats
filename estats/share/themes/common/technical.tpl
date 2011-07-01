@@ -1,4 +1,4 @@
-[start:technical]<!--start:dateform-->{dateform}<!--end:dateform--><table cellpadding="0" cellspacing="0" id="technical">
+[start:technical]{dateform}<table cellpadding="0" cellspacing="0" id="technical">
 <tr>
 <td>
 {browsers}</td>

@@ -15,7 +15,6 @@ if (empty($Path[2]) || !isset($Feeds[$Path[2]]))
 	$Path[2] = 'daily';
 }
 
-$VisitsAvailable = (EstatsCore::option('CollectFrequency/time') == 'hourly' || EstatsCore::option('CollectFrequency/time') == 'daily');
 $TimeFormat = 'Y.m.d';
 $TimeUnitFormat = '%Y.%m.%d';
 $TimeUnitStep = 86400;
@@ -27,7 +26,6 @@ switch ($Path[2])
 		$Period = array(mktime(23, 59, 59));
 		$EntriesAmount = 30;
 		$Step = 86400;
-		$VisitsAvailable = (EstatsCore::option('CollectFrequency/time') == 'hourly');
 		$TimeFormat = 'Y.m.d H';
 		$TimeUnitFormat = '%Y.%m.%d %H';
 		$TimeUnitStep = 3600;
@@ -151,7 +149,7 @@ for ($i = 0; $i < $EntriesAmount; ++$i)
 '.$Summary.'
 ';
 
-	if ($VisitsAvailable && $TimeData['data'])
+	if ($TimeData['data'])
 	{
 		$Content.= '<h2>'.EstatsLocale::translate('Visits').'</h2>
 <table cellpadding="2px" cellspacing="0" border="1px" width="100%">

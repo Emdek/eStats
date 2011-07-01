@@ -1,4 +1,4 @@
-[start:general]<!--start:dateform-->{dateform}<!--end:dateform--><table cellpadding="0" cellspacing="0" id="general">
+[start:general]{dateform}<table cellpadding="0" cellspacing="0" id="general">
 <tr>
 <td rowspan="3">
 {sites}</td>

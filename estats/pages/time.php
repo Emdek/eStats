@@ -71,7 +71,7 @@ for ($i = 0, $c = count($Groups['time']); $i < $c; ++$i)
 
 	EstatsTheme::add($Groups['time'][$i], '');
 
-	if ((EstatsCore::option('CollectFrequency/time') != 'hourly' && in_array($Groups['time'][$i], array ('24hours', 'hours'))) || ($Var == 4 && $Groups['time'][$i] !== $Path[2]))
+	if ($Var == 4 && $Groups['time'][$i] !== $Path[2])
 	{
 		continue;
 	}
