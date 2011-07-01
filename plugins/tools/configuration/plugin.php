@@ -189,7 +189,7 @@ ResultsAmount = {resultsamount};
 ChangedValueString = \''.EstatsLocale::translate('Field value is other than default').'\';
 SearchString = \''.EstatsLocale::translate('Search').'\';
 
-for (i = 0; i < 2; i++)
+for (i = 0; i < 2; ++i)
 {
 	Fieldsets = document.getElementById(\'g_\' + (i?\'Core\':\'GUI\')).getElementsByTagName(\'fieldset\');
 

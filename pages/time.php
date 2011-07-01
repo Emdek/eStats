@@ -132,7 +132,7 @@ for ($i = 0, $c = count($Groups['time']); $i < $c; ++$i)
 	'month' => '%Y.%m',
 	'year' => '%Y'
 	);
-			$Fields = array();
+			$Fields = array(array(EstatsDriver::ELEMENT_FUNCTION, array(EstatsDriver::FUNCTION_DATETIME, array('time', $Units[$ChartInformation['unit']])), 'unit'));
 			$Bits = 0;
 			$Bit = 1;
 
@@ -152,8 +152,6 @@ for ($i = 0, $c = count($Groups['time']); $i < $c; ++$i)
 					$Fields[] = array(EstatsDriver::ELEMENT_FUNCTION, array(EstatsDriver::FUNCTION_SUM, $AvailableViewTypes[$k]), $AvailableViewTypes[$k]);
 				}
 			}
-
-			$Fields[] = array(EstatsDriver::ELEMENT_FUNCTION, array(EstatsDriver::FUNCTION_DATETIME, array('time', $Units[$ChartInformation['unit']])), 'unit');
 
 			$Result = EstatsCore::driver()->selectData(array('time'), $Fields, EstatsCore::timeClause('time', $Ranges[$j][0], $Ranges[$j][1]), 0, 0, array('unit' => TRUE), array('unit'));
 
