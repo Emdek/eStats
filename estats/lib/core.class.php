@@ -1149,11 +1149,7 @@ class EstatsCore
 				self::$Driver->updateData('visitors', array('lastvisit' => self::$Timestamps['full'], 'visitsamount' => array(EstatsDriver::ELEMENT_EXPRESSION, array('visitsamount', EstatsDriver::OPERATOR_INCREASE))), array(array(EstatsDriver::ELEMENT_OPERATION, array('id', EstatsDriver::OPERATOR_EQUAL, array(EstatsDriver::ELEMENT_VALUE, self::$VisitorID)))));
 			}
 
-			if (self::option('VisitDetails'))
-			{
-				self::$Driver->insertData('details', array('id' => self::$VisitorID, 'address' => $Address, 'time' => self::$Timestamps['full']));
-			}
-
+			self::$Driver->insertData('details', array('id' => self::$VisitorID, 'address' => $Address, 'time' => self::$Timestamps['full']));
 			self::increaseAmount('sites', array('name' => $Title, 'address' => $Address));
 
 			if (self::$Robot && !self::option('CountRobots'))

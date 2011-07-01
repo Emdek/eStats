@@ -36,14 +36,11 @@ if (isset($Path[3]) && $Path[3] == 'advanced')
 	'Visits/amount' => EstatsLocale::translate('Amount of entries per page in Visits'),
 	'Visits/detailsamount' => EstatsLocale::translate('Amount of entries per page in Visit details'),
 	'Visits/maxpages' => EstatsLocale::translate('Max amount of pages available for user (0 - all available)'),
-	'Visits/oldvisitspolicy' => EstatsLocale::translate('Policy what to do with old visits data'),
-	'Visits/period' => EstatsLocale::translate('Amount of days from which visits data are displayed (0 - display all)'),
 	'Path/mode' => EstatsLocale::translate('Mode of passing data in the path'),
 	'Path/prefix' => EstatsLocale::translate('Address prefix'),
 	'Path/separator' => EstatsLocale::translate('Separator between address and GET query'),
 	'Path/suffix' => EstatsLocale::translate('Address suffix'),
 	'CountRobots' => EstatsLocale::translate('Add robots visits to visits'),
-	'VisitDetails' => EstatsLocale::translate('Collect visit details '),
 	'VisitTime' => EstatsLocale::translate('Time after that visit is count again (seconds)'),
 	'BlockedIPs' => EstatsLocale::translate('Disallow stats viewing for selected IP addresses'),
 	'IgnoredIPs' => EstatsLocale::translate('Ignored IPs'),
@@ -67,7 +64,6 @@ if (isset($Path[3]) && $Path[3] == 'advanced')
 	$OptionSelects['Antipixel'] = $OptionSelects['DefaultTheme'] = array();
 	$OptionSelects['Backups/profile'] = array('data', 'full', 'user');
 	$OptionSelects['ChartsType'] = array('areas', 'bars', 'html', 'lines');
-	$OptionSelects['Visits/oldvisitspolicy'] = array('keep', 'compact', 'delete');
 	$OptionSelects['Path/mode'] = range(0, 2);
 	$OptionSelects['DefaultTheme'] = array_keys(EstatsTheme::available());
 	$OptionSelects['Antipixel'] = glob('share/antipixels/*/*.{png,gif,jpg}', GLOB_BRACE);

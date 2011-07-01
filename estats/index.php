@@ -578,32 +578,6 @@ else
 		EstatsCache::delete();
 	}
 
-	if (EstatsCore::option('LastCheck') !== date('Ymd') && (EstatsCore::option('Visits/oldvisitspolicy') == 'compact' || EstatsCore::option('Visits/oldvisitspolicy') == 'delete'))
-	{
-		EstatsCore::setConfiguration(array('LastCheck' => date('Ymd')));
-
-		$Time = EstatsCore::driver()->selectData(array('details'), array(array(EstatsDriver::ELEMENT_FUNCTION, array(EstatsDriver::FUNCTION_MAX, 'time'), 'maxtime')), NULL, 1, (self::option('Visits/amount') * self::option('Visits/maxpages')), array('maxtime' => FALSE), array('id'));
-		$Time = $Time[0]['maxtime'];
-		$Result = EstatsCore::driver()->selectData(array('details'), array('id', array(EstatsDriver::ELEMENT_FUNCTION, array(EstatsDriver::FUNCTION_MAX, 'time'), 'maxtime'), array(EstatsDriver::ELEMENT_FUNCTION, array(EstatsDriver::FUNCTION_MIN, 'time'), 'mintime')), array(array(EstatsDriver::ELEMENT_OPERATION, array('maxtime', EstatsDriver::OPERATOR_LESSOREQUAL, $Time)), EstatsDriver::OPERATOR_AND, array(EstatsDriver::ELEMENT_OPERATION, array('mintime', EstatsDriver::OPERATOR_LESS, ($_SERVER['REQUEST_TIME'] - max(self::option('VisitTime'), self::option('Visits/period')))))));
-
-		if ($Result)
-		{
-			$UniqueIDs = array();
-
-			for ($i = 0, $c = count($Result); $i < $c; ++$i)
-			{
-				$UniqueIDs[] = $Result[$i]['id'];
-			}
-
-			EstatsCore::driver()->deleteData('details', array(array(EstatsDriver::ELEMENT_OPERATION, array('id', EstatsDriver::OPERATOR_IN, $UniqueIDs))));
-
-			if (EstatsCore::option('Visits/oldvisitspolicy') == 'delete')
-			{
-				EstatsCore::driver()->deleteData('visitors', array(array(EstatsDriver::ELEMENT_OPERATION, array('id', EstatsDriver::OPERATOR_IN, $UniqueIDs))));
-			}
-		}
-	}
-
 	EstatsTheme::add('loginindex', EstatsGUI::tabindex());
 	EstatsTheme::add('startdate', date('d.m.Y', EstatsCore::option('CollectedFrom')));
 	EstatsTheme::add('starttime', date('H:i:s', EstatsCore::option('CollectedFrom')));
