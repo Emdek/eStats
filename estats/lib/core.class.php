@@ -93,12 +93,6 @@ class EstatsCore
 	const EVENT_DATADELETED = 30;
 
 /**
- * Event: data from selected tables were deleted
- */
-
-	const EVENT_TABLESEMPTIED = 31;
-
-/**
  * Event: backups were deleted
  */
 

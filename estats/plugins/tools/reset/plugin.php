@@ -56,20 +56,6 @@ if (isset($_POST['ResetData']))
 	EstatsCore::setConfiguration(array('CollectedFrom' => $_SERVER['REQUEST_TIME']), 0);
 }
 
-if (isset($_POST['ResetTables']) && !array_diff($_POST['Tables'], $DatabaseTables) && !in_array('configuration', $_POST['Tables']) && !in_array('logs', $_POST['Tables']))
-{
-	for ($i = 0, $c = count($_POST['Tables']); $i < $c; ++$i)
-	{
-		if (!in_array($DatabaseTables[$i], array('configuration', 'logs')) && in_array($_POST['Tables'][$i], $DatabaseTables))
-		{
-			EstatsCore::driver()->deleteData($_POST['Tables'][$i]);
-		}
-	}
-
-	EstatsCore::logEvent(EstatsCore::EVENT_TABLESEMPTIED, implode(', ', $_POST['Tables']));
-	EstatsGUI::notify(EstatsLocale::translate('Selected tables emptied successfully.'), 'success');
-}
-
 $DatabaseSize = 0;
 
 for ($i = 0, $c = count($DatabaseTables); $i < $c; ++$i)
@@ -95,15 +81,7 @@ foreach ($ResetOptions as $Key => $Value)
 	EstatsTheme::append('page', EstatsGUI::optionRowWidget(EstatsLocale::translate($OptionNames[$Key]).' (<strong>'.EstatsGUI::formatSize($Value).'</strong>)', '', 'Reset'.$Key, FALSE, EstatsGUI::FIELD_BOOLEAN));
 }
 
-for ($i = 0, $c = count($DatabaseTables); $i < $c; ++$i)
-{
-	if (in_array($DatabaseTables[$i], array('configuration', 'logs')))
-	{
-		unset($DatabaseTables[$i]);
-	}
-}
-
-EstatsTheme::append('page', EstatsGUI::optionRowWidget(EstatsLocale::translate('Reset selected tables'), '', 'Tables', array(), EstatsGUI::FIELD_SELECT, $DatabaseTables).EstatsGUI::optionRowWidget(EstatsLocale::translate('Create backup'), '', 'CreateBackup', 1, EstatsGUI::FIELD_BOOLEAN).'<div class="buttons">
+EstatsTheme::append('page', EstatsGUI::optionRowWidget(EstatsLocale::translate('Create backup'), '', 'CreateBackup', 1, EstatsGUI::FIELD_BOOLEAN).'<div class="buttons">
 <input type="submit" value="'.EstatsLocale::translate('Execute').'" onclick="if (!confirm(\''.EstatsLocale::translate('Do You really want to delete data?').'\')) return false" tabindex="'.EstatsGUI::tabindex().'" />
 <input type="reset" value="'.EstatsLocale::translate('Reset').'" tabindex="'.EstatsGUI::tabindex().'" />
 </div>
