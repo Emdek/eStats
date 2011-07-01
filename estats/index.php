@@ -279,6 +279,38 @@ if (isset($_POST['locale']))
 	die(header('Location: '.EstatsTheme::get('datapath').EstatsCore::option('Path/prefix').$_POST['locale'].'/'.implode('/', array_slice($Path, 1)).EstatsCore::option('Path/suffix')));
 }
 
+$Locales = EstatsLocale::available();
+
+if (!isset($_SESSION[EstatsCore::session()]['locale']))
+{
+	$Language = EstatsCore::language();
+
+	if (strlen($Language) > 1)
+	{
+		$_SESSION[EstatsCore::session()]['locale'] = (array_key_exists($Language, EstatsLocale::available())?$Language:(array_key_exists(substr($Language, 0, 2), EstatsLocale::available())?substr($Language, 0, 2):'en'));
+	}
+}
+
+if (!isset($Path[0]) || !EstatsLocale::exists($Path[0]))
+{
+	$Path[0] = (empty($_SESSION[EstatsCore::session()]['locale'])?'en':$_SESSION[EstatsCore::session()]['locale']);
+}
+
+if (!is_readable('locale/'.$Path[0].'/locale.ini'))
+{
+	$Path[0] = 'en';
+}
+
+EstatsLocale::set($Path[0], (defined('ESTATS_GETTEXT')?ESTATS_GETTEXT:NULL));
+
+$_SESSION[EstatsCore::session()]['locale'] = $Path[0];
+
+foreach ($Locales as $Key => $Value)
+{
+	$SelectLocale.= '<option value="'.$Key.'"'.(($Key == $Path[0])?' selected="selected"':'').'>'.$Value.'</option>
+';
+}
+
 if (defined('ESTATS_INSTALL'))
 {
 	define('ESTATS_USERLEVEL', 0);
@@ -411,38 +443,6 @@ if (!EstatsTheme::set($_SESSION[EstatsCore::session()]['theme']))
 }
 
 EstatsTheme::load('common');
-
-$Locales = EstatsLocale::available();
-
-if (!isset($_SESSION[EstatsCore::session()]['locale']))
-{
-	$Language = EstatsCore::language();
-
-	if (strlen($Language) > 1)
-	{
-		$_SESSION[EstatsCore::session()]['locale'] = (array_key_exists($Language, EstatsLocale::available())?$Language:(array_key_exists(substr($Language, 0, 2), EstatsLocale::available())?substr($Language, 0, 2):'en'));
-	}
-}
-
-if (!isset($Path[0]) || !EstatsLocale::exists($Path[0]))
-{
-	$Path[0] = (empty($_SESSION[EstatsCore::session()]['locale'])?'en':$_SESSION[EstatsCore::session()]['locale']);
-}
-
-if (!is_readable('locale/'.$Path[0].'/locale.ini'))
-{
-	$Path[0] = 'en';
-}
-
-EstatsLocale::set($Path[0], (defined('ESTATS_GETTEXT')?ESTATS_GETTEXT:NULL));
-
-$_SESSION[EstatsCore::session()]['locale'] = $Path[0];
-
-foreach ($Locales as $Key => $Value)
-{
-	$SelectLocale.= '<option value="'.$Key.'"'.(($Key == $Path[0])?' selected="selected"':'').'>'.$Value.'</option>
-';
-}
 
 if (!EstatsLocale::option('Status'))
 {
