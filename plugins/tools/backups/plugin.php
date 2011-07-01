@@ -118,7 +118,7 @@ if (isset($_FILES['UploadBackup']) && is_uploaded_file($_FILES['UploadBackup']['
 		$_POST['BackupID'] = 'Upload-'.$_SERVER['REQUEST_TIME'].'.user';
 		$_POST['RestoreBackup'] = TRUE;
 
-		move_uploaded_file($_FILES['UploadBackup']['tmp_name'], $DataDir.'backups/'.$_POST['BackupID'].'.estats.bak');
+		move_uploaded_file($_FILES['UploadBackup']['tmp_name'], $DataDir.'backups/'.$_POST['BackupID'].'.bak');
 	}
 }
 
