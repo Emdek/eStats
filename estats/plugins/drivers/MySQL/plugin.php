@@ -2,7 +2,7 @@
 /**
  * MySQL database driver class for eStats
  * @author Emdek <http://emdek.pl>
- * @version 4.0.01
+ * @version 4.0.02
  */
 
 class EstatsDriverMysql extends EstatsDriver
@@ -281,6 +281,7 @@ class EstatsDriverMysql extends EstatsDriver
 		if (parent::connect($Connection, $User, $Password, $Prefix, $Persistent))
 		{
 			$this->Information['DatabaseVersion'] = $this->PDO->getAttribute(PDO::ATTR_SERVER_VERSION);
+			$this->PDO->query('SET NAMES \'utf8\'');
 		}
 
 		return $this->Connected;
@@ -310,9 +311,11 @@ class EstatsDriverMysql extends EstatsDriver
 			}
 		}
 
+		$TextTypes = array('TEXT', 'VARCHAR', 'CHAR');
+
 		foreach ($Attributes as $Key => $Value)
 		{
-			$SQL = '`'.$Key.'` '.$Value['type'].(isset($Value['length'])?'('.$Value['length'].')':'').(isset($Value['null'])?'':' NOT NULL').(isset($Value['autoincrement'])?' AUTO_INCREMENT':'');
+			$SQL = '`'.$Key.'` '.$Value['type'].(isset($Value['length'])?'('.$Value['length'].')':'').(in_array(strtoupper($Value['type']), $TextTypes)?' CHARACTER SET \'utf8\' COLLATE \'utf8_unicode_ci\'':'').(isset($Value['null'])?'':' NOT NULL').(isset($Value['autoincrement'])?' AUTO_INCREMENT':'');
 
 			if (isset($Value['unique']))
 			{
@@ -371,7 +374,7 @@ class EstatsDriverMysql extends EstatsDriver
 
 		$Parts = array_merge($Parts, $ForeignKeys, $IndexKeys);
 
-		$this->PDO->exec('CREATE TABLE `'.$this->Prefix.$Table.'` ('.implode(', ', $Parts).') ENGINE=InnoDB');
+		$this->PDO->exec('CREATE TABLE `'.$this->Prefix.$Table.'` ('.implode(', ', $Parts).') ENGINE=InnoDB CHARACTER SET \'utf8\' COLLATE \'utf8_unicode_ci\'');
 
 		return $this->tableExists($Table);
 	}
