@@ -105,7 +105,7 @@ Module: '.EstatsCore::driver()->option('Name').' v'.EstatsCore::driver()->option
 				{
 					$Values = array();
 
-					for ($k = 0; $k < $Amount; $k++)
+					for ($k = 0; $k < $Amount; ++$k)
 					{
 						$Values[] = strtr($Row[$k], array(
 	"\r" => '\r',
@@ -138,13 +138,17 @@ Module: '.EstatsCore::driver()->option('Name').' v'.EstatsCore::driver()->option
 
 	static function restore($BackupID)
 	{
-		$Status = TRUE;
 		$File = fopen(EstatsCore::path(TRUE).'backups/'.$BackupID.'.bak', 'r');
+
+		if ($File == FALSE)
+		{
+			return FALSE;
+		}
+
+		$Status = TRUE;
 		$Buffer = '';
 		$Replace = $Recreate = $Create = $Table = $Fields = $Line = 0;
 		$Schema = EstatsCore::loadData('share/data/database.ini');
-
-		EstatsCore::driver()->beginTransaction();
 
 		while (!feof($File))
 		{
@@ -154,7 +158,18 @@ Module: '.EstatsCore::driver()->option('Name').' v'.EstatsCore::driver()->option
 			{
 				if (!$Buffer || $Line < 10)
 				{
-					if ($Line == 3)
+					if ($Line == 2)
+					{
+						if (preg_match('#eStats v[\d\.]+ database backup#', $Buffer))
+						{
+							EstatsCore::driver()->beginTransaction();
+						}
+						else
+						{
+							return FALSE;
+						}
+					}
+					else if ($Line == 3)
 					{
 						if (strstr($Buffer, 'replace data'))
 						{
@@ -175,6 +190,7 @@ Module: '.EstatsCore::driver()->option('Name').' v'.EstatsCore::driver()->option
 					}
 
 					++$Line;
+
 					$Buffer = '';
 
 					continue;
