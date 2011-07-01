@@ -398,7 +398,7 @@ if (!is_readable('locale/'.$Path[0].'/locale.ini'))
 	$Path[0] = 'en';
 }
 
-EstatsLocale::set($Path[0]);
+EstatsLocale::set($Path[0], (defined('ESTATS_GETTEXT')?ESTATS_GETTEXT:NULL));
 
 $_SESSION[EstatsCore::session()]['locale'] = $Path[0];
 

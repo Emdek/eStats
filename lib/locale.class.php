@@ -2,7 +2,7 @@
 /**
  * Locale class for eStats
  * @author Emdek <http://emdek.pl>
- * @version 0.9.10
+ * @version 0.9.11
  */
 
 class EstatsLocale
@@ -41,10 +41,11 @@ class EstatsLocale
 /**
  * Sets default locale
  * @param string Locale
+ * @param boolean Gettext
  * @return boolean
  */
 
-	static public function set($Locale)
+	static public function set($Locale, $Gettext = NULL)
 	{
 		$FileName = './locale/'.$Locale.'/locale.ini';
 
@@ -62,6 +63,11 @@ class EstatsLocale
 		{
 			putenv('LANG='.$Locale);
 			putenv('LANGUAGE='.$Locale);
+		}
+
+		if ($Gettext !== NULL)
+		{
+			self::$Gettext = $Gettext;
 		}
 
 		self::load();
