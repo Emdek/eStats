@@ -2,7 +2,7 @@
 /**
  * Geolocation class for eStats
  * @author Emdek <http://emdek.pl>
- * @version 2.0.06
+ * @version 2.0.07
  */
 
 class EstatsGeolocation
@@ -66,15 +66,15 @@ class EstatsGeolocation
 				}
 			}
 
-			$IP = explode('.', $IP);
-			$Statement = self::$PDO->prepare('SELECT "l"."city" AS "city", "l"."region" AS "region", "l"."country_code" AS "country_code", "l"."latitude" AS "latitude", "l"."longitude" AS "longitude" FROM "blocks" "b", "locations" "l" WHERE ? BETWEEN "b"."ipstart" AND "b"."ipend" AND "b"."location" = "l"."location"');
+			$Statement = self::$PDO->prepare('SELECT * FROM "locations" WHERE "location" = (SELECT "location" FROM "blocks" WHERE ? BETWEEN "ipstart" AND "ipend")');
 
 			if (!$Statement)
 			{
 				return array();
 			}
 
-			$Result = $Statement->execute(((16777216 * $IP[0]) + (65536 * $IP[1]) + (256 * $IP[2]) + $IP[3]));
+			$IP = explode('.', $IP);
+			$Result = $Statement->execute(array((16777216 * $IP[0]) + (65536 * $IP[1]) + (256 * $IP[2]) + $IP[3]));
 			$Data = (isset($Result[0])?$Result[0]:array());
 		}
 
