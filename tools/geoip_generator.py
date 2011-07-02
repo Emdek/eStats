@@ -43,7 +43,7 @@ for line in reader:
 		continue
 
 	try:
-		cursor.execute('INSERT INTO "blocks" VALUES (%d, %d, %d)', (int(line[0]), int(line[1]), int(line[2])))
+		cursor.execute('INSERT INTO "blocks" VALUES (?, ?, ?)', (int(line[0]), int(line[1]), int(line[2])))
 	except:
 		print 'An error occured during insertion of row ',i,' into database!'
 
@@ -68,7 +68,7 @@ for line in reader:
 		continue
 
 	try:
-		cursor.execute('INSERT INTO "locations" VALUES (%d, %s, %s, %s, %f, %f)', (int(line[0]), str(line[3]), str(line[2]), str(line[1]), float(line[5]), float(line[6])))
+		cursor.execute('INSERT INTO "locations" VALUES (?, ?, ?, ?, ?, ?)', (int(line[0]), str(line[3]), str(line[2]), str(line[1]), float(line[5]), float(line[6])))
 	except:
 		print 'An error occured during insertion of row ',i,' into database!'
 
