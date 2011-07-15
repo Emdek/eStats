@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: estats\n"
-"POT-Creation-Date: 2011-06-30 23:55+0100\n"
-"PO-Revision-Date: 2011-07-01 00:01+0100\n"
+"POT-Creation-Date: 2011-07-10 14:55+0100\n"
+"PO-Revision-Date: 2011-07-10 14:56+0100\n"
 "Last-Translator: Michał D. aka Emdek <emdeck@gmail.com>\n"
 "Language-Team: \n"
 "Language: \n"
@@ -309,7 +309,7 @@ msgstr "Autor"
 msgid "Available"
 msgstr "Dostępne"
 
-#: pages/time.php:277
+#: pages/time.php:275
 #: pages/feed.php:77
 #: lib/group.class.php:651
 msgid "Average"
@@ -505,7 +505,7 @@ msgstr "Bretoński"
 msgid "British Indian Ocean Territory"
 msgstr "Brytyjskie Terytorium Oceanu Indyjskiego"
 
-#: share/data/countries.ini:242
+#: share/data/countries.ini:243
 msgid "British Virgin Islands"
 msgstr "Brytyjskie Wyspy Dziewicze"
 
@@ -597,7 +597,7 @@ msgstr "Nie można połączyć się z bazą danych!"
 msgid "Can not found class %s!"
 msgstr "Nie można znaleźć klasy %s!"
 
-#: index.php:374
+#: index.php:406
 msgid "Can not load theme %s!"
 msgstr "Nie można załadować motywu %s!"
 
@@ -633,7 +633,7 @@ msgstr "Republika Środkowoafrykańska"
 msgid "Ceuta and Melilla"
 msgstr "Ceuta i Melilla"
 
-#: share/data/countries.ini:218
+#: share/data/countries.ini:219
 msgid "Chad"
 msgstr "Czad"
 
@@ -715,7 +715,7 @@ msgstr "Kolumbia"
 msgid "Comoros"
 msgstr "Komory"
 
-#: pages/time.php:274
+#: pages/time.php:272
 msgid "Compare with previous period"
 msgstr "Porównaj z poprzednim okresem"
 
@@ -1147,7 +1147,7 @@ msgstr "Ekwador"
 msgid "Egypt"
 msgstr "Egipt"
 
-#: share/data/countries.ini:213
+#: share/data/countries.ini:214
 msgid "El Salvador"
 msgstr "Salwador"
 
@@ -1325,7 +1325,7 @@ msgstr "Gujana Francuska"
 msgid "French Polynesia"
 msgstr "Polinezja Francuska"
 
-#: share/data/countries.ini:219
+#: share/data/countries.ini:220
 msgid "French Southern Territories"
 msgstr "Francuskie Terytoria Południowe"
 
@@ -1864,7 +1864,7 @@ msgstr "Łotwa"
 msgid "Latvian"
 msgstr "Łotewski"
 
-#: pages/time.php:278
+#: pages/time.php:276
 #: pages/feed.php:78
 #: lib/group.class.php:652
 msgid "Least"
@@ -2055,7 +2055,7 @@ msgstr "Mauritius"
 msgid "Max amount of pages available for user (0 - all available)"
 msgstr "Maksymalna ilość stron z danymi dostępna dla użytkownika (0 - wszystkie dostępne)"
 
-#: share/data/countries.ini:249
+#: share/data/countries.ini:250
 msgid "Mayotte"
 msgstr "Majetta"
 
@@ -2126,7 +2126,7 @@ msgid "Morocco"
 msgstr "Moroko"
 
 #: pages/general.php:43
-#: pages/time.php:276
+#: pages/time.php:274
 #: pages/feed.php:76
 #: lib/group.class.php:650
 msgid "Most"
@@ -2235,7 +2235,7 @@ msgstr "Niue"
 msgid "No"
 msgstr "Nie"
 
-#: pages/time.php:268
+#: pages/time.php:266
 #: lib/group.class.php:529
 msgid "No data to display!"
 msgstr "Brak danych do wyświetlenia!"
@@ -2629,11 +2629,11 @@ msgstr "Saint Lucia"
 msgid "Saint Pierre and Miquelon"
 msgstr "Saint Pierre i Miquelon"
 
-#: share/data/countries.ini:240
+#: share/data/countries.ini:241
 msgid "Saint Vincent and the Grenadines"
 msgstr "Saint Vincent i Grenadyny"
 
-#: share/data/countries.ini:247
+#: share/data/countries.ini:248
 msgid "Samoa"
 msgstr "Samoa"
 
@@ -2653,7 +2653,7 @@ msgstr "Sangho"
 msgid "Sanskrit"
 msgstr "Sanskryt"
 
-#: share/data/countries.ini:212
+#: share/data/countries.ini:213
 msgid "Sao Tome and Principe"
 msgstr "Wyspy Świętego Tomasza i Książęca"
 
@@ -2869,7 +2869,7 @@ msgstr "Somalijski"
 msgid "Somalia"
 msgstr "Somalia"
 
-#: share/data/countries.ini:250
+#: share/data/countries.ini:251
 msgid "South Africa"
 msgstr "Repuplika Południowej Afryki"
 
@@ -2884,6 +2884,10 @@ msgstr "Georgia Południowa i Sandwich Południowy"
 #: share/data/countries.ini:127
 msgid "South Korea"
 msgstr "Korea Południowa"
+
+#: share/data/countries.ini:212
+msgid "South Sudan"
+msgstr "Sudan Południowy"
 
 #: share/data/countries.ini:70
 msgid "Spain"
@@ -2922,7 +2926,7 @@ msgstr "Sukces"
 msgid "Sudan"
 msgstr "Sudan"
 
-#: pages/time.php:275
+#: pages/time.php:273
 #: pages/feed.php:75
 #: pages/feed.php:254
 #: lib/group.class.php:649
@@ -2952,7 +2956,7 @@ msgstr "Wyspy Svalbard i Jan Mayen"
 msgid "Swahili"
 msgstr "Suahili"
 
-#: share/data/countries.ini:215
+#: share/data/countries.ini:216
 msgid "Swaziland"
 msgstr "Suazi"
 
@@ -2968,7 +2972,7 @@ msgstr "Szwedzki"
 msgid "Switzerland"
 msgstr "Szwajcaria"
 
-#: share/data/countries.ini:214
+#: share/data/countries.ini:215
 msgid "Syria"
 msgstr "Syria"
 
@@ -2984,7 +2988,7 @@ msgstr "Tabele do archiwizowania (profil użytkownika)"
 msgid "Tagalog"
 msgstr "Tagalog"
 
-#: share/data/countries.ini:231
+#: share/data/countries.ini:232
 msgid "Taiwan"
 msgstr "Tajwan"
 
@@ -2992,7 +2996,7 @@ msgstr "Tajwan"
 msgid "Tajik"
 msgstr "Tadżycki"
 
-#: share/data/countries.ini:222
+#: share/data/countries.ini:223
 msgid "Tajikistan"
 msgstr "Tadżykistan"
 
@@ -3000,7 +3004,7 @@ msgstr "Tadżykistan"
 msgid "Tamil"
 msgstr "Tamilski"
 
-#: share/data/countries.ini:232
+#: share/data/countries.ini:233
 msgid "Tanzania"
 msgstr "Tanzania"
 
@@ -3024,7 +3028,7 @@ msgstr "Testuj połączenie z bazą danych"
 msgid "Thai"
 msgstr "Tajski"
 
-#: share/data/countries.ini:221
+#: share/data/countries.ini:222
 msgid "Thailand"
 msgstr "Tajlandia"
 
@@ -3086,11 +3090,11 @@ msgstr "Czas, po którym wizyta jest naliczana ponownie (sekundy)"
 msgid "Time interval between checking for new version availability (0 to disable) (seconds)"
 msgstr "Odstęp czasu pomiędzy sprawdzaniem dostępności nowej wersji (0 aby wyłączyć) (sekundy)"
 
-#: pages/time.php:270
+#: pages/time.php:268
 msgid "Time statistics"
 msgstr "Statystyki czasowe"
 
-#: share/data/countries.ini:224
+#: share/data/countries.ini:225
 msgid "Timor-Leste"
 msgstr "Timor Wschodni"
 
@@ -3102,15 +3106,15 @@ msgstr "Do"
 msgid "To enable collecting of statistics you must place activation code on each page."
 msgstr "Aby aktywować zbieranie statystyk musisz umieścić kod aktywacyjny na każdej stronie."
 
-#: share/data/countries.ini:220
+#: share/data/countries.ini:221
 msgid "Togo"
 msgstr "Togo"
 
-#: share/data/countries.ini:223
+#: share/data/countries.ini:224
 msgid "Tokelau"
 msgstr "Tokelau"
 
-#: share/data/countries.ini:227
+#: share/data/countries.ini:228
 #: share/data/languages.ini:122
 msgid "Tonga"
 msgstr "Tonga"
@@ -3123,11 +3127,11 @@ msgstr "Zbyt stara wersja PHP!"
 msgid "Tools"
 msgstr "Narzędzia"
 
-#: share/data/countries.ini:229
+#: share/data/countries.ini:230
 msgid "Trinidad and Tobago"
 msgstr "Trinidad and Tobago"
 
-#: share/data/countries.ini:216
+#: share/data/countries.ini:217
 msgid "Tristan da Cunha"
 msgstr "Tristan da Cunha"
 
@@ -3135,11 +3139,11 @@ msgstr "Tristan da Cunha"
 msgid "Tsonga"
 msgstr "Tsonga"
 
-#: share/data/countries.ini:226
+#: share/data/countries.ini:227
 msgid "Tunisia"
 msgstr "Tunezja"
 
-#: share/data/countries.ini:228
+#: share/data/countries.ini:229
 msgid "Turkey"
 msgstr "Turcja"
 
@@ -3151,15 +3155,15 @@ msgstr "Turecki"
 msgid "Turkmen"
 msgstr "Turkmeński"
 
-#: share/data/countries.ini:225
+#: share/data/countries.ini:226
 msgid "Turkmenistan"
 msgstr "Turkmenistan"
 
-#: share/data/countries.ini:217
+#: share/data/countries.ini:218
 msgid "Turks and Caicos Islands"
 msgstr "Turks o Caicos"
 
-#: share/data/countries.ini:230
+#: share/data/countries.ini:231
 msgid "Tuvalu"
 msgstr "Tuwalu"
 
@@ -3175,15 +3179,15 @@ msgstr "Typ"
 msgid "Type of compression of file for download"
 msgstr "Rodzaj kompresji pobieranego pliku"
 
-#: share/data/countries.ini:235
+#: share/data/countries.ini:236
 msgid "US Minor Outlying Islands"
 msgstr "Dalekie Wyspy Mniejsze Stanów Zjednoczonych"
 
-#: share/data/countries.ini:243
+#: share/data/countries.ini:244
 msgid "US Virgin Islands"
 msgstr "Amerykańskie Wyspy Dziewicze"
 
-#: share/data/countries.ini:234
+#: share/data/countries.ini:235
 msgid "Uganda"
 msgstr "Uganda"
 
@@ -3191,7 +3195,7 @@ msgstr "Uganda"
 msgid "Uighur"
 msgstr "Ujgurski"
 
-#: share/data/countries.ini:233
+#: share/data/countries.ini:234
 msgid "Ukraine"
 msgstr "Ukraina"
 
@@ -3222,7 +3226,7 @@ msgstr "Unikalne"
 msgid "United Arab Emirates"
 msgstr "Zjednoczone Emiraty Arabskie"
 
-#: share/data/countries.ini:236
+#: share/data/countries.ini:237
 msgid "United States"
 msgstr "Stany Zjednoczone"
 
@@ -3261,7 +3265,7 @@ msgstr "Nieudana próba logowania użytkownika"
 msgid "Urdu"
 msgstr "Urdu"
 
-#: share/data/countries.ini:237
+#: share/data/countries.ini:238
 msgid "Uruguay"
 msgstr "Urugwaj"
 
@@ -3307,23 +3311,23 @@ msgstr "Użytkownik zalogował się"
 msgid "Uzbek"
 msgstr "Uzbecki"
 
-#: share/data/countries.ini:238
+#: share/data/countries.ini:239
 msgid "Uzbekistan"
 msgstr "Uzbekistan"
 
-#: share/data/countries.ini:245
+#: share/data/countries.ini:246
 msgid "Vanuatu"
 msgstr "Vanuatu"
 
-#: share/data/countries.ini:239
+#: share/data/countries.ini:240
 msgid "Vatican City"
 msgstr "Watykan"
 
-#: share/data/countries.ini:241
+#: share/data/countries.ini:242
 msgid "Venezuela"
 msgstr "Wenezuela"
 
-#: share/data/countries.ini:244
+#: share/data/countries.ini:245
 msgid "Viet Nam"
 msgstr "Wietnam"
 
@@ -3331,7 +3335,7 @@ msgstr "Wietnam"
 msgid "Vietnamese"
 msgstr "Wietnamski"
 
-#: pages/time.php:273
+#: pages/time.php:271
 msgid "View of visits charts"
 msgstr "Widok wykresów odwiedzin"
 
@@ -3364,7 +3368,7 @@ msgstr "Wizyty"
 msgid "Volapuk"
 msgstr "Volapuk"
 
-#: share/data/countries.ini:246
+#: share/data/countries.ini:247
 msgid "Wallis and Futuna Islands"
 msgstr "Wyspy Wallis i Futuna"
 
@@ -3428,7 +3432,7 @@ msgstr "Rok"
 msgid "Years"
 msgstr "Lata"
 
-#: share/data/countries.ini:248
+#: share/data/countries.ini:249
 msgid "Yemen"
 msgstr "Jemen"
 
@@ -3469,7 +3473,7 @@ msgstr "Twoje wizyty"
 msgid "ZIP compression support"
 msgstr "Obsługa kompresji ZIP"
 
-#: share/data/countries.ini:251
+#: share/data/countries.ini:252
 msgid "Zambia"
 msgstr "Zambia"
 
@@ -3477,7 +3481,7 @@ msgstr "Zambia"
 msgid "Zhuang"
 msgstr "Zhuang"
 
-#: share/data/countries.ini:252
+#: share/data/countries.ini:253
 msgid "Zimbabwe"
 msgstr "Zimbabwe"
 
