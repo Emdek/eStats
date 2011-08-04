@@ -171,7 +171,7 @@ class EstatsDriverMysql extends EstatsDriver
 					{
 						$String.= $this->elementString($Data[$i][0], $Data[$i][1]);
 					}
-					else if (is_integer($Data[$i]))
+					else if (is_int($Data[$i]))
 					{
 						if ($Data[$i] == self::OPERATOR_GROUPING_START || $Data[$i] == self::OPERATOR_GROUPING_END)
 						{
@@ -451,7 +451,7 @@ class EstatsDriverMysql extends EstatsDriver
 				}
 				else if (is_array($Fields[$i]))
 				{
-					$Parts[] = $this->elementString($Fields[$i][0], $Fields[$i][1]).((isset($Fields[$i][2]) && $Fields[$i][2])?' AS `'.$Fields[$i][2].'`':'');
+					$Parts[] = $this->elementString($Fields[$i][0], $Fields[$i][1]).(empty($Fields[$i][2])?'':' AS `'.$Fields[$i][2].'`');
 				}
 				else
 				{
@@ -472,7 +472,7 @@ class EstatsDriverMysql extends EstatsDriver
 		{
 			if (is_array($Tables[$i]))
 			{
-				if (is_integer($Tables[$i][0]))
+				if (is_int($Tables[$i][0]))
 				{
 					$Natural = ($Tables[$i][0] & self::JOIN_NATURAL);
 					$Tables[$i][0] = ($Tables[$i][0] & ~self::JOIN_NATURAL);
@@ -509,7 +509,7 @@ class EstatsDriverMysql extends EstatsDriver
 				$TablesPart.= '`'.$this->Prefix.$Tables[$i].'`'.($this->Prefix?' AS `'.$Tables[$i].'`':'');
 			}
 
-			if ($i > 0 && is_array($Tables[$i - 1]) && is_integer($Tables[$i - 1][0]))
+			if ($i > 0 && is_array($Tables[$i - 1]) && is_int($Tables[$i - 1][0]))
 			{
 				if ($Tables[$i - 1][1] == self::OPERATOR_JOIN_ON)
 				{

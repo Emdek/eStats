@@ -112,7 +112,7 @@ if ($UpdateIDs)
 
 for ($i = 0, $c = count($Data); $i < $c; ++$i)
 {
-	if (is_integer($Data[$i]))
+	if (is_int($Data[$i]))
 	{
 		EstatsCache::delete('visit-'.$UpdateIDs[$Data[$i]].'-*');
 
