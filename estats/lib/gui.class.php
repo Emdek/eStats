@@ -214,7 +214,10 @@ class EstatsGUI
 				{
 					$Icon = 'plugin';
 				}
+			break;
 			case 'countries':
+				$Category = 'flags';
+			break;
 			case 'miscellaneous':
 			break;
 			default:
