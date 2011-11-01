@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: estats\n"
-"POT-Creation-Date: 2011-07-10 14:55+0100\n"
+"POT-Creation-Date: 2011-11-01 15:45+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE\n"
@@ -46,8 +46,8 @@ msgid ""
 "<strong style=\"text-decoration:underline;\">Use at own risk!</strong>"
 msgstr ""
 
-#: pages/feed.php:241
 #: lib/group.class.php:801
+#: pages/feed.php:241
 msgid "%s (%d of %d)"
 msgstr ""
 
@@ -143,7 +143,7 @@ msgstr ""
 msgid "Albanian"
 msgstr ""
 
-#: share/data/countries.ini:63
+#: share/data/countries.ini:64
 msgid "Algeria"
 msgstr ""
 
@@ -190,8 +190,8 @@ msgstr ""
 msgid "Amount of visits"
 msgstr ""
 
-#: plugins/tools/backups/plugin.php:105
 #: plugins/tools/reset/plugin.php:60
+#: plugins/tools/backups/plugin.php:105
 msgid "An error occured during backup create attempt!"
 msgstr ""
 
@@ -282,8 +282,8 @@ msgid "Austria"
 msgstr ""
 
 #: install.php:76
-#: pages/geolocation.php:189
 #: plugins/tools/summary/plugin.php:74
+#: pages/geolocation.php:189
 msgid "Author"
 msgstr ""
 
@@ -291,9 +291,9 @@ msgstr ""
 msgid "Available"
 msgstr ""
 
+#: lib/group.class.php:651
 #: pages/time.php:275
 #: pages/feed.php:77
-#: lib/group.class.php:651
 msgid "Average"
 msgstr ""
 
@@ -321,8 +321,8 @@ msgstr ""
 msgid "Backup copy"
 msgstr ""
 
-#: plugins/tools/backups/plugin.php:97
 #: plugins/tools/reset/plugin.php:54
+#: plugins/tools/backups/plugin.php:97
 msgid "Backup created successfully."
 msgstr ""
 
@@ -370,7 +370,7 @@ msgstr ""
 msgid "Backups were deleted"
 msgstr ""
 
-#: share/data/countries.ini:32
+#: share/data/countries.ini:33
 msgid "Bahamas"
 msgstr ""
 
@@ -394,7 +394,7 @@ msgstr ""
 msgid "Basque"
 msgstr ""
 
-#: share/data/countries.ini:36
+#: share/data/countries.ini:37
 msgid "Belarus"
 msgstr ""
 
@@ -402,7 +402,7 @@ msgstr ""
 msgid "Belgium"
 msgstr ""
 
-#: share/data/countries.ini:37
+#: share/data/countries.ini:38
 msgid "Belize"
 msgstr ""
 
@@ -426,7 +426,7 @@ msgstr ""
 msgid "Between %s and %s there were no visits."
 msgstr ""
 
-#: share/data/countries.ini:33
+#: share/data/countries.ini:34
 msgid "Bhutan"
 msgstr ""
 
@@ -446,8 +446,8 @@ msgstr ""
 msgid "Block counting of this keyword / phrase"
 msgstr ""
 
-#: pages/visits.php:233
 #: lib/group.class.php:742
+#: pages/visits.php:233
 msgid "Block counting of this referrer"
 msgstr ""
 
@@ -467,15 +467,15 @@ msgstr ""
 msgid "Bosnia and Herzegovina"
 msgstr ""
 
-#: share/data/countries.ini:35
+#: share/data/countries.ini:36
 msgid "Botswana"
 msgstr ""
 
-#: share/data/countries.ini:34
+#: share/data/countries.ini:35
 msgid "Bouvet Island"
 msgstr ""
 
-#: share/data/countries.ini:31
+#: share/data/countries.ini:32
 msgid "Brazil"
 msgstr ""
 
@@ -483,11 +483,11 @@ msgstr ""
 msgid "Breton"
 msgstr ""
 
-#: share/data/countries.ini:111
+#: share/data/countries.ini:112
 msgid "British Indian Ocean Territory"
 msgstr ""
 
-#: share/data/countries.ini:243
+#: share/data/countries.ini:245
 msgid "British Virgin Islands"
 msgstr ""
 
@@ -495,10 +495,10 @@ msgstr ""
 msgid "Browse"
 msgstr ""
 
+#: plugins/tools/blacklist/plugin.php:138
 #: pages/visits.php:190
 #: pages/visits.php:280
 #: pages/visits.php:437
-#: plugins/tools/blacklist/plugin.php:138
 msgid "Browser"
 msgstr ""
 
@@ -558,7 +558,7 @@ msgstr ""
 msgid "Cache time for visitors list (seconds)"
 msgstr ""
 
-#: share/data/countries.ini:122
+#: share/data/countries.ini:123
 msgid "Cambodia"
 msgstr ""
 
@@ -566,7 +566,7 @@ msgstr ""
 msgid "Cambodian"
 msgstr ""
 
-#: share/data/countries.ini:47
+#: share/data/countries.ini:48
 msgid "Cameroon"
 msgstr ""
 
@@ -587,35 +587,39 @@ msgstr ""
 msgid "Can you use <em>PHP</em> code on your page?"
 msgstr ""
 
-#: share/data/countries.ini:38
+#: share/data/countries.ini:39
 msgid "Canada"
 msgstr ""
 
-#: share/data/countries.ini:105
+#: share/data/countries.ini:106
 msgid "Canary Islands"
 msgstr ""
 
-#: share/data/countries.ini:53
+#: share/data/countries.ini:54
 msgid "Cape Verde"
+msgstr ""
+
+#: share/data/countries.ini:31
+msgid "Caribbean Netherlands"
 msgstr ""
 
 #: share/data/languages.ini:17
 msgid "Catalan"
 msgstr ""
 
-#: share/data/countries.ini:129
+#: share/data/countries.ini:130
 msgid "Cayman Islands"
 msgstr ""
 
-#: share/data/countries.ini:41
+#: share/data/countries.ini:42
 msgid "Central African Republic"
 msgstr ""
 
-#: share/data/countries.ini:64
+#: share/data/countries.ini:65
 msgid "Ceuta and Melilla"
 msgstr ""
 
-#: share/data/countries.ini:219
+#: share/data/countries.ini:221
 msgid "Chad"
 msgstr ""
 
@@ -627,9 +631,9 @@ msgstr ""
 msgid "Change password"
 msgstr ""
 
+#: pages/technical.php:30
 #: pages/geolocation.php:187
 #: pages/general.php:37
-#: pages/technical.php:30
 msgid "Chart"
 msgstr ""
 
@@ -641,11 +645,11 @@ msgstr ""
 msgid "Check for upgrade"
 msgstr ""
 
-#: share/data/countries.ini:46
+#: share/data/countries.ini:47
 msgid "Chile"
 msgstr ""
 
-#: share/data/countries.ini:48
+#: share/data/countries.ini:49
 msgid "China"
 msgstr ""
 
@@ -661,7 +665,7 @@ msgstr ""
 msgid "Choose theme"
 msgstr ""
 
-#: share/data/countries.ini:54
+#: share/data/countries.ini:55
 msgid "Christmas Island"
 msgstr ""
 
@@ -673,7 +677,7 @@ msgstr ""
 msgid "City"
 msgstr ""
 
-#: share/data/countries.ini:50
+#: share/data/countries.ini:51
 msgid "Clipperton Island"
 msgstr ""
 
@@ -681,7 +685,7 @@ msgstr ""
 msgid "Co-ordinates"
 msgstr ""
 
-#: share/data/countries.ini:39
+#: share/data/countries.ini:40
 msgid "Cocos Islands"
 msgstr ""
 
@@ -689,11 +693,11 @@ msgstr ""
 msgid "Collect visit details "
 msgstr ""
 
-#: share/data/countries.ini:49
+#: share/data/countries.ini:50
 msgid "Colombia"
 msgstr ""
 
-#: share/data/countries.ini:124
+#: share/data/countries.ini:125
 msgid "Comoros"
 msgstr ""
 
@@ -721,8 +725,8 @@ msgstr ""
 msgid "Configuration of visits information"
 msgstr ""
 
-#: plugins/tools/backups/plugin.php:22
 #: lib/gui.class.php:823
+#: plugins/tools/backups/plugin.php:22
 msgid "Configuration saved successfully."
 msgstr ""
 
@@ -730,7 +734,7 @@ msgstr ""
 msgid "Configuration was saved"
 msgstr ""
 
-#: share/data/countries.ini:42
+#: share/data/countries.ini:43
 msgid "Congo"
 msgstr ""
 
@@ -760,7 +764,7 @@ msgstr ""
 msgid "Continue anyway"
 msgstr ""
 
-#: share/data/countries.ini:45
+#: share/data/countries.ini:46
 msgid "Cook Islands"
 msgstr ""
 
@@ -782,7 +786,7 @@ msgstr ""
 msgid "Corsican"
 msgstr ""
 
-#: share/data/countries.ini:51
+#: share/data/countries.ini:52
 msgid "Costa Rica"
 msgstr ""
 
@@ -809,8 +813,8 @@ msgstr ""
 msgid "Country"
 msgstr ""
 
-#: plugins/tools/backups/plugin.php:208
 #: plugins/tools/reset/plugin.php:141
+#: plugins/tools/backups/plugin.php:208
 msgid "Create backup"
 msgstr ""
 
@@ -822,7 +826,7 @@ msgstr ""
 msgid "Create backups after specified time (seconds)"
 msgstr ""
 
-#: share/data/countries.ini:102
+#: share/data/countries.ini:103
 msgid "Croatia"
 msgstr ""
 
@@ -830,7 +834,7 @@ msgstr ""
 msgid "Croatian"
 msgstr ""
 
-#: share/data/countries.ini:52
+#: share/data/countries.ini:53
 msgid "Cuba"
 msgstr ""
 
@@ -850,7 +854,7 @@ msgstr ""
 msgid "Currently enabled"
 msgstr ""
 
-#: share/data/countries.ini:55
+#: share/data/countries.ini:56
 msgid "Cyprus"
 msgstr ""
 
@@ -858,7 +862,7 @@ msgstr ""
 msgid "Czech"
 msgstr ""
 
-#: share/data/countries.ini:56
+#: share/data/countries.ini:57
 msgid "Czech Republic"
 msgstr ""
 
@@ -899,9 +903,9 @@ msgstr ""
 msgid "Data directory"
 msgstr ""
 
-#: pages/visits.php:76
 #: lib/chart.class.php:703
 #: lib/group.class.php:519
+#: pages/visits.php:76
 msgid "Data from <em>cache</em>, refreshed: %s."
 msgstr ""
 
@@ -970,9 +974,9 @@ msgstr ""
 msgid "Database user password"
 msgstr ""
 
+#: plugins/tools/logs/plugin.php:184
 #: pages/visits.php:419
 #: pages/feed.php:160
-#: plugins/tools/logs/plugin.php:184
 msgid "Date"
 msgstr ""
 
@@ -1005,10 +1009,10 @@ msgstr ""
 msgid "Default value"
 msgstr ""
 
-#: plugins/tools/configuration/plugin.php:180
-#: plugins/tools/configuration/plugin.php:364
 #: plugins/tools/blacklist/plugin.php:48
 #: plugins/tools/backups/plugin.php:206
+#: plugins/tools/configuration/plugin.php:180
+#: plugins/tools/configuration/plugin.php:364
 msgid "Defaults"
 msgstr ""
 
@@ -1016,7 +1020,7 @@ msgstr ""
 msgid "Delete"
 msgstr ""
 
-#: share/data/countries.ini:60
+#: share/data/countries.ini:61
 msgid "Denmark"
 msgstr ""
 
@@ -1024,7 +1028,7 @@ msgstr ""
 msgid "Details"
 msgstr ""
 
-#: share/data/countries.ini:58
+#: share/data/countries.ini:59
 msgid "Diego Garcia"
 msgstr ""
 
@@ -1049,7 +1053,7 @@ msgstr ""
 msgid "Disallow stats viewing for selected IP addresses"
 msgstr ""
 
-#: share/data/countries.ini:59
+#: share/data/countries.ini:60
 msgid "Djibouti"
 msgstr ""
 
@@ -1057,8 +1061,8 @@ msgstr ""
 msgid "Do You really want to ban this IP address?"
 msgstr ""
 
-#: plugins/tools/backups/plugin.php:198
 #: plugins/tools/reset/plugin.php:142
+#: plugins/tools/backups/plugin.php:198
 msgid "Do You really want to delete data?"
 msgstr ""
 
@@ -1070,17 +1074,17 @@ msgstr ""
 msgid "Do You really want to restore data?"
 msgstr ""
 
-#: plugins/tools/configuration/plugin.php:180
-#: plugins/tools/configuration/plugin.php:364
 #: plugins/tools/blacklist/plugin.php:48
 #: plugins/tools/backups/plugin.php:206
+#: plugins/tools/configuration/plugin.php:180
+#: plugins/tools/configuration/plugin.php:364
 msgid "Do You really want to restore defaults?"
 msgstr ""
 
-#: plugins/tools/configuration/plugin.php:179
-#: plugins/tools/configuration/plugin.php:363
 #: plugins/tools/blacklist/plugin.php:47
 #: plugins/tools/backups/plugin.php:205
+#: plugins/tools/configuration/plugin.php:179
+#: plugins/tools/configuration/plugin.php:363
 msgid "Do You really want to save?"
 msgstr ""
 
@@ -1096,11 +1100,11 @@ msgstr ""
 msgid "Documentation"
 msgstr ""
 
-#: share/data/countries.ini:61
+#: share/data/countries.ini:62
 msgid "Dominica"
 msgstr ""
 
-#: share/data/countries.ini:62
+#: share/data/countries.ini:63
 msgid "Dominican Republic"
 msgstr ""
 
@@ -1116,15 +1120,15 @@ msgstr ""
 msgid "Dutch"
 msgstr ""
 
-#: share/data/countries.ini:65
+#: share/data/countries.ini:66
 msgid "Ecuador"
 msgstr ""
 
-#: share/data/countries.ini:67
+#: share/data/countries.ini:68
 msgid "Egypt"
 msgstr ""
 
-#: share/data/countries.ini:214
+#: share/data/countries.ini:215
 msgid "El Salvador"
 msgstr ""
 
@@ -1161,11 +1165,11 @@ msgstr ""
 msgid "Entries amount"
 msgstr ""
 
-#: share/data/countries.ini:92
+#: share/data/countries.ini:93
 msgid "Equatorial Guinea"
 msgstr ""
 
-#: share/data/countries.ini:69
+#: share/data/countries.ini:70
 msgid "Eritrea"
 msgstr ""
 
@@ -1181,7 +1185,7 @@ msgstr ""
 msgid "Esperanto"
 msgstr ""
 
-#: share/data/countries.ini:66
+#: share/data/countries.ini:67
 msgid "Estonia"
 msgstr ""
 
@@ -1189,7 +1193,7 @@ msgstr ""
 msgid "Estonian"
 msgstr ""
 
-#: share/data/countries.ini:71
+#: share/data/countries.ini:72
 msgid "Ethiopia"
 msgstr ""
 
@@ -1197,7 +1201,7 @@ msgstr ""
 msgid "Europe"
 msgstr ""
 
-#: share/data/countries.ini:72
+#: share/data/countries.ini:73
 msgid "European Union"
 msgstr ""
 
@@ -1213,11 +1217,11 @@ msgstr ""
 msgid "Export"
 msgstr ""
 
-#: share/data/countries.ini:75
+#: share/data/countries.ini:76
 msgid "Falkland Islands"
 msgstr ""
 
-#: share/data/countries.ini:77
+#: share/data/countries.ini:78
 msgid "Faroe Islands"
 msgstr ""
 
@@ -1225,7 +1229,7 @@ msgstr ""
 msgid "Faroese"
 msgstr ""
 
-#: share/data/countries.ini:76
+#: share/data/countries.ini:77
 msgid "Federated States of Micronesia"
 msgstr ""
 
@@ -1233,18 +1237,18 @@ msgstr ""
 msgid "Feed channel for {servername}"
 msgstr ""
 
-#: plugins/tools/configuration/plugin.php:189
 #: lib/gui.class.php:749
+#: plugins/tools/configuration/plugin.php:189
 msgid "Field value is other than default"
 msgstr ""
 
-#: share/data/countries.ini:74
+#: share/data/countries.ini:75
 #: share/data/languages.ini:32
 msgid "Fiji"
 msgstr ""
 
-#: plugins/tools/configuration/plugin.php:106
 #: plugins/tools/logs/plugin.php:165
+#: plugins/tools/configuration/plugin.php:106
 msgid "Filter"
 msgstr ""
 
@@ -1256,7 +1260,7 @@ msgstr ""
 msgid "Fine tune configuration"
 msgstr ""
 
-#: share/data/countries.ini:73
+#: share/data/countries.ini:74
 msgid "Finland"
 msgstr ""
 
@@ -1282,11 +1286,11 @@ msgstr ""
 msgid "Flash plugin version"
 msgstr ""
 
-#: share/data/countries.ini:78
+#: share/data/countries.ini:79
 msgid "France"
 msgstr ""
 
-#: share/data/countries.ini:79
+#: share/data/countries.ini:80
 msgid "France, Metropolitan"
 msgstr ""
 
@@ -1294,15 +1298,15 @@ msgstr ""
 msgid "French"
 msgstr ""
 
-#: share/data/countries.ini:84
+#: share/data/countries.ini:85
 msgid "French Guiana"
 msgstr ""
 
-#: share/data/countries.ini:179
+#: share/data/countries.ini:180
 msgid "French Polynesia"
 msgstr ""
 
-#: share/data/countries.ini:220
+#: share/data/countries.ini:222
 msgid "French Southern Territories"
 msgstr ""
 
@@ -1326,13 +1330,13 @@ msgstr ""
 msgid "Full"
 msgstr ""
 
+#: pages/technical.php:29
 #: pages/geolocation.php:186
 #: pages/general.php:36
-#: pages/technical.php:29
 msgid "Full list"
 msgstr ""
 
-#: share/data/countries.ini:80
+#: share/data/countries.ini:81
 msgid "Gabon"
 msgstr ""
 
@@ -1340,7 +1344,7 @@ msgstr ""
 msgid "Galician"
 msgstr ""
 
-#: share/data/countries.ini:89
+#: share/data/countries.ini:90
 msgid "Gambia"
 msgstr ""
 
@@ -1356,7 +1360,7 @@ msgstr ""
 msgid "Geolocation support"
 msgstr ""
 
-#: share/data/countries.ini:83
+#: share/data/countries.ini:84
 msgid "Georgia"
 msgstr ""
 
@@ -1368,15 +1372,15 @@ msgstr ""
 msgid "German"
 msgstr ""
 
-#: share/data/countries.ini:57
+#: share/data/countries.ini:58
 msgid "Germany"
 msgstr ""
 
-#: share/data/countries.ini:86
+#: share/data/countries.ini:87
 msgid "Ghana"
 msgstr ""
 
-#: share/data/countries.ini:87
+#: share/data/countries.ini:88
 msgid "Gibraltar"
 msgstr ""
 
@@ -1413,11 +1417,11 @@ msgstr ""
 msgid "Graphics generation support"
 msgstr ""
 
-#: share/data/countries.ini:81
+#: share/data/countries.ini:82
 msgid "Great Britain"
 msgstr ""
 
-#: share/data/countries.ini:93
+#: share/data/countries.ini:94
 msgid "Greece"
 msgstr ""
 
@@ -1425,7 +1429,7 @@ msgstr ""
 msgid "Greek"
 msgstr ""
 
-#: share/data/countries.ini:88
+#: share/data/countries.ini:89
 msgid "Greenland"
 msgstr ""
 
@@ -1433,15 +1437,15 @@ msgstr ""
 msgid "Greenlandic"
 msgstr ""
 
-#: share/data/countries.ini:82
+#: share/data/countries.ini:83
 msgid "Grenada"
 msgstr ""
 
-#: share/data/countries.ini:91
+#: share/data/countries.ini:92
 msgid "Guadeloupe"
 msgstr ""
 
-#: share/data/countries.ini:96
+#: share/data/countries.ini:97
 msgid "Guam"
 msgstr ""
 
@@ -1449,19 +1453,19 @@ msgstr ""
 msgid "Guarani"
 msgstr ""
 
-#: share/data/countries.ini:95
+#: share/data/countries.ini:96
 msgid "Guatemala"
 msgstr ""
 
-#: share/data/countries.ini:85
+#: share/data/countries.ini:86
 msgid "Guernsey"
 msgstr ""
 
-#: share/data/countries.ini:90
+#: share/data/countries.ini:91
 msgid "Guinea"
 msgstr ""
 
-#: share/data/countries.ini:97
+#: share/data/countries.ini:98
 msgid "Guinea-Bissau"
 msgstr ""
 
@@ -1469,7 +1473,7 @@ msgstr ""
 msgid "Gujarati"
 msgstr ""
 
-#: share/data/countries.ini:98
+#: share/data/countries.ini:99
 msgid "Guyana"
 msgstr ""
 
@@ -1477,7 +1481,7 @@ msgstr ""
 msgid "Gzip compression support"
 msgstr ""
 
-#: share/data/countries.ini:103
+#: share/data/countries.ini:104
 msgid "Haiti"
 msgstr ""
 
@@ -1485,7 +1489,7 @@ msgstr ""
 msgid "Hausa"
 msgstr ""
 
-#: share/data/countries.ini:100
+#: share/data/countries.ini:101
 msgid "Heard and McDonald Islands"
 msgstr ""
 
@@ -1497,11 +1501,11 @@ msgstr ""
 msgid "Hindi"
 msgstr ""
 
-#: share/data/countries.ini:101
+#: share/data/countries.ini:102
 msgid "Honduras"
 msgstr ""
 
-#: share/data/countries.ini:99
+#: share/data/countries.ini:100
 msgid "Hong Kong"
 msgstr ""
 
@@ -1525,16 +1529,16 @@ msgstr ""
 msgid "Hungarian"
 msgstr ""
 
-#: share/data/countries.ini:104
+#: share/data/countries.ini:105
 msgid "Hungary"
 msgstr ""
 
-#: pages/visits.php:435
 #: plugins/tools/blacklist/plugin.php:58
+#: pages/visits.php:435
 msgid "IP"
 msgstr ""
 
-#: share/data/countries.ini:114
+#: share/data/countries.ini:115
 msgid "Iceland"
 msgstr ""
 
@@ -1554,8 +1558,8 @@ msgstr ""
 msgid "Ignored"
 msgstr ""
 
-#: plugins/tools/configuration/plugin.php:50
 #: plugins/tools/blacklist/plugin.php:43
+#: plugins/tools/configuration/plugin.php:50
 msgid "Ignored IPs"
 msgstr ""
 
@@ -1563,13 +1567,13 @@ msgstr ""
 msgid "Ignored and blocked visits"
 msgstr ""
 
-#: plugins/tools/configuration/plugin.php:51
 #: plugins/tools/blacklist/plugin.php:43
+#: plugins/tools/configuration/plugin.php:51
 msgid "Ignored keywords"
 msgstr ""
 
-#: plugins/tools/configuration/plugin.php:53
 #: plugins/tools/blacklist/plugin.php:43
+#: plugins/tools/configuration/plugin.php:53
 msgid "Ignored referrers"
 msgstr ""
 
@@ -1581,11 +1585,11 @@ msgstr ""
 msgid "In period"
 msgstr ""
 
-#: share/data/countries.ini:110
+#: share/data/countries.ini:111
 msgid "India"
 msgstr ""
 
-#: share/data/countries.ini:106
+#: share/data/countries.ini:107
 msgid "Indonesia"
 msgstr ""
 
@@ -1593,8 +1597,8 @@ msgstr ""
 msgid "Indonesian"
 msgstr ""
 
-#: plugins/tools/logs/plugin.php:190
 #: lib/gui.class.php:660
+#: plugins/tools/logs/plugin.php:190
 msgid "Information"
 msgstr ""
 
@@ -1631,11 +1635,11 @@ msgstr ""
 msgid "Invalid visit identifier!"
 msgstr ""
 
-#: share/data/countries.ini:112
+#: share/data/countries.ini:113
 msgid "Iraq"
 msgstr ""
 
-#: share/data/countries.ini:107
+#: share/data/countries.ini:108
 msgid "Ireland"
 msgstr ""
 
@@ -1643,15 +1647,15 @@ msgstr ""
 msgid "Irish"
 msgstr ""
 
-#: share/data/countries.ini:113
+#: share/data/countries.ini:114
 msgid "Islamic Republic of Iran"
 msgstr ""
 
-#: share/data/countries.ini:109
+#: share/data/countries.ini:110
 msgid "Isle of Man"
 msgstr ""
 
-#: share/data/countries.ini:108
+#: share/data/countries.ini:109
 msgid "Israel"
 msgstr ""
 
@@ -1659,19 +1663,19 @@ msgstr ""
 msgid "Italian"
 msgstr ""
 
-#: share/data/countries.ini:115
+#: share/data/countries.ini:116
 msgid "Italy"
 msgstr ""
 
-#: share/data/countries.ini:44
+#: share/data/countries.ini:45
 msgid "Ivory Coast"
 msgstr ""
 
-#: share/data/countries.ini:117
+#: share/data/countries.ini:118
 msgid "Jamaica"
 msgstr ""
 
-#: share/data/countries.ini:119
+#: share/data/countries.ini:120
 msgid "Japan"
 msgstr ""
 
@@ -1708,11 +1712,11 @@ msgstr ""
 msgid "Javanese"
 msgstr ""
 
-#: share/data/countries.ini:116
+#: share/data/countries.ini:117
 msgid "Jersey"
 msgstr ""
 
-#: share/data/countries.ini:118
+#: share/data/countries.ini:119
 msgid "Jordan"
 msgstr ""
 
@@ -1728,11 +1732,11 @@ msgstr ""
 msgid "Kazakh"
 msgstr ""
 
-#: share/data/countries.ini:130
+#: share/data/countries.ini:131
 msgid "Kazakhstan"
 msgstr ""
 
-#: share/data/countries.ini:120
+#: share/data/countries.ini:121
 msgid "Kenya"
 msgstr ""
 
@@ -1751,7 +1755,7 @@ msgstr ""
 msgid "Kirghiz"
 msgstr ""
 
-#: share/data/countries.ini:123
+#: share/data/countries.ini:124
 msgid "Kiribati"
 msgstr ""
 
@@ -1767,11 +1771,11 @@ msgstr ""
 msgid "Kurdish"
 msgstr ""
 
-#: share/data/countries.ini:128
+#: share/data/countries.ini:129
 msgid "Kuwait"
 msgstr ""
 
-#: share/data/countries.ini:121
+#: share/data/countries.ini:122
 msgid "Kyrgyzstan"
 msgstr ""
 
@@ -1793,7 +1797,7 @@ msgstr ""
 msgid "Languages"
 msgstr ""
 
-#: share/data/countries.ini:131
+#: share/data/countries.ini:132
 msgid "Laos"
 msgstr ""
 
@@ -1833,7 +1837,7 @@ msgstr ""
 msgid "Latin"
 msgstr ""
 
-#: share/data/countries.ini:140
+#: share/data/countries.ini:141
 msgid "Latvia"
 msgstr ""
 
@@ -1841,13 +1845,13 @@ msgstr ""
 msgid "Latvian"
 msgstr ""
 
+#: lib/group.class.php:652
 #: pages/time.php:276
 #: pages/feed.php:78
-#: lib/group.class.php:652
 msgid "Least"
 msgstr ""
 
-#: share/data/countries.ini:132
+#: share/data/countries.ini:133
 msgid "Lebanon"
 msgstr ""
 
@@ -1855,19 +1859,19 @@ msgstr ""
 msgid "Legend"
 msgstr ""
 
-#: share/data/countries.ini:137
+#: share/data/countries.ini:138
 msgid "Lesotho"
 msgstr ""
 
-#: share/data/countries.ini:136
+#: share/data/countries.ini:137
 msgid "Liberia"
 msgstr ""
 
-#: share/data/countries.ini:141
+#: share/data/countries.ini:142
 msgid "Libya"
 msgstr ""
 
-#: share/data/countries.ini:134
+#: share/data/countries.ini:135
 msgid "Liechtenstein"
 msgstr ""
 
@@ -1883,7 +1887,7 @@ msgstr ""
 msgid "Link to Whois service"
 msgstr ""
 
-#: share/data/countries.ini:138
+#: share/data/countries.ini:139
 msgid "Lithuania"
 msgstr ""
 
@@ -1929,15 +1933,15 @@ msgstr ""
 msgid "Login"
 msgstr ""
 
-#: share/data/countries.ini:139
+#: share/data/countries.ini:140
 msgid "Luxembourg"
 msgstr ""
 
-#: share/data/countries.ini:152
+#: share/data/countries.ini:153
 msgid "Macao"
 msgstr ""
 
-#: share/data/countries.ini:148
+#: share/data/countries.ini:149
 msgid "Macedonia"
 msgstr ""
 
@@ -1945,7 +1949,7 @@ msgstr ""
 msgid "Macedonian"
 msgstr ""
 
-#: share/data/countries.ini:146
+#: share/data/countries.ini:147
 msgid "Madagascar"
 msgstr ""
 
@@ -1961,7 +1965,7 @@ msgstr ""
 msgid "Malagasy"
 msgstr ""
 
-#: share/data/countries.ini:160
+#: share/data/countries.ini:161
 msgid "Malawi"
 msgstr ""
 
@@ -1973,19 +1977,19 @@ msgstr ""
 msgid "Malayalam"
 msgstr ""
 
-#: share/data/countries.ini:162
+#: share/data/countries.ini:163
 msgid "Malaysia"
 msgstr ""
 
-#: share/data/countries.ini:159
+#: share/data/countries.ini:160
 msgid "Maldives"
 msgstr ""
 
-#: share/data/countries.ini:149
+#: share/data/countries.ini:150
 msgid "Mali"
 msgstr ""
 
-#: share/data/countries.ini:157
+#: share/data/countries.ini:158
 msgid "Malta"
 msgstr ""
 
@@ -2012,19 +2016,19 @@ msgstr ""
 msgid "Marathi"
 msgstr ""
 
-#: share/data/countries.ini:147
+#: share/data/countries.ini:148
 msgid "Marshall Islands"
 msgstr ""
 
-#: share/data/countries.ini:154
+#: share/data/countries.ini:155
 msgid "Martinique"
 msgstr ""
 
-#: share/data/countries.ini:155
+#: share/data/countries.ini:156
 msgid "Mauritania"
 msgstr ""
 
-#: share/data/countries.ini:158
+#: share/data/countries.ini:159
 msgid "Mauritius"
 msgstr ""
 
@@ -2032,16 +2036,16 @@ msgstr ""
 msgid "Max amount of pages available for user (0 - all available)"
 msgstr ""
 
-#: share/data/countries.ini:250
+#: share/data/countries.ini:252
 msgid "Mayotte"
 msgstr ""
 
-#: plugins/tools/configuration/plugin.php:109
 #: plugins/tools/logs/plugin.php:176
+#: plugins/tools/configuration/plugin.php:109
 msgid "Meeting conditions"
 msgstr ""
 
-#: share/data/countries.ini:161
+#: share/data/countries.ini:162
 msgid "Mexico"
 msgstr ""
 
@@ -2060,15 +2064,15 @@ msgstr ""
 msgid "Moldavian"
 msgstr ""
 
-#: share/data/countries.ini:144
+#: share/data/countries.ini:145
 msgid "Moldova"
 msgstr ""
 
-#: share/data/countries.ini:143
+#: share/data/countries.ini:144
 msgid "Monaco"
 msgstr ""
 
-#: share/data/countries.ini:151
+#: share/data/countries.ini:152
 msgid "Mongolia"
 msgstr ""
 
@@ -2076,7 +2080,7 @@ msgstr ""
 msgid "Mongolian"
 msgstr ""
 
-#: share/data/countries.ini:145
+#: share/data/countries.ini:146
 msgid "Montenegro"
 msgstr ""
 
@@ -2094,26 +2098,26 @@ msgstr ""
 msgid "Monthly visits summary for %B %Y."
 msgstr ""
 
-#: share/data/countries.ini:156
+#: share/data/countries.ini:157
 msgid "Montserrat"
 msgstr ""
 
-#: share/data/countries.ini:142
+#: share/data/countries.ini:143
 msgid "Morocco"
 msgstr ""
 
-#: pages/general.php:43
+#: lib/group.class.php:650
 #: pages/time.php:274
 #: pages/feed.php:76
-#: lib/group.class.php:650
+#: pages/general.php:43
 msgid "Most"
 msgstr ""
 
-#: share/data/countries.ini:163
+#: share/data/countries.ini:164
 msgid "Mozambique"
 msgstr ""
 
-#: share/data/countries.ini:150
+#: share/data/countries.ini:151
 msgid "Myanmar"
 msgstr ""
 
@@ -2123,16 +2127,16 @@ msgstr ""
 msgid "N/A"
 msgstr ""
 
-#: share/data/countries.ini:164
+#: share/data/countries.ini:165
 msgid "Namibia"
 msgstr ""
 
-#: share/data/countries.ini:173
+#: share/data/countries.ini:174
 #: share/data/languages.ini:80
 msgid "Nauru"
 msgstr ""
 
-#: share/data/countries.ini:172
+#: share/data/countries.ini:173
 msgid "Nepal"
 msgstr ""
 
@@ -2140,7 +2144,7 @@ msgstr ""
 msgid "Nepali"
 msgstr ""
 
-#: share/data/countries.ini:170
+#: share/data/countries.ini:171
 msgid "Netherlands"
 msgstr ""
 
@@ -2163,11 +2167,11 @@ msgstr ""
 msgid "Network robots"
 msgstr ""
 
-#: share/data/countries.ini:165
+#: share/data/countries.ini:166
 msgid "New Caledonia"
 msgstr ""
 
-#: share/data/countries.ini:175
+#: share/data/countries.ini:176
 msgid "New Zealand"
 msgstr ""
 
@@ -2187,33 +2191,33 @@ msgstr ""
 msgid "Next"
 msgstr ""
 
-#: share/data/countries.ini:169
+#: share/data/countries.ini:170
 msgid "Nicaragua"
 msgstr ""
 
-#: share/data/countries.ini:166
+#: share/data/countries.ini:167
 msgid "Niger"
 msgstr ""
 
-#: share/data/countries.ini:168
+#: share/data/countries.ini:169
 msgid "Nigeria"
 msgstr ""
 
-#: share/data/countries.ini:174
+#: share/data/countries.ini:175
 msgid "Niue"
 msgstr ""
 
 #: install.php:350
+#: lib/gui.class.php:255
+#: lib/gui.class.php:259
 #: pages/visits.php:197
 #: pages/visits.php:199
 #: pages/visits.php:201
-#: lib/gui.class.php:255
-#: lib/gui.class.php:259
 msgid "No"
 msgstr ""
 
-#: pages/time.php:266
 #: lib/group.class.php:529
+#: pages/time.php:266
 msgid "No data to display!"
 msgstr ""
 
@@ -2221,15 +2225,15 @@ msgstr ""
 msgid "No plugin"
 msgstr ""
 
-#: pages/visits.php:434
+#: lib/group.class.php:810
 #: plugins/tools/blacklist/plugin.php:153
 #: plugins/tools/logs/plugin.php:225
 #: plugins/tools/backups/plugin.php:190
-#: lib/group.class.php:810
+#: pages/visits.php:434
 msgid "None"
 msgstr ""
 
-#: share/data/countries.ini:167
+#: share/data/countries.ini:168
 msgid "Norfolk Island"
 msgstr ""
 
@@ -2237,15 +2241,15 @@ msgstr ""
 msgid "North America"
 msgstr ""
 
-#: share/data/countries.ini:126
+#: share/data/countries.ini:127
 msgid "North Korea"
 msgstr ""
 
-#: share/data/countries.ini:153
+#: share/data/countries.ini:154
 msgid "Northern Mariana Islands"
 msgstr ""
 
-#: share/data/countries.ini:171
+#: share/data/countries.ini:172
 msgid "Norway"
 msgstr ""
 
@@ -2273,7 +2277,7 @@ msgstr ""
 msgid "Occitan"
 msgstr ""
 
-#: share/data/countries.ini:176
+#: share/data/countries.ini:177
 msgid "Oman"
 msgstr ""
 
@@ -2293,11 +2297,11 @@ msgstr ""
 msgid "Only collected data"
 msgstr ""
 
+#: plugins/tools/blacklist/plugin.php:139
+#: plugins/tools/summary/plugin.php:101
 #: pages/visits.php:188
 #: pages/visits.php:281
 #: pages/visits.php:438
-#: plugins/tools/blacklist/plugin.php:139
-#: plugins/tools/summary/plugin.php:101
 msgid "Operating system"
 msgstr ""
 
@@ -2358,27 +2362,27 @@ msgstr ""
 msgid "Page unavailable due to maintenance."
 msgstr ""
 
-#: share/data/countries.ini:182
+#: share/data/countries.ini:183
 msgid "Pakistan"
 msgstr ""
 
-#: share/data/countries.ini:189
+#: share/data/countries.ini:190
 msgid "Palau"
 msgstr ""
 
-#: share/data/countries.ini:187
+#: share/data/countries.ini:188
 msgid "Palestinian Territory, Occupied"
 msgstr ""
 
-#: share/data/countries.ini:177
+#: share/data/countries.ini:178
 msgid "Panama"
 msgstr ""
 
-#: share/data/countries.ini:180
+#: share/data/countries.ini:181
 msgid "Papua New Guinea"
 msgstr ""
 
-#: share/data/countries.ini:190
+#: share/data/countries.ini:191
 msgid "Paraguay"
 msgstr ""
 
@@ -2402,15 +2406,15 @@ msgstr ""
 msgid "Persian"
 msgstr ""
 
-#: share/data/countries.ini:178
+#: share/data/countries.ini:179
 msgid "Peru"
 msgstr ""
 
-#: share/data/countries.ini:181
+#: share/data/countries.ini:182
 msgid "Philippines"
 msgstr ""
 
-#: share/data/countries.ini:185
+#: share/data/countries.ini:186
 msgid "Pitcairn"
 msgstr ""
 
@@ -2426,7 +2430,7 @@ msgstr ""
 msgid "Place the <em>PHP</em> code somewhere at start of code of your page. Script will collect the most part of data, technical information (such as screen resolution) will be handled by <em>JavaScript</em> code."
 msgstr ""
 
-#: share/data/countries.ini:183
+#: share/data/countries.ini:184
 msgid "Poland"
 msgstr ""
 
@@ -2438,7 +2442,7 @@ msgstr ""
 msgid "Polish"
 msgstr ""
 
-#: share/data/countries.ini:188
+#: share/data/countries.ini:189
 msgid "Portugal"
 msgstr ""
 
@@ -2464,7 +2468,7 @@ msgstr ""
 msgid "Proxy"
 msgstr ""
 
-#: share/data/countries.ini:186
+#: share/data/countries.ini:187
 msgid "Puerto Rico"
 msgstr ""
 
@@ -2472,7 +2476,7 @@ msgstr ""
 msgid "Punjabi"
 msgstr ""
 
-#: share/data/countries.ini:191
+#: share/data/countries.ini:192
 msgid "Qatar"
 msgstr ""
 
@@ -2527,12 +2531,12 @@ msgstr ""
 
 #: install.php:155
 #: install.php:361
-#: plugins/tools/configuration/plugin.php:181
-#: plugins/tools/configuration/plugin.php:365
+#: plugins/tools/reset/plugin.php:143
 #: plugins/tools/blacklist/plugin.php:49
 #: plugins/tools/logs/plugin.php:170
 #: plugins/tools/backups/plugin.php:207
-#: plugins/tools/reset/plugin.php:143
+#: plugins/tools/configuration/plugin.php:181
+#: plugins/tools/configuration/plugin.php:365
 msgid "Reset"
 msgstr ""
 
@@ -2552,9 +2556,9 @@ msgstr ""
 msgid "Results per page"
 msgstr ""
 
-#: pages/general.php:41
-#: pages/feed.php:169
 #: lib/gui.class.php:269
+#: pages/feed.php:169
+#: pages/general.php:41
 msgid "Returns"
 msgstr ""
 
@@ -2562,7 +2566,7 @@ msgstr ""
 msgid "Returns visitors"
 msgstr ""
 
-#: share/data/countries.ini:192
+#: share/data/countries.ini:193
 msgid "Reunion"
 msgstr ""
 
@@ -2570,7 +2574,7 @@ msgstr ""
 msgid "Rhaeto-Romance"
 msgstr ""
 
-#: share/data/countries.ini:193
+#: share/data/countries.ini:194
 msgid "Romania"
 msgstr ""
 
@@ -2582,35 +2586,35 @@ msgstr ""
 msgid "Russian"
 msgstr ""
 
-#: share/data/countries.ini:195
+#: share/data/countries.ini:196
 msgid "Russian Federation"
 msgstr ""
 
-#: share/data/countries.ini:196
+#: share/data/countries.ini:197
 msgid "Rwanda"
 msgstr ""
 
-#: share/data/countries.ini:203
+#: share/data/countries.ini:204
 msgid "Saint Helena"
 msgstr ""
 
-#: share/data/countries.ini:125
+#: share/data/countries.ini:126
 msgid "Saint Kitts and Nevis"
 msgstr ""
 
-#: share/data/countries.ini:133
+#: share/data/countries.ini:134
 msgid "Saint Lucia"
 msgstr ""
 
-#: share/data/countries.ini:184
+#: share/data/countries.ini:185
 msgid "Saint Pierre and Miquelon"
 msgstr ""
 
-#: share/data/countries.ini:241
+#: share/data/countries.ini:243
 msgid "Saint Vincent and the Grenadines"
 msgstr ""
 
-#: share/data/countries.ini:248
+#: share/data/countries.ini:250
 msgid "Samoa"
 msgstr ""
 
@@ -2618,7 +2622,7 @@ msgstr ""
 msgid "Samoan"
 msgstr ""
 
-#: share/data/countries.ini:208
+#: share/data/countries.ini:209
 msgid "San Marino"
 msgstr ""
 
@@ -2630,18 +2634,18 @@ msgstr ""
 msgid "Sanskrit"
 msgstr ""
 
-#: share/data/countries.ini:213
+#: share/data/countries.ini:214
 msgid "Sao Tome and Principe"
 msgstr ""
 
-#: share/data/countries.ini:197
+#: share/data/countries.ini:198
 msgid "Saudi Arabia"
 msgstr ""
 
-#: plugins/tools/configuration/plugin.php:179
-#: plugins/tools/configuration/plugin.php:363
 #: plugins/tools/blacklist/plugin.php:47
 #: plugins/tools/backups/plugin.php:205
+#: plugins/tools/configuration/plugin.php:179
+#: plugins/tools/configuration/plugin.php:363
 msgid "Save"
 msgstr ""
 
@@ -2649,8 +2653,8 @@ msgstr ""
 msgid "Save configuration file"
 msgstr ""
 
-#: plugins/tools/configuration/plugin.php:54
 #: plugins/tools/blacklist/plugin.php:43
+#: plugins/tools/configuration/plugin.php:54
 msgid "Save information about ignored and blocked visits"
 msgstr ""
 
@@ -2668,13 +2672,13 @@ msgstr ""
 msgid "Screen resolutions"
 msgstr ""
 
+#: plugins/tools/logs/plugin.php:163
 #: plugins/tools/configuration/plugin.php:107
 #: plugins/tools/configuration/plugin.php:107
 #: plugins/tools/configuration/plugin.php:107
 #: plugins/tools/configuration/plugin.php:107
 #: plugins/tools/configuration/plugin.php:108
 #: plugins/tools/configuration/plugin.php:190
-#: plugins/tools/logs/plugin.php:163
 msgid "Search"
 msgstr ""
 
@@ -2693,7 +2697,7 @@ msgstr ""
 msgid "Send"
 msgstr ""
 
-#: share/data/countries.ini:209
+#: share/data/countries.ini:210
 msgid "Senegal"
 msgstr ""
 
@@ -2701,7 +2705,7 @@ msgstr ""
 msgid "Separator between address and GET query"
 msgstr ""
 
-#: share/data/countries.ini:194
+#: share/data/countries.ini:195
 msgid "Serbia"
 msgstr ""
 
@@ -2730,9 +2734,9 @@ msgid "Setswana"
 msgstr ""
 
 #: install.php:532
-#: plugins/tools/configuration/plugin.php:315
 #: plugins/tools/blacklist/plugin.php:41
 #: plugins/tools/backups/plugin.php:201
+#: plugins/tools/configuration/plugin.php:315
 msgid "Settings"
 msgstr ""
 
@@ -2748,7 +2752,7 @@ msgstr ""
 msgid "Settings requeired for correct data collecting"
 msgstr ""
 
-#: share/data/countries.ini:199
+#: share/data/countries.ini:200
 msgid "Seychelles"
 msgstr ""
 
@@ -2793,7 +2797,7 @@ msgstr ""
 msgid "Showed"
 msgstr ""
 
-#: share/data/countries.ini:207
+#: share/data/countries.ini:208
 msgid "Sierra Leone"
 msgstr ""
 
@@ -2801,12 +2805,16 @@ msgstr ""
 msgid "Sindhi"
 msgstr ""
 
-#: share/data/countries.ini:202
+#: share/data/countries.ini:203
 msgid "Singapore"
 msgstr ""
 
 #: share/data/languages.ini:101
 msgid "Sinhalese"
+msgstr ""
+
+#: share/data/countries.ini:216
+msgid "Sint Maarten"
 msgstr ""
 
 #: share/data/languages.ini:109
@@ -2825,11 +2833,11 @@ msgstr ""
 msgid "Slovak"
 msgstr ""
 
-#: share/data/countries.ini:206
+#: share/data/countries.ini:207
 msgid "Slovak Republic"
 msgstr ""
 
-#: share/data/countries.ini:204
+#: share/data/countries.ini:205
 msgid "Slovenia"
 msgstr ""
 
@@ -2837,7 +2845,7 @@ msgstr ""
 msgid "Slovenian"
 msgstr ""
 
-#: share/data/countries.ini:198
+#: share/data/countries.ini:199
 msgid "Solomon Islands"
 msgstr ""
 
@@ -2845,11 +2853,11 @@ msgstr ""
 msgid "Somali"
 msgstr ""
 
-#: share/data/countries.ini:210
+#: share/data/countries.ini:211
 msgid "Somalia"
 msgstr ""
 
-#: share/data/countries.ini:251
+#: share/data/countries.ini:253
 msgid "South Africa"
 msgstr ""
 
@@ -2857,19 +2865,19 @@ msgstr ""
 msgid "South America"
 msgstr ""
 
-#: share/data/countries.ini:94
+#: share/data/countries.ini:95
 msgid "South Georgia and the South Sandwich Islands"
 msgstr ""
 
-#: share/data/countries.ini:127
+#: share/data/countries.ini:128
 msgid "South Korea"
 msgstr ""
 
-#: share/data/countries.ini:212
+#: share/data/countries.ini:213
 msgid "South Sudan"
 msgstr ""
 
-#: share/data/countries.ini:70
+#: share/data/countries.ini:71
 msgid "Spain"
 msgstr ""
 
@@ -2877,7 +2885,7 @@ msgstr ""
 msgid "Spanish"
 msgstr ""
 
-#: share/data/countries.ini:135
+#: share/data/countries.ini:136
 msgid "Sri Lanka"
 msgstr ""
 
@@ -2902,21 +2910,21 @@ msgstr ""
 msgid "Success"
 msgstr ""
 
-#: share/data/countries.ini:200
+#: share/data/countries.ini:201
 msgid "Sudan"
 msgstr ""
 
+#: lib/group.class.php:649
+#: lib/group.class.php:809
 #: pages/time.php:273
 #: pages/feed.php:75
 #: pages/feed.php:254
-#: lib/group.class.php:649
-#: lib/group.class.php:809
 msgid "Sum"
 msgstr ""
 
-#: pages/feed.php:150
-#: plugins/tools/summary/plugin.php:66
 #: lib/chart.class.php:708
+#: plugins/tools/summary/plugin.php:66
+#: pages/feed.php:150
 msgid "Summary"
 msgstr ""
 
@@ -2924,11 +2932,11 @@ msgstr ""
 msgid "Sundanese"
 msgstr ""
 
-#: share/data/countries.ini:211
+#: share/data/countries.ini:212
 msgid "Suriname"
 msgstr ""
 
-#: share/data/countries.ini:205
+#: share/data/countries.ini:206
 msgid "Svalbard and Jan Mayen Islands"
 msgstr ""
 
@@ -2936,11 +2944,11 @@ msgstr ""
 msgid "Swahili"
 msgstr ""
 
-#: share/data/countries.ini:216
+#: share/data/countries.ini:218
 msgid "Swaziland"
 msgstr ""
 
-#: share/data/countries.ini:201
+#: share/data/countries.ini:202
 msgid "Sweden"
 msgstr ""
 
@@ -2948,11 +2956,11 @@ msgstr ""
 msgid "Swedish"
 msgstr ""
 
-#: share/data/countries.ini:43
+#: share/data/countries.ini:44
 msgid "Switzerland"
 msgstr ""
 
-#: share/data/countries.ini:215
+#: share/data/countries.ini:217
 msgid "Syria"
 msgstr ""
 
@@ -2968,7 +2976,7 @@ msgstr ""
 msgid "Tagalog"
 msgstr ""
 
-#: share/data/countries.ini:232
+#: share/data/countries.ini:234
 msgid "Taiwan"
 msgstr ""
 
@@ -2976,7 +2984,7 @@ msgstr ""
 msgid "Tajik"
 msgstr ""
 
-#: share/data/countries.ini:223
+#: share/data/countries.ini:225
 msgid "Tajikistan"
 msgstr ""
 
@@ -2984,7 +2992,7 @@ msgstr ""
 msgid "Tamil"
 msgstr ""
 
-#: share/data/countries.ini:233
+#: share/data/countries.ini:235
 msgid "Tanzania"
 msgstr ""
 
@@ -3008,11 +3016,11 @@ msgstr ""
 msgid "Thai"
 msgstr ""
 
-#: share/data/countries.ini:222
+#: share/data/countries.ini:224
 msgid "Thailand"
 msgstr ""
 
-#: share/data/countries.ini:40
+#: share/data/countries.ini:41
 msgid "The Democratic Republic of Congo"
 msgstr ""
 
@@ -3023,9 +3031,11 @@ msgstr ""
 #: index.php:517
 #: index.php:547
 #: index.php:559
-#: plugins/tools/configuration/plugin.php:93
-#: plugins/tools/configuration/plugin.php:213
-#: plugins/tools/configuration/plugin.php:255
+#: plugins/tools/reset/plugin.php:19
+#: plugins/tools/reset/plugin.php:33
+#: plugins/tools/reset/plugin.php:45
+#: plugins/tools/reset/plugin.php:69
+#: plugins/tools/reset/plugin.php:91
 #: plugins/tools/blacklist/plugin.php:17
 #: plugins/tools/summary/plugin.php:17
 #: plugins/tools/backups/plugin.php:17
@@ -3033,11 +3043,9 @@ msgstr ""
 #: plugins/tools/backups/plugin.php:88
 #: plugins/tools/backups/plugin.php:114
 #: plugins/tools/backups/plugin.php:129
-#: plugins/tools/reset/plugin.php:19
-#: plugins/tools/reset/plugin.php:33
-#: plugins/tools/reset/plugin.php:45
-#: plugins/tools/reset/plugin.php:69
-#: plugins/tools/reset/plugin.php:91
+#: plugins/tools/configuration/plugin.php:93
+#: plugins/tools/configuration/plugin.php:213
+#: plugins/tools/configuration/plugin.php:255
 msgid "This functionality is disabled in demo mode!"
 msgstr ""
 
@@ -3074,7 +3082,7 @@ msgstr ""
 msgid "Time statistics"
 msgstr ""
 
-#: share/data/countries.ini:225
+#: share/data/countries.ini:227
 msgid "Timor-Leste"
 msgstr ""
 
@@ -3086,15 +3094,15 @@ msgstr ""
 msgid "To enable collecting of statistics you must place activation code on each page."
 msgstr ""
 
-#: share/data/countries.ini:221
+#: share/data/countries.ini:223
 msgid "Togo"
 msgstr ""
 
-#: share/data/countries.ini:224
+#: share/data/countries.ini:226
 msgid "Tokelau"
 msgstr ""
 
-#: share/data/countries.ini:228
+#: share/data/countries.ini:230
 #: share/data/languages.ini:122
 msgid "Tonga"
 msgstr ""
@@ -3107,11 +3115,11 @@ msgstr ""
 msgid "Tools"
 msgstr ""
 
-#: share/data/countries.ini:230
+#: share/data/countries.ini:232
 msgid "Trinidad and Tobago"
 msgstr ""
 
-#: share/data/countries.ini:217
+#: share/data/countries.ini:219
 msgid "Tristan da Cunha"
 msgstr ""
 
@@ -3119,11 +3127,11 @@ msgstr ""
 msgid "Tsonga"
 msgstr ""
 
-#: share/data/countries.ini:227
+#: share/data/countries.ini:229
 msgid "Tunisia"
 msgstr ""
 
-#: share/data/countries.ini:229
+#: share/data/countries.ini:231
 msgid "Turkey"
 msgstr ""
 
@@ -3135,15 +3143,15 @@ msgstr ""
 msgid "Turkmen"
 msgstr ""
 
-#: share/data/countries.ini:226
+#: share/data/countries.ini:228
 msgid "Turkmenistan"
 msgstr ""
 
-#: share/data/countries.ini:218
+#: share/data/countries.ini:220
 msgid "Turks and Caicos Islands"
 msgstr ""
 
-#: share/data/countries.ini:231
+#: share/data/countries.ini:233
 msgid "Tuvalu"
 msgstr ""
 
@@ -3159,15 +3167,15 @@ msgstr ""
 msgid "Type of compression of file for download"
 msgstr ""
 
-#: share/data/countries.ini:236
+#: share/data/countries.ini:238
 msgid "US Minor Outlying Islands"
 msgstr ""
 
-#: share/data/countries.ini:244
+#: share/data/countries.ini:246
 msgid "US Virgin Islands"
 msgstr ""
 
-#: share/data/countries.ini:235
+#: share/data/countries.ini:237
 msgid "Uganda"
 msgstr ""
 
@@ -3175,7 +3183,7 @@ msgstr ""
 msgid "Uighur"
 msgstr ""
 
-#: share/data/countries.ini:234
+#: share/data/countries.ini:236
 msgid "Ukraine"
 msgstr ""
 
@@ -3195,10 +3203,10 @@ msgstr ""
 msgid "Unblock counting of this referrer"
 msgstr ""
 
-#: pages/general.php:40
-#: pages/feed.php:163
-#: plugins/tools/blacklist/plugin.php:125
 #: lib/gui.class.php:270
+#: plugins/tools/blacklist/plugin.php:125
+#: pages/feed.php:163
+#: pages/general.php:40
 msgid "Unique"
 msgstr ""
 
@@ -3206,18 +3214,18 @@ msgstr ""
 msgid "United Arab Emirates"
 msgstr ""
 
-#: share/data/countries.ini:237
+#: share/data/countries.ini:239
 msgid "United States"
 msgstr ""
 
-#: pages/visits.php:185
-#: pages/visits.php:235
-#: pages/visits.php:236
 #: lib/gui.class.php:251
 #: lib/gui.class.php:285
 #: lib/gui.class.php:289
 #: lib/gui.class.php:306
 #: lib/gui.class.php:318
+#: pages/visits.php:185
+#: pages/visits.php:235
+#: pages/visits.php:236
 msgid "Unknown"
 msgstr ""
 
@@ -3245,7 +3253,7 @@ msgstr ""
 msgid "Urdu"
 msgstr ""
 
-#: share/data/countries.ini:238
+#: share/data/countries.ini:240
 msgid "Uruguay"
 msgstr ""
 
@@ -3269,9 +3277,9 @@ msgstr ""
 msgid "Use persistent connection with database"
 msgstr ""
 
+#: plugins/tools/blacklist/plugin.php:70
 #: pages/visits.php:278
 #: pages/visits.php:436
-#: plugins/tools/blacklist/plugin.php:70
 msgid "User Agent"
 msgstr ""
 
@@ -3291,23 +3299,23 @@ msgstr ""
 msgid "Uzbek"
 msgstr ""
 
-#: share/data/countries.ini:239
+#: share/data/countries.ini:241
 msgid "Uzbekistan"
 msgstr ""
 
-#: share/data/countries.ini:246
+#: share/data/countries.ini:248
 msgid "Vanuatu"
 msgstr ""
 
-#: share/data/countries.ini:240
+#: share/data/countries.ini:242
 msgid "Vatican City"
 msgstr ""
 
-#: share/data/countries.ini:242
+#: share/data/countries.ini:244
 msgid "Venezuela"
 msgstr ""
 
-#: share/data/countries.ini:245
+#: share/data/countries.ini:247
 msgid "Viet Nam"
 msgstr ""
 
@@ -3319,10 +3327,10 @@ msgstr ""
 msgid "View of visits charts"
 msgstr ""
 
-#: pages/general.php:39
-#: pages/feed.php:166
-#: plugins/tools/blacklist/plugin.php:127
 #: lib/gui.class.php:268
+#: plugins/tools/blacklist/plugin.php:127
+#: pages/feed.php:166
+#: pages/general.php:39
 msgid "Views"
 msgstr ""
 
@@ -3339,8 +3347,8 @@ msgid "Visited pages"
 msgstr ""
 
 #: index.php:638
-#: pages/general.php:38
 #: pages/feed.php:156
+#: pages/general.php:38
 msgid "Visits"
 msgstr ""
 
@@ -3348,7 +3356,7 @@ msgstr ""
 msgid "Volapuk"
 msgstr ""
 
-#: share/data/countries.ini:247
+#: share/data/countries.ini:249
 msgid "Wallis and Futuna Islands"
 msgstr ""
 
@@ -3376,7 +3384,7 @@ msgstr ""
 msgid "Welsh"
 msgstr ""
 
-#: share/data/countries.ini:68
+#: share/data/countries.ini:69
 msgid "Western Sahara"
 msgstr ""
 
@@ -3413,15 +3421,15 @@ msgstr ""
 msgid "Years"
 msgstr ""
 
-#: share/data/countries.ini:249
+#: share/data/countries.ini:251
 msgid "Yemen"
 msgstr ""
 
 #: install.php:349
+#: lib/gui.class.php:255
 #: pages/visits.php:197
 #: pages/visits.php:199
 #: pages/visits.php:201
-#: lib/gui.class.php:255
 msgid "Yes"
 msgstr ""
 
@@ -3445,8 +3453,8 @@ msgstr ""
 msgid "You can not refresh page so quickly!"
 msgstr ""
 
-#: pages/visits.php:423
 #: lib/chart.class.php:606
+#: pages/visits.php:423
 msgid "Your visits"
 msgstr ""
 
@@ -3454,7 +3462,7 @@ msgstr ""
 msgid "ZIP compression support"
 msgstr ""
 
-#: share/data/countries.ini:252
+#: share/data/countries.ini:254
 msgid "Zambia"
 msgstr ""
 
@@ -3462,7 +3470,7 @@ msgstr ""
 msgid "Zhuang"
 msgstr ""
 
-#: share/data/countries.ini:253
+#: share/data/countries.ini:255
 msgid "Zimbabwe"
 msgstr ""
 
