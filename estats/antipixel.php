@@ -15,16 +15,21 @@ if (isset($_GET['count']))
 	{
 		define('ESTATS_COUNT', TRUE);
 
-		if (isset($_GET['address']))
+		if (!empty($_GET['address']))
 		{
 			$Address = parse_url($_GET['address']);
 
 			define('ESTATS_ADDRESS', $Address['path'].(isset($Address['query'])?'?'.$Address['query']:''));
 		}
 
-		if (isset($_GET['title']))
+		if (!empty($_GET['title']))
 		{
 			define('ESTATS_TITLE', $_GET['title']);
+		}
+
+		if (!empty($_GET['referrer']))
+		{
+			$_SERVER['HTTP_REFERER'] = $_GET['referrer'];
 		}
 	}
 
