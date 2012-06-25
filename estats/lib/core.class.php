@@ -195,12 +195,6 @@ class EstatsCore
 	static private $Statistics;
 
 /**
- * Contains current date time strings
- */
-
-	static private $Timestamps;
-
-/**
  * Gets configuration from database
  */
 
@@ -288,7 +282,6 @@ class EstatsCore
 
 	static private function increaseAmount($Table, $Values)
 	{
-		$Values['time'] = self::$Timestamps['daily'];
 		$Where = array();
 
 		foreach ($Values as $Key => $Value)
@@ -356,14 +349,6 @@ class EstatsCore
 		self::$HasJSInformation = TRUE;
 		self::$PreviousVisitorID = 0;
 		self::$Robot = '';
-		self::$Timestamps = array(
-	'yearly' => date('Y-01-01 00:00:00', $_SERVER['REQUEST_TIME']),
-	'monthly' => date('Y-m-01 00:00:00', $_SERVER['REQUEST_TIME']),
-	'daily' => date('Y-m-d 00:00:00', $_SERVER['REQUEST_TIME']),
-	'hourly' => date('Y-m-d H:00:00', $_SERVER['REQUEST_TIME']),
-	'full' => date('Y-m-d H:i:s', $_SERVER['REQUEST_TIME']),
-	'none' => 0
-	);
 
 		if (isset($_SERVER['HTTP_VIA']))
 		{
@@ -450,7 +435,7 @@ class EstatsCore
 			$Events = self::loadData('share/data/events.ini');
 
 			file_put_contents($FileName, '
-'.self::$Timestamps['full'].': '.(isset($Events[$Event])?$Events[$Event]:$Event).($Comment?' ('.$Comment.')':''), FILE_APPEND);
+'.$_SERVER['REQUEST_TIME'].': '.(isset($Events[$Event])?$Events[$Event]:$Event).($Comment?' ('.$Comment.')':''), FILE_APPEND);
 		}
 	}
 
@@ -959,7 +944,7 @@ class EstatsCore
 			{
 				$Values = array(
 	'views' => array(EstatsDriver::ELEMENT_EXPRESSION, array('views', EstatsDriver::OPERATOR_INCREASE)),
-	'lastview' => self::$Timestamps['full']
+	'lastview' => $_SERVER['REQUEST_TIME']
 	);
 			}
 			else
@@ -967,7 +952,7 @@ class EstatsCore
 				$Values = array(
 	'unique' => array(EstatsDriver::ELEMENT_EXPRESSION, array('unique', EstatsDriver::OPERATOR_INCREASE)),
 	'useragent' => $_SERVER['HTTP_USER_AGENT'],
-	'lastview' => self::$Timestamps['full']
+	'lastview' => $_SERVER['REQUEST_TIME']
 	);
 			}
 
@@ -976,9 +961,9 @@ class EstatsCore
 		else
 		{
 			self::$Driver->insertData('ignored', array(
-	'lastview' => self::$Timestamps['full'],
-	'lastvisit' => self::$Timestamps['full'],
-	'firstvisit' => self::$Timestamps['full'],
+	'lastview' => $_SERVER['REQUEST_TIME'],
+	'lastvisit' => $_SERVER['REQUEST_TIME'],
+	'firstvisit' => $_SERVER['REQUEST_TIME'],
 	'unique' => 1,
 	'views' => 0,
 	'useragent' => $_SERVER['HTTP_USER_AGENT'],
@@ -1066,8 +1051,8 @@ class EstatsCore
 				$Host = (is_numeric(end($Host))?'?':implode('.', ((count($Host) < 3)?$Host:array_slice($Host, 1))));
 
 				$Data['id'] = self::$VisitorID;
-				$Data['firstvisit'] = self::$Timestamps['full'];
-				$Data['lastvisit'] = self::$Timestamps['full'];
+				$Data['firstvisit'] = $_SERVER['REQUEST_TIME'];
+				$Data['lastvisit'] = $_SERVER['REQUEST_TIME'];
 				$Data['visitsamount'] = 1;
 				$Data['ip'] = self::$IP;
 				$Data['previous'] = self::$PreviousVisitorID;
@@ -1140,10 +1125,10 @@ class EstatsCore
 			}
 			else
 			{
-				self::$Driver->updateData('visitors', array('lastvisit' => self::$Timestamps['full'], 'visitsamount' => array(EstatsDriver::ELEMENT_EXPRESSION, array('visitsamount', EstatsDriver::OPERATOR_INCREASE))), array(array(EstatsDriver::ELEMENT_OPERATION, array('id', EstatsDriver::OPERATOR_EQUAL, array(EstatsDriver::ELEMENT_VALUE, self::$VisitorID)))));
+				self::$Driver->updateData('visitors', array('lastvisit' => $_SERVER['REQUEST_TIME'], 'visitsamount' => array(EstatsDriver::ELEMENT_EXPRESSION, array('visitsamount', EstatsDriver::OPERATOR_INCREASE))), array(array(EstatsDriver::ELEMENT_OPERATION, array('id', EstatsDriver::OPERATOR_EQUAL, array(EstatsDriver::ELEMENT_VALUE, self::$VisitorID)))));
 			}
 
-			self::$Driver->insertData('details', array('id' => self::$VisitorID, 'address' => $Address, 'time' => self::$Timestamps['full']));
+			self::$Driver->insertData('details', array('id' => self::$VisitorID, 'address' => $Address, 'time' => $_SERVER['REQUEST_TIME']));
 			self::increaseAmount('sites', array('name' => $Title, 'address' => $Address));
 
 			if (self::$Robot && !self::option('CountRobots'))
@@ -1167,9 +1152,9 @@ class EstatsCore
 				$Type = 'views';
 			}
 
-			if (!self::$Driver->updateData('time', array($Type => array(EstatsDriver::ELEMENT_EXPRESSION, array($Type, EstatsDriver::OPERATOR_INCREASE))), array(array(EstatsDriver::ELEMENT_OPERATION, array('time', EstatsDriver::OPERATOR_EQUAL, array(EstatsDriver::ELEMENT_VALUE, self::$Timestamps['daily']))))))
+			if (!self::$Driver->updateData('time', array($Type => array(EstatsDriver::ELEMENT_EXPRESSION, array($Type, EstatsDriver::OPERATOR_INCREASE))), array(array(EstatsDriver::ELEMENT_OPERATION, array('time', EstatsDriver::OPERATOR_EQUAL, array(EstatsDriver::ELEMENT_VALUE, date('Y-m-d 00:00:00', $_SERVER['REQUEST_TIME'])))))))
 			{
-				self::$Driver->insertData('time', array('time' => self::$Timestamps['daily'], 'views' => (($Type == 'views')?1:0), 'unique' => (($Type == 'unique')?1:0), 'returns' => (($Type == 'returns')?1:0)));
+				self::$Driver->insertData('time', array('time' => date('Y-m-d 00:00:00', $_SERVER['REQUEST_TIME']), 'views' => (($Type == 'views')?1:0), 'unique' => (($Type == 'unique')?1:0), 'returns' => (($Type == 'returns')?1:0)));
 			}
 		}
 	}
