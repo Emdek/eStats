@@ -50,7 +50,7 @@ Powered by<br />
 <br />
 <div>
 Design by <strong>Neo</strong><br />
-&copy; 2005 - 2011 <a href="http://emdek.cba.pl/" tabindex="{tabindex}"><strong>Emdek</strong></a>
+&copy; 2005 - 2012 <a href="http://emdek.cba.pl/" tabindex="{tabindex}"><strong>Emdek</strong></a>
 </div>
 <a href="#header" title="{lang_gototop}" tabindex="{tabindex}" id="gototop">&nbsp;</a>
 <small>{pagegeneration}</small>
