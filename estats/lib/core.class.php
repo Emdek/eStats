@@ -858,6 +858,7 @@ class EstatsCore
 
 		return (int) self::$Driver->selectField('sites', array(EstatsDriver::ELEMENT_FUNCTION, array(EstatsDriver::FUNCTION_SUM, 'amount')), $Where);
 	}
+
 /**
  * Returns time and amount of most visits
  * @param string Type
