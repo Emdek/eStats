@@ -26,16 +26,14 @@ function checkErrors
 
 sourceDirectory=`readlink -f $1`
 
-mkdir -p export/estats
-cd export/estats
+mkdir "export"
+cd "export"
 
 exportDirectory=`pwd`
 
-cd $sourceDirectory
+echo 'Copying files...'
 
-echo 'Exporting files...'
-
-svn export --force ./ $exportDirectory > /dev/null
+cp -r $sourceDirectory "$exportDirectory/estats" > /dev/null
 
 checkErrors
 
@@ -43,11 +41,10 @@ if [ $# -gt 1 ]
 then
 	echo 'Appending additional files...'
 
-	cp -R $2 $exportDirectory
+	cp -r $2 "$exportDirectory/estats"
 fi
 
 cd $exportDirectory
-cd ../
 
 echo 'Creating ZIP package...'
 
@@ -63,6 +60,6 @@ checkErrors
 
 echo 'Cleaning up...'
 
-rm -r $exportDirectory
+rm -r "$exportDirectory/estats"
 
 echo 'Packages created successfully.'
