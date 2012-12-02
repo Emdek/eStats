@@ -980,7 +980,6 @@ class EstatsCore
  * @param string Address
  * @param string Title
  * @param array Data
- * @return array
  */
 
 	static function collectData($Count = TRUE, $Address = NULL, $Title = NULL, $Data = array())
