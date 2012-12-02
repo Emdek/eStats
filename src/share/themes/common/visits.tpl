@@ -2,9 +2,9 @@
 <p>
 <label>
 <span>
-<input type="hidden" name="ChangeRobots" value="1" />
-<input type="checkbox" name="ShowRobots" value="1" {robotscheckbox} />
-<input type="submit" value="{lang_change}" tabindex="{robotsformindex}" />
+<input type="hidden" name="ChangeRobots" value="1">
+<input type="checkbox" name="ShowRobots" value="1" {robotscheckbox}>
+<input type="submit" value="{lang_change}" tabindex="{robotsformindex}">
 </span>
 {lang_showrobots}:
 </label>

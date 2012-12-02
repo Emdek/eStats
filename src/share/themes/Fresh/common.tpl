@@ -3,7 +3,7 @@
 <span class="menu_entry_right">
 <span class="menu_entry_left"></span>
 {text}
-<img src="{icon}" alt="" />
+<img src="{icon}" alt="">
 </span>
 </a>
 <!--start:submenu-{id}--><ul id="submenu_{id}">
@@ -15,7 +15,7 @@
 <a href="{link}" tabindex="{tabindex}" accesskey="{accesskey}" class="{class}">
 <span class="submenu_entry_right">
 <span class="submenu_entry_left"></span>
-<img src="{icon}" alt="" />
+<img src="{icon}" alt="">
 {text}
 </span>
 </a>
@@ -31,7 +31,7 @@
 <p>
 <label>
 <span>
-{selecthour}{selectday}{selectmonth}{selectyear}{selectmap}<input type="submit" value="{lang_show}" tabindex="{dateformindex}" />{dateprevious}{datenext}</span>
+{selecthour}{selectday}{selectmonth}{selectyear}{selectmap}<input type="submit" value="{lang_show}" tabindex="{dateformindex}">{dateprevious}{datenext}</span>
 {lang_showdatafor}:
 </label>
 </p>
@@ -52,7 +52,7 @@
 <table cellspacing="0" cellpadding="0" id="group_{id}">
 <tr>
 <th class="corner_left_top">
-<img src="{datapath}/share/icons/pages/{id}.png" alt="" class="icon" />
+<img src="{datapath}/share/icons/pages/{id}.png" alt="" class="icon">
 </th>
 <th colspan="<!--start:group_difference-->4<!--end:group_difference--><!--start:!group_difference-->3<!--end:!group_difference-->" class="title">
 <a href="{link}" tabindex="{tabindex}">{title}</a>

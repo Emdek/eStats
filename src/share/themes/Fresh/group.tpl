@@ -10,7 +10,7 @@
 <tr>
 <th<!--start:group_chart--> colspan="2"<!--end:group_chart--> class="title">
 <span class="icon_wrapper">
-<img src="{datapath}/share/icons/pages/{id}.png" alt="" class="icon" />
+<img src="{datapath}/share/icons/pages/{id}.png" alt="" class="icon">
 </span>
 {title}
 </th>
@@ -22,7 +22,7 @@
 {links}</td>
 <!--start:group_chart--><td class="pie">
 <p>
-<img src="{path}image{suffix}{separator}id={chartidpie}" alt="" />
+<img src="{path}image{suffix}{separator}id={chartidpie}" alt="">
 </p>
 </td>
 <!--end:group_chart--></tr>
@@ -48,7 +48,7 @@
 <td class="bar">
 <p>
 <span>
-<img src="{datapath}share/themes/Fresh/images/background_bar.png" alt="" style="height:10px;width:{bar}%;background:{colour} !important;" />
+<img src="{datapath}share/themes/Fresh/images/background_bar.png" alt="" style="height:10px;width:{bar}%;background:{colour} !important;">
 </span>
 <em>{percent}</em>
 </p>

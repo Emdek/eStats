@@ -2,7 +2,7 @@
 <table cellspacing="0" cellpadding="0">
 <tr>
 <th class="corner_left_top">
-<img src="{datapath}/share/icons/pages/{id}.png" alt="" class="icon" />
+<img src="{datapath}/share/icons/pages/{id}.png" alt="" class="icon">
 </th>
 <th class="title">
 {title}

@@ -24,7 +24,7 @@
 {lang_map}
 </h3>
 <div>
-<img src="{path}image{suffix}{separator}id=geolocation-{mapid}" alt="" usemap="#geolocation_map" id="geolocationmap" />
+<img src="{path}image{suffix}{separator}id=geolocation-{mapid}" alt="" usemap="#geolocation_map" id="geolocationmap">
 <map id="geolocation_map" name="geolocation_map">
 {maphrefs}</map>
 <div id="geolocationtooltips">

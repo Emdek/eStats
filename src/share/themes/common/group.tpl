@@ -15,7 +15,7 @@
 </tr>
 <tr>
 <td>
-<img src="{path}image{suffix}{separator}id={chartidpie}" alt="" />
+<img src="{path}image{suffix}{separator}id={chartidpie}" alt="">
 </td>
 </tr><!--end:group_chart--></table>
 [/end]

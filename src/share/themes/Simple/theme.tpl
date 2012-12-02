@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN">
 <html dir="{dir}">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 {meta}<link href="{datapath}share/icons/miscellaneous/estats.png" rel="shortcut icon" type="image/png">
 <title>eStats :: {title}</title>
 <!--
@@ -23,7 +23,7 @@ Licence: GPL
 {selectlocale}{selecttheme}<input type="submit" value="{lang_change}" tabindex="{selectformindex}">
 </div>
 </form>
-<!--end:selectform-->{date}<!--start:!installation--><br />
+<!--end:selectform-->{date}<!--start:!installation--><br>
 <a href="<!--start:loggedin-->{selfpath}{separator}logout" tabindex="{loginindex}">{lang_logout}<!--end:loggedin--><!--start:!loggedin-->{path}login{suffix}" tabindex="{loginindex}">{lang_login}<!--end:!loggedin--></a>
 <!--end:!installation--></div>
 <div align="left">

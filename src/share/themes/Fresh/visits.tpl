@@ -2,9 +2,9 @@
 <p>
 <label>
 <span>
-<input type="checkbox" name="ShowRobots" value="1" {robotscheckbox} />
-<input type="submit" value="{lang_change}" tabindex="{robotsformindex}" />
-<input type="hidden" name="ChangeRobots" value="1" />
+<input type="checkbox" name="ShowRobots" value="1" {robotscheckbox}>
+<input type="submit" value="{lang_change}" tabindex="{robotsformindex}">
+<input type="hidden" name="ChangeRobots" value="1">
 </span>
 {lang_showrobots}:
 </label>
@@ -14,7 +14,7 @@
 <table cellpadding="2" cellspacing="0" id="visits">
 <tr>
 <th class="corner_left_top">
-<img src="{datapath}/share/icons/pages/visits.png" alt="" class="icon" />
+<img src="{datapath}/share/icons/pages/visits.png" alt="" class="icon">
 </th>
 <th>
 #
@@ -92,7 +92,7 @@
 </td>
 <td>
 <p>
-{host}<!--start:administrator--><br />
+{host}<!--start:administrator--><br>
 {ip}<!--end:administrator-->
 </p>
 </td>
@@ -135,7 +135,7 @@
 <tr>
 <th colspan="2" class="title">
 <span class="corner_left_top">
-<img src="{datapath}/share/icons/pages/visits.png" alt="" class="icon" />
+<img src="{datapath}/share/icons/pages/visits.png" alt="" class="icon">
 </span>
 {title}
 </th>
@@ -357,7 +357,7 @@
 <tr>
 <th>
 <span class="icon_wrapper">
-<img src="{datapath}/share/icons/pages/sites.png" alt="" class="icon" />
+<img src="{datapath}/share/icons/pages/sites.png" alt="" class="icon">
 </span>
 </th>
 <th>
@@ -383,7 +383,7 @@
 </table>
 <!--start:other-visits--><h3>
 <span class="header_left">
-<img src="{datapath}/share/icons/pages/visits.png" alt="" class="icon" />
+<img src="{datapath}/share/icons/pages/visits.png" alt="" class="icon">
 </span>
 <span class="header_right"></span>
 {lang_othervisits}

@@ -31,7 +31,7 @@
 <tr>
 <th>
 <span class="icon_wrapper">
-<img src="{datapath}/share/icons/pages/visits.png" alt="" class="icon" />
+<img src="{datapath}/share/icons/pages/visits.png" alt="" class="icon">
 </span>
 </th>
 <th>

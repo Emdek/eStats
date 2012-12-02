@@ -2,7 +2,7 @@
 <p>
 <label>
 <span>
-{selecthour}{selectday}{selectmonth}{selectyear}{selectmap}<input type="submit" value="{lang_show}" tabindex="{dateformindex}"  />{dateprevious}{datenext}
+{selecthour}{selectday}{selectmonth}{selectyear}{selectmap}<input type="submit" value="{lang_show}" tabindex="{dateformindex}">{dateprevious}{datenext}
 </span>
 {lang_showdatafor}:
 </label>
@@ -19,7 +19,7 @@
 <p>
 <label>
 <span>
-<input type="checkbox" name="TimeCompare" value="1"{checkboxcomparechecked} tabindex="{checkboxcompareindex}" />
+<input type="checkbox" name="TimeCompare" value="1"{checkboxcomparechecked} tabindex="{checkboxcompareindex}">
 </span>
 {lang_compareprevious}:
 </label>
