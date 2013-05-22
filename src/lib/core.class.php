@@ -398,7 +398,7 @@ class EstatsCore
 		{
 			$String = strtolower($_SERVER['HTTP_ACCEPT_LANGUAGE']);
 
-			self::$Language = substr($String, 0, (strlen($String) > 2 && $String[2] == '-')?5:2);
+			self::$Language = substr($String, 0, ((strlen($String) > 2 && $String[2] == '-')?5:2));
 		}
 
 		return TRUE;
