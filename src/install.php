@@ -368,7 +368,7 @@ define(\'eStatsVersion\', \''.number_format((double) ESTATS_VERSIONSTRING, 1, '.
 <strong>'.EstatsLocale::translate('PHP code').'</strong>:
 <textarea cols="150" rows="5" id="phpcode">&lt;?php
 define(\'ESTATS_COUNT\', 1);
-@include(\''.substr(dirname(__FILE__), 0, -8).'/stats.php\');
+@include(\''.htmlspecialchars(dirname(__FILE__)).'/stats.php\');
 ?&gt;</textarea>
 </label>
 </p>
