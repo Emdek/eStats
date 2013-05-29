@@ -1,9 +1,9 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<!DOCTYPE html>
+<html>
 <head>
-<link href="docs.css" rel="stylesheet" type="text/css" />
-<link href="../share/icons/miscellaneous/estats.png" rel="shortcut icon" type="image/png" />
-<meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+<link href="docs.css" rel="stylesheet" type="text/css">
+<link href="../share/icons/miscellaneous/estats.png" rel="shortcut icon" type="image/png">
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <title>eStats :: ReadMe</title>
 </head>
 <body>
@@ -135,10 +135,10 @@ define('ESTATS_ADDRESS', '<strong>ADDRESS</strong>'); // optional
 define('ESTATS_TITLE', '<strong>TITLE</strong>'); // optional
 @include ('<strong>PATH</strong>');
 ?&gt;</code></pre>
-<strong>Where:</strong><br /><br />
-<strong>ADDRESS</strong> - website address (without http://website.address.com, example: /index.php?page=main) (optional);<br />
-<strong>TITLE</strong> - if file text encoding is different than <em>UTF-8</em>, you should not use characters outside English alphabet (optional);<br />
-<strong>PATH</strong> - path to file <em>stats.php</em> in <em>estats/</em> directory, example: <em>../directory/estats/stats.php</em>.<br /><br />
+<strong>Where:</strong><br><br>
+<strong>ADDRESS</strong> - website address (without http://website.address.com, example: /index.php?page=main) (optional);<br>
+<strong>TITLE</strong> - if file text encoding is different than <em>UTF-8</em>, you should not use characters outside English alphabet (optional);<br>
+<strong>PATH</strong> - path to file <em>stats.php</em> in <em>estats/</em> directory, example: <em>../directory/estats/stats.php</em>.<br><br>
 Lines with parameters marked as optional could be safely removed.
 </li>
 <li>
@@ -158,12 +158,12 @@ var eAddress = '<strong>ADDRESS</strong>'; // optional
 var eAntipixel = '<strong>ANTIPIXEL</strong>'; // optional
 &lt;/script&gt;
 &lt;script type="text/javascript" src="<strong>PATH</strong>stats.js"&gt;&lt;/script&gt;</code></pre>
-<strong>Where:</strong><br /><br />
-<strong>PATH</strong> - path to <em>estats</em> directory, example: <em>/directory/estats/</em>,<br />
-<strong>COUNT</strong> - <em>0</em> - collect only technical data, <em>1</em> - collect all data (<span style="text-decoration:underline;">only</span> if you can not use <em>PHP</em> code).<br />
-<strong>ADDRESS</strong> - website address, example: <em>/directory/website.html</em> (optional);<br />
-<strong>TITLE</strong> - website title (optional);<br />
-<strong>ANTIPIXEL</strong> - selected antipixel for website, example <em>default/silver.png</em> (optional).<br /><br />
+<strong>Where:</strong><br><br>
+<strong>PATH</strong> - path to <em>estats</em> directory, example: <em>/directory/estats/</em>,<br>
+<strong>COUNT</strong> - <em>0</em> - collect only technical data, <em>1</em> - collect all data (<span style="text-decoration:underline;">only</span> if you can not use <em>PHP</em> code).<br>
+<strong>ADDRESS</strong> - website address, example: <em>/directory/website.html</em> (optional);<br>
+<strong>TITLE</strong> - website title (optional);<br>
+<strong>ANTIPIXEL</strong> - selected antipixel for website, example <em>default/silver.png</em> (optional).<br><br>
 <span style="text-decoration:underline;">Lines with parameters marked as optional can not be removed, you should leave these values blank if you want use values taken from website or defaults.</span>
 </li>
 </ol>

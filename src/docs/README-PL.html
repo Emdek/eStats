@@ -1,9 +1,9 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pl">
+<!DOCTYPE html>
+<html>
 <head>
-<link href="docs.css" rel="stylesheet" type="text/css" />
-<link href="../share/icons/miscellaneous/estats.png" rel="shortcut icon" type="image/png" />
-<meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+<link href="docs.css" rel="stylesheet" type="text/css">
+<link href="../share/icons/miscellaneous/estats.png" rel="shortcut icon" type="image/png">
+<meta http-equiv="Content-type" content="text/html; charset=UTF-8">
 <title>eStats :: ReadMe</title>
 </head>
 <body>
@@ -135,10 +135,10 @@ define('ESTATS_ADDRESS', '<strong>ADDRESS</strong>'); // opcjonalnie
 define('ESTATS_TITLE', '<strong>TITLE</strong>'); // opcjonalnie
 @include ('<strong>PATH</strong>');
 ?&gt;</code></pre>
-<strong>Gdzie:</strong><br /><br />
-<strong>ADDRESS</strong> - adres podstrony (bez http://adres.strony.pl, np. /index.php?strona=glowna) (opcjonalnie);<br />
-<strong>TITLE</strong> - jeśli kodowanie znaków podstrony jest inne niż <em>UTF-8</em>, to nie używaj w nim znaków spoza angielskiego alfabetu (opcjonalnie);<br />
-<strong>PATH</strong> - ścieżka dostępu do pliku <em>stats.php</em> w katalogu <em>estats/</em>, np. <em>../katalog/estats/stats.php</em>.<br /><br />
+<strong>Gdzie:</strong><br><br>
+<strong>ADDRESS</strong> - adres podstrony (bez http://adres.strony.pl, np. /index.php?strona=glowna) (opcjonalnie);<br>
+<strong>TITLE</strong> - jeśli kodowanie znaków podstrony jest inne niż <em>UTF-8</em>, to nie używaj w nim znaków spoza angielskiego alfabetu (opcjonalnie);<br>
+<strong>PATH</strong> - ścieżka dostępu do pliku <em>stats.php</em> w katalogu <em>estats/</em>, np. <em>../katalog/estats/stats.php</em>.<br><br>
 Linie z parametrami oznaczonymi jako opcjonalne można usunąć, wtedy użyte zostaną wartości pobrane ze strony lub domyślne.
 </li>
 <li>
@@ -158,12 +158,12 @@ var eAddress = '<strong>ADDRESS</strong>'; // opcjonalnie
 var eAntipixel = '<strong>ANTIPIXEL</strong>'; // opcjonalnie
 &lt;/script&gt;
 &lt;script type="text/javascript" src="<strong>PATH</strong>stats.js"&gt;&lt;/script&gt;</code></pre>
-<strong>Gdzie:</strong><br /><br />
-<strong>PATH</strong> - ścieżka dostępu do katalogu <em>estats/</em>, np. <em>/katalog/estats/</em>;<br />
-<strong>COUNT</strong> - <em>0</em> - zbieraj tylko dane techniczne, <em>1</em> - zbieraj wszystkie dane (<span style="text-decoration:underline;">tylko</span> gdy nie można użyć kodu <em>PHP</em>);<br />
-<strong>ADDRESS</strong> - adres podstrony, np. <em>/katalog/podstrona.html</em> (opcjonalnie);<br />
-<strong>TITLE</strong> - tytuł podstrony (opcjonalnie);<br />
-<strong>ANTIPIXEL</strong> - wybrany antypixel dla podstrony, np. <em>default/silver.png</em> (opcjonalnie).<br /><br />
+<strong>Gdzie:</strong><br><br>
+<strong>PATH</strong> - ścieżka dostępu do katalogu <em>estats/</em>, np. <em>/katalog/estats/</em>;<br>
+<strong>COUNT</strong> - <em>0</em> - zbieraj tylko dane techniczne, <em>1</em> - zbieraj wszystkie dane (<span style="text-decoration:underline;">tylko</span> gdy nie można użyć kodu <em>PHP</em>);<br>
+<strong>ADDRESS</strong> - adres podstrony, np. <em>/katalog/podstrona.html</em> (opcjonalnie);<br>
+<strong>TITLE</strong> - tytuł podstrony (opcjonalnie);<br>
+<strong>ANTIPIXEL</strong> - wybrany antypixel dla podstrony, np. <em>default/silver.png</em> (opcjonalnie).<br><br>
 <span style="text-decoration:underline;">Linii z parametrami oznaczonymi jako opcjonalne nie można usunąć, należy pozostawić puste wartości dla użycia wartości pobranych ze strony lub domyślnych.</span>
 </li>
 </ol>
