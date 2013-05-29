@@ -149,7 +149,7 @@ EstatsTheme::add('page', '<h3>
 </h3>
 <form action="{selfpath}" method="post" enctype="multipart/form-data">
 '.($SelectBackups?EstatsGUI::optionRowWidget(EstatsLocale::translate('Backup copy'), '', '', '<select name="BackupID">
-'.$SelectBackups.'</select><br />
+'.$SelectBackups.'</select><br>
 <label>
 '.EstatsLocale::translate('Compression').':
 <select name="Compress" title="'.EstatsLocale::translate('Type of compression of file for download').'">
@@ -159,19 +159,19 @@ EstatsTheme::add('page', '<h3>
 ':'').(class_exists('ZipArchive')?'<option>ZIP</option>
 ':'').'</select>
 </label>
-<input type="submit" name="DownloadBackup" value="'.EstatsLocale::translate('Download').'" />
-<input type="submit" onclick="if (!confirm(\''.EstatsLocale::translate('Do You really want to restore data?').'\')) return false" name="RestoreBackup" value="'.EstatsLocale::translate('Restore').'" />
-<input type="submit" onclick="if (!confirm(\''.EstatsLocale::translate('Do You really want to delete data?').'\')) return false" name="DeleteBackup" value="'.EstatsLocale::translate('Delete').'" />', EstatsGUI::FIELD_CUSTOM):'').EstatsGUI::optionRowWidget(EstatsLocale::translate('Restore backup saved on hard disc'), '', '', '<input type="file" name="UploadBackup" />
-<input type="submit" value="'.EstatsLocale::translate('Send').'" />', EstatsGUI::FIELD_CUSTOM).'</form>
+<input type="submit" name="DownloadBackup" value="'.EstatsLocale::translate('Download').'">
+<input type="submit" onclick="if (!confirm(\''.EstatsLocale::translate('Do You really want to restore data?').'\')) return false" name="RestoreBackup" value="'.EstatsLocale::translate('Restore').'">
+<input type="submit" onclick="if (!confirm(\''.EstatsLocale::translate('Do You really want to delete data?').'\')) return false" name="DeleteBackup" value="'.EstatsLocale::translate('Delete').'">', EstatsGUI::FIELD_CUSTOM):'').EstatsGUI::optionRowWidget(EstatsLocale::translate('Restore backup saved on hard disc'), '', '', '<input type="file" name="UploadBackup">
+<input type="submit" value="'.EstatsLocale::translate('Send').'">', EstatsGUI::FIELD_CUSTOM).'</form>
 <h3>
 {heading-start}'.EstatsLocale::translate('Settings').'{heading-end}
 </h3>
 <form action="{selfpath}" method="post">
 '.EstatsGUI::optionRowWidget(EstatsLocale::translate('Backup creation profile'), '', 'Backups/profile', EstatsCore::option('Backups/profile'), EstatsGUI::FIELD_SELECT, $Profiles).EstatsGUI::optionRowWidget(EstatsLocale::translate('Create backups after specified time (s)'), '', 'Backups/creationinterval', EstatsCore::option('Backups/creationinterval')).EstatsGUI::optionRowWidget(EstatsLocale::translate('Tables to archivize'), '', 'Backups/usertables[]', EstatsCore::option('Backups/usertables'), EstatsGUI::FIELD_SELECT, array_keys(EstatsCore::loadData('share/data/database.ini'))).EstatsGUI::optionRowWidget(EstatsLocale::translate('Replace existing data'), '', 'Backups/replacedata', EstatsCore::option('Backups/replacedata'), EstatsGUI::FIELD_BOOLEAN).'<div class="buttons">
-<input type="submit" onclick="if (!confirm(\''.EstatsLocale::translate('Do you really want to save?').'\')) return false" value="'.EstatsLocale::translate('Save').'" name="SaveConfiguration" />
-<input type="submit" onclick="if (!confirm(\''.EstatsLocale::translate('Do you really want to restore defaults?').'\')) return false" value="'.EstatsLocale::translate('Defaults').'" name="Defaults" />
-<input type="reset" value="'.EstatsLocale::translate('Reset').'" />
-<input type="submit" name="CreateBackup" value="'.EstatsLocale::translate('Create backup').'" />
+<input type="submit" onclick="if (!confirm(\''.EstatsLocale::translate('Do you really want to save?').'\')) return false" value="'.EstatsLocale::translate('Save').'" name="SaveConfiguration">
+<input type="submit" onclick="if (!confirm(\''.EstatsLocale::translate('Do you really want to restore defaults?').'\')) return false" value="'.EstatsLocale::translate('Defaults').'" name="Defaults">
+<input type="reset" value="'.EstatsLocale::translate('Reset').'">
+<input type="submit" name="CreateBackup" value="'.EstatsLocale::translate('Create backup').'">
 </div>
 </form>
 ');

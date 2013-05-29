@@ -64,7 +64,7 @@ if (isset($_POST['DatabaseDriver']) && !isset($_POST['Execute']) && isset($_SESS
 
 		if (!$Driver->isAvailable())
 		{
-			EstatsGUI::notify(EstatsLocale::translate('This database module is not supported on this server!<br />
+			EstatsGUI::notify(EstatsLocale::translate('This database module is not supported on this server!<br>
 Continuation of installation can cause unexpected results!'), 'error');
 		}
 
@@ -156,11 +156,11 @@ Continuation of installation can cause unexpected results!'), 'error');
 document.getElementById(\'install_advanced\').style.display = \'none\';
 </script>
 <div class="buttons">
-<input type="submit" name="TestConnection" value="'.EstatsLocale::translate('Test database connection').'" />
-<input type="submit" name="Execute" value="'.EstatsLocale::translate('Continue').'" />
-<input type="reset" value="'.EstatsLocale::translate('Reset').'" /><br />
-<input type="button" value="'.EstatsLocale::translate('Advanced').'" onclick="document.getElementById(\'install_advanced\').style.display = ((document.getElementById(\'install_advanced\').style.display == \'none\')?\'block\':\'none\')" />
-<input type="hidden" name="DatabaseDriver" value="'.htmlspecialchars($_POST['DatabaseDriver']).'" />
+<input type="submit" name="TestConnection" value="'.EstatsLocale::translate('Test database connection').'">
+<input type="submit" name="Execute" value="'.EstatsLocale::translate('Continue').'">
+<input type="reset" value="'.EstatsLocale::translate('Reset').'"><br>
+<input type="button" value="'.EstatsLocale::translate('Advanced').'" onclick="document.getElementById(\'install_advanced\').style.display = ((document.getElementById(\'install_advanced\').style.display == \'none\')?\'block\':\'none\')">
+<input type="hidden" name="DatabaseDriver" value="'.htmlspecialchars($_POST['DatabaseDriver']).'">
 </div>
 </form>
 ');
@@ -188,7 +188,7 @@ else if (isset($_POST['Execute']))
 
 		if (!$Driver->isAvailable())
 		{
-			EstatsGUI::notify(EstatsLocale::translate('This database module is not supported on this server!<br />
+			EstatsGUI::notify(EstatsLocale::translate('This database module is not supported on this server!<br>
 Continuation of installation can cause unexpected results!'), 'error');
 		}
 		else if (!$Driver->connect($Connection, (isset($_POST['DatabaseUser'])?$_POST['DatabaseUser']:''), (isset($_POST['DatabasePassword'])?$_POST['DatabasePassword']:''), (isset($_POST['DatabasePrefix'])?$_POST['DatabasePrefix']:'')))
@@ -330,7 +330,7 @@ define(\'eStatsVersion\', \''.number_format((double) ESTATS_VERSIONSTRING, 1, '.
 '.htmlspecialchars($ConfigurationFile).'</textarea>
 </p>
 <div class="buttons">
-<input type="button" value="'.EstatsLocale::translate('Select').'" onclick="document.getElementById(\'configfile\').select(); document.getElementById(\'configfile\').focus()" />
+<input type="button" value="'.EstatsLocale::translate('Select').'" onclick="document.getElementById(\'configfile\').select(); document.getElementById(\'configfile\').focus()">
 </div>
 ':'').'<h4>
 '.EstatsLocale::translate('Fine tune configuration').'
@@ -359,8 +359,8 @@ define(\'eStatsVersion\', \''.number_format((double) ESTATS_VERSIONSTRING, 1, '.
 <p>
 <label>
 <span>
-<input id="websitetitle" onkeyup="updateCode()" onkeydown="updateCode()" />
-<input type="button" value="'.EstatsLocale::translate('Reset').'" onclick="document.getElementById(\'websitetitle\').value = \'\'; updateCode()" />
+<input id="websitetitle" onkeyup="updateCode()" onkeydown="updateCode()">
+<input type="button" value="'.EstatsLocale::translate('Reset').'" onclick="document.getElementById(\'websitetitle\').value = \'\'; updateCode()">
 </span>
 '.EstatsLocale::translate('Page title (optional, should be unique for each page, if set)').':
 </label>
@@ -375,7 +375,7 @@ define(\'ESTATS_COUNT\', 1);
 </label>
 </p>
 <div class="buttons">
-<input type="button" value="'.EstatsLocale::translate('Select').'" onclick="document.getElementById(\'phpcode\').select(); document.getElementById(\'phpcode\').focus()" />
+<input type="button" value="'.EstatsLocale::translate('Select').'" onclick="document.getElementById(\'phpcode\').select(); document.getElementById(\'phpcode\').focus()">
 </div>
 <p>
 '.EstatsLocale::translate('Place the <em>PHP</em> code somewhere at start of code of your page. Script will collect the most part of data, technical information (such as screen resolution) will be handled by <em>JavaScript</em> code.').'
@@ -401,7 +401,7 @@ var eAntipixel = \'\';
 </label>
 </p>
 <div class="buttons">
-<input type="button" value="'.EstatsLocale::translate('Select').'" onclick="document.getElementById(\'javascriptcode\').select(); document.getElementById(\'javascriptcode\').focus()" />
+<input type="button" value="'.EstatsLocale::translate('Select').'" onclick="document.getElementById(\'javascriptcode\').select(); document.getElementById(\'javascriptcode\').focus()">
 </div>
 </div>
 <div id="canusephpno">
@@ -424,7 +424,7 @@ var eAntipixel = \'\';
 &lt;script type="text/javascript" src="{datapath}stats.js"&gt;&lt;/script&gt;</textarea>
 </p>
 <div class="buttons">
-<input type="button" value="'.EstatsLocale::translate('Select').'" onclick="document.getElementById(\'javascriptcodenophp\').select(); document.getElementById(\'javascriptcodenophp\').focus()" />
+<input type="button" value="'.EstatsLocale::translate('Select').'" onclick="document.getElementById(\'javascriptcodenophp\').select(); document.getElementById(\'javascriptcodenophp\').focus()">
 </div>
 </div>
 <script type="text/javascript">
@@ -523,10 +523,10 @@ else
 {heading-start}'.EstatsLocale::translate('Introduction').'{heading-end}
 </h3>
 <p>
-'.EstatsLocale::translate('<strong>Welcome in eStats installer!</strong><br /><br />
-This script allows to install eStats easy and fast on your server.<br />
-You were redirected here because file <em>conf/config.php</em> does not exists or is incorrect / incompatible with this eStats version.<br />
-Select database type and admin password.<br />
+'.EstatsLocale::translate('<strong>Welcome in eStats installer!</strong><br><br>
+This script allows to install eStats easy and fast on your server.<br>
+You were redirected here because file <em>conf/config.php</em> does not exists or is incorrect / incompatible with this eStats version.<br>
+Select database type and admin password.<br>
 After you fill all fields click <em>Continue</em> button to configure the script.').'
 </p>
 <form action="{selfpath}" method="post">
@@ -545,7 +545,7 @@ After you fill all fields click <em>Continue</em> button to configure the script
 ':'').'<p>
 <label>
 <span>
-<input name="Email" />
+<input name="Email">
 </span>
 '.EstatsLocale::translate('Administrator email').':
 </label>
@@ -553,7 +553,7 @@ After you fill all fields click <em>Continue</em> button to configure the script
 <p>
 <label>
 <span>
-<input type="password" name="RootPassword" />
+<input type="password" name="RootPassword">
 </span>
 '.EstatsLocale::translate('Administrator password').':
 </label>
@@ -561,7 +561,7 @@ After you fill all fields click <em>Continue</em> button to configure the script
 <p>
 <label>
 <span>
-<input type="password" name="RepeatPassword" />
+<input type="password" name="RepeatPassword">
 </span>
 '.EstatsLocale::translate('Repeat password').':
 </label>
@@ -593,7 +593,7 @@ After you fill all fields click <em>Continue</em> button to configure the script
 	}
 
 	EstatsTheme::append('page', '<div class="buttons">
-<input type="submit" value="'.($Error?EstatsLocale::translate('Continue anyway'):EstatsLocale::translate('Continue')).'"'.($Error?' onclick="alert(\''.EstatsLocale::translate('Continuation despite errors threatens unexpected results!\nYou continue on your own risk!').'\')"':'').' />
+<input type="submit" value="'.($Error?EstatsLocale::translate('Continue anyway'):EstatsLocale::translate('Continue')).'"'.($Error?' onclick="alert(\''.EstatsLocale::translate('Continuation despite errors threatens unexpected results!\nYou continue on your own risk!').'\')"':'').'>
 </div>
 </form>
 ');

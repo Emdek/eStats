@@ -84,13 +84,13 @@ if (isset($Path[3]) && $Path[3] == 'advanced')
 <div id="search">
 <span>
 <label for="AdvancedSearch">'.EstatsLocale::translate('Filter').'</label>:&nbsp;
-<input value="'.EstatsLocale::translate('Search').'" id="AdvancedSearch" onblur="if (!this.value) this.value = \''.EstatsLocale::translate('Search').'\'; if (this.value == \''.EstatsLocale::translate('Search').'\') this.style.color = \'gray\';" onfocus="this.style.color = \'black\'; if (this.value == \''.EstatsLocale::translate('Search').'\') this.value = \'\'; else search(this.value)" onkeyup="search(this.value)" onkeyup="search(this.value)" />
-<input type="button" value="'.EstatsLocale::translate('Search').'" onclick="document.getElementById(\'AdvancedSearch\').focus(); search(document.getElementById(\'AdvancedSearch\').value);" /><br />
+<input value="'.EstatsLocale::translate('Search').'" id="AdvancedSearch" onblur="if (!this.value) this.value = \''.EstatsLocale::translate('Search').'\'; if (this.value == \''.EstatsLocale::translate('Search').'\') this.style.color = \'gray\';" onfocus="this.style.color = \'black\'; if (this.value == \''.EstatsLocale::translate('Search').'\') this.value = \'\'; else search(this.value)" onkeyup="search(this.value)" onkeyup="search(this.value)">
+<input type="button" value="'.EstatsLocale::translate('Search').'" onclick="document.getElementById(\'AdvancedSearch\').focus(); search(document.getElementById(\'AdvancedSearch\').value);"><br>
 '.EstatsLocale::translate('Meeting conditions').': <em id="ResultsAmount">{resultsamount}</em>.
 </span>
-<input type="checkbox" id="ShowAll" onclick="showAll()" />
-<label for="ShowAll">'.EstatsLocale::translate('Show all').'</label><br />
-<input type="checkbox" id="ShowModified" onclick="showModified()" />
+<input type="checkbox" id="ShowAll" onclick="showAll()">
+<label for="ShowAll">'.EstatsLocale::translate('Show all').'</label><br>
+<input type="checkbox" id="ShowModified" onclick="showModified()">
 <label for="ShowModified">'.EstatsLocale::translate('Show only modified').'</label>
 </div>
 <form action="{selfpath}" method="post">
@@ -156,9 +156,9 @@ if (isset($Path[3]) && $Path[3] == 'advanced')
 	}
 
 	EstatsTheme::append('page', '<div class="buttons">
-<input type="submit" onclick="if (!confirm('.EstatsLocale::translate('Do You really want to save?').')) return false" value="'.EstatsLocale::translate('Save').'" name="SaveConfiguration" />
-<input type="submit" onclick="if (!confirm('.EstatsLocale::translate('Do You really want to restore defaults?').')) return false" value="'.EstatsLocale::translate('Defaults').'" name="Defaults" />
-<input type="reset" onclick="resetAll()" value="'.EstatsLocale::translate('Reset').'" />
+<input type="submit" onclick="if (!confirm('.EstatsLocale::translate('Do You really want to save?').')) return false" value="'.EstatsLocale::translate('Save').'" name="SaveConfiguration">
+<input type="submit" onclick="if (!confirm('.EstatsLocale::translate('Do You really want to restore defaults?').')) return false" value="'.EstatsLocale::translate('Defaults').'" name="Defaults">
+<input type="reset" onclick="resetAll()" value="'.EstatsLocale::translate('Reset').'">
 </div>
 </form>
 <script type="text/javascript">
@@ -273,7 +273,7 @@ else
 	}
 
 	EstatsTheme::append('page', '<div class="buttons">
-<input type="submit" name="ChangePassword" value="'.EstatsLocale::translate('Change password').'" />
+<input type="submit" name="ChangePassword" value="'.EstatsLocale::translate('Change password').'">
 </div>
 </form>
 <form action="{selfpath}" method="post">
@@ -325,13 +325,13 @@ else
 ';
 	}
 
-	EstatsTheme::append('page', EstatsGUI::optionRowWidget(EstatsLocale::translate('Statistics antipixel'), '', 'Antipixel', '<img src="{datapath}share/antipixels/'.htmlspecialchars(EstatsCore::option('Antipixel'), ENT_QUOTES, 'UTF-8', FALSE).'" alt="Preview" id="antipixelpreview" />
+	EstatsTheme::append('page', EstatsGUI::optionRowWidget(EstatsLocale::translate('Statistics antipixel'), '', 'Antipixel', '<img src="{datapath}share/antipixels/'.htmlspecialchars(EstatsCore::option('Antipixel'), ENT_QUOTES, 'UTF-8', FALSE).'" alt="Preview" id="antipixelpreview">
 <select name="Antipixel" id="F_Antipixel" onchange="document.getElementById(\'antipixelpreview\').src = \'{datapath}share/antipixels/\' + this.options[selectedIndex].value">
 '.$AntipixelSelect.'</select>', EstatsGUI::FIELD_CUSTOM).EstatsGUI::optionRowWidget(EstatsLocale::translate('Default theme'), '', 'DefaultTheme', EstatsCore::option('DefaultTheme'), EstatsGUI::FIELD_SELECT, array_keys($Themes)).EstatsGUI::optionRowWidget(EstatsLocale::translate('Mode of passing data in the path'), '', 'PathMode', EstatsCore::option('Path/mode'), EstatsGUI::FIELD_SELECT, array('GET', 'PATH_INFO', 'Rewrite')).'<div class="buttons">
-<input type="submit" onclick="if (!confirm(document.getElementById(\'F_Maintenance\').checked?\'Do you really want to enable maintenance mode?\nIf you log out before turning it off you will not be able to log in again!\':\''.EstatsLocale::translate('Do you really want to save?').'\')) return false" value="'.EstatsLocale::translate('Save').'" name="SaveConfiguration" />
-<input type="submit" onclick="if (!confirm(\''.EstatsLocale::translate('Do you really want to restore defaults?').'\')) return false" value="'.EstatsLocale::translate('Defaults').'" name="Defaults" />
-<input type="reset" value="'.EstatsLocale::translate('Reset').'" />
-<input type="button" onclick="location.href = \'{path}tools/configuration/advanced{suffix}\'" value="'.EstatsLocale::translate('Advanced').'" />
+<input type="submit" onclick="if (!confirm(document.getElementById(\'F_Maintenance\').checked?\'Do you really want to enable maintenance mode?\nIf you log out before turning it off you will not be able to log in again!\':\''.EstatsLocale::translate('Do you really want to save?').'\')) return false" value="'.EstatsLocale::translate('Save').'" name="SaveConfiguration">
+<input type="submit" onclick="if (!confirm(\''.EstatsLocale::translate('Do you really want to restore defaults?').'\')) return false" value="'.EstatsLocale::translate('Defaults').'" name="Defaults">
+<input type="reset" value="'.EstatsLocale::translate('Reset').'">
+<input type="button" onclick="location.href = \'{path}tools/configuration/advanced{suffix}\'" value="'.EstatsLocale::translate('Advanced').'">
 </div>
 </form>
 ');

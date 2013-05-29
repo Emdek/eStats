@@ -139,7 +139,7 @@ else
 				$Entry = EstatsGUI::itemText($Value['name'], 'cities');
 				$ID = md5($Key);
 
-				EstatsTheme::append('maphrefs', '<area shape="circle" alt="'.$Entry.'" title="'.$Entry.' - '.$Amount.' '.round((($Amount / $Data['sum_current']) * 100), 2).'%" onmouseover="document.getElementById (\'geolocation_tooltip_'.$ID.'\').style.display = \'block\'" onmouseout="document.getElementById (\'geolocation_tooltip_'.$ID.'\').style.display = \'none\'" coords="'.$MapInformation['Cities'][$Coordinates].',4" />
+				EstatsTheme::append('maphrefs', '<area shape="circle" alt="'.$Entry.'" title="'.$Entry.' - '.$Amount.' '.round((($Amount / $Data['sum_current']) * 100), 2).'%" onmouseover="document.getElementById (\'geolocation_tooltip_'.$ID.'\').style.display = \'block\'" onmouseout="document.getElementById (\'geolocation_tooltip_'.$ID.'\').style.display = \'none\'" coords="'.$MapInformation['Cities'][$Coordinates].',4">
 ');
 
 				$Icon = EstatsGUI::iconPath($Value['name'], 'cities');
@@ -165,7 +165,7 @@ else
 				$Amount = (isset($Data[($Path[$Var - 1] == 'continents')?'continents':'data'][(($Map != 'world')?$Path[$Var - 1].'-':'').$Key])?(int) $Data[($Path[$Var - 1] == 'continents')?'continents':'data'][(($Map != 'world')?$Path[$Var - 1].'-':'').$Key]:0);
 				$Entry = EstatsGUI::itemText((($Map == 'world')?'':$Path[$Var - 1].'-').$Key, (($Map == 'world')?(($Path[$Var - 1] == 'continents')?'continents':'countries'):'regions'));
 
-				EstatsTheme::append('maphrefs', '<area shape="poly" alt="'.$Entry.'" title="'.$Entry.($Amount?' - '.$Amount.($Amount?' ('.round((($Amount / $Data['sum_current']) * 100), 2).'%)" onmouseover="document.getElementById(\'geolocation_tooltip_'.$Key.'\').style.display = \'block\'" onmouseout="document.getElementById (\'geolocation_tooltip_'.$Key.'\').style.display = \'none\''.(($Map == 'world')?'" href="{path}geolocation/'.$Key.'/'.implode('-', $Date).'{suffix}':''):''):'').'" coords="'.$Value.'" />
+				EstatsTheme::append('maphrefs', '<area shape="poly" alt="'.$Entry.'" title="'.$Entry.($Amount?' - '.$Amount.($Amount?' ('.round((($Amount / $Data['sum_current']) * 100), 2).'%)" onmouseover="document.getElementById(\'geolocation_tooltip_'.$Key.'\').style.display = \'block\'" onmouseout="document.getElementById (\'geolocation_tooltip_'.$Key.'\').style.display = \'none\''.(($Map == 'world')?'" href="{path}geolocation/'.$Key.'/'.implode('-', $Date).'{suffix}':''):''):'').'" coords="'.$Value.'">
 ');
 
 				if ($Amount)

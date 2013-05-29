@@ -47,7 +47,7 @@ EstatsTheme::add('page', '<h3>
 </h3>
 <form action="{selfpath}" method="post">
 '.EstatsGUI::optionRowWidget(EstatsLocale::translate('Email'), '', 'Email').EstatsGUI::optionRowWidget(EstatsLocale::translate('Password'), '', 'UserPassword').EstatsGUI::optionRowWidget(EstatsLocale::translate('Repeat password'), '', 'RepeatPassword').EstatsGUI::optionRowWidget(EstatsLocale::translate('Administrator rights'), '', 'AdministratorRights', FALSE, EstatsGUI::FIELD_BOOLEAN).'<div class="buttons">
-<input type="submit" name="AddUser" value="'.EstatsLocale::translate('Add user').'" />
+<input type="submit" name="AddUser" value="'.EstatsLocale::translate('Add user').'">
 </div>
 </form>
 <h3>

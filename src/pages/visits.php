@@ -225,7 +225,7 @@ for ($i = 0, $c = count($Data); $i < $c; ++$i)
 	'referrer' => (($Data[$i]['referrer'] && !$Data[$i]['robot'])?'<a href="'.htmlspecialchars($Data[$i]['referrer']).'"'.($Data[$i]['keywords']?' title="'.EstatsLocale::translate('Keywords').': '.htmlspecialchars($Data[$i]['keywords']).'" class="tooltip"':'').' rel="nofollow">
 '.EstatsGUI::cutString($Data[$i]['referrer'], EstatsTheme::option('VisitsRowValueLength')).'
 '.($Data[$i]['keywords']?'<span>
-<strong>'.EstatsLocale::translate('Keywords').':</strong><br />
+<strong>'.EstatsLocale::translate('Keywords').':</strong><br>
 '.$Data[$i]['keywords'].'
 </span>
 ':'').'</a>'.((ESTATS_USERLEVEL == 2)?'
@@ -274,26 +274,26 @@ for ($i = 0, $c = count($Data); $i < $c; ++$i)
 ':'').($CookiesIcon?$CookiesIcon.'
 ':'').($ProxyIcon?$ProxyIcon.'
 ':'')):'<small>
-'.EstatsLocale::translate('User Agent').': <em>'.EstatsGUI::cutString($Data[$i]['useragent'], 75).'</em>.<br />
-'.($Robot?EstatsLocale::translate('Network robot').': '.$Robot.'<br />
-':EstatsLocale::translate('Browser').': <em>'.$Browser.'</em>.<br />
-'.EstatsLocale::translate('Operating system').': <em>'.$OperatingSystem.'</em>.<br />
-'.(($Data[$i]['language'] != '?')?EstatsLocale::translate('Language').': <em>'.$Language.'</em>.<br />
-':'')).($Screen?EstatsLocale::translate('Screen resolution').': <em>'.$Screen.'</em>.<br />
-':'').EstatsLocale::translate('Flash plugin version').': <em>'.($Flash?$Flash:EstatsLocale::translate('Lack')).'.</em><br />
-'.EstatsLocale::translate('Java').': <em>'.$Java.'.</em><br />
-'.EstatsLocale::translate('JavaScript').': <em>'.$JavaScript.'.</em><br />
-'.EstatsLocale::translate('Cookies').': <em>'.$Cookies.'.</em><br />
-'.($Proxy?$Proxy.'<br />
+'.EstatsLocale::translate('User Agent').': <em>'.EstatsGUI::cutString($Data[$i]['useragent'], 75).'</em>.<br>
+'.($Robot?EstatsLocale::translate('Network robot').': '.$Robot.'<br>
+':EstatsLocale::translate('Browser').': <em>'.$Browser.'</em>.<br>
+'.EstatsLocale::translate('Operating system').': <em>'.$OperatingSystem.'</em>.<br>
+'.(($Data[$i]['language'] != '?')?EstatsLocale::translate('Language').': <em>'.$Language.'</em>.<br>
+':'')).($Screen?EstatsLocale::translate('Screen resolution').': <em>'.$Screen.'</em>.<br>
+':'').EstatsLocale::translate('Flash plugin version').': <em>'.($Flash?$Flash:EstatsLocale::translate('Lack')).'.</em><br>
+'.EstatsLocale::translate('Java').': <em>'.$Java.'.</em><br>
+'.EstatsLocale::translate('JavaScript').': <em>'.$JavaScript.'.</em><br>
+'.EstatsLocale::translate('Cookies').': <em>'.$Cookies.'.</em><br>
+'.($Proxy?$Proxy.'<br>
 ':'').'</small>
 ').($Data[$i]['geolocation']?'<a href="'.EstatsGUI::mapLink($Data[$i]['geolocation']['latitude'], $Data[$i]['geolocation']['longitude']).'" class="tooltip">
 '.(EstatsTheme::option('Icons')?EstatsGUI::iconTag(EstatsGUI::iconPath('geolocation', 'miscellaneous'), EstatsLocale::translate('Show location on map')).'
 ':'').'<span>
-<strong>'.EstatsLocale::translate('Location').':</strong><br />
-'.($City?EstatsLocale::translate('City').': <em>'.EstatsGUI::itemText($City, 'cities').'</em><br />
-':'').($Region?EstatsLocale::translate('Region').': <em>'.$Region.'</em><br />
-':'').($Country?EstatsLocale::translate('Country').': <em>'.$Country.'</em><br />
-':'').($Continent?EstatsLocale::translate('Continent').': <em>'.$Continent.'</em><br />
+<strong>'.EstatsLocale::translate('Location').':</strong><br>
+'.($City?EstatsLocale::translate('City').': <em>'.EstatsGUI::itemText($City, 'cities').'</em><br>
+':'').($Region?EstatsLocale::translate('Region').': <em>'.$Region.'</em><br>
+':'').($Country?EstatsLocale::translate('Country').': <em>'.$Country.'</em><br>
+':'').($Continent?EstatsLocale::translate('Continent').': <em>'.$Continent.'</em><br>
 ':'').EstatsLocale::translate('Co-ordinates').': <em>'.$Coordinates.'</em>
 </span>
 </a>

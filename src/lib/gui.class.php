@@ -97,7 +97,7 @@ class EstatsGUI
 			return '';
 		}
 
-		return '<img src="'.EstatsTheme::get('datapath').$FileName.'" alt="'.$Title.'"'.($Title?' title="'.$Title.'"':'').' />';
+		return '<img src="'.EstatsTheme::get('datapath').$FileName.'" alt="'.$Title.'"'.($Title?' title="'.$Title.'"':'').'>';
 	}
 
 /**
@@ -688,10 +688,10 @@ class EstatsGUI
 				$Form = &$Value;
 			break;
 			case self::FIELD_BOOLEAN:
-				$Form = '<input type="checkbox" name="'.$Name.'" id="F_'.$ID.'" value="1"'.($Value?' checked="checked"':'').(($Default !== NULL)?' onchange="checkDefault(\''.$ID.'\', '.($Default?1:0).')"':'').' />';
+				$Form = '<input type="checkbox" name="'.$Name.'" id="F_'.$ID.'" value="1"'.($Value?' checked="checked"':'').(($Default !== NULL)?' onchange="checkDefault(\''.$ID.'\', '.($Default?1:0).')"':'').'>';
 			break;
 			case self::FIELD_VALUE:
-				$Form = '<input'.(stristr($Name, 'pass')?' type="password"':'').' name="'.$Name.'" id="F_'.$ID.'" value="'.htmlspecialchars($Value, ENT_QUOTES, 'UTF-8', FALSE).'"'.(($Default !== NULL)?' onkeyup="checkDefault(\''.$ID.'\', \''.str_replace(array("\r\n", "\n", '{', '}'), array('\r\n', '\n', '&#123;', '&#125;'), htmlspecialchars($Default, ENT_QUOTES, 'UTF-8')).'\')"':'').' />';
+				$Form = '<input'.(stristr($Name, 'pass')?' type="password"':'').' name="'.$Name.'" id="F_'.$ID.'" value="'.htmlspecialchars($Value, ENT_QUOTES, 'UTF-8', FALSE).'"'.(($Default !== NULL)?' onkeyup="checkDefault(\''.$ID.'\', \''.str_replace(array("\r\n", "\n", '{', '}'), array('\r\n', '\n', '&#123;', '&#125;'), htmlspecialchars($Default, ENT_QUOTES, 'UTF-8')).'\')"':'').'>';
 			break;
 			case self::FIELD_SELECT:
 				$Form = '<select name="'.$Name.'" id="F_'.$ID.'"'.(is_array($Value)?' multiple="multiple" size="3"':'').(($Default !== NULL)?' onchange="checkDefault(\''.$ID.'\', \''.str_replace(array('{', '}'), array('&#123;', '&#125;'), htmlspecialchars($Default, ENT_QUOTES, 'UTF-8')).'\')"':'').'>
@@ -733,7 +733,7 @@ class EstatsGUI
 		if ($Default !== NULL)
 		{
 			$Form.= '
-<input type="button" value="'.EstatsLocale::translate('Default').'"  onclick="setDefault(\''.$ID.'\', \''.str_replace(array("\r\n", "\n", '{', '}'), array('\r\n', '\n', '&#123;', '&#125;'), htmlspecialchars($Default, ENT_QUOTES, 'UTF-8')).'\')" title="'.EstatsLocale::translate('Default value').': '.htmlspecialchars(str_replace(array("\r\n", "\n", '{', '}'), array(' ', ' ', '&#123;', '&#125;'), $Default)).'" />';
+<input type="button" value="'.EstatsLocale::translate('Default').'"  onclick="setDefault(\''.$ID.'\', \''.str_replace(array("\r\n", "\n", '{', '}'), array('\r\n', '\n', '&#123;', '&#125;'), htmlspecialchars($Default, ENT_QUOTES, 'UTF-8')).'\')" title="'.EstatsLocale::translate('Default value').': '.htmlspecialchars(str_replace(array("\r\n", "\n", '{', '}'), array(' ', ' ', '&#123;', '&#125;'), $Default)).'">';
 		}
 
 		return EstatsTheme::parse(EstatsTheme::get('option-row'), array(
@@ -741,7 +741,7 @@ class EstatsGUI
 	'id' => &$ID,
 	'form' => &$Form,
 	'option' => &$Label,
-	'description' => ($Description?'<br />
+	'description' => ($Description?'<br>
 <dfn>'.$Description.'</dfn>':'')
 	));
 	}

@@ -42,7 +42,7 @@ function estats_error_handler($Number, $String, $File, $Line)
 <big>#'.(count($_SESSION['ERRORS']) + 1).'</big>
 '.$ErrorTypes[$Number].' (<em>'.$File.':'.$Line.'</em>)
 </h5>
-'.$String.'<br />
+'.$String.'<br>
 ';
 }
 
@@ -59,7 +59,7 @@ function estats_error_message($Message, $File, $Line, $NotFile = FALSE, $Warning
 {
 	if ($Warning)
 	{
-		EstatsGUI::notify(($NotFile?$Message:'Could not load file! (<em>'.$Message.'</em>)').'<br />
+		EstatsGUI::notify(($NotFile?$Message:'Could not load file! (<em>'.$Message.'</em>)').'<br>
 <strong>'.$File.': <em>'.$Line.'</em></strong>', ($Warning?'warning':'error'));
 
 	}
@@ -971,9 +971,9 @@ else
 ');
 		EstatsTheme::add('lang_showdatafor', EstatsLocale::translate('Show data for'));
 		EstatsTheme::add('lang_show', EstatsLocale::translate('Show'));
-		EstatsTheme::add('dateprevious', '<input type="submit" name="previous" value="'.EstatsLocale::translate('Previous').'" />
+		EstatsTheme::add('dateprevious', '<input type="submit" name="previous" value="'.EstatsLocale::translate('Previous').'">
 ');
-		EstatsTheme::add('datenext', '<input type="submit" name="next" value="'.EstatsLocale::translate('Next').'" />
+		EstatsTheme::add('datenext', '<input type="submit" name="next" value="'.EstatsLocale::translate('Next').'">
 ');
 	}
 
@@ -987,7 +987,7 @@ else
 
 		foreach ($Feeds as $Key => $Value)
  		{
-			EstatsTheme::append('meta', '<link rel="alternate" type="application/atom+xml" href="{path}feed/'.$Key.'{suffix}" title="'.$Value.'" />
+			EstatsTheme::append('meta', '<link rel="alternate" type="application/atom+xml" href="{path}feed/'.$Key.'{suffix}" title="'.$Value.'">
 ');
 		}
 	}
@@ -1015,7 +1015,7 @@ else
 	}
 	else if (($_SERVER['REQUEST_TIME'] - $_SESSION[EstatsCore::session()]['viewTime']) < 2 && !ESTATS_USERLEVEL && $Path[1] !== 'image')
 	{
-		EstatsTheme::append('meta', '<meta http-equiv="Refresh" content="2" />
+		EstatsTheme::append('meta', '<meta http-equiv="Refresh" content="2">
 ');
 		EstatsGUI::notify(EstatsLocale::translate('You can not refresh page so quickly!'), 'error');
 		EstatsTheme::add('title', EstatsLocale::translate('Access denied'));
@@ -1073,27 +1073,27 @@ if (ESTATS_USERLEVEL == 2 || defined('ESTATS_INSTALL'))
 
 if (ESTATS_VERSIONSTATUS !== 'stable')
 {
-	EstatsGUI::notify(sprintf(EstatsLocale::translate('This is a test version of <em>eStats</em> (status: <em>%s</em>).<br />
-Its functionality could be incomplete, could work incorrect and be incompatible with newest versions!<br />
+	EstatsGUI::notify(sprintf(EstatsLocale::translate('This is a test version of <em>eStats</em> (status: <em>%s</em>).<br>
+Its functionality could be incomplete, could work incorrect and be incompatible with newest versions!<br>
 <strong style="text-decoration:underline;">Use at own risk!</strong>'), ESTATS_VERSIONSTATUS), 'warning');
 }
 
 if ((ESTATS_USERLEVEL == 2 || defined('ESTATS_INSTALL')) && ini_get('safe_mode'))
 {
-	EstatsGUI::notify(EstatsLocale::translate('<em>PHP safe mode</em> has been activated on this server!<br />
-That could cause problems in case of automatic creation of files and directories.<br />
+	EstatsGUI::notify(EstatsLocale::translate('<em>PHP safe mode</em> has been activated on this server!<br>
+That could cause problems in case of automatic creation of files and directories.<br>
 Solution is change of their owner or manual creation.'), 'warning');
 }
 
 if (EstatsCore::option('Maintenance') && ESTATS_USERLEVEL == 2)
 {
-	EstatsGUI::notify(EstatsLocale::translate('Maintenance mode is active!').'<br />
+	EstatsGUI::notify(EstatsLocale::translate('Maintenance mode is active!').'<br>
 <a href="{selfpath}{separator}maintenance"><strong>'.EstatsLocale::translate('Disable maintenance mode').'</strong></a>.', 'warning');
 }
 
 if (!EstatsCore::option('StatsEnabled') && !defined('ESTATS_INSTALL'))
 {
-	EstatsGUI::notify(EstatsLocale::translate('Statistics are disabled.').((ESTATS_USERLEVEL == 2)?'<br />
+	EstatsGUI::notify(EstatsLocale::translate('Statistics are disabled.').((ESTATS_USERLEVEL == 2)?'<br>
 <a href="{selfpath}{separator}enable"><strong>'.EstatsLocale::translate('Enable data collecting').'</strong></a>.':''), 'information');
 }
 
@@ -1116,7 +1116,7 @@ if ($Notifications)
 	{
 		$Message = explode('|', $Notifications[$i][0]);
 
-		EstatsTheme::append('announcements', EstatsGUI::notificationWidget((is_numeric($Message[0])?EstatsLocale::translate($Logs[$Message[0]]).'.':$Message[0]).(isset($Message[1])?'<br />
+		EstatsTheme::append('announcements', EstatsGUI::notificationWidget((is_numeric($Message[0])?EstatsLocale::translate($Logs[$Message[0]]).'.':$Message[0]).(isset($Message[1])?'<br>
 <em>'.$Message[1].'</em>.':''), $Notifications[$i][1]));
 	}
 }
@@ -1131,7 +1131,7 @@ if (file_exists('./share/themes/'.$_SESSION[EstatsCore::session()]['theme'].'/im
 
 	for ($i = 0, $c = count($Images); $i < $c; ++$i)
 	{
-		EstatsTheme::append('preloader', '<img src="'.$Images[$i].'" alt="" />
+		EstatsTheme::append('preloader', '<img src="'.$Images[$i].'" alt="">
 ');
 	}
 }
@@ -1167,11 +1167,6 @@ else
 }
 
 $Page = str_replace('{debug}', $Debug, EstatsTheme::parse($Page));
-
-if (EstatsTheme::option('Type') !== 'xhtml')
-{
-	$Page = str_replace(' />', '>', $Page);
-}
 
 header(EstatsTheme::option('Header'));
 

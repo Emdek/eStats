@@ -506,7 +506,7 @@ class EstatsChart
 	'id' => 'bar_'.$ID.'_'.$i.'_'.$j,
 	'class' => ($Maximum?'maximum':(($Data[$UnitID][$Summary['types'][$j]] == $Summary['minimum'][$Summary['types'][$j]])?'minimum':'')),
 	'title' => EstatsGUI::itemText($Summary['types'][$j], $Category).': '.$Data[$UnitID][$Summary['types'][$j]],
-	'simplebar' => (EstatsTheme::option('ChartSimple')?str_repeat(' <br />
+	'simplebar' => (EstatsTheme::option('ChartSimple')?str_repeat(' <br>
 ', (int) (($Height / 150) * 10)):'')
 	));
 					}
@@ -540,7 +540,7 @@ class EstatsChart
 			{
 				krsort($ToolTip);
 
-				$ToolTip = implode('<br />
+				$ToolTip = implode('<br>
 ', $ToolTip);
 
 				if ($UserVisits)
@@ -601,9 +601,9 @@ class EstatsChart
 	'bars' => (($Type != 'html')?'<div class="empty"></div>
 ':$Bars),
 	'tooltip' => ($ToolTip?'<span class="tooltip">
-<strong>'.ucfirst($ToolTipDate).':</strong><br />
-'.$ToolTip.($YourVisits?'<br />
-'.EstatsLocale::translate('Your visits').': '.EstatsGUI::formatNumber($YourVisits).' ('.((isset($Summary['sum']['unique']) && $Summary['sum']['unique'])?round((($YourVisits / $Summary['sum']['unique']) * 100), 1):0).'%)<br />
+<strong>'.ucfirst($ToolTipDate).':</strong><br>
+'.$ToolTip.($YourVisits?'<br>
+'.EstatsLocale::translate('Your visits').': '.EstatsGUI::formatNumber($YourVisits).' ('.((isset($Summary['sum']['unique']) && $Summary['sum']['unique'])?round((($YourVisits / $Summary['sum']['unique']) * 100), 1):0).'%)<br>
 ':'').'</span>
 ':' ')
 	));
@@ -624,7 +624,7 @@ class EstatsChart
 							continue;
 						}
 
-						$Levels.= '<hr id="level_'.$ID.'_'.$LevelTypes[$j].'_'.$i.'" class="'.$LevelTypes[$j].'" style="margin-top:-'.(int)((($Summary[$LevelTypes[$j]][$Summary['types'][$i]] / $Summary['maxall']) * 150) + 2).'px;border-color:#'.$Colours[$i].';" title="'.EstatsLocale::translate(ucfirst($Summary['types'][$i])).' - '.$LevelNames[$j].': '.round($Summary[$LevelTypes[$j]][$Summary['types'][$i]], 2).'" />
+						$Levels.= '<hr id="level_'.$ID.'_'.$LevelTypes[$j].'_'.$i.'" class="'.$LevelTypes[$j].'" style="margin-top:-'.(int)((($Summary[$LevelTypes[$j]][$Summary['types'][$i]] / $Summary['maxall']) * 150) + 2).'px;border-color:#'.$Colours[$i].';" title="'.EstatsLocale::translate(ucfirst($Summary['types'][$i])).' - '.$LevelNames[$j].': '.round($Summary[$LevelTypes[$j]][$Summary['types'][$i]], 2).'">
 	';
 					}
 				}
@@ -654,7 +654,7 @@ class EstatsChart
 '.$Levels.'</td>
 </tr>
 <tr>
-'.$Descriptions.'<th>'.(($Summary['maxall'] && !EstatsTheme::option('ChartSimple') && $TypeAmounts <= 3)?'<input type="checkbox" id="levels_switch_'.$Period.'" onclick="levelsShowHide(\''.$Period.'\')"'.((!isset($_COOKIE['estats_time_levels_chart_'.$Period]) || $_COOKIE['estats_time_levels_chart_'.$Period] != 'true')?' checked="checked"':'').' title="'.EstatsLocale::translate('Show / hide levels of maximum, average and minimum').'" />':'&nbsp;').'</th>
+'.$Descriptions.'<th>'.(($Summary['maxall'] && !EstatsTheme::option('ChartSimple') && $TypeAmounts <= 3)?'<input type="checkbox" id="levels_switch_'.$Period.'" onclick="levelsShowHide(\''.$Period.'\')"'.((!isset($_COOKIE['estats_time_levels_chart_'.$Period]) || $_COOKIE['estats_time_levels_chart_'.$Period] != 'true')?' checked="checked"':'').' title="'.EstatsLocale::translate('Show / hide levels of maximum, average and minimum').'">':'&nbsp;').'</th>
 </tr>
 ';
 		$SummaryTable = '';

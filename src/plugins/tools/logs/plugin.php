@@ -162,12 +162,12 @@ EstatsTheme::add('page', '<form action="{selfpath}" method="post">
 <h3>
 {heading-start}'.EstatsLocale::translate('Search').'{heading-end}
 </h3>
-'.EstatsGUI::optionRowWidget(EstatsLocale::translate('Find entry (search in all fields)'), '', 'search', (isset($_POST['search'])?stripslashes($_POST['search']):'')).EstatsGUI::optionRowWidget(EstatsLocale::translate('Results per page'), '', 'amount', $EntriesPerPage).EstatsGUI::optionRowWidget(EstatsLocale::translate('Filter'), '', 'filter[]', (isset($_POST['filter'])?$_POST['filter']:array()), EstatsGUI::FIELD_SELECT, $Filters).EstatsGUI::optionRowWidget(EstatsLocale::translate('In period'), '', '', EstatsLocale::translate('From').' <input name="from" value="'.(isset($_POST['from'])?$_POST['from']:date('Y-m-d H:00:00', eStats)).'" />
-'.EstatsLocale::translate('To').' <input name="to" value="'.(isset($_POST['to'])?$_POST['to']:date('Y-m-d H:00:00', strtotime('next hour'))).'" />
+'.EstatsGUI::optionRowWidget(EstatsLocale::translate('Find entry (search in all fields)'), '', 'search', (isset($_POST['search'])?stripslashes($_POST['search']):'')).EstatsGUI::optionRowWidget(EstatsLocale::translate('Results per page'), '', 'amount', $EntriesPerPage).EstatsGUI::optionRowWidget(EstatsLocale::translate('Filter'), '', 'filter[]', (isset($_POST['filter'])?$_POST['filter']:array()), EstatsGUI::FIELD_SELECT, $Filters).EstatsGUI::optionRowWidget(EstatsLocale::translate('In period'), '', '', EstatsLocale::translate('From').' <input name="from" value="'.(isset($_POST['from'])?$_POST['from']:date('Y-m-d H:00:00', eStats)).'">
+'.EstatsLocale::translate('To').' <input name="to" value="'.(isset($_POST['to'])?$_POST['to']:date('Y-m-d H:00:00', strtotime('next hour'))).'">
 ', EstatsGUI::FIELD_CUSTOM).'<div class="buttons">
-<input type="submit" value="'.EstatsLocale::translate('Show').'" />
-<input type="submit" name="export" value="'.EstatsLocale::translate('Export').'" />
-<input type="reset" value="'.EstatsLocale::translate('Reset').'" />
+<input type="submit" value="'.EstatsLocale::translate('Show').'">
+<input type="submit" name="export" value="'.EstatsLocale::translate('Export').'">
+<input type="reset" value="'.EstatsLocale::translate('Reset').'">
 </div>
 <h3>
 {heading-start}'.EstatsLocale::translate('Browse').'{heading-end}
