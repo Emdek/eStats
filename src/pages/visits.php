@@ -209,7 +209,7 @@ for ($i = 0, $c = count($Data); $i < $c; ++$i)
 	$Country = htmlspecialchars(($Data[$i]['geolocation'] && $Data[$i]['geolocation']['country'])?EstatsGUI::itemText($Data[$i]['geolocation']['country'], 'countries'):'');
 	$Continent = htmlspecialchars(($Data[$i]['geolocation'] && $Data[$i]['geolocation']['continent'])?EstatsGUI::itemText($Data[$i]['geolocation']['continent'], 'continents'):'');
 	$Coordinates = ($Data[$i]['geolocation']?EstatsGeolocation::coordinates($Data[$i]['geolocation']['latitude'], $Data[$i]['geolocation']['longitude']):'');
-	$Location = ($Data[$i]['geolocation']?'<a href="'.EstatsGUI::mapLink($Data[$i]['geolocation']['latitude'], $Data[$i]['geolocation']['longitude']).'" tabindex="'.EstatsGUI::tabindex().'">'.($City?$City.', ':'').$Country.'</a>':'');
+	$Location = ($Data[$i]['geolocation']?'<a href="'.EstatsGUI::mapLink($Data[$i]['geolocation']['latitude'], $Data[$i]['geolocation']['longitude']).'">'.($City?$City.', ':'').$Country.'</a>':'');
 	$Hours = intval(($Last + 5 - $First) / 3600);
 	$Minutes = intval((($Last + 5 - $First) / 60) - (($Hours * 60)));
 	$Seconds = intval($Last + 5 - $First - (($Minutes * 60) + ($Hours * 3600)));
@@ -222,15 +222,14 @@ for ($i = 0, $c = count($Data); $i < $c; ++$i)
 	'last' => date('d.m.Y H:i:s', $Last),
 	'visits' => (int) $Data[$i]['visitsamount'],
 	'time' => $Difference,
-	'tabindex' => EstatsGUI::tabindex(),
-	'referrer' => (($Data[$i]['referrer'] && !$Data[$i]['robot'])?'<a href="'.htmlspecialchars($Data[$i]['referrer']).'" tabindex="'.EstatsGUI::tabindex().'"'.($Data[$i]['keywords']?' title="'.EstatsLocale::translate('Keywords').': '.htmlspecialchars($Data[$i]['keywords']).'" class="tooltip"':'').' rel="nofollow">
+	'referrer' => (($Data[$i]['referrer'] && !$Data[$i]['robot'])?'<a href="'.htmlspecialchars($Data[$i]['referrer']).'"'.($Data[$i]['keywords']?' title="'.EstatsLocale::translate('Keywords').': '.htmlspecialchars($Data[$i]['keywords']).'" class="tooltip"':'').' rel="nofollow">
 '.EstatsGUI::cutString($Data[$i]['referrer'], EstatsTheme::option('VisitsRowValueLength')).'
 '.($Data[$i]['keywords']?'<span>
 <strong>'.EstatsLocale::translate('Keywords').':</strong><br />
 '.$Data[$i]['keywords'].'
 </span>
 ':'').'</a>'.((ESTATS_USERLEVEL == 2)?'
-<a href="{selfpath}{separator}referrer='.$Data[$i]['referrer-host'].'" class="'.(in_array($Data[$i]['referrer-host'], EstatsCore::option('Referrers'))?'green" title="'.EstatsLocale::translate('Unblock counting of this referrer').'"':'red" onclick="if (!confirm(\''.EstatsLocale::translate('Do You really want to exclude this referrer?').'\')) return false" title="'.EstatsLocale::translate('Block counting of this referrer').'"').' tabindex="'.EstatsGUI::tabindex().'"><strong>&#187;</strong></a>':''):'&nbsp;'),
+<a href="{selfpath}{separator}referrer='.$Data[$i]['referrer-host'].'" class="'.(in_array($Data[$i]['referrer-host'], EstatsCore::option('Referrers'))?'green" title="'.EstatsLocale::translate('Unblock counting of this referrer').'"':'red" onclick="if (!confirm(\''.EstatsLocale::translate('Do You really want to exclude this referrer?').'\')) return false" title="'.EstatsLocale::translate('Block counting of this referrer').'"').'><strong>&#187;</strong></a>':''):'&nbsp;'),
 	'keywords' => EstatsGUI::cutString($Data[$i]['keywords'], EstatsTheme::option('VisitsRowValueLength'), 1),
 	'host' => (($Data[$i]['host'] && $Data[$i]['host'] !== '?')?EstatsGUI::cutString($Data[$i]['host'], EstatsTheme::option('VisitsRowValueLength'), 1):EstatsLocale::translate('Unknown')),
 	'ip' => ((ESTATS_USERLEVEL == 2 && $Data[$i]['ip'])?(($Data[$i]['ip'] == 'unknown')?EstatsLocale::translate('Unknown'):(($Data[$i]['ip'] == '127.0.0.1')?$Data[$i]['ip']:EstatsGUI::whoisLink($Data[$i]['ip'], $Data[$i]['ip'])).'
@@ -287,7 +286,7 @@ for ($i = 0, $c = count($Data); $i < $c; ++$i)
 '.EstatsLocale::translate('Cookies').': <em>'.$Cookies.'.</em><br />
 '.($Proxy?$Proxy.'<br />
 ':'').'</small>
-').($Data[$i]['geolocation']?'<a href="'.EstatsGUI::mapLink($Data[$i]['geolocation']['latitude'], $Data[$i]['geolocation']['longitude']).'" tabindex="'.EstatsGUI::tabindex().'" class="tooltip">
+').($Data[$i]['geolocation']?'<a href="'.EstatsGUI::mapLink($Data[$i]['geolocation']['latitude'], $Data[$i]['geolocation']['longitude']).'" class="tooltip">
 '.(EstatsTheme::option('Icons')?EstatsGUI::iconTag(EstatsGUI::iconPath('geolocation', 'miscellaneous'), EstatsLocale::translate('Show location on map')).'
 ':'').'<span>
 <strong>'.EstatsLocale::translate('Location').':</strong><br />
@@ -336,7 +335,7 @@ if ($ShowDetails)
 	'num' => ($Data[0]['visitsamount'] - $i - (($Page - 1) * EstatsCore::option('Visits/detailsamount'))),
 	'date' => date('d.m.Y H:i:s', (is_numeric($Sites[$i]['time'])?$Sites[$i]['time']:strtotime($Sites[$i]['time']))),
 	'title' => $Title,
-	'link' => '<a href="'.htmlspecialchars($Sites[$i]['address']).'" tabindex="'.EstatsGUI::tabindex().'">'.EstatsGUI::cutString($Title, EstatsTheme::option('DetailsRowValueLength')).'</a>'
+	'link' => '<a href="'.htmlspecialchars($Sites[$i]['address']).'">'.EstatsGUI::cutString($Title, EstatsTheme::option('DetailsRowValueLength')).'</a>'
 	)));
 	}
 
@@ -388,7 +387,6 @@ if ($ShowDetails)
 			EstatsTheme::add('details-'.$Data[$i]['id'], $Data[$i]['details']);
 			EstatsTheme::append('othervisits', EstatsTheme::parse(EstatsTheme::get('other-visits-row'), array(
 	'id' => $Data[$i]['id'],
-	'tabindex' => EstatsGUI::tabindex(),
 	'first' => date('d.m.Y H:i:s', (is_numeric($Data[$i]['firstvisit'])?$Data[$i]['firstvisit']:strtotime($Data[$i]['firstvisit']))),
 	'last' => date('d.m.Y H:i:s', (is_numeric($Data[$i]['lastvisit'])?$Data[$i]['lastvisit']:strtotime($Data[$i]['lastvisit']))),
 	'amount' => (int) $Data[$i]['visitsamount'],
@@ -400,8 +398,7 @@ if ($ShowDetails)
 }
 else
 {
-	EstatsTheme::add('robotscheckbox', 'tabindex="'.EstatsGUI::tabindex().'"'.($ShowRobots?' checked="checked"':''));
-	EstatsTheme::add('robotsformindex', EstatsGUI::tabindex());
+	EstatsTheme::add('robotscheckbox', ($ShowRobots?' checked="checked"':''));
 
 	if ($PagesAmount > 1 && EstatsCore::option('Visits/maxpages') > 1)
 	{

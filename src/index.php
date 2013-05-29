@@ -503,14 +503,13 @@ EstatsTheme::add('language', $Path[0]);
 EstatsTheme::add('theme', $_SESSION[EstatsCore::session()]['theme']);
 EstatsTheme::add('lang_gototop', EstatsLocale::translate('Go to top'));
 EstatsTheme::add('lang_change', EstatsLocale::translate('Change'));
-EstatsTheme::add('header', (defined('ESTATS_INSTALL')?'eStats <em>v'.ESTATS_VERSIONSTRING.'</em> :: '.EstatsLocale::translate('Installer'):preg_replace('#(\{tabindex\})#e', 'EstatsGUI::tabindex()', EstatsCore::option('Header'))));
-EstatsTheme::add('selectlocale', ((count($Locales) > 1)?'<select name="locale" title="'.EstatsLocale::translate('Choose language').'" tabindex="'.EstatsGUI::tabindex().'">
+EstatsTheme::add('header', (defined('ESTATS_INSTALL')?'eStats <em>v'.ESTATS_VERSIONSTRING.'</em> :: '.EstatsLocale::translate('Installer'):EstatsCore::option('Header')));
+EstatsTheme::add('selectlocale', ((count($Locales) > 1)?'<select name="locale" title="'.EstatsLocale::translate('Choose language').'">
 '.$SelectLocale.'</select>
 ':''));
-EstatsTheme::add('selecttheme', ((count($Themes) > 2)?'<select name="theme" title="'.EstatsLocale::translate('Choose theme').'" tabindex="'.EstatsGUI::tabindex().'">
+EstatsTheme::add('selecttheme', ((count($Themes) > 2)?'<select name="theme" title="'.EstatsLocale::translate('Choose theme').'">
 '.$SelectTheme.'</select>
 ':''));
-EstatsTheme::add('selectformindex', (EstatsTheme::get('selectform')?EstatsGUI::tabindex():''));
 EstatsTheme::add('path', EstatsTheme::get('datapath').EstatsCore::option('Path/prefix').$Path[0].'/');
 EstatsTheme::add('suffix', EstatsCore::option('Path/suffix'));
 
@@ -578,7 +577,6 @@ else
 		EstatsCache::delete();
 	}
 
-	EstatsTheme::add('loginindex', EstatsGUI::tabindex());
 	EstatsTheme::add('startdate', date('d.m.Y', EstatsCore::option('CollectedFrom')));
 	EstatsTheme::add('starttime', date('H:i:s', EstatsCore::option('CollectedFrom')));
 	EstatsTheme::add('servername', $_SERVER['SERVER_NAME']);
@@ -875,8 +873,7 @@ else
 	'id' => $Menu[$i],
 	'icon' => EstatsGUI::iconPath($Menu[$i], 'pages'),
 	'entry' => $Menu[$i],
-	'accesskey' => $AccessKey,
-	'tabindex' => EstatsGUI::tabindex()
+	'accesskey' => $AccessKey
 	)));
 		EstatsTheme::add('submenu-'.$Menu[$i], '');
 		EstatsTheme::add('submenu-'.$Menu[$i], FALSE);
@@ -901,8 +898,7 @@ else
 	'id' => $Menu[$i].'_'.$Groups[$Menu[$i]][$j],
 	'icon' => EstatsGUI::iconPath($Groups[$Menu[$i]][$j], 'pages'),
 	'entry' => $Groups[$Menu[$i]][$j],
-	'accesskey' => '',
-	'tabindex' => EstatsGUI::tabindex()
+	'accesskey' => ''
 	)));
 			}
 		}
@@ -920,8 +916,7 @@ else
 	'id' => 'tools_'.$PermittedTools[$j],
 	'icon' => EstatsGUI::iconPath($PermittedTools[$j], 'pages'),
 	'entry' => $PermittedTools[$j],
-	'accesskey' => '',
-	'tabindex' => EstatsGUI::tabindex()
+	'accesskey' => ''
 	)));
 			}
 		}
@@ -937,7 +932,7 @@ else
 ';
 		}
 
-		EstatsTheme::add('selecthour', '<select name="hour" id="hour" title="'.EstatsLocale::translate('Hour').'" tabindex="'.EstatsGUI::tabindex().'">
+		EstatsTheme::add('selecthour', '<select name="hour" id="hour" title="'.EstatsLocale::translate('Hour').'">
 <option'.(($Date[3] && $Date[2])?'':' selected="selected"').' value="0">'.EstatsLocale::translate('All').'</option>
 '.$SelectHours.'</select>
 ');
@@ -948,7 +943,7 @@ else
 ';
 		}
 
-		EstatsTheme::add('selectday', '<select name="day" id="day" title="'.EstatsLocale::translate('Day').'" tabindex="'.EstatsGUI::tabindex().'">
+		EstatsTheme::add('selectday', '<select name="day" id="day" title="'.EstatsLocale::translate('Day').'">
 <option'.($Date[2]?'':' selected="selected"').' value="0">'.EstatsLocale::translate('All').'</option>
 '.$SelectDays.'</select>
 ');
@@ -959,7 +954,7 @@ else
 ';
 		}
 
-		EstatsTheme::add('selectmonth', '<select name="month" id="month" title="'.EstatsLocale::translate('Month').'" tabindex="'.EstatsGUI::tabindex().'">
+		EstatsTheme::add('selectmonth', '<select name="month" id="month" title="'.EstatsLocale::translate('Month').'">
 <option'.($Date[1]?'':' selected="selected"').' value="0">'.EstatsLocale::translate('All').'</option>
 '.$SelectMonths.'</select>
 ');
@@ -970,16 +965,15 @@ else
 ';
 		}
 
-		EstatsTheme::add('selectyear', '<select name="year" id="year" title="'.EstatsLocale::translate('Year').'" tabindex="'.EstatsGUI::tabindex().'">
+		EstatsTheme::add('selectyear', '<select name="year" id="year" title="'.EstatsLocale::translate('Year').'">
 <option'.($Date[0]?'':' selected="selected"').' value="0">'.EstatsLocale::translate('All').'</option>
 '.$SelectYears.'</select>
 ');
-		EstatsTheme::add('dateformindex', EstatsGUI::tabindex());
 		EstatsTheme::add('lang_showdatafor', EstatsLocale::translate('Show data for'));
 		EstatsTheme::add('lang_show', EstatsLocale::translate('Show'));
-		EstatsTheme::add('dateprevious', '<input type="submit" name="previous" value="'.EstatsLocale::translate('Previous').'" tabindex="'.EstatsGUI::tabindex().'" />
+		EstatsTheme::add('dateprevious', '<input type="submit" name="previous" value="'.EstatsLocale::translate('Previous').'" />
 ');
-		EstatsTheme::add('datenext', '<input type="submit" name="next" value="'.EstatsLocale::translate('Next').'" tabindex="'.EstatsGUI::tabindex().'" />
+		EstatsTheme::add('datenext', '<input type="submit" name="next" value="'.EstatsLocale::translate('Next').'" />
 ');
 	}
 
@@ -1094,13 +1088,13 @@ Solution is change of their owner or manual creation.'), 'warning');
 if (EstatsCore::option('Maintenance') && ESTATS_USERLEVEL == 2)
 {
 	EstatsGUI::notify(EstatsLocale::translate('Maintenance mode is active!').'<br />
-<a href="{selfpath}{separator}maintenance" tabindex="'.EstatsGUI::tabindex().'"><strong>'.EstatsLocale::translate('Disable maintenance mode').'</strong></a>.', 'warning');
+<a href="{selfpath}{separator}maintenance"><strong>'.EstatsLocale::translate('Disable maintenance mode').'</strong></a>.', 'warning');
 }
 
 if (!EstatsCore::option('StatsEnabled') && !defined('ESTATS_INSTALL'))
 {
 	EstatsGUI::notify(EstatsLocale::translate('Statistics are disabled.').((ESTATS_USERLEVEL == 2)?'<br />
-<a href="{selfpath}{separator}enable" tabindex="'.EstatsGUI::tabindex().'"><strong>'.EstatsLocale::translate('Enable data collecting').'</strong></a>.':''), 'information');
+<a href="{selfpath}{separator}enable"><strong>'.EstatsLocale::translate('Enable data collecting').'</strong></a>.':''), 'information');
 }
 
 if (EstatsTheme::contains('css'))
@@ -1187,5 +1181,5 @@ if (defined('ESTATS_GZIP') && ESTATS_GZIP && function_exists('ob_gzhandler') && 
 	ob_start('ob_gzhandler');
 }
 
-die(preg_replace('#(\{tabindex\})#e', 'EstatsGUI::tabindex()', $Page));
+die($Page);
 ?>

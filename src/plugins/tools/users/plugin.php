@@ -47,7 +47,7 @@ EstatsTheme::add('page', '<h3>
 </h3>
 <form action="{selfpath}" method="post">
 '.EstatsGUI::optionRowWidget(EstatsLocale::translate('Email'), '', 'Email').EstatsGUI::optionRowWidget(EstatsLocale::translate('Password'), '', 'UserPassword').EstatsGUI::optionRowWidget(EstatsLocale::translate('Repeat password'), '', 'RepeatPassword').EstatsGUI::optionRowWidget(EstatsLocale::translate('Administrator rights'), '', 'AdministratorRights', FALSE, EstatsGUI::FIELD_BOOLEAN).'<div class="buttons">
-<input type="submit" name="AddUser" value="'.EstatsLocale::translate('Add user').'" tabindex="'.EstatsGUI::tabindex().'" />
+<input type="submit" name="AddUser" value="'.EstatsLocale::translate('Add user').'" />
 </div>
 </form>
 <h3>
@@ -82,7 +82,7 @@ for ($i = 0, $c = count($Users); $i < $c; ++$i)
 </td>
 <td>
 <p>
-<a href="mailto:'.htmlspecialchars($Users[$i]['email']).'" tabindex='.EstatsGUI::tabindex().'>'.htmlspecialchars($Users[$i]['email']).'</a>
+<a href="mailto:'.htmlspecialchars($Users[$i]['email']).'">'.htmlspecialchars($Users[$i]['email']).'</a>
 </p>
 </td>
 <td>

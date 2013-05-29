@@ -35,7 +35,7 @@ else
 ';
 	}
 
-	EstatsTheme::add('selectmap', '<select name="map" id="map" title="'.EstatsLocale::translate('Map view').'" tabindex="'.EstatsGUI::tabindex().'">
+	EstatsTheme::add('selectmap', '<select name="map" id="map" title="'.EstatsLocale::translate('Map view').'">
 <optgroup label="'.EstatsLocale::translate('World').'">
 <option'.(($Path[$Var - 1] == 'countries')?' selected="selected"':'').' value="countries">'.EstatsLocale::translate('Countries').' ('.EstatsLocale::translate('Map').')</option>
 <option'.(($Path[$Var - 1] == 'continents')?' selected="selected"':'').' value="continents">'.EstatsLocale::translate('Continents').' ('.EstatsLocale::translate('Map').')</option>
@@ -112,7 +112,6 @@ else
 		$Data['cities'] = &$Cities;
 
 		EstatsTheme::add('mapid', $MapID);
-		EstatsTheme::add('maptabindex', EstatsGUI::tabindex());
 		EstatsTheme::add('mapauthor', $MapInformation['Information']['Author']);
 		EstatsTheme::add('maplink', $MapInformation['Information']['URL']);
 		EstatsTheme::add('maptime', date('Y.m.d H:i:s', $MapInformation['Information']['Time']));
@@ -140,7 +139,7 @@ else
 				$Entry = EstatsGUI::itemText($Value['name'], 'cities');
 				$ID = md5($Key);
 
-				EstatsTheme::append('maphrefs', '<area shape="circle" alt="'.$Entry.'" title="'.$Entry.' - '.$Amount.' '.round ((($Amount / $Data['sum_current']) * 100), 2).'%" onmouseover="document.getElementById (\'geolocation_tooltip_'.$ID.'\').style.display = \'block\'" onmouseout="document.getElementById (\'geolocation_tooltip_'.$ID.'\').style.display = \'none\'" coords="'.$MapInformation['Cities'][$Coordinates].',4" tabindex="'.(EstatsGUI::tabindex()).'" />
+				EstatsTheme::append('maphrefs', '<area shape="circle" alt="'.$Entry.'" title="'.$Entry.' - '.$Amount.' '.round((($Amount / $Data['sum_current']) * 100), 2).'%" onmouseover="document.getElementById (\'geolocation_tooltip_'.$ID.'\').style.display = \'block\'" onmouseout="document.getElementById (\'geolocation_tooltip_'.$ID.'\').style.display = \'none\'" coords="'.$MapInformation['Cities'][$Coordinates].',4" />
 ');
 
 				$Icon = EstatsGUI::iconPath($Value['name'], 'cities');
@@ -166,7 +165,7 @@ else
 				$Amount = (isset($Data[($Path[$Var - 1] == 'continents')?'continents':'data'][(($Map != 'world')?$Path[$Var - 1].'-':'').$Key])?(int) $Data[($Path[$Var - 1] == 'continents')?'continents':'data'][(($Map != 'world')?$Path[$Var - 1].'-':'').$Key]:0);
 				$Entry = EstatsGUI::itemText((($Map == 'world')?'':$Path[$Var - 1].'-').$Key, (($Map == 'world')?(($Path[$Var - 1] == 'continents')?'continents':'countries'):'regions'));
 
-				EstatsTheme::append('maphrefs', '<area shape="poly" alt="'.$Entry.'" title="'.$Entry.($Amount?' - '.$Amount.($Amount?' ('.round((($Amount / $Data['sum_current']) * 100), 2).'%)" onmouseover="document.getElementById(\'geolocation_tooltip_'.$Key.'\').style.display = \'block\'" onmouseout="document.getElementById (\'geolocation_tooltip_'.$Key.'\').style.display = \'none\''.(($Map == 'world')?'" href="{path}geolocation/'.$Key.'/'.implode('-', $Date).'{suffix}':''):''):'').'" coords="'.$Value.'" tabindex="'.(EstatsGUI::tabindex()).'" />
+				EstatsTheme::append('maphrefs', '<area shape="poly" alt="'.$Entry.'" title="'.$Entry.($Amount?' - '.$Amount.($Amount?' ('.round((($Amount / $Data['sum_current']) * 100), 2).'%)" onmouseover="document.getElementById(\'geolocation_tooltip_'.$Key.'\').style.display = \'block\'" onmouseout="document.getElementById (\'geolocation_tooltip_'.$Key.'\').style.display = \'none\''.(($Map == 'world')?'" href="{path}geolocation/'.$Key.'/'.implode('-', $Date).'{suffix}':''):''):'').'" coords="'.$Value.'" />
 ');
 
 				if ($Amount)

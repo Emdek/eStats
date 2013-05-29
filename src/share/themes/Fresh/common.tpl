@@ -1,5 +1,5 @@
 [start:menu-entry]<li id="menu_entry_{id}" class="{class}<!--start:submenu-{id}--> submenu<!--end:submenu-{id}-->">
-<a href="{link}" tabindex="{tabindex}" accesskey="{accesskey}" class="{class}">
+<a href="{link}" accesskey="{accesskey}" class="{class}">
 <span class="menu_entry_right">
 <span class="menu_entry_left"></span>
 {text}
@@ -12,7 +12,7 @@
 [/end]
 
 [start:submenu-entry]<li id="menu_entry_{id}">
-<a href="{link}" tabindex="{tabindex}" accesskey="{accesskey}" class="{class}">
+<a href="{link}" accesskey="{accesskey}" class="{class}">
 <span class="submenu_entry_right">
 <span class="submenu_entry_left"></span>
 <img src="{icon}" alt="">
@@ -31,7 +31,7 @@
 <p>
 <label>
 <span>
-{selecthour}{selectday}{selectmonth}{selectyear}{selectmap}<input type="submit" value="{lang_show}" tabindex="{dateformindex}">{dateprevious}{datenext}</span>
+{selecthour}{selectday}{selectmonth}{selectyear}{selectmap}<input type="submit" value="{lang_show}">{dateprevious}{datenext}</span>
 {lang_showdatafor}:
 </label>
 </p>
@@ -55,7 +55,7 @@
 <img src="{datapath}/share/icons/pages/{id}.png" alt="" class="icon">
 </th>
 <th colspan="<!--start:group_difference-->4<!--end:group_difference--><!--start:!group_difference-->3<!--end:!group_difference-->" class="title">
-<a href="{link}" tabindex="{tabindex}">{title}</a>
+<a href="{link}">{title}</a>
 </th>
 </tr>
 {information}{rows}{summary}</table>

@@ -4,7 +4,7 @@
 <span>
 <input type="hidden" name="ChangeRobots" value="1">
 <input type="checkbox" name="ShowRobots" value="1" {robotscheckbox}>
-<input type="submit" value="{lang_change}" tabindex="{robotsformindex}">
+<input type="submit" value="{lang_change}">
 </span>
 {lang_showrobots}:
 </label>
@@ -43,7 +43,7 @@
 
 [start:visits-row]<tr class="{class}">
 <td>
-<!--start:details-{id}--><a href="{path}visits/visit/{id}/1{suffix}" title="{lang_details}" tabindex="{tabindex}">
+<!--start:details-{id}--><a href="{path}visits/visit/{id}/1{suffix}" title="{lang_details}">
 <!--end:details-{id}--><strong><em>{id}</em></strong>
 <!--start:details-{id}--></a>
 <!--end:details-{id}--></td>
@@ -175,7 +175,7 @@
 
 [start:other-visits-row]<tr>
 <td>
-<!--start:details-{id}--><a href="{path}visits/visit/{id}/1" title="{lang_details}" tabindex="{tabindex}">
+<!--start:details-{id}--><a href="{path}visits/visit/{id}/1" title="{lang_details}">
 <!--end:details-{id}--><strong><em>{id}</em></strong>
 <!--start:details-{id}--></a>
 <!--end:details-{id}--></td>

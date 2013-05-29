@@ -437,11 +437,11 @@ class EstatsGUI
 		{
 			if ($IP == $IPs[$i] || (strstr($IPs[$i], '*') && substr($IP, 0, (strlen($IPs[$i]) - 1)) == substr($IPs[$i], 0, -1)))
 			{
-				return '<a href="{selfpath}{separator}'.($Ignored?'ignored':'blocked').'IP='.htmlspecialchars($IPs[$i]).'" class="green" title="'.(($IP == $IPs[$i])?EstatsLocale::translate('Unblock IP'):EstatsLocale::translate('Unblock IPs range')).(($IP == $IPs[$i])?'':' ('.htmlspecialchars($IPs[$i]).')').'" tabindex="'.self::tabindex().'"><strong>&#187;</strong></a>';
+				return '<a href="{selfpath}{separator}'.($Ignored?'ignored':'blocked').'IP='.htmlspecialchars($IPs[$i]).'" class="green" title="'.(($IP == $IPs[$i])?EstatsLocale::translate('Unblock IP'):EstatsLocale::translate('Unblock IPs range')).(($IP == $IPs[$i])?'':' ('.htmlspecialchars($IPs[$i]).')').'"><strong>&#187;</strong></a>';
 			}
 		}
 
-		return '<a href="{selfpath}{separator}'.($Ignored?'ignored':'blocked').'IP='.$IP.'" class="red" title="'.EstatsLocale::translate('Block this IP').'" onclick="if (!confirm (\''.EstatsLocale::translate('Do You really want to ban this IP address?').'\')) return false" tabindex="'.self::tabindex().'"><strong>&#187;</strong></a>';
+		return '<a href="{selfpath}{separator}'.($Ignored?'ignored':'blocked').'IP='.$IP.'" class="red" title="'.EstatsLocale::translate('Block this IP').'" onclick="if (!confirm (\''.EstatsLocale::translate('Do You really want to ban this IP address?').'\')) return false"><strong>&#187;</strong></a>';
 	}
 
 /**
@@ -453,7 +453,7 @@ class EstatsGUI
 
 	static function whoisLink($Data, $String = '')
 	{
-		return '<a href="'.str_replace('{data}', htmlspecialchars($Data), EstatsCore::option('WhoisLink')).'" title="'.EstatsLocale::translate('Whois').'" tabindex="'.self::tabindex().'">'.($String?$String:EstatsLocale::translate('Whois')).'</a>';
+		return '<a href="'.str_replace('{data}', htmlspecialchars($Data), EstatsCore::option('WhoisLink')).'" title="'.EstatsLocale::translate('Whois').'">'.($String?$String:EstatsLocale::translate('Whois')).'</a>';
 	}
 
 /**
@@ -575,18 +575,6 @@ class EstatsGUI
 	}
 
 /**
- * Returns next free tabindex
- * @return integer
- */
-
-	static function tabindex()
-	{
-		static $Tabindex;
-
-		return ++$Tabindex;
-	}
-
-/**
  * Generates links block
  * @param integer Page
  * @param integer Amount
@@ -628,7 +616,7 @@ class EstatsGUI
 			{
 				if ($Value > 0 && $Value <= $Amount && $Value != $Page)
 				{
-					$Links[] = '<a href="'.str_replace('{page}', $Value, $Path).'" tabindex="'.self::tabindex().'" title="'.sprintf($Locale[is_numeric($Key)?'default':$Key], $Value).'">'.(is_numeric($Key)?$Key:$Array[$Key]).'</a>';
+					$Links[] = '<a href="'.str_replace('{page}', $Value, $Path).'" title="'.sprintf($Locale[is_numeric($Key)?'default':$Key], $Value).'">'.(is_numeric($Key)?$Key:$Array[$Key]).'</a>';
 				}
 				else
 				{
@@ -700,13 +688,13 @@ class EstatsGUI
 				$Form = &$Value;
 			break;
 			case self::FIELD_BOOLEAN:
-				$Form = '<input type="checkbox" name="'.$Name.'" id="F_'.$ID.'" value="1" tabindex="'.self::tabindex().'"'.($Value?' checked="checked"':'').(($Default !== NULL)?' onchange="checkDefault(\''.$ID.'\', '.($Default?1:0).')"':'').' />';
+				$Form = '<input type="checkbox" name="'.$Name.'" id="F_'.$ID.'" value="1"'.($Value?' checked="checked"':'').(($Default !== NULL)?' onchange="checkDefault(\''.$ID.'\', '.($Default?1:0).')"':'').' />';
 			break;
 			case self::FIELD_VALUE:
-				$Form = '<input'.(stristr($Name, 'pass')?' type="password"':'').' name="'.$Name.'" id="F_'.$ID.'" value="'.htmlspecialchars($Value, ENT_QUOTES, 'UTF-8', FALSE).'" tabindex="'.self::tabindex().'"'.(($Default !== NULL)?' onkeyup="checkDefault(\''.$ID.'\', \''.str_replace(array("\r\n", "\n", '{', '}'), array('\r\n', '\n', '&#123;', '&#125;'), htmlspecialchars($Default, ENT_QUOTES, 'UTF-8')).'\')"':'').' />';
+				$Form = '<input'.(stristr($Name, 'pass')?' type="password"':'').' name="'.$Name.'" id="F_'.$ID.'" value="'.htmlspecialchars($Value, ENT_QUOTES, 'UTF-8', FALSE).'"'.(($Default !== NULL)?' onkeyup="checkDefault(\''.$ID.'\', \''.str_replace(array("\r\n", "\n", '{', '}'), array('\r\n', '\n', '&#123;', '&#125;'), htmlspecialchars($Default, ENT_QUOTES, 'UTF-8')).'\')"':'').' />';
 			break;
 			case self::FIELD_SELECT:
-				$Form = '<select name="'.$Name.'" id="F_'.$ID.'" tabindex="'.self::tabindex().'"'.(is_array($Value)?' multiple="multiple" size="3"':'').(($Default !== NULL)?' onchange="checkDefault(\''.$ID.'\', \''.str_replace(array('{', '}'), array('&#123;', '&#125;'), htmlspecialchars($Default, ENT_QUOTES, 'UTF-8')).'\')"':'').'>
+				$Form = '<select name="'.$Name.'" id="F_'.$ID.'"'.(is_array($Value)?' multiple="multiple" size="3"':'').(($Default !== NULL)?' onchange="checkDefault(\''.$ID.'\', \''.str_replace(array('{', '}'), array('&#123;', '&#125;'), htmlspecialchars($Default, ENT_QUOTES, 'UTF-8')).'\')"':'').'>
 ';
 
 				for ($i = 0, $c = count($Options); $i < $c; ++$i)
@@ -735,7 +723,7 @@ class EstatsGUI
 			break;
 			case self::FIELD_MULTILINE:
 			case self::FIELD_ARRAY:
-				$Form = '<textarea rows="1" cols="25" name="'.$Name.'" id="F_'.$ID.'" tabindex="'.self::tabindex().'"'.(($Type == self::FIELD_ARRAY)?' title="'.EstatsLocale::translate('Array, elements separated by |').'"':'').(($Default !== NULL)?' onkeyup="checkDefault(\''.$ID.'\', \''.str_replace(array("\r\n", "\n", '{', '}'), array('\r\n', '\n', '&#123;', '&#125;'), htmlspecialchars($Default, ENT_QUOTES, 'UTF-8')).'\')"':'').'>'.htmlspecialchars((is_array($Value)?implode('|', $Value):$Value), ENT_QUOTES, 'UTF-8', FALSE).'</textarea>';
+				$Form = '<textarea rows="1" cols="25" name="'.$Name.'" id="F_'.$ID.'"'.(($Type == self::FIELD_ARRAY)?' title="'.EstatsLocale::translate('Array, elements separated by |').'"':'').(($Default !== NULL)?' onkeyup="checkDefault(\''.$ID.'\', \''.str_replace(array("\r\n", "\n", '{', '}'), array('\r\n', '\n', '&#123;', '&#125;'), htmlspecialchars($Default, ENT_QUOTES, 'UTF-8')).'\')"':'').'>'.htmlspecialchars((is_array($Value)?implode('|', $Value):$Value), ENT_QUOTES, 'UTF-8', FALSE).'</textarea>';
 			break;
 			default:
 				return '';
@@ -745,7 +733,7 @@ class EstatsGUI
 		if ($Default !== NULL)
 		{
 			$Form.= '
-<input type="button" value="'.EstatsLocale::translate('Default').'"  onclick="setDefault(\''.$ID.'\', \''.str_replace(array("\r\n", "\n", '{', '}'), array('\r\n', '\n', '&#123;', '&#125;'), htmlspecialchars($Default, ENT_QUOTES, 'UTF-8')).'\')" title="'.EstatsLocale::translate('Default value').': '.htmlspecialchars(str_replace(array("\r\n", "\n", '{', '}'), array(' ', ' ', '&#123;', '&#125;'), $Default)).'" tabindex="'.self::tabindex().'" />';
+<input type="button" value="'.EstatsLocale::translate('Default').'"  onclick="setDefault(\''.$ID.'\', \''.str_replace(array("\r\n", "\n", '{', '}'), array('\r\n', '\n', '&#123;', '&#125;'), htmlspecialchars($Default, ENT_QUOTES, 'UTF-8')).'\')" title="'.EstatsLocale::translate('Default value').': '.htmlspecialchars(str_replace(array("\r\n", "\n", '{', '}'), array(' ', ' ', '&#123;', '&#125;'), $Default)).'" />';
 		}
 
 		return EstatsTheme::parse(EstatsTheme::get('option-row'), array(

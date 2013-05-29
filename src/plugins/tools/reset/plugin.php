@@ -82,8 +82,8 @@ foreach ($ResetOptions as $Key => $Value)
 }
 
 EstatsTheme::append('page', EstatsGUI::optionRowWidget(EstatsLocale::translate('Create backup'), '', 'CreateBackup', 1, EstatsGUI::FIELD_BOOLEAN).'<div class="buttons">
-<input type="submit" value="'.EstatsLocale::translate('Execute').'" onclick="if (!confirm(\''.EstatsLocale::translate('Do You really want to delete data?').'\')) return false" tabindex="'.EstatsGUI::tabindex().'" />
-<input type="reset" value="'.EstatsLocale::translate('Reset').'" tabindex="'.EstatsGUI::tabindex().'" />
+<input type="submit" value="'.EstatsLocale::translate('Execute').'" onclick="if (!confirm(\''.EstatsLocale::translate('Do You really want to delete data?').'\')) return false" />
+<input type="reset" value="'.EstatsLocale::translate('Reset').'" />
 </div>
 </form>
 ');

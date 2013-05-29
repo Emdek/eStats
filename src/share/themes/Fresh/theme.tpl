@@ -23,11 +23,11 @@ Licence: GPL
 <div id="headerright">
 <!--start:selectform--><form action="{selfpath}" method="post">
 <div>
-{selectlocale}{selecttheme}<input type="submit" value="{lang_change}" tabindex="{selectformindex}">
+{selectlocale}{selecttheme}<input type="submit" value="{lang_change}">
 </div>
 </form>
 <!--end:selectform-->{date}<!--start:!installation--><br>
-<a href="<!--start:loggedin-->{selfpath}{separator}logout" tabindex="{loginindex}">{lang_logout}<!--end:loggedin--><!--start:!loggedin-->{path}login{suffix}" tabindex="{loginindex}">{lang_login}<!--end:!loggedin--></a>
+<a href="<!--start:loggedin-->{selfpath}{separator}logout">{lang_logout}<!--end:loggedin--><!--start:!loggedin-->{path}login{suffix}">{lang_login}<!--end:!loggedin--></a>
 <!--end:!installation--></div>
 <img src="{datapath}share/themes/{theme}/images/logo.png" alt="" id="logo">
 <h1>
@@ -42,14 +42,14 @@ Licence: GPL
 {preloader}</div>
 <div id="footer">
 Powered by<br>
-<a href="http://estats.emdek.cba.pl/" tabindex="{tabindex}">
+<a href="http://estats.emdek.cba.pl/">
 <img src="{datapath}share/antipixels/default/fresh.png" alt="eStats" title="eStats">
 </a>
 <br>
 <div>
-&copy; 2005 - 2012 <a href="http://emdek.cba.pl/" tabindex="{tabindex}"><strong>Emdek</strong></a>
+&copy; 2005 - 2012 <a href="http://emdek.cba.pl/"><strong>Emdek</strong></a>
 </div>
-<a href="#header" title="{lang_gototop}" tabindex="{tabindex}" id="gototop">&nbsp;</a>
+<a href="#header" title="{lang_gototop}" id="gototop">&nbsp;</a>
 <small>{pagegeneration}</small>
 </div>
 </div>

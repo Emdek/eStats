@@ -1,7 +1,7 @@
 [start:chart]{cacheinformation}<table cellspacing="0" cellpadding="0" width="100%" border="1">
 <tr>
 <th colspan="{colspan}">
-<a href="{link}" tabindex="{tabindex}">
+<a href="{link}">
 {title}
 </a>
 </th>

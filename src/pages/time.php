@@ -40,8 +40,6 @@ for ($i = 0; $i < 3; ++$i)
 ');
 }
 
-EstatsTheme::add('selectviewindex', EstatsGUI::tabindex());
-EstatsTheme::add('checkboxcompareindex', EstatsGUI::tabindex());
 EstatsTheme::add('checkboxcomparechecked', ($Compare?' checked="checked"':''));
 
 if (!$CurrentTime)
@@ -256,7 +254,7 @@ for ($i = 0, $c = count($Groups['time']); $i < $c; ++$i)
 	);
 	}
 
-	EstatsTheme::add($Groups['time'][$i], EstatsChart::create($Groups['time'][$i], ($Graphics?EstatsCore::option('ChartsType'):'html'), 'time', $ChartID, ((!$Popularity && $Groups['time'][$i] != '24hours')?'location.href = \'{path}time/'.implode('+', $Summary['types']).'/{date}{suffix}\'':''), $ChartInformation, $Data[0], $Data[1], $Summary, '<a href="{path}time/'.$Groups['time'][$i].'/'.implode('+', $Summary['types']).($CurrentTime?'':'/{period}').($Compare?'/compare':'').'{suffix}" tabindex="'.EstatsGUI::tabindex().'">
+	EstatsTheme::add($Groups['time'][$i], EstatsChart::create($Groups['time'][$i], ($Graphics?EstatsCore::option('ChartsType'):'html'), 'time', $ChartID, ((!$Popularity && $Groups['time'][$i] != '24hours')?'location.href = \'{path}time/'.implode('+', $Summary['types']).'/{date}{suffix}\'':''), $ChartInformation, $Data[0], $Data[1], $Summary, '<a href="{path}time/'.$Groups['time'][$i].'/'.implode('+', $Summary['types']).($CurrentTime?'':'/{period}').($Compare?'/compare':'').'{suffix}">
 '.$Titles[$Groups['time'][$i]].'
 </a>', $CurrentTime, $TimeDifference, EstatsCookie::get('visits'), $CacheTime));
 }

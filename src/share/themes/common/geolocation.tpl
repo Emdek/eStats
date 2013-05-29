@@ -28,7 +28,7 @@
 </div>
 <div id="mapinfo">
 {lang_author}:
-<a href="{maplink}" tabindex="{maptabindex}"><strong>{mapauthor}</strong></a>
+<a href="{maplink}"><strong>{mapauthor}</strong></a>
 ({maptime})
 </div>
 <!--end:map-->[/end]

@@ -654,7 +654,7 @@ class EstatsChart
 '.$Levels.'</td>
 </tr>
 <tr>
-'.$Descriptions.'<th>'.(($Summary['maxall'] && !EstatsTheme::option('ChartSimple') && $TypeAmounts <= 3)?'<input type="checkbox" id="levels_switch_'.$Period.'" onclick="levelsShowHide(\''.$Period.'\')"'.((!isset($_COOKIE['estats_time_levels_chart_'.$Period]) || $_COOKIE['estats_time_levels_chart_'.$Period] != 'true')?' checked="checked"':'').' title="'.EstatsLocale::translate('Show / hide levels of maximum, average and minimum').'" tabindex="'.EstatsGUI::tabindex().'" />':'&nbsp;').'</th>
+'.$Descriptions.'<th>'.(($Summary['maxall'] && !EstatsTheme::option('ChartSimple') && $TypeAmounts <= 3)?'<input type="checkbox" id="levels_switch_'.$Period.'" onclick="levelsShowHide(\''.$Period.'\')"'.((!isset($_COOKIE['estats_time_levels_chart_'.$Period]) || $_COOKIE['estats_time_levels_chart_'.$Period] != 'true')?' checked="checked"':'').' title="'.EstatsLocale::translate('Show / hide levels of maximum, average and minimum').'" />':'&nbsp;').'</th>
 </tr>
 ';
 		$SummaryTable = '';
@@ -698,7 +698,6 @@ class EstatsChart
 	'class' => (in_array($Period, array('24hours', 'month', 'hours'))?' narrow':'').(($Type != 'html')?'':' plain').($Action?' actions':''),
 	'style' => (($Type != 'html')?' style="background:url({path}image{suffix}{separator}id='.$ID.') no-repeat left top;"':''),
 	'title' => $Title,
-	'tabindex' => EstatsGUI::tabindex(),
 	'colspan' => ($Information['amount'] + 1),
 	'cacheinformation' => ($CacheTime?EstatsGUI::notificationWidget(sprintf(EstatsLocale::translate('Data from <em>cache</em>, refreshed: %s.'), date('d.m.Y H:i:s', $CacheTime)), 'information'):''),
 	'switch' => (EstatsTheme::option('ChartSimple')?'':'<script type="text/javascript">

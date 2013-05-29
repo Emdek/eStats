@@ -1,5 +1,5 @@
 [start:menu-entry]<li id="menu_entry_{id}">
-<a href="{link}" tabindex="{tabindex}" accesskey="{accesskey}" class="{class}">
+<a href="{link}" accesskey="{accesskey}" class="{class}">
 <!--start:submenu-{id}-->&#8595;&nbsp;<!--end:submenu-{id}--><span>{text}</span>
 </a>
 <!--start:submenu-{id}--><ul id="submenu_{id}">
@@ -8,7 +8,7 @@
 [/end]
 
 [start:submenu-entry]<li id="menu_entry_{id}">
-<a href="{link}" tabindex="{tabindex}" accesskey="{accesskey}" class="{class}">
+<a href="{link}" accesskey="{accesskey}" class="{class}">
 <span>{text}</span>
 </a>
 </li>
@@ -23,7 +23,7 @@
 <p>
 <label>
 <span>
-{selecthour}{selectday}{selectmonth}{selectyear}{selectmap}<input type="submit" value="{lang_show}" tabindex="{dateformindex}">{dateprevious}{datenext}</span>
+{selecthour}{selectday}{selectmonth}{selectyear}{selectmap}<input type="submit" value="{lang_show}">{dateprevious}{datenext}</span>
 {lang_showdatafor}:
 </label>
 </p>
@@ -44,7 +44,7 @@
 <thead>
 <tr>
 <th colspan="<!--start:group_difference-->5<!--end:group_difference--><!--start:!group_difference-->4<!--end:!group_difference-->">
-<a href="{link}" tabindex="{tabindex}">{title}</a>
+<a href="{link}">{title}</a>
 </th>
 </tr>
 </thead>

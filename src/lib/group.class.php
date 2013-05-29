@@ -739,7 +739,7 @@ class EstatsGroup
 				}
 
 				$AdminOptions = '
-<a href="{selfpath}{separator}'.(($ID == 'referrers')?'referrer='.urlencode($Referrer['host']):'keyword='.urlencode($Name)).'" class="red" tabindex="'.EstatsGUI::tabindex().'" title="'.(($ID == 'referrers')?EstatsLocale::translate('Block counting of this referrer'):EstatsLocale::translate('Block counting of this keyword / phrase')).'" onclick="if (!confirm(\''.(($ID == 'referrers')?EstatsLocale::translate('Do you really want to exclude this referrer?'):EstatsLocale::translate('Do you really want to exclude this keyword / phrase?')).'\')) return false">
+<a href="{selfpath}{separator}'.(($ID == 'referrers')?'referrer='.urlencode($Referrer['host']):'keyword='.urlencode($Name)).'" class="red" title="'.(($ID == 'referrers')?EstatsLocale::translate('Block counting of this referrer'):EstatsLocale::translate('Block counting of this keyword / phrase')).'" onclick="if (!confirm(\''.(($ID == 'referrers')?EstatsLocale::translate('Do you really want to exclude this referrer?'):EstatsLocale::translate('Do you really want to exclude this keyword / phrase?')).'\')) return false">
 <strong>&#187;</strong>
 </a>';
 			}
@@ -771,7 +771,7 @@ class EstatsGroup
 	'number' => (++$Number + (($Page - 1) * EstatsCore::option('GroupAmount/'.$ID))),
 	'icon' => ($Icon?EstatsGUI::iconTag($Icon, $String).'
 ':''),
-	'value' => ($Address?'<a href="'.htmlspecialchars($Address).'" tabindex="'.EstatsGUI::tabindex().'" title="'.htmlspecialchars($String).'" rel="nofollow">
+	'value' => ($Address?'<a href="'.htmlspecialchars($Address).'" title="'.htmlspecialchars($String).'" rel="nofollow">
 ':'').str_replace('{', '&#123;', EstatsGUI::cutString($String, EstatsTheme::option('Group'.($Extended?'Single':'').'RowValueLength'))).($Address?'
 </a>':'').$AdminOptions,
 	'amount' => EstatsGUI::formatNumber($Row['amount_current']),
@@ -801,7 +801,6 @@ class EstatsGroup
 	'title' => ((!$Extended && EstatsCore::option('GroupAmount/'.$ID) && $Data['amount'] > EstatsCore::option('GroupAmount/'.$ID))?sprintf(EstatsLocale::translate('%s (%d of %d)'), $Title, (int) ((EstatsCore::option('GroupAmount/'.$ID) > $Data['amount'])?$Data['amount']:EstatsCore::option('GroupAmount/'.$ID)), (int) $Data['amount']):$Title),
 	'link' => ($Link?str_replace('{date}', '{period}', $Link):''),
 	'links' => (($PagesAmount > 1)?EstatsGUI::linksWidget($Page, $PagesAmount, str_replace('{date}', '{period}/{page}', $Link)):''),
-	'tabindex' => EstatsGUI::tabindex(),
 	'information' => ($Information?str_replace('{information}', $Information, EstatsTheme::get('group-information')):''),
 	'rows' => $Contents,
 	'summary' => $Summary,

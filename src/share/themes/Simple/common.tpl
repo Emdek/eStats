@@ -1,5 +1,5 @@
 [start:menu-entry]<li id="menu_entry_{id}">
-<a href="{link}" tabindex="{tabindex}" accesskey="{accesskey}">
+<a href="{link}" accesskey="{accesskey}">
 {text}
 </a>
 <!--start:submenu-{id}--><ul id="submenu_{id}">
@@ -18,7 +18,7 @@
 [start:dateform]<form action="{selfpath}" method="post">
 <p>
 <label for="year">{lang_showdatafor}</label>:<br>
-{dateprevious}{selectday}{selectmonth}{selectyear}{datenext}<input type="submit" value="{lang_show}" tabindex="{dateformindex}">
+{dateprevious}{selectday}{selectmonth}{selectyear}{datenext}<input type="submit" value="{lang_show}">
 </p>
 </form>
 [/end]
@@ -34,7 +34,7 @@
 
 [start:group]<tr>
 <th colspan="4">
-<a href="{link}" tabindex="{tabindex}">{title}</a>
+<a href="{link}">{title}</a>
 </th>
 </tr>
 {information}{rows}{summary}[/end]

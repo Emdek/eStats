@@ -2,18 +2,18 @@
 <div align="center">
 <label>
 {lang_email}:
-<input name="Email" tabindex="{tabindex}"><br>
+<input name="Email"><br>
 </label>
 <div align="center">
 <label>
 {lang_password}:
-<input type="password" name="Password" tabindex="{tabindex}"><br>
+<input type="password" name="Password"><br>
 </label>
 <label>
 {lang_remember}:
-<input type="checkbox" name="Remember" tabindex="{tabindex}"><br>
+<input type="checkbox" name="Remember"><br>
 </label>
-<input type="submit" value="{lang_loginto}" tabindex="{tabindex}">
+<input type="submit" value="{lang_loginto}">
 </div>
 </form>
 [/end]

@@ -51,11 +51,11 @@ EstatsTheme::add('page', '<h3>
 </h3>
 <p>
 '.EstatsLocale::translate('<em>eStats</em> version').':
-<em><a href="http://estats.emdek.cba.pl/index.php?path='.$Path[0].'/changelog/#event_'.ESTATS_VERSIONSTRING.'" tabindex="'.EstatsGUI::tabindex().'">'.ESTATS_VERSIONSTRING.' - '.ESTATS_VERSIONSTATUS.'</a> ('.date('d.m.Y H:i:s', ESTATS_VERSIONTIME).')</em>'.((isset($_SESSION[EstatsCore::session()]['NewerVersion']) && $_SESSION[EstatsCore::session()]['NewerVersion'] != ESTATS_VERSIONSTRING)?'(<strong>'.EstatsLocale::translate('New version is available!').' - <a href="http://estats.emdek.cba.pl/index.php/'.$Path[0].'/changelog/#'.$_SESSION[EstatsCore::session()]['NewerVersion'].'" tabindex="'.EstatsGUI::tabindex().'">'.$_SESSION[EstatsCore::session()]['NewerVersion'].'</a></strong>)':'').' - <a href="{selfpath}{separator}checkversion">'.EstatsLocale::translate('Check for upgrade').'</a>;
+<em><a href="http://estats.emdek.cba.pl/index.php?path='.$Path[0].'/changelog/#event_'.ESTATS_VERSIONSTRING.'">'.ESTATS_VERSIONSTRING.' - '.ESTATS_VERSIONSTATUS.'</a> ('.date('d.m.Y H:i:s', ESTATS_VERSIONTIME).')</em>'.((isset($_SESSION[EstatsCore::session()]['NewerVersion']) && $_SESSION[EstatsCore::session()]['NewerVersion'] != ESTATS_VERSIONSTRING)?'(<strong>'.EstatsLocale::translate('New version is available!').' - <a href="http://estats.emdek.cba.pl/index.php/'.$Path[0].'/changelog/#'.$_SESSION[EstatsCore::session()]['NewerVersion'].'">'.$_SESSION[EstatsCore::session()]['NewerVersion'].'</a></strong>)':'').' - <a href="{selfpath}{separator}checkversion">'.EstatsLocale::translate('Check for upgrade').'</a>;
 </p>
 <p>
 '.EstatsLocale::translate('Database module').':
-<em><a href="'.htmlspecialchars(EstatsCore::driver()->option('URL')).'" tabindex="'.EstatsGUI::tabindex().'" title="'.EstatsLocale::translate('Author').': '.EstatsCore::driver()->option('Author').'">'.EstatsCore::driver()->option('Name').' v'.EstatsCore::driver()->option('Version').' - '.EstatsCore::driver()->option('Status').'</a> ('.date('d.m.Y H:i:s', EstatsCore::driver()->option('Time')).')</em>;
+<em><a href="'.htmlspecialchars(EstatsCore::driver()->option('URL')).'" title="'.EstatsLocale::translate('Author').': '.EstatsCore::driver()->option('Author').'">'.EstatsCore::driver()->option('Name').' v'.EstatsCore::driver()->option('Version').' - '.EstatsCore::driver()->option('Status').'</a> ('.date('d.m.Y H:i:s', EstatsCore::driver()->option('Time')).')</em>;
 </p>
 <p>
 '.EstatsLocale::translate('Database').':
@@ -63,7 +63,7 @@ EstatsTheme::add('page', '<h3>
 </p>
 <p>
 '.EstatsLocale::translate('PHP version').':
-<em>'.htmlspecialchars(PHP_VERSION).(function_exists('phpinfo')?' (<a href="{path}tools/summary/phpinfo{suffix}" tabindex="'.EstatsGUI::tabindex().'">phpinfo</a>)':'').'</em>;
+<em>'.htmlspecialchars(PHP_VERSION).(function_exists('phpinfo')?' (<a href="{path}tools/summary/phpinfo{suffix}">phpinfo</a>)':'').'</em>;
 </p>
 <p>
 '.EstatsLocale::translate('PHP loaded extensions').':

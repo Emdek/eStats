@@ -85,7 +85,7 @@ Continuation of installation can cause unexpected results!'), 'error');
 {heading-start}'.EstatsLocale::translate('Driver information').'{heading-end}
 </h3>
 <p>
-<a href="'.htmlspecialchars($Driver->option('URL')).'" tabindex="'.EstatsGUI::tabindex().'" title="'.EstatsLocale::translate('Author').': '.htmlspecialchars($Driver->option('Author')).'"><strong>'.htmlspecialchars($Driver->option('Name')).' v'.htmlspecialchars($Driver->option('Version')).' - '.htmlspecialchars($Driver->option('Status')).'</strong></a> ('.date('d.m.Y H:i:s', $Driver->option('Time')).').
+<a href="'.htmlspecialchars($Driver->option('URL')).'" title="'.EstatsLocale::translate('Author').': '.htmlspecialchars($Driver->option('Author')).'"><strong>'.htmlspecialchars($Driver->option('Name')).' v'.htmlspecialchars($Driver->option('Version')).' - '.htmlspecialchars($Driver->option('Status')).'</strong></a> ('.date('d.m.Y H:i:s', $Driver->option('Time')).').
 </p>
 ');
 
@@ -156,10 +156,10 @@ Continuation of installation can cause unexpected results!'), 'error');
 document.getElementById(\'install_advanced\').style.display = \'none\';
 </script>
 <div class="buttons">
-<input type="submit" name="TestConnection" value="'.EstatsLocale::translate('Test database connection').'" tabindex="'.EstatsGUI::tabindex().'" />
-<input type="submit" name="Execute" value="'.EstatsLocale::translate('Continue').'" tabindex="'.EstatsGUI::tabindex().'" />
-<input type="reset" value="'.EstatsLocale::translate('Reset').'" tabindex="'.EstatsGUI::tabindex().'" /><br />
-<input type="button" value="'.EstatsLocale::translate('Advanced').'" tabindex="'.EstatsGUI::tabindex().'" onclick="document.getElementById(\'install_advanced\').style.display = ((document.getElementById(\'install_advanced\').style.display == \'none\')?\'block\':\'none\')" />
+<input type="submit" name="TestConnection" value="'.EstatsLocale::translate('Test database connection').'" />
+<input type="submit" name="Execute" value="'.EstatsLocale::translate('Continue').'" />
+<input type="reset" value="'.EstatsLocale::translate('Reset').'" /><br />
+<input type="button" value="'.EstatsLocale::translate('Advanced').'" onclick="document.getElementById(\'install_advanced\').style.display = ((document.getElementById(\'install_advanced\').style.display == \'none\')?\'block\':\'none\')" />
 <input type="hidden" name="DatabaseDriver" value="'.htmlspecialchars($_POST['DatabaseDriver']).'" />
 </div>
 </form>
@@ -330,13 +330,13 @@ define(\'eStatsVersion\', \''.number_format((double) ESTATS_VERSIONSTRING, 1, '.
 '.htmlspecialchars($ConfigurationFile).'</textarea>
 </p>
 <div class="buttons">
-<input type="button" value="'.EstatsLocale::translate('Select').'" tabindex="'.EstatsGUI::tabindex().'" onclick="document.getElementById(\'configfile\').select(); document.getElementById(\'configfile\').focus()" />
+<input type="button" value="'.EstatsLocale::translate('Select').'" onclick="document.getElementById(\'configfile\').select(); document.getElementById(\'configfile\').focus()" />
 </div>
 ':'').'<h4>
 '.EstatsLocale::translate('Fine tune configuration').'
 </h4>
 <p>
-'.sprintf(EstatsLocale::translate('If no actions remain for execution go to <a href="%s" tabindex="%d"><strong>configuration</strong></a> page and perform after installation setup.'), '{datapath}index.php'.(($_POST['PathMode'] == 1)?'/':'?path=').$Path[0].'/tools/configuration',EstatsGUI::tabindex()).'
+'.sprintf(EstatsLocale::translate('If no actions remain for execution go to <a href="%s"><strong>configuration</strong></a> page and perform after installation setup.'), '{datapath}index.php'.(($_POST['PathMode'] == 1)?'/':'?path=').$Path[0].'/tools/configuration').'
 </p>
 <h4>
 '.EstatsLocale::translate('Place activation code on your page').'
@@ -347,7 +347,7 @@ define(\'eStatsVersion\', \''.number_format((double) ESTATS_VERSIONSTRING, 1, '.
 <p>
 <label>
 <span>
-<select id="canusephp" tabindex="'.EstatsGUI::tabindex().'" onchange="document.getElementById(\'canusephpyes\').style.display = ((this.options[selectedIndex].value == \'yes\')?\'block\':\'none\'); document.getElementById(\'canusephpno\').style.display = ((this.options[selectedIndex].value == \'no\')?\'block\':\'none\')">
+<select id="canusephp" onchange="document.getElementById(\'canusephpyes\').style.display = ((this.options[selectedIndex].value == \'yes\')?\'block\':\'none\'); document.getElementById(\'canusephpno\').style.display = ((this.options[selectedIndex].value == \'no\')?\'block\':\'none\')">
 <option value="yes" selected="selected">'.EstatsLocale::translate('Yes').'</option>
 <option value="no">'.EstatsLocale::translate('No').'</option>
 </select>
@@ -359,8 +359,8 @@ define(\'eStatsVersion\', \''.number_format((double) ESTATS_VERSIONSTRING, 1, '.
 <p>
 <label>
 <span>
-<input id="websitetitle" tabindex="'.EstatsGUI::tabindex().'" onkeyup="updateCode()" onkeydown="updateCode()" />
-<input type="button" value="'.EstatsLocale::translate('Reset').'" tabindex="'.EstatsGUI::tabindex().'" onclick="document.getElementById(\'websitetitle\').value = \'\'; updateCode()" />
+<input id="websitetitle" onkeyup="updateCode()" onkeydown="updateCode()" />
+<input type="button" value="'.EstatsLocale::translate('Reset').'" onclick="document.getElementById(\'websitetitle\').value = \'\'; updateCode()" />
 </span>
 '.EstatsLocale::translate('Page title (optional, should be unique for each page, if set)').':
 </label>
@@ -375,7 +375,7 @@ define(\'ESTATS_COUNT\', 1);
 </label>
 </p>
 <div class="buttons">
-<input type="button" value="'.EstatsLocale::translate('Select').'" tabindex="'.EstatsGUI::tabindex().'" onclick="document.getElementById(\'phpcode\').select(); document.getElementById(\'phpcode\').focus()" />
+<input type="button" value="'.EstatsLocale::translate('Select').'" onclick="document.getElementById(\'phpcode\').select(); document.getElementById(\'phpcode\').focus()" />
 </div>
 <p>
 '.EstatsLocale::translate('Place the <em>PHP</em> code somewhere at start of code of your page. Script will collect the most part of data, technical information (such as screen resolution) will be handled by <em>JavaScript</em> code.').'
@@ -401,7 +401,7 @@ var eAntipixel = \'\';
 </label>
 </p>
 <div class="buttons">
-<input type="button" value="'.EstatsLocale::translate('Select').'" tabindex="'.EstatsGUI::tabindex().'" onclick="document.getElementById(\'javascriptcode\').select(); document.getElementById(\'javascriptcode\').focus()" />
+<input type="button" value="'.EstatsLocale::translate('Select').'" onclick="document.getElementById(\'javascriptcode\').select(); document.getElementById(\'javascriptcode\').focus()" />
 </div>
 </div>
 <div id="canusephpno">
@@ -424,7 +424,7 @@ var eAntipixel = \'\';
 &lt;script type="text/javascript" src="{datapath}stats.js"&gt;&lt;/script&gt;</textarea>
 </p>
 <div class="buttons">
-<input type="button" value="'.EstatsLocale::translate('Select').'" tabindex="'.EstatsGUI::tabindex().'" onclick="document.getElementById(\'javascriptcodenophp\').select(); document.getElementById(\'javascriptcodenophp\').focus()" />
+<input type="button" value="'.EstatsLocale::translate('Select').'" onclick="document.getElementById(\'javascriptcodenophp\').select(); document.getElementById(\'javascriptcodenophp\').focus()" />
 </div>
 </div>
 <script type="text/javascript">
@@ -536,7 +536,7 @@ After you fill all fields click <em>Continue</em> button to configure the script
 '.($DriverSelect?'<p>
 <label>
 <span>
-<select name="DatabaseDriver" tabindex="'.EstatsGUI::tabindex().'">
+<select name="DatabaseDriver">
 '.$DriverSelect.'</select>
 </span>
 '.EstatsLocale::translate('Database module').':
@@ -545,7 +545,7 @@ After you fill all fields click <em>Continue</em> button to configure the script
 ':'').'<p>
 <label>
 <span>
-<input name="Email" tabindex="'.EstatsGUI::tabindex().'" />
+<input name="Email" />
 </span>
 '.EstatsLocale::translate('Administrator email').':
 </label>
@@ -553,7 +553,7 @@ After you fill all fields click <em>Continue</em> button to configure the script
 <p>
 <label>
 <span>
-<input type="password" name="RootPassword" tabindex="'.EstatsGUI::tabindex().'" />
+<input type="password" name="RootPassword" />
 </span>
 '.EstatsLocale::translate('Administrator password').':
 </label>
@@ -561,7 +561,7 @@ After you fill all fields click <em>Continue</em> button to configure the script
 <p>
 <label>
 <span>
-<input type="password" name="RepeatPassword" tabindex="'.EstatsGUI::tabindex().'" />
+<input type="password" name="RepeatPassword" />
 </span>
 '.EstatsLocale::translate('Repeat password').':
 </label>
@@ -593,7 +593,7 @@ After you fill all fields click <em>Continue</em> button to configure the script
 	}
 
 	EstatsTheme::append('page', '<div class="buttons">
-<input type="submit" value="'.($Error?EstatsLocale::translate('Continue anyway'):EstatsLocale::translate('Continue')).'" tabindex="'.EstatsGUI::tabindex().'"'.($Error?' onclick="alert(\''.EstatsLocale::translate('Continuation despite errors threatens unexpected results!\nYou continue on your own risk!').'\')"':'').' />
+<input type="submit" value="'.($Error?EstatsLocale::translate('Continue anyway'):EstatsLocale::translate('Continue')).'"'.($Error?' onclick="alert(\''.EstatsLocale::translate('Continuation despite errors threatens unexpected results!\nYou continue on your own risk!').'\')"':'').' />
 </div>
 </form>
 ');
