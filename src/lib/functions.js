@@ -1,8 +1,9 @@
 function setCookie(Name, Value)
 {
-	Time = new Date();
-	Time.setTime (Time.getTime() + 31536000);
-	document.cookie = Name + '=' + escape(Value) + '; expires=' + (Value?Time.toGMTString():-1) + '; path=' + escape('/');
+	var Time = new Date();
+	Time.setTime(Time.getTime() + 31536000);
+
+	document.cookie = (Name + '=' + escape(Value) + '; expires=' + (Value ? Time.toGMTString() : -1) + '; path=' + escape('/'));
 }
 
 function levelsShowHide(ID)
@@ -16,10 +17,10 @@ function levelsShowHide(ID)
 
 	for (i = 0, c = HRs.length; i < c; ++i)
 	{
-		HRs[i].style.display = (document.getElementById('levels_switch_' + ID).checked?'block':'none');
+		HRs[i].style.display = (document.getElementById('levels_switch_' + ID).checked ? 'block' : 'none');
 	}
 
-	setCookie('estats_time_levels_chart_' + ID, !document.getElementById('levels_switch_' + ID).checked);
+	setCookie(('estats_time_levels_chart_' + ID), !document.getElementById('levels_switch_' + ID).checked);
 }
 
 function highlightBars(ID, Number, Type, Mode)
@@ -57,7 +58,7 @@ function highlightBars(ID, Number, Type, Mode)
 		}
 		else
 		{
-			Levels[i].className = Levels[i].className.replace (' active', '');
+			Levels[i].className = Levels[i].className.replace(' active', '');
 		}
 	}
 
@@ -72,7 +73,7 @@ function highlightBars(ID, Number, Type, Mode)
 	{
 		if (!Mode)
 		{
-			Bars[i].className = Bars[i].className.replace (' active', '');
+			Bars[i].className = Bars[i].className.replace(' active', '');
 
 			continue;
 		}
@@ -82,7 +83,7 @@ function highlightBars(ID, Number, Type, Mode)
 			continue;
 		}
 
-		String = '_' + Number;
+		String = ('_' + Number);
 
 		if (Bars[i].id.substr (Bars[i].id.length - String.length) != String && Number > -1)
 		{
@@ -96,13 +97,14 @@ function highlightBars(ID, Number, Type, Mode)
 function expandRow(ID, Container)
 {
 	Container.style.display = 'block';
+
 	document.getElementById(ID).className = 'expanded';
 	document.getElementById(ID).style.display = 'block';
 }
 
 function queryRows(GroupID, SID, Query, Mode)
 {
-	Paragraphs = document.getElementById(Mode?GroupID:SID).getElementsByTagName('p');
+	Paragraphs = document.getElementById(Mode ? GroupID : SID).getElementsByTagName('p');
 
 	for (k = 0; k < Paragraphs.length; ++k)
 	{
@@ -117,7 +119,7 @@ function queryRows(GroupID, SID, Query, Mode)
 
 		if (Description.length)
 		{
-			SearchInString = ' ' + Description[0].innerHTML;
+			SearchInString = (' ' + Description[0].innerHTML);
 		}
 		else
 		{
@@ -131,7 +133,7 @@ function queryRows(GroupID, SID, Query, Mode)
 			SearchInString += Field.value + ' ';
 		}
 
-		SearchInString += ParagraphID.substr(2) + ' ';
+		SearchInString += (ParagraphID.substr(2) + ' ');
 		SearchInString = SearchInString.toLowerCase();
 
 		if (SearchInString.split(Query).length > 1)
@@ -194,7 +196,7 @@ function search(Query)
 		if (Fieldsets[i].id.split('.').length == 1)
 		{
 			GroupID = Fieldsets[i].id;
-			Groups = document.getElementById (GroupID).getElementsByTagName('fieldset');
+			Groups = document.getElementById(GroupID).getElementsByTagName('fieldset');
 
 			for (j = 0; j < Groups.length; ++j)
 			{
@@ -218,8 +220,8 @@ function checkDefault(Field, Value)
 		Change = (document.getElementById('F_' + Field).value != Value);
 	}
 
-	document.getElementById('P_' + Field).className = (Change?'changed':'');
-	document.getElementById('P_' + Field).title = (Change?ChangedValueString:'');
+	document.getElementById('P_' + Field).className = (Change ? 'changed' : '');
+	document.getElementById('P_' + Field).title = (Change ? ChangedValueString : '');
 }
 
 function setDefault(Field, Value)
@@ -238,7 +240,7 @@ function setDefault(Field, Value)
 
 function changeClassName(ID)
 {
-	document.getElementById(ID).className = ((document.getElementById(ID).className == 'expanded')?'collapsed':'expanded');
+	document.getElementById(ID).className = ((document.getElementById(ID).className == 'expanded') ? 'collapsed' : 'expanded');
 	document.getElementById('ShowAll').checked = 0;
 }
 
@@ -246,7 +248,7 @@ function resetAll()
 {
 	Inputs = document.getElementById('advanced').getElementsByTagName('input');
 
-	for (i = 0; i < Inputs.length; i++)
+	for (i = 0; i < Inputs.length; ++i)
 	{
 		if (Inputs[i].type == 'button')
 		{
@@ -271,7 +273,7 @@ function expandAll()
 
 	for (i = 0; i < Fieldsets.length; ++i)
 	{
-		Fieldsets[i].className = (Expanded?'collapsed':'expanded');
+		Fieldsets[i].className = (Expanded ? 'collapsed' : 'expanded');
 		Fieldsets[i].style.display = 'block';
 	}
 
