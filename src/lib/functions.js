@@ -1,121 +1,122 @@
-function setCookie(Name, Value)
+function setCookie(name, value)
 {
-	var Time = new Date();
-	Time.setTime(Time.getTime() + 31536000);
+	var time = new Date();
+	time.setTime(time.getTime() + 31536000);
 
-	document.cookie = (Name + '=' + escape(Value) + '; expires=' + (Value ? Time.toGMTString() : -1) + '; path=' + escape('/'));
+	document.cookie = (name + '=' + escape(value) + '; expires=' + (value ? time.toGMTString() : -1) + '; path=' + escape('/'));
 }
 
-function levelsShowHide(ID)
+function levelsShowHide(identifier)
 {
-	if (!document.getElementById('levels_switch_' + ID))
+	if (!document.getElementById('levels_switch_' + identifier))
 	{
 		return;
 	}
 
-	HRs = document.getElementById('chart_' + ID).getElementsByTagName('hr');
+	var elements = document.getElementById('chart_' + identifier).getElementsByTagName('hr');
 
-	for (i = 0, c = HRs.length; i < c; ++i)
+	for (i = 0; i < elements.length; ++i)
 	{
-		HRs[i].style.display = (document.getElementById('levels_switch_' + ID).checked ? 'block' : 'none');
+		elements[i].style.display = (document.getElementById('levels_switch_' + identifier).checked ? 'block' : 'none');
 	}
 
-	setCookie(('estats_time_levels_chart_' + ID), !document.getElementById('levels_switch_' + ID).checked);
+	setCookie(('estats_time_levels_chart_' + identifier), !document.getElementById('levels_switch_' + identifier).checked);
 }
 
-function highlightBars(ID, Number, Type, Mode)
+function highlightBars(identifier, number, type, mode)
 {
-	if (Type == 'sum')
-	{
-		Levels = document.getElementById('chart_' + ID).getElementsByTagName('hr');
-	}
+	var levels;
 
+	if (type == 'sum')
+	{
+		levels = document.getElementById('chart_' + identifier).getElementsByTagName('hr');
+	}
 	else
 	{
-		Levels = new Array(document.getElementById('level_' + ID + '_' + Type + '_' + Number));
+		levels = new Array(document.getElementById('level_' + identifier + '_' + type + '_' + number));
 	}
 
-	for (i = 0; i < Levels.length; ++i)
+	for (i = 0; i < levels.length; ++i)
 	{
-		if (!Levels[i])
+		if (!levels[i])
 		{
 			continue;
 		}
 
-		if (Type == 'sum')
+		if (type == 'sum')
 		{
-			String = '_' + Number;
+			var string = ('_' + number);
 
-			if (Levels[i].id.substr(Levels[i].id.length - String.length) != String)
+			if (levels[i].id.substr(levels[i].id.length - string.length) != string)
 			{
 				continue;
 			}
 		}
 
-		if (Mode)
+		if (mode)
 		{
-			Levels[i].className += ' active';
+			levels[i].className += ' active';
 		}
 		else
 		{
-			Levels[i].className = Levels[i].className.replace(' active', '');
+			levels[i].className = levels[i].className.replace(' active', '');
 		}
 	}
 
-	if (Type == 'average')
+	if (type == 'average')
 	{
 		return;
 	}
 
-	Bars = document.getElementById('chart_' + ID).getElementsByTagName('div');
+	var bars = document.getElementById('chart_' + identifier).getElementsByTagName('div');
 
-	for (i = 0; i < Bars.length; ++i)
+	for (i = 0; i < bars.length; ++i)
 	{
-		if (!Mode)
+		if (!mode)
 		{
-			Bars[i].className = Bars[i].className.replace(' active', '');
+			bars[i].className = bars[i].className.replace(' active', '');
 
 			continue;
 		}
 
-		if (!Bars[i].id || (Type != 'sum' && Bars[i].className != Type))
+		if (!bars[i].id || (type != 'sum' && bars[i].className != type))
 		{
 			continue;
 		}
 
-		String = ('_' + Number);
+		var string = ('_' + number);
 
-		if (Bars[i].id.substr (Bars[i].id.length - String.length) != String && Number > -1)
+		if (bars[i].id.substr (bars[i].id.length - string.length) != string && number > -1)
 		{
 			continue;
 		}
 
-		Bars[i].className += ' active';
+		bars[i].className += ' active';
 	}
 }
 
-function expandRow(ID, Container)
+function expandRow(identifier, container)
 {
-	Container.style.display = 'block';
+	container.style.display = 'block';
 
-	document.getElementById(ID).className = 'expanded';
-	document.getElementById(ID).style.display = 'block';
+	document.getElementById(identifier).className = 'expanded';
+	document.getElementById(identifier).style.display = 'block';
 }
 
-function queryRows(GroupID, SID, Query, Mode)
+function queryRows(GroupID, SID, Query, mode)
 {
-	Paragraphs = document.getElementById(Mode ? GroupID : SID).getElementsByTagName('p');
+	var Paragraphs = document.getElementById(mode ? GroupID : SID).getElementsByTagName('p');
 
 	for (k = 0; k < Paragraphs.length; ++k)
 	{
-		ParagraphID = Paragraphs[k].id;
+		var ParagraphID = Paragraphs[k].id;
 
 		if (document.getElementById('ShowModified').checked && Paragraphs[k].className != 'changed')
 		{
 			continue;
 		}
 
-		Description = document.getElementById(ParagraphID).getElementsByTagName('dfn');
+		var Description = document.getElementById(ParagraphID).getElementsByTagName('dfn');
 
 		if (Description.length)
 		{
@@ -126,7 +127,7 @@ function queryRows(GroupID, SID, Query, Mode)
 			SearchInString = ' ';
 		}
 
-		Field = document.getElementById('F' + ParagraphID.substr(1));
+		var Field = document.getElementById('F' + ParagraphID.substr(1));
 
 		if (Field.tagName == 'TEXTAREA' || (Field.tagName == 'INPUT' && Field.getAttribute('type') == ''))
 		{
@@ -143,7 +144,7 @@ function queryRows(GroupID, SID, Query, Mode)
 				++document.getElementById('ResultsAmount').innerHTML;
 			}
 
-			if (!Mode)
+			if (!mode)
 			{
 				expandRow(SID, Paragraphs[k]);
 			}
@@ -153,15 +154,15 @@ function queryRows(GroupID, SID, Query, Mode)
 	}
 }
 
-function search(Query)
+function search(query)
 {
-	Query = Query.toLowerCase();
-	Fieldsets = document.getElementById('advanced').getElementsByTagName('Fieldset');
-	Rows = document.getElementById('advanced').getElementsByTagName('p');
+	var query = query.toLowerCase();
+	var Fieldsets = document.getElementById('advanced').getElementsByTagName('Fieldset');
+	var Rows = document.getElementById('advanced').getElementsByTagName('p');
 
 	document.getElementById('ResultsAmount').innerHTML = 0;
 
-	if (Query != '')
+	if (query != '')
 	{
 		for (i = 0; i < Fieldsets.length; ++i)
 		{
@@ -188,7 +189,7 @@ function search(Query)
 
 		document.getElementById('ResultsAmount').innerHTML = ResultsAmount;
 
-		return (0);
+		return;
 	}
 
 	for (i = 0; i < Fieldsets.length; i++)
@@ -202,86 +203,88 @@ function search(Query)
 			{
 				SID = Groups[j].id;
 
-				queryRows(GroupID, SID, Query, 0);
-				queryRows(GroupID, SID, Query, 1);
+				queryRows(GroupID, SID, query, 0);
+				queryRows(GroupID, SID, query, 1);
 			}
 		}
 	}
 }
 
-function checkDefault(Field, Value)
+function checkDefault(field, value)
 {
-	if (document.getElementById('F_' + Field).tagName == 'INPUT' && document.getElementById('F_' + Field).getAttribute('type') == 'checkbox')
+	var changed = false;
+
+	if (document.getElementById('F_' + field).tagName == 'INPUT' && document.getElementById('F_' + field).getAttribute('type') == 'checkbox')
 	{
-		Change = (document.getElementById('F_' + Field).checked != Value);
+		changed = (document.getElementById('F_' + field).checked != value);
 	}
 	else
 	{
-		Change = (document.getElementById('F_' + Field).value != Value);
+		changed = (document.getElementById('F_' + field).value != value);
 	}
 
-	document.getElementById('P_' + Field).className = (Change ? 'changed' : '');
-	document.getElementById('P_' + Field).title = (Change ? ChangedValueString : '');
+	document.getElementById('P_' + field).className = (changed ? 'changed' : '');
+	document.getElementById('P_' + field).title = (changed ? ChangedValueString : '');
 }
 
-function setDefault(Field, Value)
+function setDefault(field, value)
 {
-	if (document.getElementById('F_' + Field).tagName == 'INPUT' && document.getElementById('F_' + Field).getAttribute('type') == 'checkbox')
+	if (document.getElementById('F_' + field).tagName == 'INPUT' && document.getElementById('F_' + field).getAttribute('type') == 'checkbox')
 	{
-		document.getElementById('F_' + Field).checked = (Value == '1');
+		document.getElementById('F_' + field).checked = (value == '1');
 	}
 	else
 	{
-		document.getElementById('F_' + Field).value = Value;
+		document.getElementById('F_' + field).value = value;
 	}
 
-	checkDefault(Field, Value);
+	checkDefault(field, value);
 }
 
-function changeClassName(ID)
+function changeClassName(identifier)
 {
-	document.getElementById(ID).className = ((document.getElementById(ID).className == 'expanded') ? 'collapsed' : 'expanded');
+	document.getElementById(identifier).className = ((document.getElementById(identifier).className == 'expanded') ? 'collapsed' : 'expanded');
 	document.getElementById('ShowAll').checked = 0;
 }
 
 function resetAll()
 {
-	Inputs = document.getElementById('advanced').getElementsByTagName('input');
+	var elements = document.getElementById('advanced').getElementsByTagName('input');
 
-	for (i = 0; i < Inputs.length; ++i)
+	for (i = 0; i < elements.length; ++i)
 	{
-		if (Inputs[i].type == 'button')
+		if (elements[i].type == 'button')
 		{
-			eval(Inputs[i].getAttribute('onclick'));
+			eval(elements[i].getAttribute('onclick'));
 		}
 	}
 }
 
 function collapseAll()
 {
-	Fieldsets = document.getElementById('advanced').getElementsByTagName('fieldset');
+	var elements = document.getElementById('advanced').getElementsByTagName('fieldset');
 
-	for (i = 0; i < Fieldsets.length; ++i)
+	for (i = 0; i < elements.length; ++i)
 	{
-		Fieldsets[i].className = 'collapsed';
+		elements[i].className = 'collapsed';
 	}
 }
 
 function expandAll()
 {
-	Fieldsets = document.getElementById('advanced').getElementsByTagName('fieldset');
+	var elements = document.getElementById('advanced').getElementsByTagName('fieldset');
 
-	for (i = 0; i < Fieldsets.length; ++i)
+	for (i = 0; i < elements.length; ++i)
 	{
-		Fieldsets[i].className = (Expanded ? 'collapsed' : 'expanded');
-		Fieldsets[i].style.display = 'block';
+		elements[i].className = (Expanded ? 'collapsed' : 'expanded');
+		elements[i].style.display = 'block';
 	}
 
-	Paragraphs = document.getElementById('advanced').getElementsByTagName('p');
+	elements = document.getElementById('advanced').getElementsByTagName('p');
 
-	for (i = 0; i < Paragraphs.length; ++i)
+	for (i = 0; i < elements.length; ++i)
 	{
-		Paragraphs[i].style.display = 'block';
+		elements[i].style.display = 'block';
 	}
 
 	document.getElementById('ResultsAmount').innerHTML = ResultsAmount;
@@ -320,20 +323,22 @@ function showModified()
 	document.getElementById('ShowAll').checked = 0;
 	document.getElementById('ResultsAmount').innerHTML = 0;
 
-	Fieldsets = document.getElementById('advanced').getElementsByTagName('fieldset');
+	var Fieldsets = document.getElementById('advanced').getElementsByTagName('fieldset');
 
 	for (i = 0, c = Fieldsets.length; i < c; ++i)
 	{
-		Modified = 0;
-		Paragraphs = Fieldsets[i].getElementsByTagName('p');
+		var modified = false;
+		var Paragraphs = Fieldsets[i].getElementsByTagName('p');
 
 		for (j = 0; j < Paragraphs.length; ++j)
 		{
 			if (Paragraphs[j].className == 'changed')
 			{
 				++document.getElementById('ResultsAmount').innerHTML;
+
 				Paragraphs[j].style.display = 'block';
-				Modified = 1;
+
+				modified = true;
 			}
 			else
 			{
@@ -341,7 +346,7 @@ function showModified()
 			}
 		}
 
-		if (Modified)
+		if (modified)
 		{
 			Fieldsets[i].className = 'expanded';
 			Fieldsets[i].style.display = 'block';
@@ -356,6 +361,7 @@ function showModified()
 	if (SearchValue != SearchString)
 	{
 		search(SearchValue);
+
 		document.getElementById('AdvancedSearch').value = SearchValue;
 	}
 }
