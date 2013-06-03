@@ -162,23 +162,22 @@ if (isset($Path[3]) && $Path[3] == 'advanced')
 </div>
 </form>
 <script type="text/javascript">
-// <![CDATA[
 document.getElementById(\'AdvancedSearch\').style.color = \'gray\';
 
-ResultsAmount = {resultsamount};
-ChangedValueString = \''.EstatsLocale::translate('Field value is other than default').'\';
-SearchString = \''.EstatsLocale::translate('Search').'\';
+var resultsAmount = {resultsamount};
+var changedValueString = \''.EstatsLocale::translate('Field value is other than default').'\';
+var searchString = \''.EstatsLocale::translate('Search').'\';
+var expanded = true;
 
-for (i = 0; i < 2; ++i)
+for (var i = 0; i < 2; ++i)
 {
-	Fieldsets = document.getElementById(\'g_\' + (i?\'Core\':\'GUI\')).getElementsByTagName(\'fieldset\');
+	var elements = document.getElementById(\'g_\' + (i ? \'Core\' : \'GUI\')).getElementsByTagName(\'fieldset\');
 
-	for (j = 0; j < Fieldsets.length; ++j)
+	for (var j = 0; j < elements.length; ++j)
 	{
-		Fieldsets[j].className = \'collapsed\';
+		elements[j].className = \'collapsed\';
 	}
 }
-// ]]>
 </script>
 </div>
 ');

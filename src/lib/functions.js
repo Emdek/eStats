@@ -15,7 +15,7 @@ function levelsShowHide(identifier)
 
 	var elements = document.getElementById('chart_' + identifier).getElementsByTagName('hr');
 
-	for (i = 0; i < elements.length; ++i)
+	for (var i = 0; i < elements.length; ++i)
 	{
 		elements[i].style.display = (document.getElementById('levels_switch_' + identifier).checked ? 'block' : 'none');
 	}
@@ -36,7 +36,7 @@ function highlightBars(identifier, number, type, mode)
 		levels = new Array(document.getElementById('level_' + identifier + '_' + type + '_' + number));
 	}
 
-	for (i = 0; i < levels.length; ++i)
+	for (var i = 0; i < levels.length; ++i)
 	{
 		if (!levels[i])
 		{
@@ -70,7 +70,7 @@ function highlightBars(identifier, number, type, mode)
 
 	var bars = document.getElementById('chart_' + identifier).getElementsByTagName('div');
 
-	for (i = 0; i < bars.length; ++i)
+	for (var i = 0; i < bars.length; ++i)
 	{
 		if (!mode)
 		{
@@ -103,53 +103,50 @@ function expandRow(identifier, container)
 	document.getElementById(identifier).style.display = 'block';
 }
 
-function queryRows(GroupID, SID, Query, mode)
+function queryRows(groupIdentifier, sectionIdentifier, query, mode)
 {
-	var Paragraphs = document.getElementById(mode ? GroupID : SID).getElementsByTagName('p');
+	var elements = document.getElementById(mode ? groupIdentifier : sectionIdentifier).getElementsByTagName('p');
 
-	for (k = 0; k < Paragraphs.length; ++k)
+	for (var i = 0; i < elements.length; ++i)
 	{
-		var ParagraphID = Paragraphs[k].id;
+		var identifier = elements[i].id;
 
-		if (document.getElementById('ShowModified').checked && Paragraphs[k].className != 'changed')
+		if (document.getElementById('ShowModified').checked && elements[i].className != 'changed')
 		{
 			continue;
 		}
 
-		var Description = document.getElementById(ParagraphID).getElementsByTagName('dfn');
+		var description = document.getElementById(identifier).getElementsByTagName('dfn');
+		var searchInString = ' ';
 
-		if (Description.length)
+		if (description.length > 0)
 		{
-			SearchInString = (' ' + Description[0].innerHTML);
-		}
-		else
-		{
-			SearchInString = ' ';
+			searchInString = (' ' + description[0].innerHTML);
 		}
 
-		var Field = document.getElementById('F' + ParagraphID.substr(1));
+		var field = document.getElementById('F' + identifier.substr(1));
 
-		if (Field.tagName == 'TEXTAREA' || (Field.tagName == 'INPUT' && Field.getAttribute('type') == ''))
+		if (field.tagName == 'TEXTAREA' || (field.tagName == 'INPUT' && field.getAttribute('type') == ''))
 		{
-			SearchInString += Field.value + ' ';
+			searchInString += field.value + ' ';
 		}
 
-		SearchInString += (ParagraphID.substr(2) + ' ');
-		SearchInString = SearchInString.toLowerCase();
+		searchInString += (identifier.substr(2) + ' ');
+		searchInString = searchInString.toLowerCase();
 
-		if (SearchInString.split(Query).length > 1)
+		if (searchInString.split(query).length > 1)
 		{
-			if (Paragraphs[k].style.display != 'block')
+			if (elements[i].style.display != 'block')
 			{
 				++document.getElementById('ResultsAmount').innerHTML;
 			}
 
 			if (!mode)
 			{
-				expandRow(SID, Paragraphs[k]);
+				expandRow(sectionIdentifier, elements[i]);
 			}
 
-			expandRow(GroupID, Paragraphs[k]);
+			expandRow(groupIdentifier, elements[i]);
 		}
 	}
 }
@@ -157,34 +154,34 @@ function queryRows(GroupID, SID, Query, mode)
 function search(query)
 {
 	var query = query.toLowerCase();
-	var Fieldsets = document.getElementById('advanced').getElementsByTagName('Fieldset');
-	var Rows = document.getElementById('advanced').getElementsByTagName('p');
+	var fieldsets = document.getElementById('advanced').getElementsByTagName('Fieldset');
+	var rows = document.getElementById('advanced').getElementsByTagName('p');
 
 	document.getElementById('ResultsAmount').innerHTML = 0;
 
 	if (query != '')
 	{
-		for (i = 0; i < Fieldsets.length; ++i)
+		for (var i = 0; i < fieldsets.length; ++i)
 		{
-			Fieldsets[i].style.display = 'none';
+			fieldsets[i].style.display = 'none';
 		}
 
-		for (i = 0; i < Rows.length; ++i)
+		for (var i = 0; i < rows.length; ++i)
 		{
-			Rows[i].style.display = 'none';
+			rows[i].style.display = 'none';
 		}
 	}
 	else
 	{
-		for (i = 0; i < Fieldsets.length; ++i)
+		for (var i = 0; i < fieldsets.length; ++i)
 		{
-			Fieldsets[i].className = 'collapsed';
-			Fieldsets[i].style.display = 'block';
+			fieldsets[i].className = 'collapsed';
+			fieldsets[i].style.display = 'block';
 		}
 
-		for (i = 0; i < Rows.length; ++i)
+		for (var i = 0; i < rows.length; ++i)
 		{
-			Rows[i].style.display = 'block';
+			rows[i].style.display = 'block';
 		}
 
 		document.getElementById('ResultsAmount').innerHTML = ResultsAmount;
@@ -192,19 +189,19 @@ function search(query)
 		return;
 	}
 
-	for (i = 0; i < Fieldsets.length; i++)
+	for (var i = 0; i < fieldsets.length; i++)
 	{
-		if (Fieldsets[i].id.split('.').length == 1)
+		if (fieldsets[i].id.split('.').length == 1)
 		{
-			GroupID = Fieldsets[i].id;
-			Groups = document.getElementById(GroupID).getElementsByTagName('fieldset');
+			var groupIdentifier = fieldsets[i].id;
+			var groups = document.getElementById(groupIdentifier).getElementsByTagName('fieldset');
 
-			for (j = 0; j < Groups.length; ++j)
+			for (var j = 0; j < groups.length; ++j)
 			{
-				SID = Groups[j].id;
+				var sectionIdentifier = groups[j].id;
 
-				queryRows(GroupID, SID, query, 0);
-				queryRows(GroupID, SID, query, 1);
+				queryRows(groupIdentifier, sectionIdentifier, query, 0);
+				queryRows(groupIdentifier, sectionIdentifier, query, 1);
 			}
 		}
 	}
@@ -251,7 +248,7 @@ function resetAll()
 {
 	var elements = document.getElementById('advanced').getElementsByTagName('input');
 
-	for (i = 0; i < elements.length; ++i)
+	for (var i = 0; i < elements.length; ++i)
 	{
 		if (elements[i].type == 'button')
 		{
@@ -264,7 +261,7 @@ function collapseAll()
 {
 	var elements = document.getElementById('advanced').getElementsByTagName('fieldset');
 
-	for (i = 0; i < elements.length; ++i)
+	for (var i = 0; i < elements.length; ++i)
 	{
 		elements[i].className = 'collapsed';
 	}
@@ -274,15 +271,15 @@ function expandAll()
 {
 	var elements = document.getElementById('advanced').getElementsByTagName('fieldset');
 
-	for (i = 0; i < elements.length; ++i)
+	for (var i = 0; i < elements.length; ++i)
 	{
-		elements[i].className = (Expanded ? 'collapsed' : 'expanded');
+		elements[i].className = (expanded ? 'collapsed' : 'expanded');
 		elements[i].style.display = 'block';
 	}
 
 	elements = document.getElementById('advanced').getElementsByTagName('p');
 
-	for (i = 0; i < elements.length; ++i)
+	for (var i = 0; i < elements.length; ++i)
 	{
 		elements[i].style.display = 'block';
 	}
@@ -292,29 +289,30 @@ function expandAll()
 
 function showAll()
 {
-	Expanded = !document.getElementById('ShowAll').checked;
+	expanded = !document.getElementById('ShowAll').checked;
 
 	document.getElementById('ShowModified').checked = 0;
 	document.getElementById('AdvancedSearch').style.color = 'gray';
-	document.getElementById('AdvancedSearch').value = SearchString;
+	document.getElementById('AdvancedSearch').value = searchString;
 
 	expandAll();
 }
 
 function showModified()
 {
-	Expanded = !document.getElementById('ShowModified').checked;
-	SearchValue = document.getElementById('AdvancedSearch').value;
+	var searchValue = document.getElementById('AdvancedSearch').value;
 
-	if (Expanded)
+	expanded = !document.getElementById('ShowModified').checked;
+
+	if (expanded)
 	{
 		expandAll();
 
-		if (SearchValue != SearchString)
+		if (searchValue != searchString)
 		{
-			search(SearchValue);
+			search(searchValue);
 
-			document.getElementById('AdvancedSearch').value = SearchValue;
+			document.getElementById('AdvancedSearch').value = searchValue;
 		}
 
 		return;
@@ -323,45 +321,45 @@ function showModified()
 	document.getElementById('ShowAll').checked = 0;
 	document.getElementById('ResultsAmount').innerHTML = 0;
 
-	var Fieldsets = document.getElementById('advanced').getElementsByTagName('fieldset');
+	var fieldsets = document.getElementById('advanced').getElementsByTagName('fieldset');
 
-	for (i = 0, c = Fieldsets.length; i < c; ++i)
+	for (var i = 0, c = fieldsets.length; i < c; ++i)
 	{
 		var modified = false;
-		var Paragraphs = Fieldsets[i].getElementsByTagName('p');
+		var elements = fieldsets[i].getElementsByTagName('p');
 
-		for (j = 0; j < Paragraphs.length; ++j)
+		for (var j = 0; j < elements.length; ++j)
 		{
-			if (Paragraphs[j].className == 'changed')
+			if (elements[j].className == 'changed')
 			{
 				++document.getElementById('ResultsAmount').innerHTML;
 
-				Paragraphs[j].style.display = 'block';
+				elements[j].style.display = 'block';
 
 				modified = true;
 			}
 			else
 			{
-				Paragraphs[j].style.display = 'none';
+				elements[j].style.display = 'none';
 			}
 		}
 
 		if (modified)
 		{
-			Fieldsets[i].className = 'expanded';
-			Fieldsets[i].style.display = 'block';
+			fieldsets[i].className = 'expanded';
+			fieldsets[i].style.display = 'block';
 		}
 		else
 		{
-			Fieldsets[i].className = 'collapsed';
-			Fieldsets[i].style.display = 'none';
+			fieldsets[i].className = 'collapsed';
+			fieldsets[i].style.display = 'none';
 		}
 	}
 
-	if (SearchValue != SearchString)
+	if (searchValue != searchString)
 	{
-		search(SearchValue);
+		search(searchValue);
 
-		document.getElementById('AdvancedSearch').value = SearchValue;
+		document.getElementById('AdvancedSearch').value = searchValue;
 	}
 }
