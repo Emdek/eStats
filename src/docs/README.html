@@ -143,19 +143,16 @@ Lines with parameters marked as optional could be safely removed.
 </li>
 <li>
 Collecting informations about screen resolutions, flash plugin version etc. will work only if you put this code into the website source:
-<pre><code>&lt;noscript&gt;
-&lt;div&gt;
-&lt;a href="http://estats.emdek.cba.pl/"&gt;
-&lt;img src="<strong>PATH</strong>antipixel.php?count=<strong>COUNT</strong>" alt="eStats" title="eStats" /&gt;
+<pre><code>&lt;a href="http://estats.emdek.cba.pl/"&gt;
+&lt;img src="<strong>PATH</strong>antipixel.php?count=<strong>COUNT</strong>" alt="eStats" id="<strong>IMAGE</strong>" title="eStats" /&gt;
 &lt;/a&gt;
-&lt;/div&gt;
-&lt;/noscript&gt;
 &lt;script type="text/javascript"&gt;
 var eCount = <strong>COUNT</strong>;
 var ePath = '<strong>PATH</strong>';
 var eTitle = '<strong>TITLE</strong>'; // optional
 var eAddress = '<strong>ADDRESS</strong>'; // optional
 var eAntipixel = '<strong>ANTIPIXEL</strong>'; // optional
+var eImage = '<strong>IMAGE</strong>';
 &lt;/script&gt;
 &lt;script type="text/javascript" src="<strong>PATH</strong>stats.js"&gt;&lt;/script&gt;</code></pre>
 <strong>Where:</strong><br><br>
@@ -163,7 +160,8 @@ var eAntipixel = '<strong>ANTIPIXEL</strong>'; // optional
 <strong>COUNT</strong> - <em>0</em> - collect only technical data, <em>1</em> - collect all data (<span style="text-decoration:underline;">only</span> if you can not use <em>PHP</em> code).<br>
 <strong>ADDRESS</strong> - website address, example: <em>/directory/website.html</em> (optional);<br>
 <strong>TITLE</strong> - website title (optional);<br>
-<strong>ANTIPIXEL</strong> - selected antipixel for website, example <em>default/silver.png</em> (optional).<br><br>
+<strong>ANTIPIXEL</strong> - selected antipixel for website, example <em>default/silver.png</em> (optional);<br>
+<strong>IMAGE</strong> - identifier of <em>IMG</em> tag of antipixel, example <em>estats</em>.<br><br>
 <span style="text-decoration:underline;">Lines with parameters marked as optional can not be removed, you should leave these values blank if you want use values taken from website or defaults.</span>
 </li>
 </ol>
@@ -203,7 +201,7 @@ Contact
 If you find any bugs in the script (though this was only a typo), or have any ideas, that might enhance it, then post your ideas on <a href="http://estats.emdek.cba.pl/forum/">project forum</a>.
 </p>
 <h3>
-Last modified: 2011-01-28 16:12:10 CET
+Last modified: 2013-06-17 22:47:46 CET
 </h3>
 </body>
 </html>

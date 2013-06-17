@@ -143,19 +143,16 @@ Linie z parametrami oznaczonymi jako opcjonalne można usunąć, wtedy użyte zo
 </li>
 <li>
 Aby działało zbieranie informacji o rozdzielczościach ekranu, wersji wtyczki flash itd. należy umieścić ponadto gdzieś na stronie następujący kod:
-<pre><code>&lt;noscript&gt;
-&lt;div&gt;
-&lt;a href="http://estats.emdek.cba.pl/"&gt;
-&lt;img src="<strong>PATH</strong>antipixel.php?count=<strong>COUNT</strong>" alt="eStats" title="eStats" /&gt;
+<pre><code>&lt;a href="http://estats.emdek.cba.pl/"&gt;
+&lt;img src="<strong>PATH</strong>antipixel.php?count=<strong>COUNT</strong>" alt="eStats" id="<strong>IMAGE</strong>" title="eStats" /&gt;
 &lt;/a&gt;
-&lt;/div&gt;
-&lt;/noscript&gt;
 &lt;script type="text/javascript"&gt;
 var eCount = <strong>COUNT</strong>;
 var ePath = '<strong>PATH</strong>';
 var eTitle = '<strong>TITLE</strong>'; // opcjonalnie
 var eAddress = '<strong>ADDRESS</strong>'; // opcjonalnie
 var eAntipixel = '<strong>ANTIPIXEL</strong>'; // opcjonalnie
+var eImage = '<strong>IMAGE</strong>';
 &lt;/script&gt;
 &lt;script type="text/javascript" src="<strong>PATH</strong>stats.js"&gt;&lt;/script&gt;</code></pre>
 <strong>Gdzie:</strong><br><br>
@@ -163,7 +160,8 @@ var eAntipixel = '<strong>ANTIPIXEL</strong>'; // opcjonalnie
 <strong>COUNT</strong> - <em>0</em> - zbieraj tylko dane techniczne, <em>1</em> - zbieraj wszystkie dane (<span style="text-decoration:underline;">tylko</span> gdy nie można użyć kodu <em>PHP</em>);<br>
 <strong>ADDRESS</strong> - adres podstrony, np. <em>/katalog/podstrona.html</em> (opcjonalnie);<br>
 <strong>TITLE</strong> - tytuł podstrony (opcjonalnie);<br>
-<strong>ANTIPIXEL</strong> - wybrany antypixel dla podstrony, np. <em>default/silver.png</em> (opcjonalnie).<br><br>
+<strong>ANTIPIXEL</strong> - wybrany antypixel dla podstrony, np. <em>default/silver.png</em> (opcjonalnie).<br>
+<strong>IMAGE</strong> - identyfikator znacznika <em>IMG</em> antypiksela, np. <em>estats</em>.<br><br>
 <span style="text-decoration:underline;">Linii z parametrami oznaczonymi jako opcjonalne nie można usunąć, należy pozostawić puste wartości dla użycia wartości pobranych ze strony lub domyślnych.</span>
 </li>
 </ol>
@@ -203,7 +201,7 @@ Kontakt
 Jeśli znajdziesz jakieś błędy w skrypcie (choćby to była zwykła literówka) lub masz jakieś pomysły, które mogłyby uatrakcyjnić go, to napisz o tym na <a href="http://estats.emdek.cba.pl/forum/">forum projektu</a>.
 </p>
 <h3>
-Ostatnio zmieniany: 2011-01-28 16:12:10 CET
+Ostatnia modyfikacja: 2013-06-17 22:47:46 CET
 </h3>
 </body>
 </html>
