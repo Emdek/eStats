@@ -42,7 +42,7 @@ Powered by<br>
 <a href="http://estats.emdek.pl/">
 <img src="{datapath}share/antipixels/default/simple.png" alt="eStats" title="eStats" border="0">
 </a><br><br>
-&copy; 2005 - 2012 <a href="http://emdek.pl/"><strong>Emdek</strong></a>
+&copy; 2005 - 2013 <a href="http://emdek.pl/"><strong>Emdek</strong></a>
 <div align="right">
 <a href="#top" title="{lang_gototop}" id="gototop"><b>^</b></a><br>
 </div>
