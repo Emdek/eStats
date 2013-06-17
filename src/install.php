@@ -313,6 +313,7 @@ define(\'eStatsVersion\', \''.number_format((double) ESTATS_VERSIONSTRING, 1, '.
 				}
 			}
 
+			$RandomIdentifier = md5(mt_rand());
 			$Session = md5('estats_'.substr($Configuration['UniqueID'], 0, 10));
 			$_SESSION[$Session]['password'] = $_SESSION[EstatsCore::session()]['password'];
 			$_SESSION[$Session]['email'] = $_SESSION[EstatsCore::session()]['email'];
@@ -384,7 +385,7 @@ define(\'ESTATS_COUNT\', 1);
 <label>
 <strong>'.EstatsLocale::translate('JavaScript code').'</strong>:
 <textarea cols="150" rows="5" id="javascriptcode">&lt;a href="http://estats.emdek.pl/"&gt;
-&lt;img src="{datapath}antipixel.php?count=0" alt="eStats" id="estats" title="eStats" /&gt;
+&lt;img src="{datapath}antipixel.php?count=0" alt="eStats" id="estats_'.$RandomIdentifier.'" title="eStats" /&gt;
 &lt;/a&gt;
 &lt;script type="text/javascript"&gt;
 var eCount = 0;
@@ -392,7 +393,7 @@ var ePath = \'{datapath}\';
 var eTitle = \'\';
 var eAddress = \'\';
 var eAntipixel = \'\';
-var eImage = \'estats\';
+var eImage = \'estats_'.$RandomIdentifier.'\';
 &lt;/script&gt;
 &lt;script type="text/javascript" src="{datapath}stats.js"&gt;&lt;/script&gt;</textarea>
 </label>
