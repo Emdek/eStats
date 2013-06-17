@@ -428,7 +428,7 @@ var eAntipixel = \'\';
 <script type="text/javascript">
 function updateCode()
 {
-	document.getElementById(\'phpcode\').value = \'&lt;?php\ndefine(\\\'ESTATS_COUNT\\\', 1);\n\' + (document.getElementById(\'websitetitle\').value ? \'define(\\\'ESTATS_TITLE\\\', \\\'\' + document.getElementById(\'websitetitle\').value + \'\\\');\n\' : \'\') + \'@include(\\\''.substr(dirname(__FILE__), 0, -8).'/stats.php\\\');\n?&gt;\';
+	document.getElementById(\'phpcode\').value = \'&lt;?php\ndefine(\\\'ESTATS_COUNT\\\', 1);\n\' + (document.getElementById(\'websitetitle\').value ? \'define(\\\'ESTATS_TITLE\\\', \\\'\' + document.getElementById(\'websitetitle\').value + \'\\\');\n\' : \'\') + \'@include(\\\''.htmlspecialchars(dirname(__FILE__)).'/stats.php\\\');\n?&gt;\';
 }
 
 document.getElementById(\'canusephpno\').style.display = \'none\';
