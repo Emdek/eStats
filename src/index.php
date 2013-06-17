@@ -466,7 +466,7 @@ if (isset($_GET['checkversion']))
 {
 	if (((ESTATS_USERLEVEL == 2 && EstatsCore::option('CheckVersionTime')) || (defined('ESTATS_INSTALL') && !isset($_POST))) && (!isset($_SESSION[EstatsCore::session()]['LatestVersion']) || ($_SERVER['REQUEST_TIME'] - $_SESSION[EstatsCore::session()]['LatestVersion'][1]) > EstatsCore::option('CheckVersionTime')))
 	{
-		$Handle = fopen('http://estats.emdek.cba.pl/current.php?'.$_SERVER['SERVER_NAME'].'---'.$_SERVER['SCRIPT_NAME'].'---'.ESTATS_VERSIONSTRING, 'r');
+		$Handle = fopen('http://estats.emdek.pl/current.php?'.$_SERVER['SERVER_NAME'].'---'.$_SERVER['SCRIPT_NAME'].'---'.ESTATS_VERSIONSTRING, 'r');
 
 		if ($Handle)
 		{

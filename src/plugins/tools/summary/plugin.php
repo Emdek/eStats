@@ -51,7 +51,7 @@ EstatsTheme::add('page', '<h3>
 </h3>
 <p>
 '.EstatsLocale::translate('<em>eStats</em> version').':
-<em><a href="http://estats.emdek.cba.pl/index.php?path='.$Path[0].'/changelog/#event_'.ESTATS_VERSIONSTRING.'">'.ESTATS_VERSIONSTRING.' - '.ESTATS_VERSIONSTATUS.'</a> ('.date('d.m.Y H:i:s', ESTATS_VERSIONTIME).')</em>'.((isset($_SESSION[EstatsCore::session()]['NewerVersion']) && $_SESSION[EstatsCore::session()]['NewerVersion'] != ESTATS_VERSIONSTRING)?'(<strong>'.EstatsLocale::translate('New version is available!').' - <a href="http://estats.emdek.cba.pl/index.php/'.$Path[0].'/changelog/#'.$_SESSION[EstatsCore::session()]['NewerVersion'].'">'.$_SESSION[EstatsCore::session()]['NewerVersion'].'</a></strong>)':'').' - <a href="{selfpath}{separator}checkversion">'.EstatsLocale::translate('Check for upgrade').'</a>;
+<em><a href="http://estats.emdek.pl/index.php?path='.$Path[0].'/changelog/#event_'.ESTATS_VERSIONSTRING.'">'.ESTATS_VERSIONSTRING.' - '.ESTATS_VERSIONSTATUS.'</a> ('.date('d.m.Y H:i:s', ESTATS_VERSIONTIME).')</em>'.((isset($_SESSION[EstatsCore::session()]['NewerVersion']) && $_SESSION[EstatsCore::session()]['NewerVersion'] != ESTATS_VERSIONSTRING)?'(<strong>'.EstatsLocale::translate('New version is available!').' - <a href="http://estats.emdek.pl/index.php/'.$Path[0].'/changelog/#'.$_SESSION[EstatsCore::session()]['NewerVersion'].'">'.$_SESSION[EstatsCore::session()]['NewerVersion'].'</a></strong>)':'').' - <a href="{selfpath}{separator}checkversion">'.EstatsLocale::translate('Check for upgrade').'</a>;
 </p>
 <p>
 '.EstatsLocale::translate('Database module').':
@@ -109,10 +109,10 @@ EstatsTheme::add('page', '<h3>
 {heading-start}'.EstatsLocale::translate('Important links').'{heading-end}
 </h3>
 <p>
-<a href="http://estats.emdek.cba.pl/index.php?path=pl/docs">'.EstatsLocale::translate('Documentation').'</a>
+<a href="http://estats.emdek.pl/index.php?path=pl/docs">'.EstatsLocale::translate('Documentation').'</a>
 </p>
 <p>
-<a href="http://estats.emdek.cba.pl/forum/">'.EstatsLocale::translate('Project\'s forum').'</a>
+<a href="http://estats.emdek.pl/forum/">'.EstatsLocale::translate('Project\'s forum').'</a>
 </p>
 ');
 ?>

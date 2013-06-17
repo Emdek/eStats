@@ -290,7 +290,7 @@ eStats :: '.EstatsLocale::translate('Feed channel for {servername}').'
 </subtitle>
 <id>http://{servername}{path}feed/'.$Path[2].'{suffix}</id>
 <icon>http://{servername}{datapath}share/icons/miscellaneous/estats.png</icon>
-<generator uri="http://estats.emdek.cba.pl/">eStats</generator>
+<generator uri="http://estats.emdek.pl/">eStats</generator>
 <updated>'.date('Y-m-d\TH:i:s\Z', $LastUpdate).'</updated>
 <link rel="alternate" type="text/html" href="http://{servername}{path}" />
 <link rel="self" type="application/atom+xml" href="http://{servername}{path}feed{suffix}" />

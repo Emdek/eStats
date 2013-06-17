@@ -10,7 +10,7 @@
 {css}<!--
 Fresh theme for eStats 5.0
 Author: Emdek
-http://estats.emdek.cba.pl
+http://estats.emdek.pl
 Licence: GPL
 -->
 <script type="text/javascript" src="{datapath}lib/functions.js"></script>
@@ -42,12 +42,12 @@ Licence: GPL
 {preloader}</div>
 <div id="footer">
 Powered by<br>
-<a href="http://estats.emdek.cba.pl/">
+<a href="http://estats.emdek.pl/">
 <img src="{datapath}share/antipixels/default/fresh.png" alt="eStats" title="eStats">
 </a>
 <br>
 <div>
-&copy; 2005 - 2012 <a href="http://emdek.cba.pl/"><strong>Emdek</strong></a>
+&copy; 2005 - 2012 <a href="http://emdek.pl/"><strong>Emdek</strong></a>
 </div>
 <a href="#header" title="{lang_gototop}" id="gototop">&nbsp;</a>
 <small>{pagegeneration}</small>

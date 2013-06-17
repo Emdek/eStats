@@ -7,7 +7,7 @@
 <!--
 Simple theme for eStats 5.0
 Author: Emdek
-URL: http://estats.emdek.cba.pl
+URL: http://estats.emdek.pl
 Licence: GPL
 -->
 </head>
@@ -39,10 +39,10 @@ Licence: GPL
 </div>
 <div align="center">
 Powered by<br>
-<a href="http://estats.emdek.cba.pl/">
+<a href="http://estats.emdek.pl/">
 <img src="{datapath}share/antipixels/default/simple.png" alt="eStats" title="eStats" border="0">
 </a><br><br>
-&copy; 2005 - 2012 <a href="http://emdek.cba.pl/"><strong>Emdek</strong></a>
+&copy; 2005 - 2012 <a href="http://emdek.pl/"><strong>Emdek</strong></a>
 <div align="right">
 <a href="#top" title="{lang_gototop}" id="gototop"><b>^</b></a><br>
 </div>

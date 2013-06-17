@@ -383,7 +383,7 @@ define(\'ESTATS_COUNT\', 1);
 <p>
 <label>
 <strong>'.EstatsLocale::translate('JavaScript code').'</strong>:
-<textarea cols="150" rows="5" id="javascriptcode">&lt;a href="http://estats.emdek.cba.pl/"&gt;
+<textarea cols="150" rows="5" id="javascriptcode">&lt;a href="http://estats.emdek.pl/"&gt;
 &lt;img src="{datapath}antipixel.php?count=0" alt="eStats" id="estats" title="eStats" /&gt;
 &lt;/a&gt;
 &lt;script type="text/javascript"&gt;
@@ -406,7 +406,7 @@ var eImage = \'estats\';
 <label for="javascriptcodenophp"><strong>'.EstatsLocale::translate('JavaScript code').'</strong></label>:
 <textarea cols="150" rows="5" id="javascriptcodenophp">&lt;noscript&gt;
 &lt;div&gt;
-&lt;a href="http://estats.emdek.cba.pl/"&gt;
+&lt;a href="http://estats.emdek.pl/"&gt;
 &lt;img src="{datapath}antipixel.php?count=1" alt="eStats" title="eStats" /&gt;
 &lt;/a&gt;
 &lt;/div&gt;
