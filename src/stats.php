@@ -24,16 +24,16 @@ define('ESTATS_PATH', dirname(__FILE__).'/');
  * @param boolean Warning
  */
 
-function estats_error_message($Message, $File, $Line, $NotFile = FALSE, $Warning = FALSE)
+function estats_error_message($message, $file, $line, $notFile = FALSE, $warning = FALSE)
 {
-	if (!$Warning && !defined('ESTATS_CRITICAL'))
+	if (!$warning && !defined('ESTATS_CRITICAL'))
 	{
 		define('ESTATS_CRITICAL', TRUE);
 	}
 
 	if (!defined('ESTATS_ANTIPIXEL'))
 	{
-		echo '<b>eStats '.($Warning?'warning':'error').':</b> <i>'.($NotFile?$Message:'Could not load file: <b>'.$Message.'</b>!').'</i> (<b>'.$File.': '.$Line.'</b>)<br>
+		echo '<b>eStats '.($warning?'warning':'error').':</b> <i>'.($notFile?$message:'Could not load file: <b>'.$message.'</b>!').'</i> (<b>'.$file.': '.$line.'</b>)<br>
 ';
 	}
 }
@@ -100,18 +100,18 @@ if (defined('ESTATS_COUNT') || defined('ESTATS_JSINFORMATION') || defined('ESTAT
 	{
 		if (EstatsCore::option('StatsEnabled'))
 		{
-			EstatsCore::collectData(defined('ESTATS_COUNT'), (defined('ESTATS_ADDRESS')?ESTATS_ADDRESS:$_SERVER['REQUEST_URI']), (defined('ESTATS_TITLE')?ESTATS_TITLE:''), (defined('ESTATS_JSINFORMATION')?$JSInformation:array()));
+			EstatsCore::collectData(defined('ESTATS_COUNT'), (defined('ESTATS_ADDRESS')?ESTATS_ADDRESS:$_SERVER['REQUEST_URI']), (defined('ESTATS_TITLE')?ESTATS_TITLE:''), (defined('ESTATS_JSINFORMATION')?$jSInformation:array()));
 		}
 
 		if (EstatsCore::option('Backups/creationinterval') && ((($_SERVER['REQUEST_TIME'] - EstatsCore::option('LastBackup')) > EstatsCore::option('Backups/creationinterval'))))
 		{
 			EstatsCore::setConfiguration(array('LastBackup' => $_SERVER['REQUEST_TIME']));
 
-			$BackupID = EstatsBackups::create(ESTATS_VERSIONSTRING, EstatsCore::option('Backups/profile'), EstatsCore::option('Backups/usertables'), EstatsCore::option('Backups/replacedata'));
+			$backupID = EstatsBackups::create(ESTATS_VERSIONSTRING, EstatsCore::option('Backups/profile'), EstatsCore::option('Backups/usertables'), EstatsCore::option('Backups/replacedata'));
 
-			if ($BackupID)
+			if ($backupID)
 			{
-				EstatsCore::logEvent(EstatsCore::EVENT_BACKUPCREATED, 'ID: '.$BackupID);
+				EstatsCore::logEvent(EstatsCore::EVENT_BACKUPCREATED, 'ID: '.$backupID);
 			}
 			else
 			{

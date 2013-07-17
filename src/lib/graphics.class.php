@@ -24,16 +24,16 @@ class EstatsGraphics
  * @return array
  */
 
-	static function colour($String)
+	static function colour($string)
 	{
-		$Colour = array();
+		$colour = array();
 
 		for ($i = 0; $i < 3; ++$i)
 		{
-			$Colour[$i] = hexdec('0x'.substr($String, (2 * $i), 2));
+			$colour[$i] = hexdec('0x'.substr($string, (2 * $i), 2));
 		}
 
-		return $Colour;
+		return $colour;
 	}
 
 /**
@@ -46,14 +46,14 @@ class EstatsGraphics
  * @param array Colour
  */
 
-	static function drawText($Image, $X, $Y, $Size, $String, $Colour = 0)
+	static function drawText($image, $x, $y, $size, $string, $colour = 0)
 	{
-		if (!$Colour)
+		if (!$colour)
 		{
-			$Colour = self::colour($Colour);
+			$colour = self::colour($colour);
 		}
 
-		imagettftext($Image, $Size, 0, $X, $Y, imagecolorallocate($Image, $Colour[0], $Colour[1], $Colour[2]), './share/fonts/LiberationMono-Regular.ttf', $String);
+		imagettftext($image, $size, 0, $x, $y, imagecolorallocate($image, $colour[0], $colour[1], $colour[2]), './share/fonts/LiberationMono-Regular.ttf', $string);
 	}
 
 /**
@@ -62,11 +62,11 @@ class EstatsGraphics
  * @param integer Time
  */
 
-	function cacheImage($ID, $Time)
+	function cacheImage($iD, $time)
 	{
-		if (!EstatsCache::status($ID, $Time, '.png'))
+		if (!EstatsCache::status($iD, $time, '.png'))
 		{
-			self::outputImage($ID);
+			self::outputImage($iD);
 		}
 	}
 
@@ -76,31 +76,31 @@ class EstatsGraphics
  * @param resource Image
  */
 
-	static function saveImage($ID, $Image)
+	static function saveImage($iD, $image)
 	{
-		imagetruecolortopalette($Image, 0, 256);
+		imagetruecolortopalette($image, 0, 256);
 
-		$FileName = EstatsCache::path($ID, '.png');
+		$fileName = EstatsCache::path($iD, '.png');
 
-		if (is_file($FileName))
+		if (is_file($fileName))
 		{
-			unlink($FileName);
+			unlink($fileName);
 		}
 
-		touch($FileName);
-		chmod($FileName, 0666);
+		touch($fileName);
+		chmod($fileName, 0666);
 
-		if (!imagepng($Image, $FileName))
+		if (!imagepng($image, $fileName))
 		{
 			header('Content-type: image/png');
-			imagepng($Image);
-			imagedestroy($Image);
+			imagepng($image);
+			imagedestroy($image);
 			die();
 		}
 
-		imagedestroy($Image);
+		imagedestroy($image);
 
-		self::outputImage($ID);
+		self::outputImage($iD);
 	}
 
 /**
@@ -108,10 +108,10 @@ class EstatsGraphics
  * @param string ID
  */
 
-	static function outputImage($ID)
+	static function outputImage($iD)
 	{
 		header('Content-type: image/png');
-		die(file_get_contents(EstatsCache::path($ID, '.png')));
+		die(file_get_contents(EstatsCache::path($iD, '.png')));
 	}
 
 /**
@@ -121,147 +121,147 @@ class EstatsGraphics
  * @param string Category
  */
 
-	static function chartPie($ID, $Data, $Category)
+	static function chartPie($iD, $data, $category)
 	{
-		arsort($Data['data']);
+		arsort($data['data']);
 
-		$Others = $Amount = $j = 0;
-		$Percents = $Names = $Slices = $Coordinates = array();
+		$others = $amount = $j = 0;
+		$percents = $names = $slices = $coordinates = array();
 
-		for ($i = 0, $c = count($Data['data']); $i < $c; ++$i)
+		for ($i = 0, $c = count($data['data']); $i < $c; ++$i)
 		{
-			$Percent = (($Data['data'][$i]['amount_current'] / $Data['sum_current']) * 100);
+			$percent = (($data['data'][$i]['amount_current'] / $data['sum_current']) * 100);
 
-			if (++$j <= 20 && ($Percent >= 5 || (!$Others && $j == $c)))
+			if (++$j <= 20 && ($percent >= 5 || (!$others && $j == $c)))
 			{
-				$Percents[] = $Percent;
-				$Names[] = $Data['data'][$i]['name'];
-				$Amount += $Data['data'][$i]['amount_current'];
+				$percents[] = $percent;
+				$names[] = $data['data'][$i]['name'];
+				$amount += $data['data'][$i]['amount_current'];
 			}
 			else
 			{
-				++$Others;
+				++$others;
 			}
 		}
 
-		if (($Data['sum_current'] - $Amount) > 0)
+		if (($data['sum_current'] - $amount) > 0)
 		{
-			$Percents[] = ((($Data['sum_current'] - $Amount) / $Data['sum_current']) * 100);
+			$percents[] = ((($data['sum_current'] - $amount) / $data['sum_current']) * 100);
 		}
 
-		unset($Data);
+		unset($data);
 
-		$Amount = count($Percents);
-		$Colours = explode('|', EstatsTheme::option('ChartPieColours'));
+		$amount = count($percents);
+		$colours = explode('|', EstatsTheme::option('ChartPieColours'));
 
 		for ($i = 0; $i < 2; ++$i)
 		{
-			$Colours[$i] = self::colour($Colours[$i]);
+			$colours[$i] = self::colour($colours[$i]);
 		}
 
-		$Image = imagecreatetruecolor(400, 400);
+		$image = imagecreatetruecolor(400, 400);
 
-		imagefill($Image, 0, 0, imagecolorallocate($Image, 255, 255, 255));
-		imageantialias($Image, TRUE);
+		imagefill($image, 0, 0, imagecolorallocate($image, 255, 255, 255));
+		imageantialias($image, TRUE);
 
-		$Start = 150;
-		$End = 0;
-		$X = 390;
-		$ColoursStep = array();
+		$start = 150;
+		$end = 0;
+		$x = 390;
+		$coloursStep = array();
 
 		for ($i = 0; $i < 3; ++$i)
 		{
-			$ColoursStep[$i] = (($Colours[1][$i] - $Colours[0][$i]) / $Amount);
+			$coloursStep[$i] = (($colours[1][$i] - $colours[0][$i]) / $amount);
 		}
 
-		for ($i = 0, $c = count($Percents); $i < $c; ++$i)
+		for ($i = 0, $c = count($percents); $i < $c; ++$i)
 		{
-			$Slices[] = array(
-	$Start,
-	($Start = ceil(($End += $Percents[$i]) * 3.6) + 150),
-	imagecolorallocate($Image, $Colours[0][0], $Colours[0][1], $Colours[0][2]),
-	imagecolorallocate($Image, ($Colours[0][0] - 30), ($Colours[0][1] - 30), ($Colours[0][2] - 30))
+			$slices[] = array(
+	$start,
+	($start = ceil(($end += $percents[$i]) * 3.6) + 150),
+	imagecolorallocate($image, $colours[0][0], $colours[0][1], $colours[0][2]),
+	imagecolorallocate($image, ($colours[0][0] - 30), ($colours[0][1] - 30), ($colours[0][2] - 30))
 	);
-			$Rad = deg2rad($Slices[$i][0] + (($Slices[$i][1] - $Slices[$i][0]) / 2));
-			$Coordinates[] = array(((int) (100 * cos($Rad)) + 150), ((int) (75 * sin($Rad)) + 105));
-			$X += 42;
+			$rad = deg2rad($slices[$i][0] + (($slices[$i][1] - $slices[$i][0]) / 2));
+			$coordinates[] = array(((int) (100 * cos($rad)) + 150), ((int) (75 * sin($rad)) + 105));
+			$x += 42;
 
 			for ($j = 0; $j < 3; ++$j)
 			{
-				$Colours[0][$j] += $ColoursStep[$j];
+				$colours[0][$j] += $coloursStep[$j];
 			}
 		}
 
 		for ($i = 170; $i > 150; --$i)
 		{
-			for ($j = 0, $l = count($Slices); $j < $l; ++$j)
+			for ($j = 0, $l = count($slices); $j < $l; ++$j)
 			{
-				if ($Percents[$j] < 1)
+				if ($percents[$j] < 1)
 				{
 					continue;
 				}
 
-				imagefilledarc($Image, 200, $i, 397, 297, $Slices[$j][0], $Slices[$j][1], $Slices[$j][3], IMG_ARC_PIE);
+				imagefilledarc($image, 200, $i, 397, 297, $slices[$j][0], $slices[$j][1], $slices[$j][3], IMG_ARC_PIE);
 			}
 		}
 
-		for ($i = 0, $c = count($Slices); $i < $c; ++$i)
+		for ($i = 0, $c = count($slices); $i < $c; ++$i)
 		{
-			if ($Percents[$i] < 1)
+			if ($percents[$i] < 1)
 			{
 				continue;
 			}
 
-			imagefilledarc($Image, 200, 150, 397, 297, $Slices[$i][0], $Slices[$i][1], $Slices[$i][2], IMG_ARC_PIE);
+			imagefilledarc($image, 200, 150, 397, 297, $slices[$i][0], $slices[$i][1], $slices[$i][2], IMG_ARC_PIE);
 		}
 
-		$FinalImage = imagecreatetruecolor(200, 200);
+		$finalImage = imagecreatetruecolor(200, 200);
 
-		imagefill($FinalImage, 0, 0, imagecolorallocate($Image, 255, 255, 255));
-		imagecopyresampled($FinalImage, $Image, 0, 0, 0, 0, 200, 200, 400, 400);
-		imagedestroy($Image);
+		imagefill($finalImage, 0, 0, imagecolorallocate($image, 255, 255, 255));
+		imagecopyresampled($finalImage, $image, 0, 0, 0, 0, 200, 200, 400, 400);
+		imagedestroy($image);
 
 		if (function_exists('imagefilter'))
 		{
-			imagefilter($FinalImage, IMG_FILTER_SMOOTH, 5);
+			imagefilter($finalImage, IMG_FILTER_SMOOTH, 5);
 		}
 
-		for ($i = 0, $c = count($Percents); $i < $c; ++$i)
+		for ($i = 0, $c = count($percents); $i < $c; ++$i)
 		{
-			$Coordinates[$i][0] -= ($Coordinates[$i][0] / 3);
-			$Coordinates[$i][1] -= ($Coordinates[$i][1] / 3);
+			$coordinates[$i][0] -= ($coordinates[$i][0] / 3);
+			$coordinates[$i][1] -= ($coordinates[$i][1] / 3);
 
-			if (isset($Names[$i]))
+			if (isset($names[$i]))
 			{
-				$Icon = EstatsGUI::iconPath($Names[$i], $Category);
+				$icon = EstatsGUI::iconPath($names[$i], $category);
 
-				if ($Icon && is_file('./'.$Icon))
+				if ($icon && is_file('./'.$icon))
 				{
-					$TmpImage = imagecreatefrompng('./'.$Icon);
+					$tmpImage = imagecreatefrompng('./'.$icon);
 
-					if ($Percents[$i] < 100 && $Percents[$i] >= 5)
+					if ($percents[$i] < 100 && $percents[$i] >= 5)
 					{
-						imagecopyresampled($FinalImage, $TmpImage, ($Coordinates[$i][0] - 10), ($Coordinates[$i][1] + 2), 0, 0, 16, 16, 16, 16);
+						imagecopyresampled($finalImage, $tmpImage, ($coordinates[$i][0] - 10), ($coordinates[$i][1] + 2), 0, 0, 16, 16, 16, 16);
 					}
 
-					imagedestroy($TmpImage);
+					imagedestroy($tmpImage);
 				}
 			}
 
-			if ($Percents[$i] != 100)
+			if ($percents[$i] != 100)
 			{
-				$String = round($Percents[$i], 2).'%';
+				$string = round($percents[$i], 2).'%';
 
-				if ($Percents[$i] >= 1)
+				if ($percents[$i] >= 1)
 				{
-					self::drawText($FinalImage, ($Coordinates[$i][0] - 20), $Coordinates[$i][1], 7, ((strlen($String) < 5)?str_repeat(' ', ((7 - strlen($String)) / 2)):'').$String);
+					self::drawText($finalImage, ($coordinates[$i][0] - 20), $coordinates[$i][1], 7, ((strlen($string) < 5)?str_repeat(' ', ((7 - strlen($string)) / 2)):'').$string);
 				}
 			}
 		}
 
-		imagecolortransparent($FinalImage, imagecolorallocate($FinalImage, 255, 255, 255));
+		imagecolortransparent($finalImage, imagecolorallocate($finalImage, 255, 255, 255));
 
-		self::saveImage($ID, $FinalImage);
+		self::saveImage($iD, $finalImage);
 	}
 
 /**
@@ -273,123 +273,123 @@ class EstatsGraphics
  * @param boolean Join
  */
 
-	static function chartTime($ID, $Data, $Summary, $Type, $Join)
+	static function chartTime($iD, $data, $summary, $type, $join)
 	{
-		if (!$Summary['maxall'])
+		if (!$summary['maxall'])
 		{
-			$Image = imagecreatetruecolor(7500, 170);
+			$image = imagecreatetruecolor(7500, 170);
 
-			imagefill($Image, 0, 0, imagecolorallocate($Image, 255, 255, 255));
-			imagecolortransparent($Image, imagecolorallocate($Image, 255, 255, 255));
+			imagefill($image, 0, 0, imagecolorallocate($image, 255, 255, 255));
+			imagecolortransparent($image, imagecolorallocate($image, 255, 255, 255));
 
-			self::saveImage($ID, $Image);
+			self::saveImage($iD, $image);
 		}
 
-		$Image = imagecreatetruecolor(1500, 340);
+		$image = imagecreatetruecolor(1500, 340);
 
-		imagefill($Image, 0, 0, imagecolorallocate($Image, 255, 255, 255));
-		imagecolortransparent($Image, imagecolorallocate($Image, 255, 255, 255));
-		imageantialias($Image, TRUE);
+		imagefill($image, 0, 0, imagecolorallocate($image, 255, 255, 255));
+		imagecolortransparent($image, imagecolorallocate($image, 255, 255, 255));
+		imageantialias($image, TRUE);
 
-		$Colours = explode('|', EstatsTheme::option('ChartTimeColours'));
+		$colours = explode('|', EstatsTheme::option('ChartTimeColours'));
 
-		for ($i = 0, $c = count($Colours); $i < $c; ++$i)
+		for ($i = 0, $c = count($colours); $i < $c; ++$i)
 		{
-			$Colour = self::colour($Colours[$i]);
-			$Colours[$i] = imagecolorallocatealpha($Image, $Colour[0], $Colour[1], $Colour[2], 30);
-			$ColoursDark[$i] = imagecolorallocate($Image, $Colour[0], $Colour[1], $Colour[2]);
+			$colour = self::colour($colours[$i]);
+			$colours[$i] = imagecolorallocatealpha($image, $colour[0], $colour[1], $colour[2], 30);
+			$coloursDark[$i] = imagecolorallocate($image, $colour[0], $colour[1], $colour[2]);
 		}
 
-		$TypesAmount = count($Summary['types']);
-		$Width = (2 * round(700 /($Summary['amount'])));
-		$ChartData = array();
-		$TimeUnit = array(0, (in_array($Summary['chart'], array('hours', 'weekdays'))?($Summary['currenttime']?-1:0):$Summary['timestamp']));
+		$typesAmount = count($summary['types']);
+		$width = (2 * round(700 /($summary['amount'])));
+		$chartData = array();
+		$timeUnit = array(0, (in_array($summary['chart'], array('hours', 'weekdays'))?($summary['currenttime']?-1:0):$summary['timestamp']));
 
-		for ($i = 0; $i < $Summary['amount']; ++$i)
+		for ($i = 0; $i < $summary['amount']; ++$i)
 		{
-			$TimeUnit = EstatsGUI::timeUnit($Summary['chart'], $TimeUnit[1], $Summary['step'], $Summary['format'], $Summary['currenttime']);
-			$UnitID = &$TimeUnit[0];
+			$timeUnit = EstatsGUI::timeUnit($summary['chart'], $timeUnit[1], $summary['step'], $summary['format'], $summary['currenttime']);
+			$unitID = &$timeUnit[0];
 
-			for ($j = 0; $j < $TypesAmount; ++$j)
+			for ($j = 0; $j < $typesAmount; ++$j)
 			{
-				$ChartData[$Summary['types'][$j]][$i] = (isset($Data[$UnitID][$Summary['types'][$j]])?$Data[$UnitID][$Summary['types'][$j]]:0);
+				$chartData[$summary['types'][$j]][$i] = (isset($data[$unitID][$summary['types'][$j]])?$data[$unitID][$summary['types'][$j]]:0);
 			}
 		}
 
-		unset($Data);
+		unset($data);
 
-		if ($Type == 'bars')
+		if ($type == 'bars')
 		{
-			$BarWidth = (($Width / $TypesAmount) * 0.8);
-			$BarMargin = (($Width / $TypesAmount) * 0.3);
+			$barWidth = (($width / $typesAmount) * 0.8);
+			$barMargin = (($width / $typesAmount) * 0.3);
 		}
 		else
 		{
-			for ($i = 0; $i < $TypesAmount; ++$i)
+			for ($i = 0; $i < $typesAmount; ++$i)
 			{
-				$ChartData[$Summary['types'][$i]][-1] = $ChartData[$Summary['types'][$i]][$Join?($Summary['amount'] - 1):0];
-				$ChartData[$Summary['types'][$i]][$Summary['amount']] = $ChartData[$Summary['types'][$i]][$Join?0:($Summary['amount'] - 1)];
+				$chartData[$summary['types'][$i]][-1] = $chartData[$summary['types'][$i]][$join?($summary['amount'] - 1):0];
+				$chartData[$summary['types'][$i]][$summary['amount']] = $chartData[$summary['types'][$i]][$join?0:($summary['amount'] - 1)];
 			}
 		}
 
-		for ($i = 0; $i < $TypesAmount; ++$i)
+		for ($i = 0; $i < $typesAmount; ++$i)
 		{
-			$X = (($Type == 'bars')?0:-($Width / 2));
+			$x = (($type == 'bars')?0:-($width / 2));
 
-			for ($j = (($Type == 'bars')?0:-1); $j < $Summary['amount']; ++$j)
+			for ($j = (($type == 'bars')?0:-1); $j < $summary['amount']; ++$j)
 			{
-				$Y = (336 - (($ChartData[$Summary['types'][$i]][$j] / $Summary['maxall']) * 300));
+				$y = (336 - (($chartData[$summary['types'][$i]][$j] / $summary['maxall']) * 300));
 
-				if (!$ChartData[$Summary['types'][$i]][$j] && !$ChartData[$Summary['types'][$i]][$j + 1])
+				if (!$chartData[$summary['types'][$i]][$j] && !$chartData[$summary['types'][$i]][$j + 1])
 				{
-					$X += $Width;
+					$x += $width;
 
 					continue;
 				}
 
-				switch ($Type)
+				switch ($type)
 				{
 					case 'bars':
-						imagefilledrectangle($Image, ($X + $BarMargin +($BarWidth * $i) - 2), ($Y - 2), ($X +($BarWidth *($i + 1)) + 2), 340, $ColoursDark[$i]);
-						imagefilledrectangle($Image, ($X + $BarMargin +($BarWidth * $i)), $Y, ($X +($BarWidth *($i + 1))), 340, $Colours[$i]);
+						imagefilledrectangle($image, ($x + $barMargin +($barWidth * $i) - 2), ($y - 2), ($x +($barWidth *($i + 1)) + 2), 340, $coloursDark[$i]);
+						imagefilledrectangle($image, ($x + $barMargin +($barWidth * $i)), $y, ($x +($barWidth *($i + 1))), 340, $colours[$i]);
 					break;
 					case 'lines':
-						imageline($Image, $X, $Y, ($X + $Width), (336 -(($ChartData[$Summary['types'][$i]][$j + 1] / $Summary['maxall']) * 300)), $Colours[$i]);
-						imageline($Image, $X, ($Y + 1), ($X + $Width), (337 -(($ChartData[$Summary['types'][$i]][$j + 1] / $Summary['maxall']) * 300)), $Colours[$i]);
+						imageline($image, $x, $y, ($x + $width), (336 -(($chartData[$summary['types'][$i]][$j + 1] / $summary['maxall']) * 300)), $colours[$i]);
+						imageline($image, $x, ($y + 1), ($x + $width), (337 -(($chartData[$summary['types'][$i]][$j + 1] / $summary['maxall']) * 300)), $colours[$i]);
 					break;
 					case 'areas':
-						$Points = array(
-	$X, 340,
-	$X, $Y,
-	($X + $Width), (336 -(($ChartData[$Summary['types'][$i]][$j + 1] / $Summary['maxall']) * 300)),
-	($X + $Width), 340
+						$points = array(
+	$x, 340,
+	$x, $y,
+	($x + $width), (336 -(($chartData[$summary['types'][$i]][$j + 1] / $summary['maxall']) * 300)),
+	($x + $width), 340
 	);
-						imagefilledpolygon($Image, $Points, 4, $Colours[$i]);
+						imagefilledpolygon($image, $points, 4, $colours[$i]);
 					break;
 				}
 
-				if ($Type != 'bars' && $ChartData[$Summary['types'][$i]][$j])
+				if ($type != 'bars' && $chartData[$summary['types'][$i]][$j])
 				{
-					imagefilledellipse($Image, $X, $Y, 8, 8, $ColoursDark[$i]);
+					imagefilledellipse($image, $x, $y, 8, 8, $coloursDark[$i]);
 				}
 
-				$X += $Width;
+				$x += $width;
 			}
 		}
 
-		$FinalImage = imagecreatetruecolor(700, 170);
+		$finalImage = imagecreatetruecolor(700, 170);
 
-		imagecopyresampled($FinalImage, $Image, 0, 0, 0, 0, 700, 170, 1400, 340);
-		imagecolortransparent($FinalImage, imagecolorallocate($FinalImage, 255, 255, 255));
+		imagecopyresampled($finalImage, $image, 0, 0, 0, 0, 700, 170, 1400, 340);
+		imagecolortransparent($finalImage, imagecolorallocate($finalImage, 255, 255, 255));
 
 		if (function_exists('imagefilter'))
 		{
-			imagefilter($FinalImage, IMG_FILTER_SMOOTH, 25);
+			imagefilter($finalImage, IMG_FILTER_SMOOTH, 25);
 		}
 
-		imagedestroy($Image);
+		imagedestroy($image);
 
-		self::saveImage($ID, $FinalImage);
+		self::saveImage($iD, $finalImage);
 	}
 
 /**
@@ -399,109 +399,109 @@ class EstatsGraphics
  * @param array Type
  */
 
-	static function map($ID, $Data, $Type)
+	static function map($iD, $data, $type)
 	{
-		$Continents = isset($Data['continents']);
-		$Map = EstatsCore::loadData('share/maps/'.$Type[0].'/map.ini', TRUE);
-		$Colours = explode('|', EstatsTheme::option('MapColours'));
-		$Start = self::colour($Colours[0]);
-		$End = self::colour($Colours[1]);
-		$ColoursStep = array();
+		$continents = isset($data['continents']);
+		$map = EstatsCore::loadData('share/maps/'.$type[0].'/map.ini', TRUE);
+		$colours = explode('|', EstatsTheme::option('MapColours'));
+		$start = self::colour($colours[0]);
+		$end = self::colour($colours[1]);
+		$coloursStep = array();
 
 		for ($i = 0; $i < 3; ++$i)
 		{
-			$ColoursStep[$i] = (($Start[$i] - $End[$i]) / 100);
+			$coloursStep[$i] = (($start[$i] - $end[$i]) / 100);
 		}
 
-		$Image = imagecreatefrompng('./share/maps/'.$Type[0].'/map.png');
+		$image = imagecreatefrompng('./share/maps/'.$type[0].'/map.png');
 
-		if ($Data['max'])
+		if ($data['max'])
 		{
-			$Border = imagecolorat($Image, 0, 0);
+			$border = imagecolorat($image, 0, 0);
 
-			if ($Continents)
+			if ($continents)
 			{
-				$CountryToContinent = EstatsCore::loadData('share/data/country-to-continent.ini');
+				$countryToContinent = EstatsCore::loadData('share/data/country-to-continent.ini');
 			}
 
-			foreach ($Map['Divisions'] as $Key => $Value)
+			foreach ($map['Divisions'] as $key => $value)
 			{
-				$Key = trim($Key, '\\');
+				$key = trim($key, '\\');
 
-				if ($Type[0] != 'world')
+				if ($type[0] != 'world')
 				{
-					$Key = $Type[0].'-'.$Key;
+					$key = $type[0].'-'.$key;
 				}
 
-				if ($Continents)
+				if ($continents)
 				{
-					$Key = $CountryToContinent[$Key];
+					$key = $countryToContinent[$key];
 				}
 
-				if (isset($Data[$Continents?'continents':'data'][$Key]) && $Data[$Continents?'continents':'data'][$Key])
+				if (isset($data[$continents?'continents':'data'][$key]) && $data[$continents?'continents':'data'][$key])
 				{
-					$Percent = (($Data[$Continents?'continents':'data'][$Key] / $Data['max']) * 100);
-					$Colour = imagecolorallocate($Image, (floor($ColoursStep[0] * $Percent) + $End[0]), (floor($ColoursStep[1] * $Percent) + $End[1]), (floor($ColoursStep[2] * $Percent) + $End[2]));
-					$Value = explode(',', $Value);
+					$percent = (($data[$continents?'continents':'data'][$key] / $data['max']) * 100);
+					$colour = imagecolorallocate($image, (floor($coloursStep[0] * $percent) + $end[0]), (floor($coloursStep[1] * $percent) + $end[1]), (floor($coloursStep[2] * $percent) + $end[2]));
+					$value = explode(',', $value);
 
-					for ($i = 0, $c = count($Value); $i < $c; $i += 2)
+					for ($i = 0, $c = count($value); $i < $c; $i += 2)
 					{
-						imagefilltoborder($Image, $Value[$i], $Value[$i + 1], $Border, $Colour);
+						imagefilltoborder($image, $value[$i], $value[$i + 1], $border, $colour);
 					}
 				}
 
-				if (isset($Map['Flags'][$Key]))
+				if (isset($map['Flags'][$key]))
 				{
-					$ImageFile = EstatsGUI::iconPath($Key, 'countries');
+					$imageFile = EstatsGUI::iconPath($key, 'countries');
 
-					if (is_file('./'.$ImageFile))
+					if (is_file('./'.$imageFile))
 					{
-						$Coordinates = explode(',', $Map['Flags'][$Key]);
-						$TmpImage = imagecreatefrompng('./'.$ImageFile);
+						$coordinates = explode(',', $map['Flags'][$key]);
+						$tmpImage = imagecreatefrompng('./'.$imageFile);
 
-						imagecopyresampled($Image, $TmpImage, $Coordinates[0], $Coordinates[1], 0, 0, 16, 16, 16, 16);
-						imagedestroy($TmpImage);
+						imagecopyresampled($image, $tmpImage, $coordinates[0], $coordinates[1], 0, 0, 16, 16, 16, 16);
+						imagedestroy($tmpImage);
 					}
 				}
 			}
 
-			if (isset($Map['Cities']))
+			if (isset($map['Cities']))
 			{
-				$Background = imagecolorallocate($Image, 250, 250, 250);
+				$background = imagecolorallocate($image, 250, 250, 250);
 
-				foreach ($Data['cities']['data'] as $Key => $Value)
+				foreach ($data['cities']['data'] as $key => $value)
 				{
-					$Key = number_format(round($Value['latitude'], 2), 2, '.', '').','.number_format(round($Value['longitude'], 2), 2, '.', '');
+					$key = number_format(round($value['latitude'], 2), 2, '.', '').','.number_format(round($value['longitude'], 2), 2, '.', '');
 
-					if (!isset($Map['Cities'][$Key]))
+					if (!isset($map['Cities'][$key]))
 					{
 						continue;
 					}
 
-					$Percent = (($Value['amount_current'] / $Data['max']) * 100);
-					$Colour = imagecolorallocate($Image, (floor($ColoursStep[0] * $Percent) + $End[0]), (floor($ColoursStep[1] * $Percent) + $End[1]), (floor($ColoursStep[2] * $Percent) + $End[2]));
-					$Value = explode(',', $Map['Cities'][$Key]);
+					$percent = (($value['amount_current'] / $data['max']) * 100);
+					$colour = imagecolorallocate($image, (floor($coloursStep[0] * $percent) + $end[0]), (floor($coloursStep[1] * $percent) + $end[1]), (floor($coloursStep[2] * $percent) + $end[2]));
+					$value = explode(',', $map['Cities'][$key]);
 
-					imagefilledellipse($Image, $Value[0], $Value[1], 7, 7, $Background);
-					imagefilledellipse($Image, $Value[0], $Value[1], 5, 5, $Colour);
+					imagefilledellipse($image, $value[0], $value[1], 7, 7, $background);
+					imagefilledellipse($image, $value[0], $value[1], 5, 5, $colour);
 				}
 			}
 
-			$Legend = explode(',', $Map['Options']['LegendLocation']);
-			$Border = imagecolorallocate($Image, $Start[0], $Start[1], $Start[2]);
+			$legend = explode(',', $map['Options']['LegendLocation']);
+			$border = imagecolorallocate($image, $start[0], $start[1], $start[2]);
 
-			imagefilledrectangle($Image, $Legend[0], $Legend[1], ($Legend[0] + 7), ($Legend[1] + 52), $Border);
+			imagefilledrectangle($image, $legend[0], $legend[1], ($legend[0] + 7), ($legend[1] + 52), $border);
 
 			for ($i = 100; $i >= 0; $i -= 2)
 			{
-				imageline($Image, ($Legend[0] + 1), ($Legend[1] -($i / 2) + 51), ($Legend[0] + 6), ($Legend[1] -($i / 2) + 51), imagecolorallocate($Image, (floor($ColoursStep[0] * $i) + $End[0]), (floor($ColoursStep[1] * $i) + $End[1]), (floor($ColoursStep[2] * $i) + $End[2])));
+				imageline($image, ($legend[0] + 1), ($legend[1] -($i / 2) + 51), ($legend[0] + 6), ($legend[1] -($i / 2) + 51), imagecolorallocate($image, (floor($coloursStep[0] * $i) + $end[0]), (floor($coloursStep[1] * $i) + $end[1]), (floor($coloursStep[2] * $i) + $end[2])));
 			}
 
-			self::drawText($Image, ($Legend[0] + 10), ($Legend[1] + 8), 8, $Data['max'].' ('.round((($Data['max'] / $Data['sum_current']) * 100), 2).'%)');
-			self::drawText($Image, ($Legend[0] + 10), ($Legend[1] + 52), 8, '0');
+			self::drawText($image, ($legend[0] + 10), ($legend[1] + 8), 8, $data['max'].' ('.round((($data['max'] / $data['sum_current']) * 100), 2).'%)');
+			self::drawText($image, ($legend[0] + 10), ($legend[1] + 52), 8, '0');
 		}
 
-		self::saveImage($ID, $Image);
+		self::saveImage($iD, $image);
 	}
 }
 ?>

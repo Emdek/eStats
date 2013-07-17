@@ -16,118 +16,118 @@ class EstatsChart
  * @return array
  */
 
-	static function information($Period, $Date, $CurrentTime)
+	static function information($period, $date, $currentTime)
 	{
-		$Data = array();
-		$Data['currenttime'] = $CurrentTime;
-		$Data['step'] = 0;
+		$data = array();
+		$data['currenttime'] = $currentTime;
+		$data['step'] = 0;
 
-		switch ($Period)
+		switch ($period)
 		{
 			case '24hours':
-				if ($CurrentTime)
+				if ($currentTime)
 				{
-					$Data['range'] = array((time() - 86400), 0);
+					$data['range'] = array((time() - 86400), 0);
 				}
 				else
 				{
-					$Data['range'] = EstatsGUI::timeRange($Date[0], $Date[1], $Date[2]);
+					$data['range'] = EstatsGUI::timeRange($date[0], $date[1], $date[2]);
 				}
 
-				$Data['unit'] = 'hour';
-				$Data['format'] = 'Y.m.d H';
-				$Data['amount'] = 24;
-				$Data['step'] = 3600;
+				$data['unit'] = 'hour';
+				$data['format'] = 'Y.m.d H';
+				$data['amount'] = 24;
+				$data['step'] = 3600;
 			break;
 			case 'month':
-				if ($CurrentTime)
+				if ($currentTime)
 				{
-					$Data['range'] = array(strtotime('last month'), 0);
-					$Data['amount'] = date('t', ((date('t') == date('j'))?$_SERVER['REQUEST_TIME']:strtotime('last month')));
+					$data['range'] = array(strtotime('last month'), 0);
+					$data['amount'] = date('t', ((date('t') == date('j'))?$_SERVER['REQUEST_TIME']:strtotime('last month')));
 				}
 				else
 				{
-					$Data['range'] = EstatsGUI::timeRange($Date[0], $Date[1]);
-					$Data['amount'] = date('t', ((date('t', $Data['range'][1]) == date('j', $Data['range'][1]))?$Data['range'][1]:$Data['range'][0]));
+					$data['range'] = EstatsGUI::timeRange($date[0], $date[1]);
+					$data['amount'] = date('t', ((date('t', $data['range'][1]) == date('j', $data['range'][1]))?$data['range'][1]:$data['range'][0]));
 				}
 
-				$Data['unit'] = 'day';
-				$Data['format'] = 'Y.m.d';
-				$Data['step'] = 86400;
+				$data['unit'] = 'day';
+				$data['format'] = 'Y.m.d';
+				$data['step'] = 86400;
 			break;
 			case 'year':
-				if ($CurrentTime)
+				if ($currentTime)
 				{
-					$Data['range'] = array(strtotime('last year'), 0);
+					$data['range'] = array(strtotime('last year'), 0);
 				}
 				else
 				{
-					$Data['range'] = EstatsGUI::timeRange($Date[0]);
+					$data['range'] = EstatsGUI::timeRange($date[0]);
 				}
 
-				$Data['unit'] = 'month';
-				$Data['format'] = 'Y.m';
-				$Data['amount'] = 12;
+				$data['unit'] = 'month';
+				$data['format'] = 'Y.m';
+				$data['amount'] = 12;
 			break;
 			case 'years':
-				$YearsRange = (date('Y') - date('Y', EstatsCore::option('CollectedFrom')));
-				$LastYears = $YearsRange;
+				$yearsRange = (date('Y') - date('Y', EstatsCore::option('CollectedFrom')));
+				$lastYears = $yearsRange;
 
-				if ($LastYears > 15)
+				if ($lastYears > 15)
 				{
-					$LastYears = 15;
+					$lastYears = 15;
 				}
-				else if ($LastYears < 5)
+				else if ($lastYears < 5)
 				{
-					$LastYears = 5;
+					$lastYears = 5;
 				}
 
-				if ($CurrentTime)
+				if ($currentTime)
 				{
-					$Data['range'] = array(strtotime('-'.$LastYears.' years'), 0);
+					$data['range'] = array(strtotime('-'.$lastYears.' years'), 0);
 				}
 				else
 				{
-					$Data['range'] = array(strtotime(($Date[0] - $LastYears + 1).'-01-01'), strtotime(($Date[0] + 1).'-01-01'));
+					$data['range'] = array(strtotime(($date[0] - $lastYears + 1).'-01-01'), strtotime(($date[0] + 1).'-01-01'));
 				}
 
-				$Data['unit'] = 'year';
-				$Data['format'] = 'Y';
-				$Data['amount'] = $LastYears;
+				$data['unit'] = 'year';
+				$data['format'] = 'Y';
+				$data['amount'] = $lastYears;
 			break;
 			case 'hours':
-				if ($CurrentTime)
+				if ($currentTime)
 				{
-					$Data['range'] = array(0, 0);
+					$data['range'] = array(0, 0);
 				}
 				else
 				{
-					$Data['range'] = EstatsGUI::timeRange($Date[0], $Date[1], $Date[2]);
+					$data['range'] = EstatsGUI::timeRange($date[0], $date[1], $date[2]);
 				}
 
-				$Data['unit'] = 'dayhour';
-				$Data['format'] = '';
-				$Data['amount'] = 24;
-				$Data['step'] = 1;
+				$data['unit'] = 'dayhour';
+				$data['format'] = '';
+				$data['amount'] = 24;
+				$data['step'] = 1;
 			break;
 			case 'weekdays':
-				if ($CurrentTime)
+				if ($currentTime)
 				{
-					$Data['range'] = array(0, 0);
+					$data['range'] = array(0, 0);
 				}
 				else
 				{
-					$Data['range'] = EstatsGUI::timeRange($Date[0], $Date[1], $Date[2]);
+					$data['range'] = EstatsGUI::timeRange($date[0], $date[1], $date[2]);
 				}
 
-				$Data['unit'] = 'weekday';
-				$Data['format'] = 'w';
-				$Data['amount'] = 7;
-				$Data['step'] = 1;
+				$data['unit'] = 'weekday';
+				$data['format'] = 'w';
+				$data['amount'] = 7;
+				$data['step'] = 1;
 			break;
 		}
 
-		return $Data;
+		return $data;
 	}
 
 /**
@@ -141,103 +141,103 @@ class EstatsChart
  * @return array
  */
 
-	static function summary($Period, $Data, $DataBefore, $Information, $Types, $TimeDifference)
+	static function summary($period, $data, $dataBefore, $information, $types, $timeDifference)
 	{
-		ksort($Data);
+		ksort($data);
 
-		$Summary = array();
-		$TypeAmounts = count($Types);
+		$summary = array();
+		$typeAmounts = count($types);
 
-		for ($i = 0; $i < $TypeAmounts; ++$i)
+		for ($i = 0; $i < $typeAmounts; ++$i)
 		{
-			$Summary['maximum'][$Types[$i]] = $Summary['minimum'][$Types[$i]] = $Summary['sum'][$Types[$i]] = $Summary['maximum_before'][$Types[$i]] = $Summary['minimum_before'][$Types[$i]] = $Summary['sum_before'][$Types[$i]] = 0;
+			$summary['maximum'][$types[$i]] = $summary['minimum'][$types[$i]] = $summary['sum'][$types[$i]] = $summary['maximum_before'][$types[$i]] = $summary['minimum_before'][$types[$i]] = $summary['sum_before'][$types[$i]] = 0;
 		}
 
-		$Information['timestamp'] = $Information['range'][0];
-		$TimeUnit = array(0, (in_array($Period, array('hours', 'weekdays'))?-1:$Information['timestamp']));
+		$information['timestamp'] = $information['range'][0];
+		$timeUnit = array(0, (in_array($period, array('hours', 'weekdays'))?-1:$information['timestamp']));
 
-		for ($i = 0; $i < $Information['amount']; ++$i)
+		for ($i = 0; $i < $information['amount']; ++$i)
 		{
-			$TimeUnit = EstatsGUI::timeUnit($Period, $TimeUnit[1], $Information['step'], $Information['format'], $Information['currenttime']);
+			$timeUnit = EstatsGUI::timeUnit($period, $timeUnit[1], $information['step'], $information['format'], $information['currenttime']);
 
-			for ($j = 0; $j < $TypeAmounts; ++$j)
+			for ($j = 0; $j < $typeAmounts; ++$j)
 			{
-				if (!isset($Data[$TimeUnit[0]][$Types[$j]]))
+				if (!isset($data[$timeUnit[0]][$types[$j]]))
 				{
 					continue;
 				}
 
-				if ($Data[$TimeUnit[0]][$Types[$j]] > $Summary['maximum'][$Types[$j]])
+				if ($data[$timeUnit[0]][$types[$j]] > $summary['maximum'][$types[$j]])
 				{
-					$Summary['maximum'][$Types[$j]] = $Data[$TimeUnit[0]][$Types[$j]];
+					$summary['maximum'][$types[$j]] = $data[$timeUnit[0]][$types[$j]];
 				}
 
-				if (($Data[$TimeUnit[0]][$Types[$j]] < $Summary['minimum'][$Types[$j]]) || !$Summary['minimum'][$Types[$j]])
+				if (($data[$timeUnit[0]][$types[$j]] < $summary['minimum'][$types[$j]]) || !$summary['minimum'][$types[$j]])
 				{
-					$Summary['minimum'][$Types[$j]] = $Data[$TimeUnit[0]][$Types[$j]];
+					$summary['minimum'][$types[$j]] = $data[$timeUnit[0]][$types[$j]];
 				}
 
-				$Summary['sum'][$Types[$j]] += $Data[$TimeUnit[0]][$Types[$j]];
+				$summary['sum'][$types[$j]] += $data[$timeUnit[0]][$types[$j]];
 			}
 		}
 
-		if ($TimeDifference)
+		if ($timeDifference)
 		{
-			foreach ($DataBefore as $Unit => $Array)
+			foreach ($dataBefore as $unit => $array)
 			{
-				for ($i = 0; $i < $TypeAmounts; ++$i)
+				for ($i = 0; $i < $typeAmounts; ++$i)
 				{
-					if (!isset($Array[$Types[$i]]))
+					if (!isset($array[$types[$i]]))
 					{
 						continue;
 					}
 
-					if ($Array[$Types[$i]] > $Summary['maximum_before'][$Types[$i]])
+					if ($array[$types[$i]] > $summary['maximum_before'][$types[$i]])
 					{
-						$Summary['maximum_before'][$Types[$i]] = $Array[$Types[$i]];
+						$summary['maximum_before'][$types[$i]] = $array[$types[$i]];
 					}
 
-					if (($Array[$Types[$i]] < $Summary['minimum_before'][$Types[$i]]) || !$Summary['minimum_before'][$Types[$i]])
+					if (($array[$types[$i]] < $summary['minimum_before'][$types[$i]]) || !$summary['minimum_before'][$types[$i]])
 					{
-						$Summary['minimum_before'][$Types[$i]] = $Array[$Types[$i]];
+						$summary['minimum_before'][$types[$i]] = $array[$types[$i]];
 					}
 
-					$Summary['sum_before'][$Types[$i]] += $Array[$Types[$i]];
+					$summary['sum_before'][$types[$i]] += $array[$types[$i]];
 				}
 			}
 		}
 
-		for ($i = 0; $i < $TypeAmounts; ++$i)
+		for ($i = 0; $i < $typeAmounts; ++$i)
 		{
-			$Summary['average'][$Types[$i]] = ($Summary['sum'][$Types[$i]] / $Information['amount']);
+			$summary['average'][$types[$i]] = ($summary['sum'][$types[$i]] / $information['amount']);
 
-			if ($TimeDifference)
+			if ($timeDifference)
 			{
-				$Summary['average_before'][$Types[$i]] = ($Summary['sum_before'][$Types[$i]] / $Information['amount']);
+				$summary['average_before'][$types[$i]] = ($summary['sum_before'][$types[$i]] / $information['amount']);
 			}
 		}
 
-		krsort($Summary['sum']);
+		krsort($summary['sum']);
 
-		$Summary['maxall'] = max($Summary['maximum']);
+		$summary['maxall'] = max($summary['maximum']);
 
-		if (count($Data) != $Information['amount'])
+		if (count($data) != $information['amount'])
 		{
-			for ($i = 0; $i < $TypeAmounts; ++$i)
+			for ($i = 0; $i < $typeAmounts; ++$i)
 			{
-				$Summary['minimum'][$Types[$i]] = 0;
+				$summary['minimum'][$types[$i]] = 0;
 			}
 		}
 
-		if ($TimeDifference && count($DataBefore) != $Information['amount'])
+		if ($timeDifference && count($dataBefore) != $information['amount'])
 		{
-			for ($i = 0; $i < $TypeAmounts; ++$i)
+			for ($i = 0; $i < $typeAmounts; ++$i)
 			{
-				$Summary['minimum_before'][$Types[$i]] = 0;
+				$summary['minimum_before'][$types[$i]] = 0;
 			}
 		}
 
-		return $Summary;
+		return $summary;
 	}
 
 /**
@@ -259,39 +259,39 @@ class EstatsChart
  * @return string
  */
 
-	static function create($Period, $Type, $Category, $ID, $Action, $Information, $Data, $DataBefore, $Summary, $Title, $CurrentTime, $TimeDifference, $UserVisits = NULL, $CacheTime = 0)
+	static function create($period, $type, $category, $iD, $action, $information, $data, $dataBefore, $summary, $title, $currentTime, $timeDifference, $userVisits = NULL, $cacheTime = 0)
 	{
-		$LevelTypes = array('maximum', 'average', 'minimum');
-		$LevelNames = array(EstatsLocale::translate('maximum'), EstatsLocale::translate('average'), EstatsLocale::translate('minimum'));
-		$TypeAmounts = count($Summary['types']);
-		$MaxValues = $MinValues = array();
-		$Popularity = in_array($Period, array('hours', 'weekdays'));
-		$Timestamp = $Information['range'][0];
+		$levelTypes = array('maximum', 'average', 'minimum');
+		$levelNames = array(EstatsLocale::translate('maximum'), EstatsLocale::translate('average'), EstatsLocale::translate('minimum'));
+		$typeAmounts = count($summary['types']);
+		$maxValues = $minValues = array();
+		$popularity = in_array($period, array('hours', 'weekdays'));
+		$timestamp = $information['range'][0];
 
-		if ($TimeDifference)
+		if ($timeDifference)
 		{
-			$TimestampBefore = ($Information['range'][0] - ($Information['range'][1] - $Information['range'][0]));
+			$timestampBefore = ($information['range'][0] - ($information['range'][1] - $information['range'][0]));
 		}
 
-		$ChartArea = $Descriptions = $Chart = '';
-		$ChartFooter = '<tr>
+		$chartArea = $descriptions = $chart = '';
+		$chartFooter = '<tr>
 <th colspan="{colspan}">
 &nbsp;
 </th>
 </tr>
 ';
-		switch ($Period)
+		switch ($period)
 		{
 			case '24hours':
-				if (!$CurrentTime || date('G') == 23)
+				if (!$currentTime || date('G') == 23)
 				{
 					break;
 				}
 
-				$Yesterday = strtotime('yesterday');
-				$ChartFooter = '<tr class="footer">
-<th colspan="'.(23 - date('G')).'" title="'.ucfirst(strftime('%A', $Yesterday)).'">
-'.(in_array(date('w', $Yesterday), array(0, 6))?'<em>'.strtoupper(strftime('%a', $Yesterday)).'</em>':strtoupper(strftime('%a', $Yesterday))).'
+				$yesterday = strtotime('yesterday');
+				$chartFooter = '<tr class="footer">
+<th colspan="'.(23 - date('G')).'" title="'.ucfirst(strftime('%A', $yesterday)).'">
+'.(in_array(date('w', $yesterday), array(0, 6))?'<em>'.strtoupper(strftime('%a', $yesterday)).'</em>':strtoupper(strftime('%a', $yesterday))).'
 </th>
 <th colspan="'.(date('G') + 1).'" title="'.ucfirst(strftime('%A')).'">
 '.(in_array(date('w'), array(0, 6))?'<em>'.strtoupper(strftime('%a')).'</em>':strtoupper(strftime('%a'))).'
@@ -303,15 +303,15 @@ class EstatsChart
 ';
 			break;
 			case 'month':
-				if (!$CurrentTime || date('t') == date('j'))
+				if (!$currentTime || date('t') == date('j'))
 				{
 					break;
 				}
 
-				$Month = ((date('n') - 1)?(date('n') - 1):12);
-				$ChartFooter = '<tr class="footer">
-<th colspan="'.(date('t', strtotime('last month')) - date('j')).'" title="'.ucfirst(strftime('%B', mktime(0, 0, 0, $Month))).'">
-'.strtoupper(strftime('%b', mktime(0, 0, 0, $Month))).'
+				$month = ((date('n') - 1)?(date('n') - 1):12);
+				$chartFooter = '<tr class="footer">
+<th colspan="'.(date('t', strtotime('last month')) - date('j')).'" title="'.ucfirst(strftime('%B', mktime(0, 0, 0, $month))).'">
+'.strtoupper(strftime('%b', mktime(0, 0, 0, $month))).'
 </th>
 <th colspan="'. date('j').'" title="'.ucfirst(strftime('%B')).'">
 '.strtoupper(strftime('%b')).'
@@ -323,19 +323,19 @@ class EstatsChart
 ';
 			break;
 			case 'year':
-				$Timestamp = strtotime(date('Y-m-01', $Timestamp));
+				$timestamp = strtotime(date('Y-m-01', $timestamp));
 
-				if ($TimeDifference)
+				if ($timeDifference)
 				{
-					$TimestampBefore = strtotime(date('Y-m-01', $TimestampBefore));
+					$timestampBefore = strtotime(date('Y-m-01', $timestampBefore));
 				}
 
-				if (!$CurrentTime || date('n') == 12)
+				if (!$currentTime || date('n') == 12)
 				{
 					break;
 				}
 
-				$ChartFooter = '<tr class="footer">
+				$chartFooter = '<tr class="footer">
 <th colspan="'.(12 - date('n')).'" title="'.(date('Y') - 1).'">
 '.(date('Y') - 1).'
 </th>
@@ -349,243 +349,243 @@ class EstatsChart
 ';
 			break;
 			case 'years':
-				$Timestamp = strtotime(date('Y-01-01', $Timestamp));
+				$timestamp = strtotime(date('Y-01-01', $timestamp));
 
-				if ($TimeDifference)
+				if ($timeDifference)
 				{
-					$TimestampBefore = strtotime(date('Y-01-01', $TimestampBefore));
+					$timestampBefore = strtotime(date('Y-01-01', $timestampBefore));
 				}
 			break;
 			case 'hours':
 			case 'weekdays':
-				$Timestamp = -1;
+				$timestamp = -1;
 			break;
 		}
 
-		$Colours = explode('|', EstatsTheme::option('ChartTimeColours'));
-		$BarWidth = round(700 / $Information['amount']);
-		$TimeUnit = array(0, $Timestamp);
-		$UnitID = $TimeUnit[0];
-		$Timestamp = $TimeUnit[1];
+		$colours = explode('|', EstatsTheme::option('ChartTimeColours'));
+		$barWidth = round(700 / $information['amount']);
+		$timeUnit = array(0, $timestamp);
+		$unitID = $timeUnit[0];
+		$timestamp = $timeUnit[1];
 
-		if ($TimeDifference)
+		if ($timeDifference)
 		{
-			$TimeUnitBefore = array(0, $TimestampBefore);
+			$timeUnitBefore = array(0, $timestampBefore);
 		}
 
-		for ($i = 0; $i < $Information['amount']; ++$i)
+		for ($i = 0; $i < $information['amount']; ++$i)
 		{
-			$ColumnTitle = $Description = $Bars = '';
-			$NextTimeStamp = $YourVisits = 0;
+			$columnTitle = $description = $bars = '';
+			$nextTimeStamp = $yourVisits = 0;
 
-			if ($CurrentTime || $Popularity)
+			if ($currentTime || $popularity)
 			{
-				$TimeUnit = EstatsGUI::timeUnit($Period, $TimeUnit[1], $Information['step'], $Information['format'], $Information['currenttime']);
-				$UnitID = $TimeUnit[0];
-				$Timestamp = $TimeUnit[1];
+				$timeUnit = EstatsGUI::timeUnit($period, $timeUnit[1], $information['step'], $information['format'], $information['currenttime']);
+				$unitID = $timeUnit[0];
+				$timestamp = $timeUnit[1];
 			}
 
-			switch ($Period)
+			switch ($period)
 			{
 				case '24hours':
-					$Description = date('H', $Timestamp);
-					$ToolTipDate = date('Y.m.d H:00');
+					$description = date('H', $timestamp);
+					$toolTipDate = date('Y.m.d H:00');
 				break;
 				case 'month':
-					$WeekDay = date('w', $Timestamp);
-					$ColumnTitle = strftime('%A', $Timestamp);
-					$Description = date('d', $Timestamp);
+					$weekDay = date('w', $timestamp);
+					$columnTitle = strftime('%A', $timestamp);
+					$description = date('d', $timestamp);
 
-					if ($WeekDay == 0 || $WeekDay == 6)
+					if ($weekDay == 0 || $weekDay == 6)
 					{
-						$Description = '<em>'.$Description.'</em>';
+						$description = '<em>'.$description.'</em>';
 					}
 
-					$ToolTipDate = $ColumnTitle.', '.date('Y.m.d', $Timestamp);
-					$ColumnTitle = ucfirst($ColumnTitle);
+					$toolTipDate = $columnTitle.', '.date('Y.m.d', $timestamp);
+					$columnTitle = ucfirst($columnTitle);
 				break;
 				case 'year':
-					$DateID = date('n', $Timestamp);
-					$Description = strtoupper(strftime('%b', mktime(0, 0, 0, $DateID)));
-					$ColumnTitle = strftime('%B', mktime(0, 0, 0, $DateID));
-					$ToolTipDate = $ColumnTitle.' '.date('Y', $Timestamp);
-					$ColumnTitle = ucfirst($ColumnTitle);
+					$dateID = date('n', $timestamp);
+					$description = strtoupper(strftime('%b', mktime(0, 0, 0, $dateID)));
+					$columnTitle = strftime('%B', mktime(0, 0, 0, $dateID));
+					$toolTipDate = $columnTitle.' '.date('Y', $timestamp);
+					$columnTitle = ucfirst($columnTitle);
 				break;
 				case 'years':
-					$ToolTipDate = $Description = $UnitID;
+					$toolTipDate = $description = $unitID;
 				break;
 				case 'hours':
-					$ToolTipDate = $Description = (($UnitID === 0)?'0':'').$UnitID;
+					$toolTipDate = $description = (($unitID === 0)?'0':'').$unitID;
 				break;
 				case 'weekdays':
-					$Timestamp = (94694400 + (($UnitID - 1) * 86400));
-					$ToolTipDate = strftime('%A', $Timestamp);
-					$ColumnTitle = ucfirst($ToolTipDate);
-					$Description = strtoupper(strftime('%a', $Timestamp));
+					$timestamp = (94694400 + (($unitID - 1) * 86400));
+					$toolTipDate = strftime('%A', $timestamp);
+					$columnTitle = ucfirst($toolTipDate);
+					$description = strtoupper(strftime('%a', $timestamp));
 
-					if ($UnitID == 0 || $UnitID == 6)
+					if ($unitID == 0 || $unitID == 6)
 					{
-						$Description = '<em>'.$Description.'</em>';
+						$description = '<em>'.$description.'</em>';
 					}
 				break;
 			}
 
-			if ($Action)
+			if ($action)
 			{
-				switch ($Period)
+				switch ($period)
 				{
 					case 'month':
-						$Date = date('Y-n-j-0', $Timestamp);
+						$date = date('Y-n-j-0', $timestamp);
 					break;
 					case 'year':
-						$Date = date('Y-n-0-0', $Timestamp);
+						$date = date('Y-n-0-0', $timestamp);
 					break;
 					case 'years':
-						$Date = date('Y-0-0-0', $Timestamp);
+						$date = date('Y-0-0-0', $timestamp);
 					break;
 				}
 			}
 
-			if (!$CurrentTime && !$Popularity)
+			if (!$currentTime && !$popularity)
 			{
-				$TimeUnit = EstatsGUI::timeUnit($Period, $TimeUnit[1], $Information['step'], $Information['format'], $Information['currenttime']);
-				$UnitID = $TimeUnit[0];
-				$Timestamp = $TimeUnit[1];
+				$timeUnit = EstatsGUI::timeUnit($period, $timeUnit[1], $information['step'], $information['format'], $information['currenttime']);
+				$unitID = $timeUnit[0];
+				$timestamp = $timeUnit[1];
 			}
 
-			if ($TimeDifference)
+			if ($timeDifference)
 			{
-				if ($Popularity)
+				if ($popularity)
 				{
-					$TimeUnitBefore = &$TimeUnit;
-					$UnitIDBefore = &$UnitID;
-					$TimestampBefore = &$Timestamp;
+					$timeUnitBefore = &$timeUnit;
+					$unitIDBefore = &$unitID;
+					$timestampBefore = &$timestamp;
 				}
 				else
 				{
-					$TimeUnitBefore = EstatsGUI::timeUnit($Period, $TimeUnitBefore[1], $Information['step'], $Information['format'], 0);
-					$UnitIDBefore = $TimeUnitBefore[0];
-					$TimestampBefore = $TimeUnitBefore[1];
+					$timeUnitBefore = EstatsGUI::timeUnit($period, $timeUnitBefore[1], $information['step'], $information['format'], 0);
+					$unitIDBefore = $timeUnitBefore[0];
+					$timestampBefore = $timeUnitBefore[1];
 				}
 			}
 
-			$Descriptions.= '<th'.($ColumnTitle?' title="'.$ColumnTitle.'"':'').'>'.$Description.'</th>
+			$descriptions.= '<th'.($columnTitle?' title="'.$columnTitle.'"':'').'>'.$description.'</th>
 ';
-			$Size = $ToolTip = array();
+			$size = $toolTip = array();
 
-			for ($j = 0; $j < $TypeAmounts; ++$j)
+			for ($j = 0; $j < $typeAmounts; ++$j)
 			{
-				if (isset($Data[$UnitID][$Summary['types'][$j]]) && $Data[$UnitID][$Summary['types'][$j]] == $Summary['maximum'][$Summary['types'][$j]])
+				if (isset($data[$unitID][$summary['types'][$j]]) && $data[$unitID][$summary['types'][$j]] == $summary['maximum'][$summary['types'][$j]])
 				{
-					$MaxValues[$Summary['types'][$j]][] = $i;
+					$maxValues[$summary['types'][$j]][] = $i;
 				}
 
-				if (!isset($Data[$UnitID][$Summary['types'][$j]]) || $Data[$UnitID][$Summary['types'][$j]] == $Summary['minimum'][$Summary['types'][$j]])
+				if (!isset($data[$unitID][$summary['types'][$j]]) || $data[$unitID][$summary['types'][$j]] == $summary['minimum'][$summary['types'][$j]])
 				{
-					$MinValues[$Summary['types'][$j]][] = $i;
+					$minValues[$summary['types'][$j]][] = $i;
 				}
 
-				$Size[$Summary['types'][$j]] = ((isset($Data[$UnitID][$Summary['types'][$j]]) && $Data[$UnitID][$Summary['types'][$j]])?(($Data[$UnitID][$Summary['types'][$j]] / $Summary['maxall']) * 150):0);
-				$Maximum = (isset($Data[$UnitID][$Summary['types'][$j]]) && $Data[$UnitID][$Summary['types'][$j]] == $Summary['maximum'][$Summary['types'][$j]] && $Summary['maximum'][$Summary['types'][$j]]);
+				$size[$summary['types'][$j]] = ((isset($data[$unitID][$summary['types'][$j]]) && $data[$unitID][$summary['types'][$j]])?(($data[$unitID][$summary['types'][$j]] / $summary['maxall']) * 150):0);
+				$maximum = (isset($data[$unitID][$summary['types'][$j]]) && $data[$unitID][$summary['types'][$j]] == $summary['maximum'][$summary['types'][$j]] && $summary['maximum'][$summary['types'][$j]]);
 
-				if ($Type == 'html')
+				if ($type == 'html')
 				{
-					$Height = $Size[$Summary['types'][$j]];
+					$height = $size[$summary['types'][$j]];
 
-					if (!$Height)
+					if (!$height)
 					{
-						$Bars.= '<div class="empty"></div>
+						$bars.= '<div class="empty"></div>
 	';
 					}
 					else
 					{
-						$Bars.= EstatsTheme::parse(EstatsTheme::get('chart-bar'), array(
-	'height' => round($Height),
-	'margin' => round(150 - $Size[$Summary['types'][$j]]),
-	'colour' => '#'.$Colours[$j],
-	'id' => 'bar_'.$ID.'_'.$i.'_'.$j,
-	'class' => ($Maximum?'maximum':(($Data[$UnitID][$Summary['types'][$j]] == $Summary['minimum'][$Summary['types'][$j]])?'minimum':'')),
-	'title' => EstatsGUI::itemText($Summary['types'][$j], $Category).': '.$Data[$UnitID][$Summary['types'][$j]],
+						$bars.= EstatsTheme::parse(EstatsTheme::get('chart-bar'), array(
+	'height' => round($height),
+	'margin' => round(150 - $size[$summary['types'][$j]]),
+	'colour' => '#'.$colours[$j],
+	'id' => 'bar_'.$iD.'_'.$i.'_'.$j,
+	'class' => ($maximum?'maximum':(($data[$unitID][$summary['types'][$j]] == $summary['minimum'][$summary['types'][$j]])?'minimum':'')),
+	'title' => EstatsGUI::itemText($summary['types'][$j], $category).': '.$data[$unitID][$summary['types'][$j]],
 	'simplebar' => (EstatsTheme::option('ChartSimple')?str_repeat(' <br>
-', (int) (($Height / 150) * 10)):'')
+', (int) (($height / 150) * 10)):'')
 	));
 					}
 				}
 
 				if (!EstatsTheme::option('ChartSimple'))
 				{
-					$Number = (isset($Data[$UnitID][$Summary['types'][$j]])?$Data[$UnitID][$Summary['types'][$j]]:0);
+					$number = (isset($data[$unitID][$summary['types'][$j]])?$data[$unitID][$summary['types'][$j]]:0);
 
-					if (!$Number)
+					if (!$number)
 					{
 						continue;
 					}
 
-					$Sum = $Summary['sum'][$Summary['types'][$j]];
+					$sum = $summary['sum'][$summary['types'][$j]];
 
-					if ($TimeDifference)
+					if ($timeDifference)
 					{
-						$Difference = EstatsGUI::formatDifference((isset($Data[$UnitID][$Summary['types'][$j]])?$Data[$UnitID][$Summary['types'][$j]]:0), (isset($DataBefore[$UnitIDBefore][$Summary['types'][$j]])?$DataBefore[$UnitIDBefore][$Summary['types'][$j]]:0));
+						$difference = EstatsGUI::formatDifference((isset($data[$unitID][$summary['types'][$j]])?$data[$unitID][$summary['types'][$j]]:0), (isset($dataBefore[$unitIDBefore][$summary['types'][$j]])?$dataBefore[$unitIDBefore][$summary['types'][$j]]:0));
 					}
 
-					$ToolTip[$Number.'.'.$j] = EstatsGUI::itemText($Summary['types'][$j], $Category).': '.($Maximum?'<strong>':'').$Number.($Maximum?'</strong>':'').' ('.($Sum?round((($Number / $Sum) * 100), 1):0).'%)'.($TimeDifference?' <em class="'.(($Difference == 0)?'remain':(($Difference > 0)?'increase':'decrease')).'">'.(($Difference > 0)?'+':'').$Difference.'%</em>':'');
+					$toolTip[$number.'.'.$j] = EstatsGUI::itemText($summary['types'][$j], $category).': '.($maximum?'<strong>':'').$number.($maximum?'</strong>':'').' ('.($sum?round((($number / $sum) * 100), 1):0).'%)'.($timeDifference?' <em class="'.(($difference == 0)?'remain':(($difference > 0)?'increase':'decrease')).'">'.(($difference > 0)?'+':'').$difference.'%</em>':'');
 				}
 			}
 
-			if (!array_sum($Size))
+			if (!array_sum($size))
 			{
-				$ToolTip = '';
+				$toolTip = '';
 			}
 			else
 			{
-				krsort($ToolTip);
+				krsort($toolTip);
 
-				$ToolTip = implode('<br>
-', $ToolTip);
+				$toolTip = implode('<br>
+', $toolTip);
 
-				if ($UserVisits)
+				if ($userVisits)
 				{
-					foreach ($UserVisits as $Visit => $VisitTime)
+					foreach ($userVisits as $visit => $visitTime)
 					{
-						if (!isset($VisitTime['first']))
+						if (!isset($visitTime['first']))
 						{
 							continue;
 						}
 
-						switch ($Period)
+						switch ($period)
 						{
 							case 'hours':
-								if (date('G', $VisitTime['first']) == $UnitID)
+								if (date('G', $visitTime['first']) == $unitID)
 								{
-									++$YourVisits;
+									++$yourVisits;
 								}
 							break;
 							case 'weekdays':
-								if (date('w', $VisitTime['first']) == $UnitID)
+								if (date('w', $visitTime['first']) == $unitID)
 								{
-									++$YourVisits;
+									++$yourVisits;
 								}
 							break;
 							default:
-								if (!$NextTimeStamp)
+								if (!$nextTimeStamp)
 								{
-									if ($Information['step'])
+									if ($information['step'])
 									{
-										$NextTimestamp = ($Timestamp + $Information['step']);
+										$nextTimestamp = ($timestamp + $information['step']);
 									}
-									else if ($Period == 'year')
+									else if ($period == 'year')
 									{
-										$NextTimeStamp = ($Timestamp +(date('t', $Timestamp) * 86400));
+										$nextTimeStamp = ($timestamp +(date('t', $timestamp) * 86400));
 									}
-									else if ($Period == 'years')
+									else if ($period == 'years')
 									{
-										$NextTimeStamp = ($Timestamp +((date('L', $Timestamp) + 365) * 86400));
+										$nextTimeStamp = ($timestamp +((date('L', $timestamp) + 365) * 86400));
 									}
 								}
 
-								if ($VisitTime['first'] >= $Timestamp && $VisitTime['first'] < $NextTimeStamp)
+								if ($visitTime['first'] >= $timestamp && $visitTime['first'] < $nextTimeStamp)
 								{
-									++$YourVisits;
+									++$yourVisits;
 								}
 							break;
 						}
@@ -593,38 +593,38 @@ class EstatsChart
 				}
 			}
 
-			$Chart.= EstatsTheme::parse(EstatsTheme::get('chart-bars-container'), array(
-	'class' => 'bars_'.$TypeAmounts,
-	'width' => $BarWidth,
-	'id' => 'bars_'.$ID.'_'.$i,
-	'action' => ($Action?str_replace('{date}', $Date, $Action):''),
-	'bars' => (($Type != 'html')?'<div class="empty"></div>
-':$Bars),
-	'tooltip' => ($ToolTip?'<span class="tooltip">
-<strong>'.ucfirst($ToolTipDate).':</strong><br>
-'.$ToolTip.($YourVisits?'<br>
-'.EstatsLocale::translate('Your visits').': '.EstatsGUI::formatNumber($YourVisits).' ('.((isset($Summary['sum']['unique']) && $Summary['sum']['unique'])?round((($YourVisits / $Summary['sum']['unique']) * 100), 1):0).'%)<br>
+			$chart.= EstatsTheme::parse(EstatsTheme::get('chart-bars-container'), array(
+	'class' => 'bars_'.$typeAmounts,
+	'width' => $barWidth,
+	'id' => 'bars_'.$iD.'_'.$i,
+	'action' => ($action?str_replace('{date}', $date, $action):''),
+	'bars' => (($type != 'html')?'<div class="empty"></div>
+':$bars),
+	'tooltip' => ($toolTip?'<span class="tooltip">
+<strong>'.ucfirst($toolTipDate).':</strong><br>
+'.$toolTip.($yourVisits?'<br>
+'.EstatsLocale::translate('Your visits').': '.EstatsGUI::formatNumber($yourVisits).' ('.((isset($summary['sum']['unique']) && $summary['sum']['unique'])?round((($yourVisits / $summary['sum']['unique']) * 100), 1):0).'%)<br>
 ':'').'</span>
 ':' ')
 	));
 		}
 
-		$Levels = $Scale = '';
+		$levels = $scale = '';
 
-		if ($Summary['maxall'])
+		if ($summary['maxall'])
 		{
-			if (!EstatsTheme::option('ChartSimple') && $TypeAmounts <= 3)
+			if (!EstatsTheme::option('ChartSimple') && $typeAmounts <= 3)
 			{
-				for ($i = 0; $i < $TypeAmounts; ++$i)
+				for ($i = 0; $i < $typeAmounts; ++$i)
 				{
 					for ($j = 0; $j < 3; ++$j)
 					{
-						if (!$Summary[$LevelTypes[$j]][$Summary['types'][$i]])
+						if (!$summary[$levelTypes[$j]][$summary['types'][$i]])
 						{
 							continue;
 						}
 
-						$Levels.= '<hr id="level_'.$ID.'_'.$LevelTypes[$j].'_'.$i.'" class="'.$LevelTypes[$j].'" style="margin-top:-'.(int)((($Summary[$LevelTypes[$j]][$Summary['types'][$i]] / $Summary['maxall']) * 150) + 2).'px;border-color:#'.$Colours[$i].';" title="'.EstatsLocale::translate(ucfirst($Summary['types'][$i])).' - '.$LevelNames[$j].': '.round($Summary[$LevelTypes[$j]][$Summary['types'][$i]], 2).'">
+						$levels.= '<hr id="level_'.$iD.'_'.$levelTypes[$j].'_'.$i.'" class="'.$levelTypes[$j].'" style="margin-top:-'.(int)((($summary[$levelTypes[$j]][$summary['types'][$i]] / $summary['maxall']) * 150) + 2).'px;border-color:#'.$colours[$i].';" title="'.EstatsLocale::translate(ucfirst($summary['types'][$i])).' - '.$levelNames[$j].': '.round($summary[$levelTypes[$j]][$summary['types'][$i]], 2).'">
 	';
 					}
 				}
@@ -632,76 +632,76 @@ class EstatsChart
 
 			for ($i = 10; $i > 0; $i--)
 			{
-				$Scale.= EstatsGUI::formatNumber(($Summary['maxall'] * $i) / 10).'
+				$scale.= EstatsGUI::formatNumber(($summary['maxall'] * $i) / 10).'
 ';
 			}
 
-			$Scale.= '<em>0</em>';
+			$scale.= '<em>0</em>';
 		}
 		else
 		{
-			$Scale = str_repeat('
+			$scale = str_repeat('
 ', 12);
 		}
 
-		$ChartArea.= '<tr>
-'.$Chart.'<td class="scale" style="">
-<pre>'.$Scale.'</pre>
+		$chartArea.= '<tr>
+'.$chart.'<td class="scale" style="">
+<pre>'.$scale.'</pre>
 </td>
 </tr>
 <tr>
-<td colspan="'.$Information['amount'].'" class="levels">
-'.$Levels.'</td>
+<td colspan="'.$information['amount'].'" class="levels">
+'.$levels.'</td>
 </tr>
 <tr>
-'.$Descriptions.'<th>'.(($Summary['maxall'] && !EstatsTheme::option('ChartSimple') && $TypeAmounts <= 3)?'<input type="checkbox" id="levels_switch_'.$Period.'" onclick="levelsShowHide(\''.$Period.'\')"'.((!isset($_COOKIE['estats_time_levels_chart_'.$Period]) || $_COOKIE['estats_time_levels_chart_'.$Period] != 'true')?' checked="checked"':'').' title="'.EstatsLocale::translate('Show / hide levels of maximum, average and minimum').'">':'&nbsp;').'</th>
+'.$descriptions.'<th>'.(($summary['maxall'] && !EstatsTheme::option('ChartSimple') && $typeAmounts <= 3)?'<input type="checkbox" id="levels_switch_'.$period.'" onclick="levelsShowHide(\''.$period.'\')"'.((!isset($_COOKIE['estats_time_levels_chart_'.$period]) || $_COOKIE['estats_time_levels_chart_'.$period] != 'true')?' checked="checked"':'').' title="'.EstatsLocale::translate('Show / hide levels of maximum, average and minimum').'">':'&nbsp;').'</th>
 </tr>
 ';
-		$SummaryTable = '';
+		$summaryTable = '';
 
-		for ($i = 0; $i < $TypeAmounts; ++$i)
+		for ($i = 0; $i < $typeAmounts; ++$i)
 		{
-			$Keys = array('sum', 'maximum', 'average', 'minimum');
-			$Text = EstatsGUI::itemText($Summary['types'][$i], $Category);
-			$Icon = EstatsGUI::iconPath($Summary['types'][$i], $Category);
-			$ThemeArray = array(
-	'text' => EstatsGUI::cutString($Text, EstatsTheme::option('ChartRowValueLength'), TRUE),
+			$keys = array('sum', 'maximum', 'average', 'minimum');
+			$text = EstatsGUI::itemText($summary['types'][$i], $category);
+			$icon = EstatsGUI::iconPath($summary['types'][$i], $category);
+			$themeArray = array(
+	'text' => EstatsGUI::cutString($text, EstatsTheme::option('ChartRowValueLength'), TRUE),
 	'number' => $i,
-	'colour' => '#'.$Colours[$i],
-	'icon' =>($Icon?'
-'.EstatsGUI::iconTag($Icon, $Text).'
+	'colour' => '#'.$colours[$i],
+	'icon' =>($icon?'
+'.EstatsGUI::iconTag($icon, $text).'
 ':''),
 	);
 			for ($j = 0; $j < 4; ++$j)
 			{
-				$ThemeArray[$Keys[$j]] = EstatsGUI::formatNumber($Summary[$Keys[$j]][$Summary['types'][$i]]);
+				$themeArray[$keys[$j]] = EstatsGUI::formatNumber($summary[$keys[$j]][$summary['types'][$i]]);
 
-				if ($TimeDifference)
+				if ($timeDifference)
 				{
-					$Difference = EstatsGUI::formatDifference($Summary[$Keys[$j]][$Summary['types'][$i]], $Summary[$Keys[$j].'_before'][$Summary['types'][$i]]);
-					$ThemeArray[$Keys[$j].'_difference'] = (($Difference > 0)?'+':'').$Difference.'%';
-					$ThemeArray[$Keys[$j].'_class'] = (($Difference == 0)?'remain':(($Difference > 0)?'increase':'decrease'));
+					$difference = EstatsGUI::formatDifference($summary[$keys[$j]][$summary['types'][$i]], $summary[$keys[$j].'_before'][$summary['types'][$i]]);
+					$themeArray[$keys[$j].'_difference'] = (($difference > 0)?'+':'').$difference.'%';
+					$themeArray[$keys[$j].'_class'] = (($difference == 0)?'remain':(($difference > 0)?'increase':'decrease'));
 				}
 			}
 
-			$SummaryTable.= EstatsTheme::parse(EstatsTheme::get('chart-summary-row'), $ThemeArray, array('time_difference' => $TimeDifference));
+			$summaryTable.= EstatsTheme::parse(EstatsTheme::get('chart-summary-row'), $themeArray, array('time_difference' => $timeDifference));
 		}
 
 	return EstatsTheme::parse(EstatsTheme::get('chart'), array(
-	'chart' => &$ChartArea,
-	'footer' => &$ChartFooter,
+	'chart' => &$chartArea,
+	'footer' => &$chartFooter,
 	'summary' => EstatsTheme::parse(EstatsTheme::get('chart-summary'), array(
-		'rows' => &$SummaryTable,
-		'id' => &$Period,
+		'rows' => &$summaryTable,
+		'id' => &$period,
 		)),
-	'id' => $Period,
-	'class' => (in_array($Period, array('24hours', 'month', 'hours'))?' narrow':'').(($Type != 'html')?'':' plain').($Action?' actions':''),
-	'style' => (($Type != 'html')?' style="background:url({path}image{suffix}{separator}id='.$ID.') no-repeat left top;"':''),
-	'title' => $Title,
-	'colspan' => ($Information['amount'] + 1),
-	'cacheinformation' => ($CacheTime?EstatsGUI::notificationWidget(sprintf(EstatsLocale::translate('Data from <em>cache</em>, refreshed: %s.'), date('d.m.Y H:i:s', $CacheTime)), 'information'):''),
+	'id' => $period,
+	'class' => (in_array($period, array('24hours', 'month', 'hours'))?' narrow':'').(($type != 'html')?'':' plain').($action?' actions':''),
+	'style' => (($type != 'html')?' style="background:url({path}image{suffix}{separator}id='.$iD.') no-repeat left top;"':''),
+	'title' => $title,
+	'colspan' => ($information['amount'] + 1),
+	'cacheinformation' => ($cacheTime?EstatsGUI::notificationWidget(sprintf(EstatsLocale::translate('Data from <em>cache</em>, refreshed: %s.'), date('d.m.Y H:i:s', $cacheTime)), 'information'):''),
 	'switch' => (EstatsTheme::option('ChartSimple')?'':'<script type="text/javascript">
-levelsShowHide(\''.$Period.'\');
+levelsShowHide(\''.$period.'\');
 </script>
 '),
 	'lang_summary' => EstatsLocale::translate('Summary'),

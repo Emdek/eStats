@@ -12,31 +12,31 @@ class EstatsLocale
  * Current locale
  */
 
-	static private $Locale;
+	static private $locale;
 
 /**
  * Gettext availability indicator
  */
 
-	static private $Gettext = NULL;
+	static private $gettext = NULL;
 
 /**
  * Optional translation table
  */
 
-	static private $Translation = NULL;
+	static private $translation = NULL;
 
 /**
  * List of available locales
  */
 
-	static private $Available = NULL;
+	static private $available = NULL;
 
 /**
  * Locale information
  */
 
-	static private $Information;
+	static private $information;
 
 /**
  * Sets default locale
@@ -45,29 +45,29 @@ class EstatsLocale
  * @return boolean
  */
 
-	static public function set($Locale, $Gettext = NULL)
+	static public function set($locale, $gettext = NULL)
 	{
-		$FileName = './locale/'.$Locale.'/locale.ini';
+		$fileName = './locale/'.$locale.'/locale.ini';
 
-		if (!is_file($FileName))
+		if (!is_file($fileName))
 		{
 			return FALSE;
 		}
 
-		self::$Locale = $Locale;
-		self::$Information = parse_ini_file($FileName, FALSE);
+		self::$locale = $locale;
+		self::$information = parse_ini_file($fileName, FALSE);
 
-		setlocale(LC_ALL, explode('|', self::$Information['Locale']));
+		setlocale(LC_ALL, explode('|', self::$information['Locale']));
 
 		if (stristr(PHP_OS, 'win'))
 		{
-			putenv('LANG='.$Locale);
-			putenv('LANGUAGE='.$Locale);
+			putenv('LANG='.$locale);
+			putenv('LANGUAGE='.$locale);
 		}
 
-		if ($Gettext !== NULL)
+		if ($gettext !== NULL)
 		{
-			self::$Gettext = $Gettext;
+			self::$gettext = $gettext;
 		}
 
 		self::load();
@@ -80,14 +80,14 @@ class EstatsLocale
  * @param string Directory
  */
 
-	static function load($Directory = '')
+	static function load($directory = '')
 	{
-		if (self::$Gettext === NULL)
+		if (self::$gettext === NULL)
 		{
-			self::$Gettext = extension_loaded('gettext');
+			self::$gettext = extension_loaded('gettext');
 		}
 
-		if (!$Directory && self::$Gettext && is_file('./locale/'.self::$Locale.'/LC_MESSAGES/estats.mo'))
+		if (!$directory && self::$gettext && is_file('./locale/'.self::$locale.'/LC_MESSAGES/estats.mo'))
 		{
 			bindtextdomain('estats', './locale/');
 			textdomain('estats');
@@ -95,27 +95,27 @@ class EstatsLocale
 		}
 		else
 		{
-			if (self::$Locale == 'en')
+			if (self::$locale == 'en')
 			{
 				return;
 			}
 
-			$Path = $Directory.($Directory?'':'./locale/').self::$Locale.($Directory?'':'/locale').'.dat';
+			$path = $directory.($directory?'':'./locale/').self::$locale.($directory?'':'/locale').'.dat';
 
-			if (!is_file($Path))
+			if (!is_file($path))
 			{
 				return;
 			}
 
-			$Translation = unserialize(file_get_contents($Path));
+			$translation = unserialize(file_get_contents($path));
 
-			if (self::$Translation !== NULL)
+			if (self::$translation !== NULL)
 			{
-				self::$Translation = array_merge($Translation, self::$Translation);
+				self::$translation = array_merge($translation, self::$translation);
 			}
 			else
 			{
-				self::$Translation = $Translation;
+				self::$translation = $translation;
 			}
 		}
 	}
@@ -127,23 +127,23 @@ class EstatsLocale
 
 	static function available()
 	{
-		if (self::$Available)
+		if (self::$available)
 		{
-			return self::$Available;
+			return self::$available;
 		}
 
-		$Array = array();
-		$Locales = glob('./locale/*/locale.ini');
+		$array = array();
+		$locales = glob('./locale/*/locale.ini');
 
-		for ($i = 0, $c = count($Locales); $i < $c; ++$i)
+		for ($i = 0, $c = count($locales); $i < $c; ++$i)
 		{
-			$Information = parse_ini_file($Locales[$i], FALSE);
-			$Array[basename(dirname($Locales[$i]))] = $Information['Name'];
+			$information = parse_ini_file($locales[$i], FALSE);
+			$array[basename(dirname($locales[$i]))] = $information['Name'];
 		}
 
-		self::$Available = $Array;
+		self::$available = $array;
 
-		return $Array;
+		return $array;
 	}
 
 /**
@@ -152,9 +152,9 @@ class EstatsLocale
  * @return string
  */
 
-	static function option($Option)
+	static function option($option)
 	{
-		return (isset(self::$Information[$Option])?self::$Information[$Option]:'');
+		return (isset(self::$information[$option])?self::$information[$option]:'');
 	}
 
 /**
@@ -163,15 +163,15 @@ class EstatsLocale
  * @return string
  */
 
-	static function translate($String)
+	static function translate($string)
 	{
-		if (self::$Gettext)
+		if (self::$gettext)
 		{
-			return gettext($String);
+			return gettext($string);
 		}
 		else
 		{
-			return (isset(self::$Translation[$String])?self::$Translation[$String]:$String);
+			return (isset(self::$translation[$string])?self::$translation[$string]:$string);
 		}
 	}
 
@@ -181,9 +181,9 @@ class EstatsLocale
  * @return boolean
  */
 
-	static function exists($Locale)
+	static function exists($locale)
 	{
-		return file_exists('./locale/'.$Locale.'/locale.ini');
+		return file_exists('./locale/'.$locale.'/locale.ini');
 	}
 }
 ?>

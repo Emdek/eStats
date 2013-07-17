@@ -12,31 +12,31 @@ class EstatsTheme
  * Current theme
  */
 
-	static private $Theme;
+	static private $theme;
 
 /**
  * Theme information
  */
 
-	static private $Information;
+	static private $information;
 
 /**
  * Theme elements
  */
 
-	static private $Elements;
+	static private $elements;
 
 /**
  * Theme switches
  */
 
-	static private $Switches;
+	static private $switches;
 
 /**
  * List of available themes
  */
 
-	static private $Available = NULL;
+	static private $available = NULL;
 
 /**
  * Sets default theme
@@ -44,19 +44,19 @@ class EstatsTheme
  * @return boolean
  */
 
-	static function set($Theme)
+	static function set($theme)
 	{
-		$FileName = './share/themes/'.$Theme.'/theme.ini';
+		$fileName = './share/themes/'.$theme.'/theme.ini';
 
-		if (!is_file($FileName))
+		if (!is_file($fileName))
 		{
 			return FALSE;
 		}
 
-		self::$Theme = $Theme;
-		self::$Information = parse_ini_file($FileName, FALSE);
-		self::$Elements['index'] = file_get_contents('./share/themes/'.$Theme.'/theme.tpl');
-		self::$Switches = array();
+		self::$theme = $theme;
+		self::$information = parse_ini_file($fileName, FALSE);
+		self::$elements['index'] = file_get_contents('./share/themes/'.$theme.'/theme.tpl');
+		self::$switches = array();
 
 		return TRUE;
 	}
@@ -68,27 +68,27 @@ class EstatsTheme
  * @return boolean
  */
 
-	static function load($File, $Directory = '')
+	static function load($file, $directory = '')
 	{
-		$FileName = ($Directory?$Directory:'./share/themes/').self::$Theme.'/'.$File.'.tpl';
+		$fileName = ($directory?$directory:'./share/themes/').self::$theme.'/'.$file.'.tpl';
 
-		if (!is_file($FileName))
+		if (!is_file($fileName))
 		{
-			$FileName = ($Directory?$Directory:'./share/themes/').'common/'.$File.'.tpl';
+			$fileName = ($directory?$directory:'./share/themes/').'common/'.$file.'.tpl';
 		}
 
-		if (!is_file($FileName))
+		if (!is_file($fileName))
 		{
 			return FALSE;
 		}
 
-		$Theme = file_get_contents($FileName);
+		$theme = file_get_contents($fileName);
 
-		preg_match_all('#\[start:(.*?)\](.*?)\[/end\]#si', $Theme, $Blocks);
+		preg_match_all('#\[start:(.*?)\](.*?)\[/end\]#si', $theme, $blocks);
 
-		for ($i = 0, $c = count($Blocks[0]); $i < $c; ++$i)
+		for ($i = 0, $c = count($blocks[0]); $i < $c; ++$i)
 		{
-			self::$Elements[$Blocks[1][$i]] = $Blocks[2][$i];
+			self::$elements[$blocks[1][$i]] = $blocks[2][$i];
 		}
 
 		return TRUE;
@@ -101,23 +101,23 @@ class EstatsTheme
 
 	static function available()
 	{
-		if (self::$Available)
+		if (self::$available)
 		{
-			return self::$Available;
+			return self::$available;
 		}
 
-		$Array = array();
-		$Themes = glob('./share/themes/*/theme.ini');
+		$array = array();
+		$themes = glob('./share/themes/*/theme.ini');
 
-		for ($i = 0, $c = count($Themes); $i < $c; ++$i)
+		for ($i = 0, $c = count($themes); $i < $c; ++$i)
 		{
-			$Information = parse_ini_file($Themes[$i], FALSE);
-			$Array[basename(dirname($Themes[$i]))] = $Information['Name'];
+			$information = parse_ini_file($themes[$i], FALSE);
+			$array[basename(dirname($themes[$i]))] = $information['Name'];
 		}
 
-		self::$Available = $Array;
+		self::$available = $array;
 
-		return $Array;
+		return $array;
 	}
 
 /**
@@ -126,9 +126,9 @@ class EstatsTheme
  * @return string
  */
 
-	static function option($Option)
+	static function option($option)
 	{
-		return (isset(self::$Information[$Option])?self::$Information[$Option]:'');
+		return (isset(self::$information[$option])?self::$information[$option]:'');
 	}
 
 /**
@@ -137,9 +137,9 @@ class EstatsTheme
  * @return string
  */
 
-	static function get($Element)
+	static function get($element)
 	{
-		return (isset(self::$Elements[$Element])?self::$Elements[$Element]:(isset(self::$Switches[$Element])?self::$Switches[$Element]:''));
+		return (isset(self::$elements[$element])?self::$elements[$element]:(isset(self::$switches[$element])?self::$switches[$element]:''));
 	}
 
 /**
@@ -148,15 +148,15 @@ class EstatsTheme
  * @param mixed Value
  */
 
-	static function add($Element, $Value)
+	static function add($element, $value)
 	{
-		if (is_bool($Value))
+		if (is_bool($value))
 		{
-			self::$Switches[$Element] = $Value;
+			self::$switches[$element] = $value;
 		}
 		else
 		{
-			self::$Elements[$Element] = $Value;
+			self::$elements[$element] = $value;
 		}
 	}
 
@@ -166,15 +166,15 @@ class EstatsTheme
  * @param string String
  */
 
-	static function append($Element, $String)
+	static function append($element, $string)
 	{
-		if (isset(self::$Elements[$Element]))
+		if (isset(self::$elements[$element]))
 		{
-			self::$Elements[$Element].= $String;
+			self::$elements[$element].= $string;
 		}
 		else
 		{
-			self::$Elements[$Element] = $String;
+			self::$elements[$element] = $string;
 		}
 	}
 
@@ -184,15 +184,15 @@ class EstatsTheme
  * @param string String
  */
 
-	static function link($From, $To)
+	static function link($from, $to)
 	{
-		if (isset(self::$Elements[$From]))
+		if (isset(self::$elements[$from]))
 		{
-			self::$Elements[$To] = &self::$Elements[$From];
+			self::$elements[$to] = &self::$elements[$from];
 		}
 		else
 		{
-			self::$Elements[$To] = '';
+			self::$elements[$to] = '';
 		}
 	}
 
@@ -201,9 +201,9 @@ class EstatsTheme
  * @param string Element
  */
 
-	static function contains($Element)
+	static function contains($element)
 	{
-		return isset(self::$Elements[$Element]);
+		return isset(self::$elements[$element]);
 	}
 
 /**
@@ -214,32 +214,32 @@ class EstatsTheme
  * @return string
  */
 
-	static function parse($String, $Elements = NULL, $Switches = FALSE)
+	static function parse($string, $elements = NULL, $switches = FALSE)
 	{
-		if ($Elements == NULL)
+		if ($elements == NULL)
 		{
-			$Elements = &self::$Elements;
+			$elements = &self::$elements;
 		}
 
-		if ($Switches)
+		if ($switches)
 		{
-			if (!is_array($Switches))
+			if (!is_array($switches))
 			{
-				$Switches = &self::$Switches;
+				$switches = &self::$switches;
 			}
 
-			foreach ($Switches as $Key => $Value)
+			foreach ($switches as $key => $value)
 			{
-				$String = preg_replace(array('#<!--start:'.$Key.'-->(.*?)<!--end:'.$Key.'-->#si', '#<!--start:!'.$Key.'-->(.*?)<!--end:!'.$Key.'-->#si'), array(($Value?'\\1':''), ($Value?'':'\\1')), $String);
+				$string = preg_replace(array('#<!--start:'.$key.'-->(.*?)<!--end:'.$key.'-->#si', '#<!--start:!'.$key.'-->(.*?)<!--end:!'.$key.'-->#si'), array(($value?'\\1':''), ($value?'':'\\1')), $string);
 			}
 		}
 
-		foreach ($Elements as $Key => $Value)
+		foreach ($elements as $key => $value)
 		{
-			$String = str_replace('{'.$Key.'}', $Value, $String);
+			$string = str_replace('{'.$key.'}', $value, $string);
 		}
 
-		return $String;
+		return $string;
 	}
 
 /**
@@ -248,9 +248,9 @@ class EstatsTheme
  * @return boolean
  */
 
-	static function exists($Theme)
+	static function exists($theme)
 	{
-		return file_exists('./share/themes/'.$Theme.'/theme.ini');
+		return file_exists('./share/themes/'.$theme.'/theme.ini');
 	}
 }
 ?>

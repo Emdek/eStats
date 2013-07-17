@@ -18,14 +18,14 @@ define('ESTATS_VERSIONTIME', 1295098200);
  * @param integer Line
  */
 
-function estats_error_handler($Number, $String, $File, $Line)
+function estats_error_handler($number, $string, $file, $line)
 {
-	if (strstr($String, 'date.timezone'))
+	if (strstr($string, 'date.timezone'))
 	{
 		return;
 	}
 
-	$ErrorTypes = array(
+	$errorTypes = array(
 	2 => 'Warning',
 	8 => 'Notice',
 	32 => 'Core warning',
@@ -40,9 +40,9 @@ function estats_error_handler($Number, $String, $File, $Line)
 
 	$_SESSION['ERRORS'][] = '<h5>
 <big>#'.(count($_SESSION['ERRORS']) + 1).'</big>
-'.$ErrorTypes[$Number].' (<em>'.$File.':'.$Line.'</em>)
+'.$errorTypes[$number].' (<em>'.$file.':'.$line.'</em>)
 </h5>
-'.$String.'<br>
+'.$string.'<br>
 ';
 }
 
@@ -55,12 +55,12 @@ function estats_error_handler($Number, $String, $File, $Line)
  * @param boolean Warning
  */
 
-function estats_error_message($Message, $File, $Line, $NotFile = FALSE, $Warning = FALSE)
+function estats_error_message($message, $file, $line, $notFile = FALSE, $warning = FALSE)
 {
-	if ($Warning)
+	if ($warning)
 	{
-		EstatsGUI::notify(($NotFile?$Message:'Could not load file! (<em>'.$Message.'</em>)').'<br>
-<strong>'.$File.': <em>'.$Line.'</em></strong>', ($Warning?'warning':'error'));
+		EstatsGUI::notify(($notFile?$message:'Could not load file! (<em>'.$message.'</em>)').'<br>
+<strong>'.$file.': <em>'.$line.'</em></strong>', ($warning?'warning':'error'));
 
 	}
 	else
@@ -75,7 +75,7 @@ function estats_error_message($Message, $File, $Line, $NotFile = FALSE, $Warning
 <h1>
 Critical error!
 </h1>
-<strong>'.($NotFile?$Message:'Could not load file <em>'.$Message.'</em>!').' (<em>'.$File.':'.$Line.'</em>)</strong>
+<strong>'.($notFile?$message:'Could not load file <em>'.$message.'</em>!').' (<em>'.$file.':'.$line.'</em>)</strong>
 '.($_SESSION['ERRORS']?'<h2>Debug ('.count($_SESSION['ERRORS']).' errors)</h2>
 '.implode('', $_SESSION['ERRORS']):'').'
 </body>
@@ -87,10 +87,10 @@ error_reporting(E_ALL);
 set_error_handler('estats_error_handler');
 session_start();
 
-$Start = microtime(TRUE);
+$start = microtime(TRUE);
 $_SESSION['ERRORS'] = array();
-$SelectLocale = $SelectTheme = $SelectYears = $SelectMonths = $SelectDays = $SelectHours = '';
-$DirName = (is_dir($_SERVER['SCRIPT_NAME'])?$_SERVER['SCRIPT_NAME']:dirname($_SERVER['SCRIPT_NAME']));
+$selectLocale = $selectTheme = $selectYears = $selectMonths = $selectDays = $selectHours = '';
+$dirName = (is_dir($_SERVER['SCRIPT_NAME'])?$_SERVER['SCRIPT_NAME']:dirname($_SERVER['SCRIPT_NAME']));
 
 if (is_readable('./conf/config.php'))
 {
@@ -162,7 +162,7 @@ if (!defined('eStats') || !defined('eStatsVersion') || eStatsVersion !== substr(
 	define('ESTATS_INSTALL', TRUE);
 }
 
-EstatsTheme::add('datapath', (($DirName == '/')?'':$DirName).'/');
+EstatsTheme::add('datapath', (($dirName == '/')?'':$dirName).'/');
 
 if (!defined('ESTATS_INSTALL'))
 {
@@ -182,28 +182,28 @@ if (!defined('ESTATS_INSTALL'))
 
 if (EstatsCore::option('Path/mode'))
 {
-	$Path = (isset($_SERVER['PATH_INFO'])?explode('/', substr($_SERVER[((!$_SERVER['PATH_INFO'] && isset($_SERVER['ORIG_PATH_INFO']))?'ORIG_':'').'PATH_INFO'], 1)):array());
+	$path = (isset($_SERVER['PATH_INFO'])?explode('/', substr($_SERVER[((!$_SERVER['PATH_INFO'] && isset($_SERVER['ORIG_PATH_INFO']))?'ORIG_':'').'PATH_INFO'], 1)):array());
 }
 else
 {
-	$Path = array();
+	$path = array();
 }
 
-if (empty($Path))
+if (empty($path))
 {
-	$Path = (isset($_GET['path'])?explode('/', $_GET['path']):(isset($_GET['vars'])?explode('/', $_GET['vars']):array()));
+	$path = (isset($_GET['path'])?explode('/', $_GET['path']):(isset($_GET['vars'])?explode('/', $_GET['vars']):array()));
 }
 
 if (defined('ESTATS_INSTALL'))
 {
-	$Path[1] = 'install';
+	$path[1] = 'install';
 }
-else if (!isset($Path[1]) || (!is_file('pages/'.$Path[1].'.php') && $Path[1] !== 'tools' && $Path[1] !== 'login'))
+else if (!isset($path[1]) || (!is_file('pages/'.$path[1].'.php') && $path[1] !== 'tools' && $path[1] !== 'login'))
 {
-	$Path[1] = 'general';
+	$path[1] = 'general';
 }
 
-$Groups = array(
+$groups = array(
 	'general' => array('sites', 'referrers', 'websearchers', 'keywords', 'robots', 'languages', 'hosts', 'proxy',),
 	'geolocation' => array('cities', 'countries', 'continents',),
 	'technical' => array('browsers', 'operatingsystems', 'browser-versions', 'operatingsystem-versions', 'screens', 'flash', 'java', 'javascript', 'cookies',),
@@ -214,47 +214,47 @@ if (isset($_POST['year']))
 {
 	if ($_POST['year'])
 	{
-		$Date = strtotime(((isset($_POST['day']) && $_POST['day'])?(($_POST['day'] < 10)?'0':'').(int) $_POST['day']:'01').'.'.($_POST['month']?(($_POST['month'] < 10)?'0':'').(int) $_POST['month']:'01').'.'.(int) $_POST['year'].(isset($_POST['hour'])?' '.(($_POST['hour'] < 10)?'0':'').(int) $_POST['hour'].':00':''));
+		$date = strtotime(((isset($_POST['day']) && $_POST['day'])?(($_POST['day'] < 10)?'0':'').(int) $_POST['day']:'01').'.'.($_POST['month']?(($_POST['month'] < 10)?'0':'').(int) $_POST['month']:'01').'.'.(int) $_POST['year'].(isset($_POST['hour'])?' '.(($_POST['hour'] < 10)?'0':'').(int) $_POST['hour'].':00':''));
 
 		if (isset($_POST['previous']) || isset($_POST['next']))
 		{
 			if (isset($_POST['hour']))
 			{
-				$String = 'hour';
+				$string = 'hour';
 			}
 			else if (isset($_POST['day']) && $_POST['day'])
 			{
-				$String = 'day';
+				$string = 'day';
 			}
 			else if ($_POST['month'])
 			{
-				$String = 'month';
+				$string = 'month';
 			}
 			else if ($_POST['year'])
 			{
-				$String = 'year';
+				$string = 'year';
 			}
 			else
 			{
-				$String = '';
+				$string = '';
 			}
 
-			if ($String)
+			if ($string)
 			{
-				$Date = strtotime(date('d.m.Y H:00', $Date).' '.(isset($_POST['previous'])?'-':'+').'1 '.$String);
+				$date = strtotime(date('d.m.Y H:00', $date).' '.(isset($_POST['previous'])?'-':'+').'1 '.$string);
 			}
 		}
 
-		$Date = date('Y-'.($_POST['month']?'n':'0').'-'.((isset($_POST['day']) && $_POST['day'])?'j':'0').'-G', $Date);
+		$date = date('Y-'.($_POST['month']?'n':'0').'-'.((isset($_POST['day']) && $_POST['day'])?'j':'0').'-G', $date);
 	}
 	else
 	{
-		$Date = '0-0-0-0';
+		$date = '0-0-0-0';
 	}
 
-	EstatsCookie::set('date', $Date);
+	EstatsCookie::set('date', $date);
 
-	die(header('Location: '.EstatsTheme::get('datapath').EstatsCore::option('Path/prefix').$Path[0].'/'.$Path[1].(($Path[1] == 'geolocation')?'/'.$_POST['map']:'').(($Path[1] !== 'time' && isset($Path[($Path[1] == 'geolocation')?4:3]))?'/'.$Path[($Path[1] == 'geolocation')?3:2]:'').(($Path[1] == 'time')?((isset($Path[2]) && in_array($Path[2], $Groups['time']))?'/'.$Path[2]:'').((isset($_POST['TimeView']))?'/'.implode('+', $_POST['TimeView']):''):'').'/'.$Date.(($Path[1] == 'time' && isset($_POST['TimeCompare']))?'/compare':'').EstatsCore::option('Path/suffix')));
+	die(header('Location: '.EstatsTheme::get('datapath').EstatsCore::option('Path/prefix').$path[0].'/'.$path[1].(($path[1] == 'geolocation')?'/'.$_POST['map']:'').(($path[1] !== 'time' && isset($path[($path[1] == 'geolocation')?4:3]))?'/'.$path[($path[1] == 'geolocation')?3:2]:'').(($path[1] == 'time')?((isset($path[2]) && in_array($path[2], $groups['time']))?'/'.$path[2]:'').((isset($_POST['TimeView']))?'/'.implode('+', $_POST['TimeView']):''):'').'/'.$date.(($path[1] == 'time' && isset($_POST['TimeCompare']))?'/compare':'').EstatsCore::option('Path/suffix')));
 }
 
 if (EstatsCookie::exists('theme'))
@@ -276,38 +276,38 @@ if (isset($_POST['theme']))
 
 if (isset($_POST['locale']))
 {
-	die(header('Location: '.EstatsTheme::get('datapath').EstatsCore::option('Path/prefix').$_POST['locale'].'/'.implode('/', array_slice($Path, 1)).EstatsCore::option('Path/suffix')));
+	die(header('Location: '.EstatsTheme::get('datapath').EstatsCore::option('Path/prefix').$_POST['locale'].'/'.implode('/', array_slice($path, 1)).EstatsCore::option('Path/suffix')));
 }
 
-$Locales = EstatsLocale::available();
+$locales = EstatsLocale::available();
 
 if (!isset($_SESSION[EstatsCore::session()]['locale']))
 {
-	$Language = EstatsCore::language();
+	$language = EstatsCore::language();
 
-	if (strlen($Language) > 1)
+	if (strlen($language) > 1)
 	{
-		$_SESSION[EstatsCore::session()]['locale'] = (array_key_exists($Language, EstatsLocale::available())?$Language:(array_key_exists(substr($Language, 0, 2), EstatsLocale::available())?substr($Language, 0, 2):'en'));
+		$_SESSION[EstatsCore::session()]['locale'] = (array_key_exists($language, EstatsLocale::available())?$language:(array_key_exists(substr($language, 0, 2), EstatsLocale::available())?substr($language, 0, 2):'en'));
 	}
 }
 
-if (!isset($Path[0]) || !EstatsLocale::exists($Path[0]))
+if (!isset($path[0]) || !EstatsLocale::exists($path[0]))
 {
-	$Path[0] = (empty($_SESSION[EstatsCore::session()]['locale'])?'en':$_SESSION[EstatsCore::session()]['locale']);
+	$path[0] = (empty($_SESSION[EstatsCore::session()]['locale'])?'en':$_SESSION[EstatsCore::session()]['locale']);
 }
 
-if (!is_readable('locale/'.$Path[0].'/locale.ini'))
+if (!is_readable('locale/'.$path[0].'/locale.ini'))
 {
-	$Path[0] = 'en';
+	$path[0] = 'en';
 }
 
-EstatsLocale::set($Path[0], (defined('ESTATS_GETTEXT')?ESTATS_GETTEXT:NULL));
+EstatsLocale::set($path[0], (defined('ESTATS_GETTEXT')?ESTATS_GETTEXT:NULL));
 
-$_SESSION[EstatsCore::session()]['locale'] = $Path[0];
+$_SESSION[EstatsCore::session()]['locale'] = $path[0];
 
-foreach ($Locales as $Key => $Value)
+foreach ($locales as $key => $value)
 {
-	$SelectLocale.= '<option value="'.$Key.'"'.(($Key == $Path[0])?' selected="selected"':'').'>'.$Value.'</option>
+	$selectLocale.= '<option value="'.$key.'"'.(($key == $path[0])?' selected="selected"':'').'>'.$value.'</option>
 ';
 }
 
@@ -339,17 +339,17 @@ else
 
 		if (EstatsCookie::exists('email'))
 		{
-			$Data = EstatsCore::driver()->selectRow('users', NULL, array(array(EstatsDriver::ELEMENT_OPERATION, array('email', EstatsDriver::OPERATOR_EQUAL, array(EstatsDriver::ELEMENT_VALUE, EstatsCookie::get('email'))))));
+			$data = EstatsCore::driver()->selectRow('users', NULL, array(array(EstatsDriver::ELEMENT_OPERATION, array('email', EstatsDriver::OPERATOR_EQUAL, array(EstatsDriver::ELEMENT_VALUE, EstatsCookie::get('email'))))));
 
-			if ($Data && EstatsCookie::get('password') == md5($Data['password'].EstatsCore::option('UniqueID')))
+			if ($data && EstatsCookie::get('password') == md5($data['password'].EstatsCore::option('UniqueID')))
 			{
-				if (!isset($_SESSION[EstatsCore::session()]['password']) || $_SESSION[EstatsCore::session()]['password'] !== $Data['password'])
+				if (!isset($_SESSION[EstatsCore::session()]['password']) || $_SESSION[EstatsCore::session()]['password'] !== $data['password'])
 				{
-					EstatsCore::logEvent((($Data['level'] < 3)?EstatsCore::EVENT_USERLOGGEDIN:EstatsCore::EVENT_ADMINISTRATORLOGGEDIN), 'IP: '.EstatsCore::IP());
+					EstatsCore::logEvent((($data['level'] < 3)?EstatsCore::EVENT_USERLOGGEDIN:EstatsCore::EVENT_ADMINISTRATORLOGGEDIN), 'IP: '.EstatsCore::IP());
 				}
 
-				$_SESSION[EstatsCore::session()]['email'] = $Data['email'];
-				$_SESSION[EstatsCore::session()]['password'] = $Data['password'];
+				$_SESSION[EstatsCore::session()]['email'] = $data['email'];
+				$_SESSION[EstatsCore::session()]['password'] = $data['password'];
 
 				EstatsCookie::set('email', $_SESSION[EstatsCore::session()]['email'], 1209600);
 				EstatsCookie::set('password', md5($_SESSION[EstatsCore::session()]['password'].EstatsCore::option('UniqueID')), 1209600);
@@ -385,11 +385,11 @@ else
 		}
 		else
 		{
-			$Data = EstatsCore::driver()->selectRow('users', NULL, array(array(EstatsDriver::ELEMENT_OPERATION, array('email', EstatsDriver::OPERATOR_EQUAL, array(EstatsDriver::ELEMENT_VALUE, EstatsCookie::get('email'))))));
+			$data = EstatsCore::driver()->selectRow('users', NULL, array(array(EstatsDriver::ELEMENT_OPERATION, array('email', EstatsDriver::OPERATOR_EQUAL, array(EstatsDriver::ELEMENT_VALUE, EstatsCookie::get('email'))))));
 
-			if (!empty($Data['password']) && $_SESSION[EstatsCore::session()]['password'] == $Data['password'])
+			if (!empty($data['password']) && $_SESSION[EstatsCore::session()]['password'] == $data['password'])
 			{
-				define('ESTATS_USERLEVEL', $Data['level']);
+				define('ESTATS_USERLEVEL', $data['level']);
 			}
 			else
 			{
@@ -410,7 +410,7 @@ else
 		}
 		else
 		{
-			EstatsCore::logEvent((($Path[1] == 'tools')?EstatsCore::EVENT_FAILEDADMISNISTRATORLOGIN:EstatsCore::EVENT_FAILEDUSERLOGIN), 'IP: '.EstatsCore::IP());
+			EstatsCore::logEvent((($path[1] == 'tools')?EstatsCore::EVENT_FAILEDADMISNISTRATORLOGIN:EstatsCore::EVENT_FAILEDUSERLOGIN), 'IP: '.EstatsCore::IP());
 			EstatsGUI::notify(EstatsLocale::translate('Wrong password or email!'), 'error');
 		}
 	}
@@ -425,9 +425,9 @@ EstatsTheme::add('selectyear', '');
 
 if (!isset($_SESSION[EstatsCore::session()]['theme']) || !EstatsTheme::exists($_SESSION[EstatsCore::session()]['theme']))
 {
-	$Browser = EstatsCore::detectBrowser($_SERVER['HTTP_USER_AGENT']);
+	$browser = EstatsCore::detectBrowser($_SERVER['HTTP_USER_AGENT']);
 
-	if ((in_array($Browser[0], array('Dillo', 'OffByOne', 'Links', 'ELinks', 'Lynx', 'W3M')) || ($Browser[0] == 'Internet Explorer' && ((double) $Browser[1]) < 6)) && is_file('share/themes/Simple/theme.tpl'))
+	if ((in_array($browser[0], array('Dillo', 'OffByOne', 'Links', 'ELinks', 'Lynx', 'W3M')) || ($browser[0] == 'Internet Explorer' && ((double) $browser[1]) < 6)) && is_file('share/themes/Simple/theme.tpl'))
 	{
 		$_SESSION[EstatsCore::session()]['theme'] = 'Simple';
 	}
@@ -446,7 +446,7 @@ EstatsTheme::load('common');
 
 if (!EstatsLocale::option('Status'))
 {
-	EstatsGUI::notify(sprintf(EstatsLocale::translate('This translation (%s) is not complete!'), $Locales[$Path[0]]), 'warning');
+	EstatsGUI::notify(sprintf(EstatsLocale::translate('This translation (%s) is not complete!'), $locales[$path[0]]), 'warning');
 }
 
 if (!isset($_SESSION[EstatsCore::session()]['viewTime']))
@@ -454,11 +454,11 @@ if (!isset($_SESSION[EstatsCore::session()]['viewTime']))
 	$_SESSION[EstatsCore::session()]['viewTime'] = 0;
 }
 
-$Themes = EstatsTheme::available();
+$themes = EstatsTheme::available();
 
-foreach ($Themes as $Key => $Value)
+foreach ($themes as $key => $value)
 {
-	$SelectTheme.= '<option value="'.urlencode($Key).'"'.(($Key == $_SESSION[EstatsCore::session()]['theme'])?' selected="selected"':'').'>'.htmlspecialchars($Value).'</option>
+	$selectTheme.= '<option value="'.urlencode($key).'"'.(($key == $_SESSION[EstatsCore::session()]['theme'])?' selected="selected"':'').'>'.htmlspecialchars($value).'</option>
 ';
 }
 
@@ -466,13 +466,13 @@ if (isset($_GET['checkversion']))
 {
 	if (((ESTATS_USERLEVEL == 2 && EstatsCore::option('CheckVersionTime')) || (defined('ESTATS_INSTALL') && !isset($_POST))) && (!isset($_SESSION[EstatsCore::session()]['LatestVersion']) || ($_SERVER['REQUEST_TIME'] - $_SESSION[EstatsCore::session()]['LatestVersion'][1]) > EstatsCore::option('CheckVersionTime')))
 	{
-		$Handle = fopen('http://estats.emdek.pl/current.php?'.$_SERVER['SERVER_NAME'].'---'.$_SERVER['SCRIPT_NAME'].'---'.ESTATS_VERSIONSTRING, 'r');
+		$handle = fopen('http://estats.emdek.pl/current.php?'.$_SERVER['SERVER_NAME'].'---'.$_SERVER['SCRIPT_NAME'].'---'.ESTATS_VERSIONSTRING, 'r');
 
-		if ($Handle)
+		if ($handle)
 		{
-			$_SESSION[EstatsCore::session()]['LatestVersion'] = array(fread($Handle, 6), $_SERVER['REQUEST_TIME']);
+			$_SESSION[EstatsCore::session()]['LatestVersion'] = array(fread($handle, 6), $_SERVER['REQUEST_TIME']);
 
-			fclose($Handle);
+			fclose($handle);
 
 			if (str_replace('.', '', $_SESSION[EstatsCore::session()]['LatestVersion'][0]) > str_replace('.', '', ESTATS_VERSIONSTRING))
 			{
@@ -496,54 +496,54 @@ EstatsTheme::add('administrator', (ESTATS_USERLEVEL == 2));
 EstatsTheme::add('installation', defined('ESTATS_INSTALL'));
 EstatsTheme::add('graphics', EstatsGraphics::isAvailable());
 EstatsTheme::add('geolocation', EstatsGeolocation::isAvailable());
-EstatsTheme::add('selectform', (count($Locales) > 1 || $SelectTheme));
+EstatsTheme::add('selectform', (count($locales) > 1 || $selectTheme));
 EstatsTheme::add('antiflood', (!defined('ESTATS_INSTALL') && ($_SERVER['REQUEST_TIME'] - $_SESSION[EstatsCore::session()]['viewTime']) < 2 && !ESTATS_USERLEVEL));
 EstatsTheme::add('dir', EstatsLocale::option('Dir'));
-EstatsTheme::add('language', $Path[0]);
+EstatsTheme::add('language', $path[0]);
 EstatsTheme::add('theme', $_SESSION[EstatsCore::session()]['theme']);
 EstatsTheme::add('lang_gototop', EstatsLocale::translate('Go to top'));
 EstatsTheme::add('lang_change', EstatsLocale::translate('Change'));
 EstatsTheme::add('header', (defined('ESTATS_INSTALL')?'eStats <em>v'.ESTATS_VERSIONSTRING.'</em> :: '.EstatsLocale::translate('Installer'):EstatsCore::option('Header')));
-EstatsTheme::add('selectlocale', ((count($Locales) > 1)?'<select name="locale" title="'.EstatsLocale::translate('Choose language').'">
-'.$SelectLocale.'</select>
+EstatsTheme::add('selectlocale', ((count($locales) > 1)?'<select name="locale" title="'.EstatsLocale::translate('Choose language').'">
+'.$selectLocale.'</select>
 ':''));
-EstatsTheme::add('selecttheme', ((count($Themes) > 2)?'<select name="theme" title="'.EstatsLocale::translate('Choose theme').'">
-'.$SelectTheme.'</select>
+EstatsTheme::add('selecttheme', ((count($themes) > 2)?'<select name="theme" title="'.EstatsLocale::translate('Choose theme').'">
+'.$selectTheme.'</select>
 ':''));
-EstatsTheme::add('path', EstatsTheme::get('datapath').EstatsCore::option('Path/prefix').$Path[0].'/');
+EstatsTheme::add('path', EstatsTheme::get('datapath').EstatsCore::option('Path/prefix').$path[0].'/');
 EstatsTheme::add('suffix', EstatsCore::option('Path/suffix'));
 
 if (ESTATS_USERLEVEL == 2)
 {
 	if ($_GET)
 	{
-		$Array = array(
+		$array = array(
 	'keyword' => 'Keywords',
 	'referrer' => 'Referrers',
 	'ignoredIP' => 'IgnoredIPs',
 	'blockedIP' => 'BlockedIPs'
 	);
-		foreach ($Array as $Key => $Value)
+		foreach ($array as $key => $value)
 		{
-			if (isset($_GET[$Key]))
+			if (isset($_GET[$key]))
 			{
-				$TmpArray = $$Value;
+				$tmpArray = $$value;
 
-				if (in_array($_GET[$Key], $TmpArray))
+				if (in_array($_GET[$key], $tmpArray))
 				{
-					unset($TmpArray[array_search($_GET[$Key], $TmpArray)]);
+					unset($tmpArray[array_search($_GET[$key], $tmpArray)]);
 				}
 				else
 				{
-					$TmpArray[] = $_GET[$Key];
+					$tmpArray[] = $_GET[$key];
 
-					if ($Key == 'keyword' || $Key == 'referrer')
+					if ($key == 'keyword' || $key == 'referrer')
 					{
-						EstatsCore::driver()->deleteData($Key.'s', array(array(EstatsDriver::ELEMENT_OPERATION, array('name', EstatsDriver::OPERATOR_EQUAL, array(EstatsDriver::ELEMENT_VALUE, urldecode($_GET[$Key]))))));
+						EstatsCore::driver()->deleteData($key.'s', array(array(EstatsDriver::ELEMENT_OPERATION, array('name', EstatsDriver::OPERATOR_EQUAL, array(EstatsDriver::ELEMENT_VALUE, urldecode($_GET[$key]))))));
 					}
 				}
 
-				EstatsCore::setConfiguration(array($Value => implode('|', $TmpArray)));
+				EstatsCore::setConfiguration(array($value => implode('|', $tmpArray)));
 			}
 		}
 	}
@@ -585,7 +585,7 @@ else
 	EstatsTheme::add('lang_login', EstatsLocale::translate('Log in'));
 	EstatsTheme::add('lang_collectedfrom', EstatsLocale::translate('Data collected from'));
 
-	$Titles = array(
+	$titles = array(
 	'general' => EstatsLocale::translate('General'),
 	'technical' => EstatsLocale::translate('Technical'),
 	'geolocation' => EstatsLocale::translate('Geolocation'),
@@ -622,22 +622,22 @@ else
 	'weekdays' => EstatsLocale::translate('Days of week')
 	);
 
-	$Var = $SubMenuVar = 0;
-	$PermittedTools = $ToolInformation = array();
+	$var = $subMenuVar = 0;
+	$permittedTools = $toolInformation = array();
 
 	if (EstatsCache::status('tools', 86400))
 	{
-		$Data = array();
-		$Tools = glob('./plugins/tools/*/plugin.ini');
+		$data = array();
+		$tools = glob('./plugins/tools/*/plugin.ini');
 
-		for ($i = 0, $c = count($Tools); $i < $c; ++$i)
+		for ($i = 0, $c = count($tools); $i < $c; ++$i)
 		{
-			$Information = EstatsCore::loadData($Tools[$i], FALSE, FALSE);
+			$information = EstatsCore::loadData($tools[$i], FALSE, FALSE);
 
-			if (isset($Information['Level']) && isset($Information['Name']) && isset($Information['Name']['en']))
+			if (isset($information['Level']) && isset($information['Name']) && isset($information['Name']['en']))
 			{
-				$ToolName = basename(dirname($Tools[$i]));
-				$ToolInformation[(isset($Information['Position'])?$Information['Position']:1000).'-'.$ToolName] = array('name' => $ToolName, 'title' => $Information['Name'], 'level' => $Information['Level']);
+				$toolName = basename(dirname($tools[$i]));
+				$toolInformation[(isset($information['Position'])?$information['Position']:1000).'-'.$toolName] = array('name' => $toolName, 'title' => $information['Name'], 'level' => $information['Level']);
 			}
 			else
 			{
@@ -645,329 +645,329 @@ else
 			}
 		}
 
-		ksort($ToolInformation, SORT_NUMERIC);
+		ksort($toolInformation, SORT_NUMERIC);
 
-		$ToolInformation = array_values($ToolInformation);
+		$toolInformation = array_values($toolInformation);
 
-		for ($i = 0, $c = count($ToolInformation); $i < $c; ++$i)
+		for ($i = 0, $c = count($toolInformation); $i < $c; ++$i)
 		{
-			$ToolInformation[$ToolInformation[$i]['name']] = array('title' => &$ToolInformation[$i]['title'], 'level' => &$ToolInformation[$i]['level']);
+			$toolInformation[$toolInformation[$i]['name']] = array('title' => &$toolInformation[$i]['title'], 'level' => &$toolInformation[$i]['level']);
 
-			unset($ToolInformation[$i]);
+			unset($toolInformation[$i]);
 		}
 
-		EstatsCache::save('tools', $ToolInformation);
+		EstatsCache::save('tools', $toolInformation);
 	}
 	else
 	{
-		$ToolInformation = EstatsCache::read('tools');
+		$toolInformation = EstatsCache::read('tools');
 	}
 
-	foreach ($ToolInformation as $Key => $Value)
+	foreach ($toolInformation as $key => $value)
 	{
-		if ($Value['level'] <= ESTATS_USERLEVEL)
+		if ($value['level'] <= ESTATS_USERLEVEL)
 		{
-			$PermittedTools[] = $Key;
+			$permittedTools[] = $key;
 		}
 	}
 
-	if ($Path[1] == 'tools' && (!isset($Path[2]) || !is_file('plugins/tools/'.$Path[2].'/plugin.php') || !in_array($Path[2], $PermittedTools)))
+	if ($path[1] == 'tools' && (!isset($path[2]) || !is_file('plugins/tools/'.$path[2].'/plugin.php') || !in_array($path[2], $permittedTools)))
 	{
-		$Path[2] = reset($PermittedTools);
+		$path[2] = reset($permittedTools);
 	}
 
-	switch ($Path[1])
+	switch ($path[1])
 	{
 		case 'general':
 		case 'technical':
-			if (isset($Path[2]) && (in_array($Path[2], $Groups[$Path[1]]) || (($Path[2] == 'operatingsystem-versions' || $Path[2] == 'browsers-versions') && $Path[1] == 'technical')))
+			if (isset($path[2]) && (in_array($path[2], $groups[$path[1]]) || (($path[2] == 'operatingsystem-versions' || $path[2] == 'browsers-versions') && $path[1] == 'technical')))
 			{
-				$Var = 3;
-				$SubMenuVar = 2;
+				$var = 3;
+				$subMenuVar = 2;
 			}
 			else
 			{
-				$Var = 2;
+				$var = 2;
 			}
 		break;
 		case 'geolocation':
-			$FileName = 'countries-list';
+			$fileName = 'countries-list';
 
-			if (EstatsCache::status($FileName, 3600) || ESTATS_USERLEVEL == 2)
+			if (EstatsCache::status($fileName, 3600) || ESTATS_USERLEVEL == 2)
 			{
-				$AvailableCountries = array();
-				$Data = EstatsCore::driver()->selectData(array('geoip'), array('country'), NULL, 0, 0, NULL, array('country'));
+				$availableCountries = array();
+				$data = EstatsCore::driver()->selectData(array('geoip'), array('country'), NULL, 0, 0, NULL, array('country'));
 
-				for ($i = 0, $c = count($Data); $i < $c; ++$i)
+				for ($i = 0, $c = count($data); $i < $c; ++$i)
 				{
-					$AvailableCountries[] = $Data[$i]['country'];
+					$availableCountries[] = $data[$i]['country'];
 				}
 
-				EstatsCache::save($FileName, $AvailableCountries);
+				EstatsCache::save($fileName, $availableCountries);
 			}
 			else
 			{
-				$AvailableCountries = EstatsCache::read($FileName);
+				$availableCountries = EstatsCache::read($fileName);
 			}
 
-			$Var = 3;
-			$SubMenuVar = 2;
+			$var = 3;
+			$subMenuVar = 2;
 
-			if (isset($Path[2]) && ($Path[2] == 'world' || in_array($Path[2], $AvailableCountries)))
+			if (isset($path[2]) && ($path[2] == 'world' || in_array($path[2], $availableCountries)))
 			{
-				if (isset($Path[3]) && ((in_array($Path[3], array('cities', 'regions')) && in_array($Path[2], $AvailableCountries)) || (in_array($Path[3], array('cities', 'countries', 'continents')) && $Path[2] == 'world')))
+				if (isset($path[3]) && ((in_array($path[3], array('cities', 'regions')) && in_array($path[2], $availableCountries)) || (in_array($path[3], array('cities', 'countries', 'continents')) && $path[2] == 'world')))
 				{
-					$Var = 4;
-					$SubMenuVar = 3;
+					$var = 4;
+					$subMenuVar = 3;
 				}
 			}
-			else if (empty($Path[2]) || !in_array($Path[2], array('countries', 'continents')))
+			else if (empty($path[2]) || !in_array($path[2], array('countries', 'continents')))
 			{
-				if (isset($Path[2]) && $Path[2] == 'cities')
+				if (isset($path[2]) && $path[2] == 'cities')
 				{
-					$Var = 4;
-					$SubMenuVar = 3;
-					$Path[2] = 'world';
-					$Path[3] = 'cities';
+					$var = 4;
+					$subMenuVar = 3;
+					$path[2] = 'world';
+					$path[3] = 'cities';
 				}
 				else
 				{
-					$Path[2] = 'countries';
+					$path[2] = 'countries';
 				}
 			}
 		break;
 		case 'time':
-			$Var = 3;
-			$SubMenuVar = 2;
+			$var = 3;
+			$subMenuVar = 2;
 
-			if (isset($Path[2]) && in_array($Path[2], $Groups['time']))
+			if (isset($path[2]) && in_array($path[2], $groups['time']))
 			{
-				$Var = 4;
+				$var = 4;
 			}
 		break;
 	}
 
-	$ViewTypes = array();
-	$AvailableViewTypes = array('views', 'unique', 'returns');
+	$viewTypes = array();
+	$availableViewTypes = array('views', 'unique', 'returns');
 
-	if (EstatsCookie::exists('timeview') && in_array($Path[1], array('general', 'technical', 'time')))
+	if (EstatsCookie::exists('timeview') && in_array($path[1], array('general', 'technical', 'time')))
 	{
-		$Path[$Var] = EstatsCookie::get('timeview');
+		$path[$var] = EstatsCookie::get('timeview');
 	}
 
 	if (isset($_POST['TimeView']))
 	{
-		$Path[$Var - 1] = implode('+', $_POST['TimeView']);
+		$path[$var - 1] = implode('+', $_POST['TimeView']);
 
-		EstatsCookie::set('timeview', $Path[$Var - 1]);
+		EstatsCookie::set('timeview', $path[$var - 1]);
 	}
 
-	if (isset($Path[$Var - 1]) && $Path[$Var - 1])
+	if (isset($path[$var - 1]) && $path[$var - 1])
 	{
-		$TmpTypes = explode('+', $Path[$Var - 1]);
+		$tmpTypes = explode('+', $path[$var - 1]);
 
-		for ($i = 0, $c = count($TmpTypes); $i < $c; ++$i)
+		for ($i = 0, $c = count($tmpTypes); $i < $c; ++$i)
 		{
-			if (in_array($TmpTypes[$i], $AvailableViewTypes) && !in_array($TmpTypes[$i], $ViewTypes))
+			if (in_array($tmpTypes[$i], $availableViewTypes) && !in_array($tmpTypes[$i], $viewTypes))
 			{
-				$ViewTypes[] = $TmpTypes[$i];
+				$viewTypes[] = $tmpTypes[$i];
 			}
 		}
 	}
 
-	if (!$ViewTypes)
+	if (!$viewTypes)
 	{
-		$ViewTypes = $AvailableViewTypes;
+		$viewTypes = $availableViewTypes;
 	}
 
-	$TimeView = implode('+', $ViewTypes);
+	$timeView = implode('+', $viewTypes);
 
-	if ($Path[1] == 'time')
+	if ($path[1] == 'time')
 	{
-		$Path[$Var - 1] = $TimeView;
+		$path[$var - 1] = $timeView;
 	}
 
-	if (!isset($Path[$Var]) || !$Path[$Var])
+	if (!isset($path[$var]) || !$path[$var])
 	{
-		if ($Path[1] == 'time')
+		if ($path[1] == 'time')
 		{
-			$Date = array(0, 0, 0, 0);
+			$date = array(0, 0, 0, 0);
 		}
 		else
 		{
 			if (EstatsCookie::exists('date'))
 			{
-				$Date = explode('-', EstatsCookie::get('date'));
+				$date = explode('-', EstatsCookie::get('date'));
 			}
 			else if (date('n') > 3)
 			{
-				$Date = array(date('Y'), 0, 0, 0);
+				$date = array(date('Y'), 0, 0, 0);
 			}
 			else
 			{
-				$Date = array(0, 0, 0, 0);
+				$date = array(0, 0, 0, 0);
 			}
 		}
 	}
 	else
 	{
-		$Date = explode('-', $Path[$Var]);
+		$date = explode('-', $path[$var]);
 	}
 
-	if (empty($Date[0]) || !in_array($Date[0], range(date('Y', EstatsCore::option('CollectedFrom')), date('Y'))))
+	if (empty($date[0]) || !in_array($date[0], range(date('Y', EstatsCore::option('CollectedFrom')), date('Y'))))
 	{
-		$Date = array_fill(0, 4, 0);
+		$date = array_fill(0, 4, 0);
 	}
-	else if (empty($Date[1]) || $Date[0].(($Date[1] < 10)?'0':'').$Date[1] < date('Ym', EstatsCore::option('CollectedFrom')) || $Date[0].(($Date[1] < 10)?'0':'').$Date[1] > date('Ym'))
+	else if (empty($date[1]) || $date[0].(($date[1] < 10)?'0':'').$date[1] < date('Ym', EstatsCore::option('CollectedFrom')) || $date[0].(($date[1] < 10)?'0':'').$date[1] > date('Ym'))
 	{
-		$Date[1] = $Date[2] = 0;
+		$date[1] = $date[2] = 0;
 	}
-	else if (empty($Date[2]) || $Date[2] < 1 || $Date[2] > date('t', strtotime($Date[0].'-'.(($Date[1] < 10)?'0':'').$Date[1].'-01')))
+	else if (empty($date[2]) || $date[2] < 1 || $date[2] > date('t', strtotime($date[0].'-'.(($date[1] < 10)?'0':'').$date[1].'-01')))
 	{
-		$Date[2] = 0;
+		$date[2] = 0;
 	}
-	else if (empty($Date[3]) || $Date[3] < 0 || $Date[3] > 23)
+	else if (empty($date[3]) || $date[3] < 0 || $date[3] > 23)
 	{
-		$Date[3] = 0;
-	}
-
-	EstatsTheme::add('period', implode('-', $Date));
-
-	if (in_array($Path[1], array('general', 'technical', 'time')))
-	{
-		$Path[$Var] = EstatsTheme::get('period');
+		$date[3] = 0;
 	}
 
-	$Menu = array('general', 'technical', 'geolocation', 'time', 'visits');
+	EstatsTheme::add('period', implode('-', $date));
 
-	if (count($ToolInformation) > 0)
+	if (in_array($path[1], array('general', 'technical', 'time')))
 	{
-		$Menu[] = 'tools';
+		$path[$var] = EstatsTheme::get('period');
 	}
 
-	$AccessKeys = array();
+	$menu = array('general', 'technical', 'geolocation', 'time', 'visits');
 
-	for ($i = 0, $c = count($Menu); $i < $c; ++$i)
+	if (count($toolInformation) > 0)
 	{
-		if (($Menu[$i] == 'geolocation' && !EstatsGeolocation::isAvailable()) || ($Menu[$i] == 'time' && !EstatsCore::driver()->selectAmount('time')))
+		$menu[] = 'tools';
+	}
+
+	$accessKeys = array();
+
+	for ($i = 0, $c = count($menu); $i < $c; ++$i)
+	{
+		if (($menu[$i] == 'geolocation' && !EstatsGeolocation::isAvailable()) || ($menu[$i] == 'time' && !EstatsCore::driver()->selectAmount('time')))
 		{
 			continue;
 		}
 
-		for ($j = 0, $l = strlen($Titles[$Menu[$i]]); $j < $l; ++$j)
+		for ($j = 0, $l = strlen($titles[$menu[$i]]); $j < $l; ++$j)
 		{
-			$AccessKey = strtoupper($Titles[$Menu[$i]][$j]);
+			$accessKey = strtoupper($titles[$menu[$i]][$j]);
 
-			if (!in_array($AccessKey, $AccessKeys) && $AccessKey >= 'A' && $AccessKey <= 'Z')
+			if (!in_array($accessKey, $accessKeys) && $accessKey >= 'A' && $accessKey <= 'Z')
 			{
-				$AccessKeys[] = $AccessKey;
+				$accessKeys[] = $accessKey;
 
 				break;
 			}
 		}
 
-		EstatsTheme::add('menu-'.$Menu[$i], EstatsTheme::parse(EstatsTheme::get('menu-entry'), array(
-	'link' => '{path}'.$Menu[$i].'{suffix}',
-	'text' => $Titles[$Menu[$i]],
-	'class' => (($Path[1] == $Menu[$i])?'active':''),
-	'id' => $Menu[$i],
-	'icon' => EstatsGUI::iconPath($Menu[$i], 'pages'),
-	'entry' => $Menu[$i],
-	'accesskey' => $AccessKey
+		EstatsTheme::add('menu-'.$menu[$i], EstatsTheme::parse(EstatsTheme::get('menu-entry'), array(
+	'link' => '{path}'.$menu[$i].'{suffix}',
+	'text' => $titles[$menu[$i]],
+	'class' => (($path[1] == $menu[$i])?'active':''),
+	'id' => $menu[$i],
+	'icon' => EstatsGUI::iconPath($menu[$i], 'pages'),
+	'entry' => $menu[$i],
+	'accesskey' => $accessKey
 	)));
-		EstatsTheme::add('submenu-'.$Menu[$i], '');
-		EstatsTheme::add('submenu-'.$Menu[$i], FALSE);
+		EstatsTheme::add('submenu-'.$menu[$i], '');
+		EstatsTheme::add('submenu-'.$menu[$i], FALSE);
 
-		if (isset($Groups[$Menu[$i]]))
+		if (isset($groups[$menu[$i]]))
 		{
-			EstatsTheme::add('submenu-'.$Menu[$i], TRUE);
+			EstatsTheme::add('submenu-'.$menu[$i], TRUE);
 
-			for ($j = 0, $l = count($Groups[$Menu[$i]]); $j < $l; ++$j)
+			for ($j = 0, $l = count($groups[$menu[$i]]); $j < $l; ++$j)
 			{
-				EstatsTheme::add('submenu-'.$Menu[$i].'_'.$Groups[$Menu[$i]][$j], FALSE);
+				EstatsTheme::add('submenu-'.$menu[$i].'_'.$groups[$menu[$i]][$j], FALSE);
 
-				if (isset($GroupAmount[$Groups[$Menu[$i]][$j]]) && !$GroupAmount[$Groups[$Menu[$i]][$j]])
+				if (isset($groupAmount[$groups[$menu[$i]][$j]]) && !$groupAmount[$groups[$menu[$i]][$j]])
 				{
 					continue;
 				}
 
-				EstatsTheme::append('submenu-'.$Menu[$i], EstatsTheme::parse(EstatsTheme::get((EstatsTheme::contains('submenu-entry')?'sub':'').'menu-entry'), array(
-	'link' => '{path}'.$Menu[$i].'/'.$Groups[$Menu[$i]][$j].'{suffix}',
-	'text' => $Titles[$Groups[$Menu[$i]][$j]],
-	'class' => ((isset($Path[$SubMenuVar]) && $Path[$SubMenuVar] == $Groups[$Menu[$i]][$j])?'active':''),
-	'id' => $Menu[$i].'_'.$Groups[$Menu[$i]][$j],
-	'icon' => EstatsGUI::iconPath($Groups[$Menu[$i]][$j], 'pages'),
-	'entry' => $Groups[$Menu[$i]][$j],
+				EstatsTheme::append('submenu-'.$menu[$i], EstatsTheme::parse(EstatsTheme::get((EstatsTheme::contains('submenu-entry')?'sub':'').'menu-entry'), array(
+	'link' => '{path}'.$menu[$i].'/'.$groups[$menu[$i]][$j].'{suffix}',
+	'text' => $titles[$groups[$menu[$i]][$j]],
+	'class' => ((isset($path[$subMenuVar]) && $path[$subMenuVar] == $groups[$menu[$i]][$j])?'active':''),
+	'id' => $menu[$i].'_'.$groups[$menu[$i]][$j],
+	'icon' => EstatsGUI::iconPath($groups[$menu[$i]][$j], 'pages'),
+	'entry' => $groups[$menu[$i]][$j],
 	'accesskey' => ''
 	)));
 			}
 		}
-		else if ($Menu[$i] == 'tools')
+		else if ($menu[$i] == 'tools')
 		{
-			EstatsTheme::add('submenu-'.$Menu[$i], (count($PermittedTools) > 0));
+			EstatsTheme::add('submenu-'.$menu[$i], (count($permittedTools) > 0));
 
-			for ($j = 0, $l = count($PermittedTools); $j < $l; ++$j)
+			for ($j = 0, $l = count($permittedTools); $j < $l; ++$j)
 			{
-				EstatsTheme::add('submenu-'.$Menu[$i].'_'.$PermittedTools[$j], FALSE);
-				EstatsTheme::append('submenu-'.$Menu[$i], EstatsTheme::parse(EstatsTheme::get((EstatsTheme::contains('submenu-entry')?'sub':'').'menu-entry'), array(
-	'link' => '{path}tools/'.$PermittedTools[$j].'{suffix}',
-	'text' => $ToolInformation[$PermittedTools[$j]]['title'][isset($ToolInformation[$PermittedTools[$j]]['title'][$_SESSION[EstatsCore::session()]['locale']])?$_SESSION[EstatsCore::session()]['locale']:'en'],
-	'class' => ((isset($Path[2]) && $Path[2] == $PermittedTools[$j])?'active':''),
-	'id' => 'tools_'.$PermittedTools[$j],
-	'icon' => EstatsGUI::iconPath($PermittedTools[$j], 'pages'),
-	'entry' => $PermittedTools[$j],
+				EstatsTheme::add('submenu-'.$menu[$i].'_'.$permittedTools[$j], FALSE);
+				EstatsTheme::append('submenu-'.$menu[$i], EstatsTheme::parse(EstatsTheme::get((EstatsTheme::contains('submenu-entry')?'sub':'').'menu-entry'), array(
+	'link' => '{path}tools/'.$permittedTools[$j].'{suffix}',
+	'text' => $toolInformation[$permittedTools[$j]]['title'][isset($toolInformation[$permittedTools[$j]]['title'][$_SESSION[EstatsCore::session()]['locale']])?$_SESSION[EstatsCore::session()]['locale']:'en'],
+	'class' => ((isset($path[2]) && $path[2] == $permittedTools[$j])?'active':''),
+	'id' => 'tools_'.$permittedTools[$j],
+	'icon' => EstatsGUI::iconPath($permittedTools[$j], 'pages'),
+	'entry' => $permittedTools[$j],
 	'accesskey' => ''
 	)));
 			}
 		}
 
-		EstatsTheme::append('menu', str_replace('{submenu}', EstatsTheme::get('submenu-'.$Menu[$i]), EstatsTheme::get('menu-'.$Menu[$i])));
+		EstatsTheme::append('menu', str_replace('{submenu}', EstatsTheme::get('submenu-'.$menu[$i]), EstatsTheme::get('menu-'.$menu[$i])));
 	}
 
-	if (in_array($Path[1], array('general', 'technical', 'geolocation', 'time')))
+	if (in_array($path[1], array('general', 'technical', 'geolocation', 'time')))
 	{
-		for ($Hour = 0; $Hour < 24; ++$Hour)
+		for ($hour = 0; $hour < 24; ++$hour)
 		{
-			$SelectHours.= '<option'.(((int) $Date[3] == $Hour && $Date[2])?' selected="selected"':'').'>'.$Hour.'</option>
+			$selectHours.= '<option'.(((int) $date[3] == $hour && $date[2])?' selected="selected"':'').'>'.$hour.'</option>
 ';
 		}
 
 		EstatsTheme::add('selecthour', '<select name="hour" id="hour" title="'.EstatsLocale::translate('Hour').'">
-<option'.(($Date[3] && $Date[2])?'':' selected="selected"').' value="0">'.EstatsLocale::translate('All').'</option>
-'.$SelectHours.'</select>
+<option'.(($date[3] && $date[2])?'':' selected="selected"').' value="0">'.EstatsLocale::translate('All').'</option>
+'.$selectHours.'</select>
 ');
 
-		for ($Day = 1; $Day <= 31; ++$Day)
+		for ($day = 1; $day <= 31; ++$day)
 		{
-			$SelectDays.= '<option'.(((int) $Date[2] == $Day)?' selected="selected"':'').'>'.$Day.'</option>
+			$selectDays.= '<option'.(((int) $date[2] == $day)?' selected="selected"':'').'>'.$day.'</option>
 ';
 		}
 
 		EstatsTheme::add('selectday', '<select name="day" id="day" title="'.EstatsLocale::translate('Day').'">
-<option'.($Date[2]?'':' selected="selected"').' value="0">'.EstatsLocale::translate('All').'</option>
-'.$SelectDays.'</select>
+<option'.($date[2]?'':' selected="selected"').' value="0">'.EstatsLocale::translate('All').'</option>
+'.$selectDays.'</select>
 ');
 
-		for ($Month = 1; $Month <= 12; ++$Month)
+		for ($month = 1; $month <= 12; ++$month)
 		{
-			$SelectMonths.= '<option value="'.$Month.'"'.(((int) $Date[1] == $Month)?' selected="selected"':'').'>'.ucfirst(strftime('%B', (mktime(0, 0, 0, $Month, 1)))).'</option>
+			$selectMonths.= '<option value="'.$month.'"'.(((int) $date[1] == $month)?' selected="selected"':'').'>'.ucfirst(strftime('%B', (mktime(0, 0, 0, $month, 1)))).'</option>
 ';
 		}
 
 		EstatsTheme::add('selectmonth', '<select name="month" id="month" title="'.EstatsLocale::translate('Month').'">
-<option'.($Date[1]?'':' selected="selected"').' value="0">'.EstatsLocale::translate('All').'</option>
-'.$SelectMonths.'</select>
+<option'.($date[1]?'':' selected="selected"').' value="0">'.EstatsLocale::translate('All').'</option>
+'.$selectMonths.'</select>
 ');
 
-		for ($Year = date('Y', EstatsCore::option('CollectedFrom')); $Year <= date('Y'); ++$Year)
+		for ($year = date('Y', EstatsCore::option('CollectedFrom')); $year <= date('Y'); ++$year)
 		{
-			$SelectYears.= '<option value="'.$Year.'"'.(($Date[0] == $Year)?' selected="selected"':'').'>'.$Year.'</option>
+			$selectYears.= '<option value="'.$year.'"'.(($date[0] == $year)?' selected="selected"':'').'>'.$year.'</option>
 ';
 		}
 
 		EstatsTheme::add('selectyear', '<select name="year" id="year" title="'.EstatsLocale::translate('Year').'">
-<option'.($Date[0]?'':' selected="selected"').' value="0">'.EstatsLocale::translate('All').'</option>
-'.$SelectYears.'</select>
+<option'.($date[0]?'':' selected="selected"').' value="0">'.EstatsLocale::translate('All').'</option>
+'.$selectYears.'</select>
 ');
 		EstatsTheme::add('lang_showdatafor', EstatsLocale::translate('Show data for'));
 		EstatsTheme::add('lang_show', EstatsLocale::translate('Show'));
@@ -979,15 +979,15 @@ else
 
 	if (!EstatsCore::option('AccessPassword'))
 	{
-		$Feeds = array(
+		$feeds = array(
 	'daily' => EstatsLocale::translate('Daily summary'),
 	'weekly' => EstatsLocale::translate('Weekly summary'),
 	'monthly' => EstatsLocale::translate('Monthly summary')
 	);
 
-		foreach ($Feeds as $Key => $Value)
+		foreach ($feeds as $key => $value)
  		{
-			EstatsTheme::append('meta', '<link rel="alternate" type="application/atom+xml" href="{path}feed/'.$Key.'{suffix}" title="'.$Value.'">
+			EstatsTheme::append('meta', '<link rel="alternate" type="application/atom+xml" href="{path}feed/'.$key.'{suffix}" title="'.$value.'">
 ');
 		}
 	}
@@ -1003,7 +1003,7 @@ else
 		EstatsGUI::notify(EstatsLocale::translate('This IP address was blocked!'), 'error');
 		EstatsTheme::add('title', EstatsLocale::translate('Access denied'));
 	}
-	else if ((EstatsCore::option('AccessPassword') && !ESTATS_USERLEVEL) || (ESTATS_USERLEVEL < 2 && ($Path[1] === 'login' || ($Path[1] === 'tools' && (!isset($Path[2]) || EstatsGUI::toolLevel($Path[2]) > ESTATS_USERLEVEL)))))
+	else if ((EstatsCore::option('AccessPassword') && !ESTATS_USERLEVEL) || (ESTATS_USERLEVEL < 2 && ($path[1] === 'login' || ($path[1] === 'tools' && (!isset($path[2]) || EstatsGUI::toolLevel($path[2]) > ESTATS_USERLEVEL)))))
 	{
 		EstatsTheme::load('login');
 		EstatsTheme::link('login', 'page');
@@ -1013,7 +1013,7 @@ else
 		EstatsTheme::add('lang_remember', EstatsLocale::translate('Remember password'));
 		EstatsTheme::add('lang_loginto', EstatsLocale::translate('Log into'));
 	}
-	else if (($_SERVER['REQUEST_TIME'] - $_SESSION[EstatsCore::session()]['viewTime']) < 2 && !ESTATS_USERLEVEL && $Path[1] !== 'image')
+	else if (($_SERVER['REQUEST_TIME'] - $_SESSION[EstatsCore::session()]['viewTime']) < 2 && !ESTATS_USERLEVEL && $path[1] !== 'image')
 	{
 		EstatsTheme::append('meta', '<meta http-equiv="Refresh" content="2">
 ');
@@ -1022,35 +1022,35 @@ else
 	}
 	else
 	{
-		if ($Path[1] == 'tools')
+		if ($path[1] == 'tools')
 		{
-			if (EstatsGUI::toolLevel($Path[2]) > ESTATS_USERLEVEL)
+			if (EstatsGUI::toolLevel($path[2]) > ESTATS_USERLEVEL)
 			{
 				estats_error_message(EstatsLocale::translate('You are not allowed to use this tool!'), __FILE__, __LINE__, TRUE);
 			}
 		}
 		else
 		{
-			if (!is_file('./pages/'.$Path[1].'.php'))
+			if (!is_file('./pages/'.$path[1].'.php'))
 			{
-				$Path[1] = 'general';
+				$path[1] = 'general';
 			}
 
-			EstatsTheme::load($Path[1]);
+			EstatsTheme::load($path[1]);
 
-			EstatsTheme::link((EstatsTheme::contains($Path[1])?$Path[1]:''), 'page');
+			EstatsTheme::link((EstatsTheme::contains($path[1])?$path[1]:''), 'page');
 		}
 
-		if ($Path[1] !== 'image' && $Path[1] !== 'feed')
+		if ($path[1] !== 'image' && $path[1] !== 'feed')
 		{
-			EstatsTheme::add('title', EstatsLocale::translate($Titles[$Path[1]]).(($Path[1] == 'tools')?' - '.$ToolInformation[$Path[2]]['title'][isset($ToolInformation[$Path[2]]['title'][$_SESSION[EstatsCore::session()]['locale']])?$_SESSION[EstatsCore::session()]['locale']:'en']:''));
+			EstatsTheme::add('title', EstatsLocale::translate($titles[$path[1]]).(($path[1] == 'tools')?' - '.$toolInformation[$path[2]]['title'][isset($toolInformation[$path[2]]['title'][$_SESSION[EstatsCore::session()]['locale']])?$_SESSION[EstatsCore::session()]['locale']:'en']:''));
 		}
 
-		$PagePath = (($Path[1] == 'tools')?'plugins/tools/'.$Path[2].'/plugin.php':'pages/'.$Path[1].'.php');
+		$pagePath = (($path[1] == 'tools')?'plugins/tools/'.$path[2].'/plugin.php':'pages/'.$path[1].'.php');
 
-		if (!include ('./'.$PagePath))
+		if (!include ('./'.$pagePath))
 		{
-			estats_error_message($PagePath, __FILE__, __LINE__);
+			estats_error_message($pagePath, __FILE__, __LINE__);
 		}
 	}
 
@@ -1108,16 +1108,16 @@ else
 	EstatsTheme::add('css', '');
 }
 
-$Notifications = EstatsGUI::notifications();
+$notifications = EstatsGUI::notifications();
 
-if ($Notifications)
+if ($notifications)
 {
-	for ($i = 0, $c = count($Notifications); $i < $c; ++$i)
+	for ($i = 0, $c = count($notifications); $i < $c; ++$i)
 	{
-		$Message = explode('|', $Notifications[$i][0]);
+		$message = explode('|', $notifications[$i][0]);
 
-		EstatsTheme::append('announcements', EstatsGUI::notificationWidget((is_numeric($Message[0])?EstatsLocale::translate($Logs[$Message[0]]).'.':$Message[0]).(isset($Message[1])?'<br>
-<em>'.$Message[1].'</em>.':''), $Notifications[$i][1]));
+		EstatsTheme::append('announcements', EstatsGUI::notificationWidget((is_numeric($message[0])?EstatsLocale::translate($logs[$message[0]]).'.':$message[0]).(isset($message[1])?'<br>
+<em>'.$message[1].'</em>.':''), $notifications[$i][1]));
 	}
 }
 else
@@ -1127,16 +1127,16 @@ else
 
 if (file_exists('./share/themes/'.$_SESSION[EstatsCore::session()]['theme'].'/images/'))
 {
-	$Images = glob('./share/themes/'.$_SESSION[EstatsCore::session()]['theme'].'/images/*.{png,jpg,gif}', GLOB_BRACE);
+	$images = glob('./share/themes/'.$_SESSION[EstatsCore::session()]['theme'].'/images/*.{png,jpg,gif}', GLOB_BRACE);
 
-	for ($i = 0, $c = count($Images); $i < $c; ++$i)
+	for ($i = 0, $c = count($images); $i < $c; ++$i)
 	{
-		EstatsTheme::append('preloader', '<img src="'.$Images[$i].'" alt="">
+		EstatsTheme::append('preloader', '<img src="'.$images[$i].'" alt="">
 ');
 	}
 }
 
-EstatsTheme::add('selfpath', EstatsTheme::get('datapath').EstatsCore::option('Path/prefix').implode('/', $Path).EstatsCore::option('Path/suffix'));
+EstatsTheme::add('selfpath', EstatsTheme::get('datapath').EstatsCore::option('Path/prefix').implode('/', $path).EstatsCore::option('Path/suffix'));
 EstatsTheme::add('separator', htmlspecialchars(EstatsCore::option('Path/separator'), ENT_QUOTES, 'UTF-8', FALSE));
 EstatsTheme::add('date', date('d.m.Y H:i:s T'));
 EstatsTheme::add('announcements', (count($_SESSION['ERRORS']) > 0 || count(EstatsGUI::notifications()) > 0));
@@ -1147,11 +1147,11 @@ if (is_file('./share/themes/'.$_SESSION[EstatsCore::session()]['theme'].'/theme.
 	include ('./share/themes/'.$_SESSION[EstatsCore::session()]['theme'].'/theme.php');
 }
 
-$Page = EstatsTheme::parse(EstatsTheme::parse(EstatsTheme::parse(EstatsTheme::get('index'), array('page' => EstatsTheme::get('page')))), array('pagegeneration' => sprintf(EstatsLocale::translate('Page generation time: %.3lf (s)'), (microtime(TRUE) - $Start))), TRUE);
+$page = EstatsTheme::parse(EstatsTheme::parse(EstatsTheme::parse(EstatsTheme::get('index'), array('page' => EstatsTheme::get('page')))), array('pagegeneration' => sprintf(EstatsLocale::translate('Page generation time: %.3lf (s)'), (microtime(TRUE) - $start))), TRUE);
 
 if ($_SESSION['ERRORS'] && (ESTATS_USERLEVEL == 2 || defined('ESTATS_INSTALL')))
 {
-	$Debug = EstatsGUI::notificationWidget('<h4 id="debug_header" onclick="document.getElementById(\'debug\').style.display = ((document.getElementById(\'debug\').style.display == \'none\')?\'block\':\'none\')">'.EstatsLocale::translate('Debug').' ('.count($_SESSION['ERRORS']).')</h4>
+	$debug = EstatsGUI::notificationWidget('<h4 id="debug_header" onclick="document.getElementById(\'debug\').style.display = ((document.getElementById(\'debug\').style.display == \'none\')?\'block\':\'none\')">'.EstatsLocale::translate('Debug').' ('.count($_SESSION['ERRORS']).')</h4>
 <div id="debug">
 '.rtrim(implode('', $_SESSION['ERRORS']), "\r\n").'
 </div>
@@ -1163,10 +1163,10 @@ document.getElementById(\'debug_header\').style.cursor = \'pointer\';
 }
 else
 {
-	$Debug = '';
+	$debug = '';
 }
 
-$Page = str_replace('{debug}', $Debug, EstatsTheme::parse($Page));
+$page = str_replace('{debug}', $debug, EstatsTheme::parse($page));
 
 header(EstatsTheme::option('Header'));
 
@@ -1176,5 +1176,5 @@ if (defined('ESTATS_GZIP') && ESTATS_GZIP && function_exists('ob_gzhandler') && 
 	ob_start('ob_gzhandler');
 }
 
-die($Page);
+die($page);
 ?>

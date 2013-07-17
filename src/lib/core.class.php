@@ -102,97 +102,97 @@ class EstatsCore
  * Contains current IP address
  */
 
-	static private $IP;
+	static private $iP;
 
 /**
  * Contains proxy name
  */
 
-	static private $Proxy;
+	static private $proxy;
 
 /**
  * Contains proxy IP
  */
 
-	static private $ProxyIP;
+	static private $proxyIP;
 
 /**
  * Contains browser language
  */
 
-	static private $Language;
+	static private $language;
 
 /**
  * Contains session identifier
  */
 
-	static private $Session;
+	static private $session;
 
 /**
  * Contains visitor ID
  */
 
-	static private $VisitorID;
+	static private $visitorID;
 
 /**
  * Contains previous ID of current visitor
  */
 
-	static private $PreviousVisitorID;
+	static private $previousVisitorID;
 
 /**
  * TRUE if current visit is new
  */
 
-	static private $IsNewVisit;
+	static private $isNewVisit;
 
 /**
  * TRUE if current visitor has information collected by JavaScript
  */
 
-	static private $HasJSInformation;
+	static private $hasJSInformation;
 
 /**
  * Contains robot name for current user agent string
  */
 
-	static private $Robot;
+	static private $robot;
 
 /**
  * Contains configuration hash
  */
 
-	static private $Configuration;
+	static private $configuration;
 
 /**
  * Contains database driver object
  */
 
-	static private $Driver;
+	static private $driver;
 
 /**
  * Contains path to script directory
  */
 
-	static private $Path;
+	static private $path;
 
 /**
  * Contains data directory path
  */
 
-	static private $DataDirectory;
+	static private $dataDirectory;
 
 /**
  * Contains security string
  */
 
-	static private $Security;
+	static private $security;
 
 /**
  * Statistics identifier
  */
 
-	static private $Statistics;
+	static private $statistics;
 
 /**
  * Gets configuration from database
@@ -202,31 +202,31 @@ class EstatsCore
 	{
 		if (EstatsCache::status('configuration', 86400))
 		{
-			$Data = array();
-			$Array = self::$Driver->selectData(array('configuration'), array('key', 'value'), array(array(EstatsDriver::ELEMENT_OPERATION, array('statistics', EstatsDriver::OPERATOR_EQUAL, array(EstatsDriver::ELEMENT_VALUE, self::$Statistics)))));
+			$data = array();
+			$array = self::$driver->selectData(array('configuration'), array('key', 'value'), array(array(EstatsDriver::ELEMENT_OPERATION, array('statistics', EstatsDriver::OPERATOR_EQUAL, array(EstatsDriver::ELEMENT_VALUE, self::$statistics)))));
 
-			if (count($Array) < 2)
+			if (count($array) < 2)
 			{
 				estats_error_message('Could not retrieve configuration!', __FILE__, __LINE__, TRUE);
 			}
 
-			for ($i = 0, $c = count($Array); $i < $c; ++$i)
+			for ($i = 0, $c = count($array); $i < $c; ++$i)
 			{
-				if (in_array($Array[$i]['key'], array('Keywords', 'BlockedIPs', 'IgnoredIPs', 'Referrers', 'Backups/usertables')))
+				if (in_array($array[$i]['key'], array('Keywords', 'BlockedIPs', 'IgnoredIPs', 'Referrers', 'Backups/usertables')))
 				{
-					self::$Configuration[$Array[$i]['key']] = explode('|', $Array[$i]['value']);
+					self::$configuration[$array[$i]['key']] = explode('|', $array[$i]['value']);
 				}
 				else
 				{
-					self::$Configuration[$Array[$i]['key']] = &$Array[$i]['value'];
+					self::$configuration[$array[$i]['key']] = &$array[$i]['value'];
 				}
 			}
 
-			EstatsCache::save('configuration', self::$Configuration);
+			EstatsCache::save('configuration', self::$configuration);
 		}
 		else
 		{
-			self::$Configuration = EstatsCache::read('configuration');
+			self::$configuration = EstatsCache::read('configuration');
 		}
 	}
 
@@ -237,36 +237,36 @@ class EstatsCore
  * @return array
  */
 
-	static private function detectString($String, $Data)
+	static private function detectString($string, $data)
 	{
-		foreach ($Data as $Key => $Value)
+		foreach ($data as $key => $value)
 		{
-			$Version = 0;
+			$version = 0;
 
-			if (isset($Value['ips']) && self::containsIP(self::$IP, $Value['ips']))
+			if (isset($value['ips']) && self::containsIP(self::$iP, $value['ips']))
 			{
-				return array($Key, '');
+				return array($key, '');
 			}
 
-			if (isset($Value['rules']))
+			if (isset($value['rules']))
 			{
-				if (strstr($Key, '.'))
+				if (strstr($key, '.'))
 				{
-					$Version = explode('.', $Key);
-					$Key = $Version[0];
+					$version = explode('.', $key);
+					$key = $version[0];
 				}
 
-				for ($i = 0, $c = count($Value['rules']); $i < $c; ++$i)
+				for ($i = 0, $c = count($value['rules']); $i < $c; ++$i)
 				{
-					if (($Version && preg_match('#'.$Value['rules'][$i].'#i', $String)) || preg_match('#'.$Value['rules'][$i].'#i', $String, $Version))
+					if (($version && preg_match('#'.$value['rules'][$i].'#i', $string)) || preg_match('#'.$value['rules'][$i].'#i', $string, $version))
 					{
-						return array($Key, (isset($Version[1])?$Version[1]:''));
+						return array($key, (isset($version[1])?$version[1]:''));
 					}
 				}
 			}
-			else if (stristr($String, $Key))
+			else if (stristr($string, $key))
 			{
-				return array($Key, '');
+				return array($key, '');
 			}
 		}
 
@@ -280,23 +280,23 @@ class EstatsCore
  * @param array Values
  */
 
-	static private function increaseAmount($Table, $Values)
+	static private function increaseAmount($table, $values)
 	{
-		$Where = array();
+		$where = array();
 
-		foreach ($Values as $Key => $Value)
+		foreach ($values as $key => $value)
 		{
-			if ($Where)
+			if ($where)
 			{
-				$Where[] = EstatsDriver::OPERATOR_AND;
+				$where[] = EstatsDriver::OPERATOR_AND;
 			}
 
-			$Where[] = array(EstatsDriver::ELEMENT_OPERATION, array($Key, EstatsDriver::OPERATOR_EQUAL, array(EstatsDriver::ELEMENT_VALUE, $Value)));
+			$where[] = array(EstatsDriver::ELEMENT_OPERATION, array($key, EstatsDriver::OPERATOR_EQUAL, array(EstatsDriver::ELEMENT_VALUE, $value)));
 		}
 
-		if (!self::$Driver->updateData($Table, array('amount' => array(EstatsDriver::ELEMENT_EXPRESSION, array('amount', EstatsDriver::OPERATOR_INCREASE))), $Where))
+		if (!self::$driver->updateData($table, array('amount' => array(EstatsDriver::ELEMENT_EXPRESSION, array('amount', EstatsDriver::OPERATOR_INCREASE))), $where))
 		{
-			self::$Driver->insertData($Table, array_merge($Values, array('amount' => 1)));
+			self::$driver->insertData($table, array_merge($values, array('amount' => 1)));
 		}
 	}
 
@@ -314,20 +314,20 @@ class EstatsCore
  * @param boolean Persistent
  */
 
-	static function init($Statistics, $Security, $Path, $DataDirectory, $Driver, $Prefix, $Connection, $User, $Password, $Persistent)
+	static function init($statistics, $security, $path, $dataDirectory, $driver, $prefix, $connection, $user, $password, $persistent)
 	{
-		self::$Statistics = $Statistics;
-		self::$Security = $Security;
-		self::$Path = realpath($Path).'/';
-		self::$DataDirectory = realpath(self::$Path.$DataDirectory).'/';
+		self::$statistics = $statistics;
+		self::$security = $security;
+		self::$path = realpath($path).'/';
+		self::$dataDirectory = realpath(self::$path.$dataDirectory).'/';
 
-		$ClassName = 'EstatsDriver'.ucfirst(strtolower($Driver));
+		$className = 'EstatsDriver'.ucfirst(strtolower($driver));
 
-		if (class_exists($ClassName))
+		if (class_exists($className))
 		{
-			self::$Driver = new $ClassName;
+			self::$driver = new $className;
 
-			if (!self::$Driver->connect($Connection, $User, $Password, $Prefix, $Persistent))
+			if (!self::$driver->connect($connection, $user, $password, $prefix, $persistent))
 			{
 				estats_error_message('Could not connect to database!', __FILE__, __LINE__, TRUE);
 
@@ -336,42 +336,42 @@ class EstatsCore
 		}
 		else
 		{
-			estats_error_message('Can not found class '.$ClassName.'!', __FILE__, __LINE__, TRUE);
+			estats_error_message('Can not found class '.$className.'!', __FILE__, __LINE__, TRUE);
 
 			return FALSE;
 		}
 
 		self::updateConfiguration();
 
-		self::$Session = md5('estats_'.substr(self::option('UniqueID'), 0, 10));
-		self::$VisitorID = -2;
-		self::$IsNewVisit = FALSE;
-		self::$HasJSInformation = TRUE;
-		self::$PreviousVisitorID = 0;
-		self::$Robot = '';
+		self::$session = md5('estats_'.substr(self::option('UniqueID'), 0, 10));
+		self::$visitorID = -2;
+		self::$isNewVisit = FALSE;
+		self::$hasJSInformation = TRUE;
+		self::$previousVisitorID = 0;
+		self::$robot = '';
 
 		if (isset($_SERVER['HTTP_VIA']))
 		{
-			self::$IP = $_SERVER[isset($_SERVER['HTTP_X_FORWARDED_FOR'])?'HTTP_X_FORWARDED_FOR':(isset($_SERVER['HTTP_X_FORWARDED'])?'HTTP_X_FORWARDED':$_SERVER['HTTP_CLIENT_IP'])];
-			self::$Proxy = $_SERVER['HTTP_VIA'];
-			self::$ProxyIP = $_SERVER['REMOTE_ADDR'];
+			self::$iP = $_SERVER[isset($_SERVER['HTTP_X_FORWARDED_FOR'])?'HTTP_X_FORWARDED_FOR':(isset($_SERVER['HTTP_X_FORWARDED'])?'HTTP_X_FORWARDED':$_SERVER['HTTP_CLIENT_IP'])];
+			self::$proxy = $_SERVER['HTTP_VIA'];
+			self::$proxyIP = $_SERVER['REMOTE_ADDR'];
 		}
 		else
 		{
-			self::$IP = $_SERVER['REMOTE_ADDR'];
-			self::$Proxy = NULL;
-			self::$ProxyIP = NULL;
+			self::$iP = $_SERVER['REMOTE_ADDR'];
+			self::$proxy = NULL;
+			self::$proxyIP = NULL;
 		}
 
 		if (empty($_SERVER['HTTP_ACCEPT_LANGUAGE']))
 		{
-			self::$Language = '?';
+			self::$language = '?';
 		}
 		else
 		{
-			$String = strtolower($_SERVER['HTTP_ACCEPT_LANGUAGE']);
+			$string = strtolower($_SERVER['HTTP_ACCEPT_LANGUAGE']);
 
-			self::$Language = substr($String, 0, ((strlen($String) > 2 && $String[2] == '-')?5:2));
+			self::$language = substr($string, 0, ((strlen($string) > 2 && $string[2] == '-')?5:2));
 		}
 
 		return TRUE;
@@ -383,31 +383,31 @@ class EstatsCore
  * @param boolean Temporary
  */
 
-	static function setConfiguration($Configuration, $Temporary = FALSE)
+	static function setConfiguration($configuration, $temporary = FALSE)
 	{
-		self::$Configuration = array_merge(self::$Configuration, $Configuration);
+		self::$configuration = array_merge(self::$configuration, $configuration);
 
-		$Options = self::loadData('share/data/configuration.ini', TRUE);
+		$options = self::loadData('share/data/configuration.ini', TRUE);
 
-		foreach ($Configuration as $Key => $Value)
+		foreach ($configuration as $key => $value)
 		{
-			if (in_array($Key, array('Keywords', 'BlockedIPs', 'IgnoredIPs', 'Referrers', 'Backups/usertables')))
+			if (in_array($key, array('Keywords', 'BlockedIPs', 'IgnoredIPs', 'Referrers', 'Backups/usertables')))
 			{
-				self::$Configuration[$Key] = explode('|', $Value);
+				self::$configuration[$key] = explode('|', $value);
 			}
 			else
 			{
-				self::$Configuration[$Key] = $Value;
+				self::$configuration[$key] = $value;
 			}
 		}
 
-		if (!$Temporary)
+		if (!$temporary)
 		{
-			foreach ($Configuration as $Key => $Value)
+			foreach ($configuration as $key => $value)
 			{
-				if (!self::$Driver->updateData('configuration', array('value' => $Value), array(array(EstatsDriver::ELEMENT_OPERATION, array('name', EstatsDriver::OPERATOR_EQUAL, array(EstatsDriver::ELEMENT_VALUE, $Key))))))
+				if (!self::$driver->updateData('configuration', array('value' => $value), array(array(EstatsDriver::ELEMENT_OPERATION, array('name', EstatsDriver::OPERATOR_EQUAL, array(EstatsDriver::ELEMENT_VALUE, $key))))))
 				{
-					self::$Driver->insertData('configuration', array('name' => $Key, 'value' => $Value, 'mode' => (isset($Options['Core'][$Key])?0:1)));
+					self::$driver->insertData('configuration', array('name' => $key, 'value' => $value, 'mode' => (isset($options['Core'][$key])?0:1)));
 				}
 			}
 		}
@@ -421,21 +421,21 @@ class EstatsCore
  * @param string Comment
  */
 
-	static function logEvent($Event, $Comment = '')
+	static function logEvent($event, $comment = '')
 	{
 		if (self::option('LogEnabled'))
 		{
-			self::$Driver->insertData('logs', array('time' => date('Y-m-d H:i:s'), 'log' => $Event, 'info' => $Comment));
+			self::$driver->insertData('logs', array('time' => date('Y-m-d H:i:s'), 'log' => $event, 'info' => $comment));
 		}
 
-		$FileName = self::$DataDirectory.'estats_'.self::$Security.'.log';
+		$fileName = self::$dataDirectory.'estats_'.self::$security.'.log';
 
-		if (is_writable($FileName))
+		if (is_writable($fileName))
 		{
-			$Events = self::loadData('share/data/events.ini');
+			$events = self::loadData('share/data/events.ini');
 
-			file_put_contents($FileName, '
-'.$_SERVER['REQUEST_TIME'].': '.(isset($Events[$Event])?$Events[$Event]:$Event).($Comment?' ('.$Comment.')':''), FILE_APPEND);
+			file_put_contents($fileName, '
+'.$_SERVER['REQUEST_TIME'].': '.(isset($events[$event])?$events[$event]:$event).($comment?' ('.$comment.')':''), FILE_APPEND);
 		}
 	}
 
@@ -445,44 +445,44 @@ class EstatsCore
  * @return mixed
  */
 
-	static function option($Option)
+	static function option($option)
 	{
-		static $Configuration;
+		static $configuration;
 
-		if (isset(self::$Configuration[$Option]))
+		if (isset(self::$configuration[$option]))
 		{
-			return self::$Configuration[$Option];
+			return self::$configuration[$option];
 		}
-		else if (self::$Driver)
+		else if (self::$driver)
 		{
-			if ($Configuration === NULL)
+			if ($configuration === NULL)
 			{
-				$Configuration = self::loadData('share/data/configuration.ini');
+				$configuration = self::loadData('share/data/configuration.ini');
 			}
 
-			if (isset($Configuration['Core'][$Option]) || isset($Configuration['GUI'][$Option]))
+			if (isset($configuration['Core'][$option]) || isset($configuration['GUI'][$option]))
 			{
-				$Value = $Configuration[isset($Configuration['Core'][$Option])?'GUI':'Core'][$Option]['value'];
+				$value = $configuration[isset($configuration['Core'][$option])?'GUI':'Core'][$option]['value'];
 
-				self::$Driver->insertData('configuration', array('statistics' => self::$Statistics, 'key' => $Name, 'value' => $Value));
+				self::$driver->insertData('configuration', array('statistics' => self::$statistics, 'key' => $name, 'value' => $value));
 
 				EstatsCache::delete('configuration');
 
-				return $Value;
+				return $value;
 			}
 
 			return '';
 		}
 		else
 		{
-			$Configuration = array(
+			$configuration = array(
 	'LogFile' => TRUE,
 	'DefaultTheme' => 'Fresh',
 	'Path/prefix' => 'index.php?vars=',
 	'Path/separator' => '&amp;'
 	);
 
-			return (isset($Configuration[$Option])?$Configuration[$Option]:'');
+			return (isset($configuration[$option])?$configuration[$option]:'');
 		}
 	}
 
@@ -494,19 +494,19 @@ class EstatsCore
  * @return array
  */
 
-	static function timeClause($Field, $From = 0, $To = 0)
+	static function timeClause($field, $from = 0, $to = 0)
 	{
-		if ($From)
+		if ($from)
 		{
-			$Clause = array(array(EstatsDriver::ELEMENT_OPERATION, array($Field, EstatsDriver::OPERATOR_GREATEROREQUAL, date('Y-m-d H:i:s', $From))));
+			$clause = array(array(EstatsDriver::ELEMENT_OPERATION, array($field, EstatsDriver::OPERATOR_GREATEROREQUAL, date('Y-m-d H:i:s', $from))));
 
-			if ($To)
+			if ($to)
 			{
-				$Clause[] = EstatsDriver::OPERATOR_AND;
-				$Clause[] = array(EstatsDriver::ELEMENT_OPERATION, array($Field, EstatsDriver::OPERATOR_LESSOREQUAL, date('Y-m-d H:i:s', $To)));
+				$clause[] = EstatsDriver::OPERATOR_AND;
+				$clause[] = array(EstatsDriver::ELEMENT_OPERATION, array($field, EstatsDriver::OPERATOR_LESSOREQUAL, date('Y-m-d H:i:s', $to)));
 			}
 
-			return $Clause;
+			return $clause;
 		}
 
 		return array();
@@ -519,11 +519,11 @@ class EstatsCore
  * @return boolean
  */
 
-	static function containsIP($IP, $Array)
+	static function containsIP($iP, $array)
 	{
-		for ($i = 0, $c = count($Array); $i < $c; ++$i)
+		for ($i = 0, $c = count($array); $i < $c; ++$i)
 		{
-			if ($Array[$i] == $IP || (strstr($Array[$i], '*') && substr($IP, 0, (strlen($Array[$i]) - 1)) == substr($Array[$i], 0, - 1)))
+			if ($array[$i] == $iP || (strstr($array[$i], '*') && substr($iP, 0, (strlen($array[$i]) - 1)) == substr($array[$i], 0, - 1)))
 			{
 				return TRUE;
 			}
@@ -540,106 +540,106 @@ class EstatsCore
  * @return array
  */
 
-	static function loadData($Path, $ProcessSections = TRUE, $Required = TRUE)
+	static function loadData($path, $processSections = TRUE, $required = TRUE)
 	{
-		static $Hash;
+		static $hash;
 
-		$Array = array();
+		$array = array();
 
-		if (!is_readable(self::$Path.$Path))
+		if (!is_readable(self::$path.$path))
 		{
-			if ($Required)
+			if ($required)
 			{
-				estats_error_message($Path, __FILE__, __LINE__, FALSE, TRUE);
+				estats_error_message($path, __FILE__, __LINE__, FALSE, TRUE);
 			}
 
-			return $Array;
+			return $array;
 		}
 
-		if (!isset($Hash[$Path]))
+		if (!isset($hash[$path]))
 		{
-			$Hash[$Path] = md5($Path);
+			$hash[$path] = md5($path);
 		}
 
-		$FileName = 'ini-'.$Hash[$Path];
+		$fileName = 'ini-'.$hash[$path];
 
-		if (!EstatsCache::status($FileName, 86400))
+		if (!EstatsCache::status($fileName, 86400))
 		{
-			return EstatsCache::read($FileName, TRUE);
+			return EstatsCache::read($fileName, TRUE);
 		}
 
-		$Data = file(self::$Path.$Path);
-		$CurrentSection = '';
+		$data = file(self::$path.$path);
+		$currentSection = '';
 
-		for ($i = 0, $c = count($Data); $i < $c; ++$i)
+		for ($i = 0, $c = count($data); $i < $c; ++$i)
 		{
-			$Data[$i] = trim($Data[$i]);
+			$data[$i] = trim($data[$i]);
 
-			if (strlen($Data[$i]) == 0 || $Data[$i][0] == ';' || $Data[$i][0] == '#')
+			if (strlen($data[$i]) == 0 || $data[$i][0] == ';' || $data[$i][0] == '#')
 			{
 				continue;
 			}
 
-			if ($Data[$i][0] == '[')
+			if ($data[$i][0] == '[')
 			{
-				if ($ProcessSections && $Data[$i][strlen($Data[$i]) - 1] == ']')
+				if ($processSections && $data[$i][strlen($data[$i]) - 1] == ']')
 				{
-					if (isset($CurrentSection[0]) && !isset($Array[$CurrentSection]))
+					if (isset($currentSection[0]) && !isset($array[$currentSection]))
 					{
-						$Array[$CurrentSection] = array();
+						$array[$currentSection] = array();
 					}
 
-					$CurrentSection = substr($Data[$i], 1, (strlen($Data[$i]) - 2));
+					$currentSection = substr($data[$i], 1, (strlen($data[$i]) - 2));
 				}
 
 				continue;
 			}
 
-			$Row = preg_split('#\s*=\s*#', $Data[$i], 2);
+			$row = preg_split('#\s*=\s*#', $data[$i], 2);
 
-			if (count($Row) < 2)
+			if (count($row) < 2)
 			{
 				continue;
 			}
 
-			$Value = str_replace('\"', '"', trim($Row[1], '"\''));
-			$Keys = preg_split('#(\[|\])#', $Row[0], -1, PREG_SPLIT_NO_EMPTY);
+			$value = str_replace('\"', '"', trim($row[1], '"\''));
+			$keys = preg_split('#(\[|\])#', $row[0], -1, PREG_SPLIT_NO_EMPTY);
 
-			if (strlen($CurrentSection) > 0)
+			if (strlen($currentSection) > 0)
 			{
-				array_unshift($Keys, $CurrentSection);
+				array_unshift($keys, $currentSection);
 			}
 
-			if (isset($Row[0][3]) && substr($Row[0], (strlen($Row[0]) - 2)) == '[]')
+			if (isset($row[0][3]) && substr($row[0], (strlen($row[0]) - 2)) == '[]')
 			{
-				$Keys[] = '';
+				$keys[] = '';
 			}
 
-			$TmpArray = &$Array;
+			$tmpArray = &$array;
 
-			for ($j = 0, $l = count($Keys); $j < $l; ++$j)
+			for ($j = 0, $l = count($keys); $j < $l; ++$j)
 			{
 				if ($j == ($l - 1))
 				{
-					if ($Keys[$j] == '')
+					if ($keys[$j] == '')
 					{
-						$TmpArray[] = $Value;
+						$tmpArray[] = $value;
 					}
 					else
 					{
-						$TmpArray[$Keys[$j]] = $Value;
+						$tmpArray[$keys[$j]] = $value;
 					}
 				}
 				else
 				{
-					$TmpArray = &$TmpArray[$Keys[$j]];
+					$tmpArray = &$tmpArray[$keys[$j]];
 				}
 			}
 		}
 
-		EstatsCache::save($FileName, $Array, TRUE);
+		EstatsCache::save($fileName, $array, TRUE);
 
-		return $Array;
+		return $array;
 	}
 
 /**
@@ -648,28 +648,28 @@ class EstatsCore
  * @return string
  */
 
-	static function detectRobot($String)
+	static function detectRobot($string)
 	{
-		static $Data;
+		static $data;
 
-		if (!$String)
+		if (!$string)
 		{
 			return '?';
 		}
 
-		if ($Data == NULL)
+		if ($data == NULL)
 		{
-			$Data = self::loadData('share/data/robots.ini');
+			$data = self::loadData('share/data/robots.ini');
 		}
 
-		if (!$Data)
+		if (!$data)
 		{
 			return NULL;
 		}
 
-		$Result = self::detectString($String, $Data);
+		$result = self::detectString($string, $data);
 
-		return (is_array($Result)?$Result[0]:$Result);
+		return (is_array($result)?$result[0]:$result);
 	}
 
 /**
@@ -678,28 +678,28 @@ class EstatsCore
  * @return array
  */
 
-	static function detectBrowser($String)
+	static function detectBrowser($string)
 	{
-		static $Data;
+		static $data;
 
-		if (!$String)
+		if (!$string)
 		{
 			return array('?', '');
 		}
 
-		if ($Data == NULL)
+		if ($data == NULL)
 		{
-			$Data = self::loadData('share/data/browsers.ini');
+			$data = self::loadData('share/data/browsers.ini');
 		}
 
-		if (!$Data)
+		if (!$data)
 		{
 			return array();
 		}
 
-		$Browser = self::detectString($String, $Data);
+		$browser = self::detectString($string, $data);
 
-		return ($Browser?$Browser:array('?', ''));
+		return ($browser?$browser:array('?', ''));
 	}
 
 /**
@@ -708,28 +708,28 @@ class EstatsCore
  * @return array
  */
 
-	static function detectOperatingSystem($String)
+	static function detectOperatingSystem($string)
 	{
-		static $Data;
+		static $data;
 
-		if (!$String)
+		if (!$string)
 		{
 			return array('?', '');
 		}
 
-		if ($Data == NULL)
+		if ($data == NULL)
 		{
-			$Data = self::loadData('share/data/operating-systems.ini');
+			$data = self::loadData('share/data/operating-systems.ini');
 		}
 
-		if (!$Data)
+		if (!$data)
 		{
 			return array();
 		}
 
-		$OperatingSystem = self::detectString($String, $Data);
+		$operatingSystem = self::detectString($string, $data);
 
-		return ($OperatingSystem?$OperatingSystem:array('?', ''));
+		return ($operatingSystem?$operatingSystem:array('?', ''));
 	}
 
 /**
@@ -739,73 +739,73 @@ class EstatsCore
  * @return array
  */
 
-	static function detectWebsearcher($String, $Phrase = FALSE)
+	static function detectWebsearcher($string, $phrase = FALSE)
 	{
-		static $Data;
+		static $data;
 
-		$Array = parse_url($String);
+		$array = parse_url($string);
 
-		if ($Data == NULL)
+		if ($data == NULL)
 		{
-			$Data = self::loadData('share/data/websearchers.ini');
+			$data = self::loadData('share/data/websearchers.ini');
 		}
 
-		if (!$Data)
+		if (!$data)
 		{
 			return array();
 		}
 
-		if (isset($Array['query']))
+		if (isset($array['query']))
 		{
-			parse_str($Array['query'], $Query);
+			parse_str($array['query'], $query);
 		}
 		else
 		{
-			$Query = NULL;
+			$query = NULL;
 		}
 
-		foreach ($Data as $Key => $Value)
+		foreach ($data as $key => $value)
 		{
-			if (strstr($Array['host'], $Key))
+			if (strstr($array['host'], $key))
 			{
-				$String = '';
+				$string = '';
 
-				if ($Query && isset($Value['query']) && isset($Query[$Value['query']]))
+				if ($query && isset($value['query']) && isset($query[$value['query']]))
 				{
-					$String = $Query[$Value['query']];
+					$string = $query[$value['query']];
 				}
-				else if (isset($Value['expression']) && preg_match('#'.$Value['expression'].'#i', $String, $Keywords))
+				else if (isset($value['expression']) && preg_match('#'.$value['expression'].'#i', $string, $keywords))
 				{
-					$String = $Keywords[1];
-				}
-
-				if ($String && isset($Value['encoding']) && function_exists('mb_convert_encoding'))
-				{
-					$String = mb_convert_encoding($String, 'UTF-8', $Value['encoding']);
+					$string = $keywords[1];
 				}
 
-				$String = str_replace(array('"', '\'', '+', '\\', ','), ' ', $String);
-
-				if ($Phrase)
+				if ($string && isset($value['encoding']) && function_exists('mb_convert_encoding'))
 				{
-					$Keywords = array($String);
+					$string = mb_convert_encoding($string, 'UTF-8', $value['encoding']);
+				}
+
+				$string = str_replace(array('"', '\'', '+', '\\', ','), ' ', $string);
+
+				if ($phrase)
+				{
+					$keywords = array($string);
 				}
 				else
 				{
-					$TmpArray = explode(' ', $String);
-					$Keywords = array();
-					$Ignored = self::option('Keywords');
+					$tmpArray = explode(' ', $string);
+					$keywords = array();
+					$ignored = self::option('Keywords');
 
-					for ($i = 0, $c = count($TmpArray); $i < $c; ++$i)
+					for ($i = 0, $c = count($tmpArray); $i < $c; ++$i)
 					{
-						if (strlen($TmpArray[$i]) > 1 && $TmpArray[$i][0] != '-' && (!$Ignored || !in_array($TmpArray[$i], $Ignored)))
+						if (strlen($tmpArray[$i]) > 1 && $tmpArray[$i][0] != '-' && (!$ignored || !in_array($tmpArray[$i], $ignored)))
 						{
-							$Keywords[] = $TmpArray[$i];
+							$keywords[] = $tmpArray[$i];
 						}
 					}
 				}
 
-				return array('http://'.$Array['host'], $Keywords);
+				return array('http://'.$array['host'], $keywords);
 			}
 		}
 
@@ -818,9 +818,9 @@ class EstatsCore
  * @return integer
  */
 
-	static function visitsOnline($Time = 300)
+	static function visitsOnline($time = 300)
 	{
-		return (int) self::$Driver->selectAmount('visitors', array(array(EstatsDriver::ELEMENT_OPERATION, array('lastvisit', EstatsDriver::OPERATOR_GREATEROREQUAL, array(EstatsDriver::ELEMENT_VALUE, date('Y-m-d H:i:s', ($_SERVER['REQUEST_TIME'] - $Time)))))));
+		return (int) self::$driver->selectAmount('visitors', array(array(EstatsDriver::ELEMENT_OPERATION, array('lastvisit', EstatsDriver::OPERATOR_GREATEROREQUAL, array(EstatsDriver::ELEMENT_VALUE, date('Y-m-d H:i:s', ($_SERVER['REQUEST_TIME'] - $time)))))));
 	}
 
 /**
@@ -831,11 +831,11 @@ class EstatsCore
  * @return integer
  */
 
-	static function visitsAmount($Type, $From = 0, $To = 0)
+	static function visitsAmount($type, $from = 0, $to = 0)
 	{
-		$Data = self::$Driver->selectRow('time', array(array(EstatsDriver::ELEMENT_FUNCTION, array(EstatsDriver::FUNCTION_SUM, array(EstatsDriver::ELEMENT_EXPRESSION, array('unique', EstatsDriver::OPERATOR_PLUS, 'returns', EstatsDriver::OPERATOR_PLUS, 'views'))), 'views'), array(EstatsDriver::ELEMENT_FUNCTION, array(EstatsDriver::FUNCTION_SUM, array(EstatsDriver::ELEMENT_EXPRESSION, array('unique', EstatsDriver::OPERATOR_PLUS, 'returns'))), 'unique'), array(EstatsDriver::ELEMENT_FUNCTION, array(EstatsDriver::FUNCTION_SUM, 'returns'), 'returns')), self::timeClause('time', $From, $To));
+		$data = self::$driver->selectRow('time', array(array(EstatsDriver::ELEMENT_FUNCTION, array(EstatsDriver::FUNCTION_SUM, array(EstatsDriver::ELEMENT_EXPRESSION, array('unique', EstatsDriver::OPERATOR_PLUS, 'returns', EstatsDriver::OPERATOR_PLUS, 'views'))), 'views'), array(EstatsDriver::ELEMENT_FUNCTION, array(EstatsDriver::FUNCTION_SUM, array(EstatsDriver::ELEMENT_EXPRESSION, array('unique', EstatsDriver::OPERATOR_PLUS, 'returns'))), 'unique'), array(EstatsDriver::ELEMENT_FUNCTION, array(EstatsDriver::FUNCTION_SUM, 'returns'), 'returns')), self::timeClause('time', $from, $to));
 
-		return (int) $Data[$Type];
+		return (int) $data[$type];
 	}
 
 /**
@@ -846,17 +846,17 @@ class EstatsCore
  * @return integer
  */
 
-	static function visitsPage($Page, $From = 0, $To = 0)
+	static function visitsPage($page, $from = 0, $to = 0)
 	{
-		$Where = array(array(EstatsDriver::ELEMENT_OPERATION, array('address', EstatsDriver::OPERATOR_EQUAL, $Page)));
+		$where = array(array(EstatsDriver::ELEMENT_OPERATION, array('address', EstatsDriver::OPERATOR_EQUAL, $page)));
 
-		if ($From || $To)
+		if ($from || $to)
 		{
-			$Where[] = EstatsDriver::OPERATOR_AND;
-			$Where[] = self::timeClause('time', $From, $To);
+			$where[] = EstatsDriver::OPERATOR_AND;
+			$where[] = self::timeClause('time', $from, $to);
 		}
 
-		return (int) self::$Driver->selectField('sites', array(EstatsDriver::ELEMENT_FUNCTION, array(EstatsDriver::FUNCTION_SUM, 'amount')), $Where);
+		return (int) self::$driver->selectField('sites', array(EstatsDriver::ELEMENT_FUNCTION, array(EstatsDriver::FUNCTION_SUM, 'amount')), $where);
 	}
 
 /**
@@ -868,23 +868,23 @@ class EstatsCore
  * @return array
  */
 
-	static function visitsMost($Type, $From = 0, $To = 0, $Unit = 'day')
+	static function visitsMost($type, $from = 0, $to = 0, $unit = 'day')
 	{
-		$Units = array(
+		$units = array(
 	'hour' => '%Y.%m.%d %H',
 	'day' => '%Y.%m.%d',
 	'month' => '%Y.%m',
 	'year' => '%Y'
 	);
 
-		$Data = self::$Driver->selectRow('time', array(array(EstatsDriver::ELEMENT_FUNCTION, array(EstatsDriver::FUNCTION_DATETIME, array('time', $Units[$Unit])), 'unit'), 'time', array(EstatsDriver::ELEMENT_FUNCTION, array(EstatsDriver::FUNCTION_SUM, array(EstatsDriver::ELEMENT_EXPRESSION, array('unique', EstatsDriver::OPERATOR_PLUS, 'returns', EstatsDriver::OPERATOR_PLUS, 'views'))), 'views'), array(EstatsDriver::ELEMENT_FUNCTION, array(EstatsDriver::FUNCTION_SUM, array(EstatsDriver::ELEMENT_EXPRESSION, array('unique', EstatsDriver::OPERATOR_PLUS, 'returns'))), 'unique'), array(EstatsDriver::ELEMENT_FUNCTION, array(EstatsDriver::FUNCTION_SUM, 'returns'), 'returns')), self::timeClause('time', $From, $To), 0, array($Type => FALSE), array('unit'));
+		$data = self::$driver->selectRow('time', array(array(EstatsDriver::ELEMENT_FUNCTION, array(EstatsDriver::FUNCTION_DATETIME, array('time', $units[$unit])), 'unit'), 'time', array(EstatsDriver::ELEMENT_FUNCTION, array(EstatsDriver::FUNCTION_SUM, array(EstatsDriver::ELEMENT_EXPRESSION, array('unique', EstatsDriver::OPERATOR_PLUS, 'returns', EstatsDriver::OPERATOR_PLUS, 'views'))), 'views'), array(EstatsDriver::ELEMENT_FUNCTION, array(EstatsDriver::FUNCTION_SUM, array(EstatsDriver::ELEMENT_EXPRESSION, array('unique', EstatsDriver::OPERATOR_PLUS, 'returns'))), 'unique'), array(EstatsDriver::ELEMENT_FUNCTION, array(EstatsDriver::FUNCTION_SUM, 'returns'), 'returns')), self::timeClause('time', $from, $to), 0, array($type => FALSE), array('unit'));
 
-		if (!$Data)
+		if (!$data)
 		{
 			return array('time' => 0, 'amount' => 0);
 		}
 
-		return array('time' => strtotime($Data['time']), 'amount' => (int) $Data[$Type]);
+		return array('time' => strtotime($data['time']), 'amount' => (int) $data[$type]);
 	}
 
 /**
@@ -894,40 +894,40 @@ class EstatsCore
  * @return array
  */
 
-	static function summary($From = 0, $To = 0)
+	static function summary($from = 0, $to = 0)
 	{
-		$FileName = 'visits'.($From?'-'.$From.($To?'-'.$To:''):'');
+		$fileName = 'visits'.($from?'-'.$from.($to?'-'.$to:''):'');
 
-		if (EstatsCache::status($FileName, self::option('Cache/others')))
+		if (EstatsCache::status($fileName, self::option('Cache/others')))
 		{
-			$Visits = array(
-	'unique' => self::visitsAmount('unique', $From, $To),
-	'views' => self::visitsAmount('views', $From, $To),
-	'returns' => self::visitsAmount('returns', $From, $To),
-	'most' => self::visitsMost('unique', $From, $To),
-	'excluded' => self::$Driver->selectField('ignored', array(EstatsDriver::FUNCTION_SUM, 'unique'), self::timeClause('lastvisit', $From, $To)),
-	'lasthour' => self::visitsAmount('unique', (($To?$To:$_SERVER['REQUEST_TIME']) - 3600), $To),
-	'last24hours' => self::visitsAmount('unique', (($To?$To:$_SERVER['REQUEST_TIME']) - 86400), $To),
-	'lastweek' => self::visitsAmount('unique', (($To?$To:$_SERVER['REQUEST_TIME']) - 604800), $To),
-	'lastmonth' => self::visitsAmount('unique', (($To?$To:$_SERVER['REQUEST_TIME']) - (86400 * date('t', $To))), $To),
-	'lastyear' => self::visitsAmount('unique', (($To?$To:$_SERVER['REQUEST_TIME']) - (86400 * (365 + date('L', $To)))), $To)
+			$visits = array(
+	'unique' => self::visitsAmount('unique', $from, $to),
+	'views' => self::visitsAmount('views', $from, $to),
+	'returns' => self::visitsAmount('returns', $from, $to),
+	'most' => self::visitsMost('unique', $from, $to),
+	'excluded' => self::$driver->selectField('ignored', array(EstatsDriver::FUNCTION_SUM, 'unique'), self::timeClause('lastvisit', $from, $to)),
+	'lasthour' => self::visitsAmount('unique', (($to?$to:$_SERVER['REQUEST_TIME']) - 3600), $to),
+	'last24hours' => self::visitsAmount('unique', (($to?$to:$_SERVER['REQUEST_TIME']) - 86400), $to),
+	'lastweek' => self::visitsAmount('unique', (($to?$to:$_SERVER['REQUEST_TIME']) - 604800), $to),
+	'lastmonth' => self::visitsAmount('unique', (($to?$to:$_SERVER['REQUEST_TIME']) - (86400 * date('t', $to))), $to),
+	'lastyear' => self::visitsAmount('unique', (($to?$to:$_SERVER['REQUEST_TIME']) - (86400 * (365 + date('L', $to)))), $to)
 	);
 
-			$HoursAmount = ceil(($_SERVER['REQUEST_TIME'] - self::option('CollectedFrom')) / 3600);
-			$DaysAmount = ceil($HoursAmount / 24);
-			$Visits['averageperday'] = ($Visits['unique'] / $DaysAmount);
-			$Visits['averageperhour'] = ($Visits['unique'] / $HoursAmount);
+			$hoursAmount = ceil(($_SERVER['REQUEST_TIME'] - self::option('CollectedFrom')) / 3600);
+			$daysAmount = ceil($hoursAmount / 24);
+			$visits['averageperday'] = ($visits['unique'] / $daysAmount);
+			$visits['averageperhour'] = ($visits['unique'] / $hoursAmount);
 
-			EstatsCache::save($FileName, $Visits);
+			EstatsCache::save($fileName, $visits);
 		}
 		else
 		{
-			$Visits = EstatsCache::read($FileName);
+			$visits = EstatsCache::read($fileName);
 		}
 
-		$Visits['online'] = self::visitsOnline((int) self::option('OnlineTime'));
+		$visits['online'] = self::visitsOnline((int) self::option('OnlineTime'));
 
-		return $Visits;
+		return $visits;
 	}
 
 /**
@@ -935,41 +935,41 @@ class EstatsCore
  * @param boolean Blocked
  */
 
-	static function ignoreVisit($Blocked)
+	static function ignoreVisit($blocked)
 	{
-		$Where = array(array(EstatsDriver::ELEMENT_OPERATION, array('ip', EstatsDriver::OPERATOR_EQUAL, array(EstatsDriver::ELEMENT_VALUE, self::$IP))), EstatsDriver::OPERATOR_AND, array(EstatsDriver::ELEMENT_OPERATION, array('type', EstatsDriver::OPERATOR_EQUAL, array(EstatsDriver::ELEMENT_VALUE, (int) $Blocked))));
+		$where = array(array(EstatsDriver::ELEMENT_OPERATION, array('ip', EstatsDriver::OPERATOR_EQUAL, array(EstatsDriver::ELEMENT_VALUE, self::$iP))), EstatsDriver::OPERATOR_AND, array(EstatsDriver::ELEMENT_OPERATION, array('type', EstatsDriver::OPERATOR_EQUAL, array(EstatsDriver::ELEMENT_VALUE, (int) $blocked))));
 
-		if (self::$Driver->selectAmount('ignored', $Where))
+		if (self::$driver->selectAmount('ignored', $where))
 		{
-			if (self::$Driver->selectAmount('ignored', array(array(EstatsDriver::ELEMENT_OPERATION, array('ip', EstatsDriver::OPERATOR_EQUAL, array(EstatsDriver::ELEMENT_VALUE, self::$IP))), EstatsDriver::OPERATOR_AND, array(EstatsDriver::ELEMENT_OPERATION, array('lastvisit', EstatsDriver::OPERATOR_GREATER, array(EstatsDriver::ELEMENT_VALUE, date('Y-m-d H:i:s', ($_SERVER['REQUEST_TIME'] - 4320))))))))
+			if (self::$driver->selectAmount('ignored', array(array(EstatsDriver::ELEMENT_OPERATION, array('ip', EstatsDriver::OPERATOR_EQUAL, array(EstatsDriver::ELEMENT_VALUE, self::$iP))), EstatsDriver::OPERATOR_AND, array(EstatsDriver::ELEMENT_OPERATION, array('lastvisit', EstatsDriver::OPERATOR_GREATER, array(EstatsDriver::ELEMENT_VALUE, date('Y-m-d H:i:s', ($_SERVER['REQUEST_TIME'] - 4320))))))))
 			{
-				$Values = array(
+				$values = array(
 	'views' => array(EstatsDriver::ELEMENT_EXPRESSION, array('views', EstatsDriver::OPERATOR_INCREASE)),
 	'lastview' => $_SERVER['REQUEST_TIME']
 	);
 			}
 			else
 			{
-				$Values = array(
+				$values = array(
 	'unique' => array(EstatsDriver::ELEMENT_EXPRESSION, array('unique', EstatsDriver::OPERATOR_INCREASE)),
 	'useragent' => $_SERVER['HTTP_USER_AGENT'],
 	'lastview' => $_SERVER['REQUEST_TIME']
 	);
 			}
 
-			self::$Driver->updateData('ignored', $Values, $Where);
+			self::$driver->updateData('ignored', $values, $where);
 		}
 		else
 		{
-			self::$Driver->insertData('ignored', array(
+			self::$driver->insertData('ignored', array(
 	'lastview' => $_SERVER['REQUEST_TIME'],
 	'lastvisit' => $_SERVER['REQUEST_TIME'],
 	'firstvisit' => $_SERVER['REQUEST_TIME'],
 	'unique' => 1,
 	'views' => 0,
 	'useragent' => $_SERVER['HTTP_USER_AGENT'],
-	'ip' => self::$IP,
-	'type' => $Blocked
+	'ip' => self::$iP,
+	'type' => $blocked
 	));
 		}
 	}
@@ -982,135 +982,135 @@ class EstatsCore
  * @param array Data
  */
 
-	static function collectData($Count = TRUE, $Address = NULL, $Title = NULL, $Data = array())
+	static function collectData($count = TRUE, $address = NULL, $title = NULL, $data = array())
 	{
 		if (self::visitorID() < 1)
 		{
 			return;
 		}
 
-		if (!empty($Data['info']))
+		if (!empty($data['info']))
 		{
-			if (!self::$IsNewVisit)
+			if (!self::$isNewVisit)
 			{
-				self::$Driver->updateData('visitors', $Data, array(array(EstatsDriver::ELEMENT_OPERATION, array('id', EstatsDriver::OPERATOR_EQUAL, array(EstatsDriver::ELEMENT_VALUE, self::$VisitorID)))));
+				self::$driver->updateData('visitors', $data, array(array(EstatsDriver::ELEMENT_OPERATION, array('id', EstatsDriver::OPERATOR_EQUAL, array(EstatsDriver::ELEMENT_VALUE, self::$visitorID)))));
 			}
 
-			if (self::$IsNewVisit || !self::$HasJSInformation)
+			if (self::$isNewVisit || !self::$hasJSInformation)
 			{
-				$Keys = array('javascript', 'cookies', 'flash', 'java', 'screen');
+				$keys = array('javascript', 'cookies', 'flash', 'java', 'screen');
 
-				for ($i = 0, $c = count($Keys); $i < $c; ++$i)
+				for ($i = 0, $c = count($keys); $i < $c; ++$i)
 				{
-					$Key = $Keys[$i].(($Keys[$i] == 'screen')?'s':'');
+					$key = $keys[$i].(($keys[$i] == 'screen')?'s':'');
 
-					self::increaseAmount($Key, array('name' => (isset($Data[$Keys[$i]])?$Data[$Keys[$i]]:0)));
+					self::increaseAmount($key, array('name' => (isset($data[$keys[$i]])?$data[$keys[$i]]:0)));
 				}
 			}
 		}
 
-		if ($Count)
+		if ($count)
 		{
-			if (isset($_SESSION[self::$Session]['visits']) && count($_SESSION[self::$Session]['visits']) > 0)
+			if (isset($_SESSION[self::$session]['visits']) && count($_SESSION[self::$session]['visits']) > 0)
 			{
-				self::$PreviousVisitorID = max(array_keys($_SESSION[self::$Session]['visits']));
+				self::$previousVisitorID = max(array_keys($_SESSION[self::$session]['visits']));
 			}
 
-			if (isset($_SESSION[self::$Session]['visits'][self::$VisitorID]))
+			if (isset($_SESSION[self::$session]['visits'][self::$visitorID]))
 			{
-				$_SESSION[self::$Session]['visits'][$_SESSION[self::$Session]['visitor']['id']]['last'] = $_SERVER['REQUEST_TIME'];
+				$_SESSION[self::$session]['visits'][$_SESSION[self::$session]['visitor']['id']]['last'] = $_SERVER['REQUEST_TIME'];
 			}
 			else
 			{
-				$_SESSION[self::$Session]['visits'][self::$VisitorID] = array('first' => $_SERVER['REQUEST_TIME'], 'last' => $_SERVER['REQUEST_TIME']);
+				$_SESSION[self::$session]['visits'][self::$visitorID] = array('first' => $_SERVER['REQUEST_TIME'], 'last' => $_SERVER['REQUEST_TIME']);
 			}
 
-			if (!isset($_SESSION[self::$Session]['visitor']))
+			if (!isset($_SESSION[self::$session]['visitor']))
 			{
-				$_SESSION[self::$Session]['visitor'] = array('time' => $_SERVER['REQUEST_TIME'], 'id' => self::$VisitorID);
+				$_SESSION[self::$session]['visitor'] = array('time' => $_SERVER['REQUEST_TIME'], 'id' => self::$visitorID);
 			}
 
-			EstatsCookie::set('visitor', $_SESSION[self::$Session]['visitor'], 31356000, '/');
-			EstatsCookie::set('visits', $_SESSION[self::$Session]['visits'], 31356000, '/');
+			EstatsCookie::set('visitor', $_SESSION[self::$session]['visitor'], 31356000, '/');
+			EstatsCookie::set('visits', $_SESSION[self::$session]['visits'], 31356000, '/');
 
-			if (self::$IsNewVisit)
+			if (self::$isNewVisit)
 			{
-				$Data = array_merge(array('info' => 0, 'javascript' => 0, 'cookies' => 0, 'flash' => 0, 'java' => 0, 'screen' => 0), $Data);
+				$data = array_merge(array('info' => 0, 'javascript' => 0, 'cookies' => 0, 'flash' => 0, 'java' => 0, 'screen' => 0), $data);
 
-				if (self::$Proxy)
+				if (self::$proxy)
 				{
-					$Data['proxy'] = (empty($_SERVER['REMOTE_HOST'])?gethostbyaddr($_SERVER['REMOTE_ADDR']):$_SERVER['REMOTE_HOST']);
-					$Data['proxyip'] = self::$ProxyIP;
+					$data['proxy'] = (empty($_SERVER['REMOTE_HOST'])?gethostbyaddr($_SERVER['REMOTE_ADDR']):$_SERVER['REMOTE_HOST']);
+					$data['proxyip'] = self::$proxyIP;
 				}
 				else
 				{
-					$Data['proxy'] = $Data['proxyip'] = '';
+					$data['proxy'] = $data['proxyip'] = '';
 				}
 
-				$Host = explode('.', ((self::$IP == 'unknown')?self::$IP:(empty($_SERVER['REMOTE_HOST'])?gethostbyaddr(self::$IP):$_SERVER['REMOTE_HOST'])));
-				$Host = (is_numeric(end($Host))?'?':implode('.', ((count($Host) < 3)?$Host:array_slice($Host, 1))));
+				$host = explode('.', ((self::$iP == 'unknown')?self::$iP:(empty($_SERVER['REMOTE_HOST'])?gethostbyaddr(self::$iP):$_SERVER['REMOTE_HOST'])));
+				$host = (is_numeric(end($host))?'?':implode('.', ((count($host) < 3)?$host:array_slice($host, 1))));
 
-				$Data['id'] = self::$VisitorID;
-				$Data['firstvisit'] = $_SERVER['REQUEST_TIME'];
-				$Data['lastvisit'] = $_SERVER['REQUEST_TIME'];
-				$Data['visitsamount'] = 1;
-				$Data['ip'] = self::$IP;
-				$Data['previous'] = self::$PreviousVisitorID;
-				$Data['robot'] = (self::$Robot?self::$Robot:'');
-				$Data['host'] = ($Host?$Host:'?');
-				$Data['language'] = strtoupper(self::$Language);
-				$Data['useragent'] = $_SERVER['HTTP_USER_AGENT'];
-				$Data['referrer'] = '';
+				$data['id'] = self::$visitorID;
+				$data['firstvisit'] = $_SERVER['REQUEST_TIME'];
+				$data['lastvisit'] = $_SERVER['REQUEST_TIME'];
+				$data['visitsamount'] = 1;
+				$data['ip'] = self::$iP;
+				$data['previous'] = self::$previousVisitorID;
+				$data['robot'] = (self::$robot?self::$robot:'');
+				$data['host'] = ($host?$host:'?');
+				$data['language'] = strtoupper(self::$language);
+				$data['useragent'] = $_SERVER['HTTP_USER_AGENT'];
+				$data['referrer'] = '';
 
 				if (isset($_SERVER['HTTP_REFERER']) && preg_match('#^(ht|f)tps?:\/\/([^/]+)#s', $_SERVER['HTTP_REFERER']))
 				{
-					$Referrer = parse_url($_SERVER['HTTP_REFERER']);
+					$referrer = parse_url($_SERVER['HTTP_REFERER']);
 
-					if (!in_array($Referrer['host'], self::option('Referrers')))
+					if (!in_array($referrer['host'], self::option('Referrers')))
 					{
-						$Data['referrer'] = &$_SERVER['HTTP_REFERER'];
+						$data['referrer'] = &$_SERVER['HTTP_REFERER'];
 					}
 				}
 				else
 				{
-					$Referrer = NULL;
+					$referrer = NULL;
 				}
 
-				if (!self::$Robot)
+				if (!self::$robot)
 				{
-					self::increaseAmount('languages', array('name' => $Data['language']));
+					self::increaseAmount('languages', array('name' => $data['language']));
 					self::increaseAmount('browsers', array_combine(array('name', 'version'), self::detectBrowser($_SERVER['HTTP_USER_AGENT'])));
 					self::increaseAmount('operatingsystems', array_combine(array('name', 'version'), self::detectOperatingSystem($_SERVER['HTTP_USER_AGENT'])));
-					self::increaseAmount('hosts', array('name' => $Data['host']));
+					self::increaseAmount('hosts', array('name' => $data['host']));
 
-					if ($Data['proxy'])
+					if ($data['proxy'])
 					{
-						self::increaseAmount('proxy', array('name' => $Data['proxy']));
+						self::increaseAmount('proxy', array('name' => $data['proxy']));
 					}
 
-					if (EstatsGeolocation::isAvailable() && ($GeoData = EstatsGeolocation::information(self::$IP)))
+					if (EstatsGeolocation::isAvailable() && ($geoData = EstatsGeolocation::information(self::$iP)))
 					{
-						self::increaseAmount('geoip', $GeoData);
+						self::increaseAmount('geoip', $geoData);
 					}
 
-					if ($Data['referrer'])
+					if ($data['referrer'])
 					{
-						self::increaseAmount('referrers', array('name' => 'http://'.strtolower($Referrer['host'])));
+						self::increaseAmount('referrers', array('name' => 'http://'.strtolower($referrer['host'])));
 					}
 
-					if ($Data['referrer'])
+					if ($data['referrer'])
 					{
-						$WebSearch = self::detectWebsearcher($Data['referrer'], self::option('CountPhrases'));
+						$webSearch = self::detectWebsearcher($data['referrer'], self::option('CountPhrases'));
 
-						if ($WebSearch)
+						if ($webSearch)
 						{
-							self::increaseAmount('websearchers', array('name' => $WebSearch[0]));
+							self::increaseAmount('websearchers', array('name' => $webSearch[0]));
 
-							for ($i = 0, $c = count($WebSearch[1]); $i < $c; ++$i)
+							for ($i = 0, $c = count($webSearch[1]); $i < $c; ++$i)
 							{
-								if ($WebSearch[1][$i])
+								if ($webSearch[1][$i])
 								{
-									self::increaseAmount('keywords', array('name' => $WebSearch[1][$i]));
+									self::increaseAmount('keywords', array('name' => $webSearch[1][$i]));
 								}
 							}
 						}
@@ -1118,43 +1118,43 @@ class EstatsCore
 				}
 				else
 				{
-					self::increaseAmount('robots', array('name' => self::$Robot));
+					self::increaseAmount('robots', array('name' => self::$robot));
 				}
 
-				self::$Driver->insertData('visitors', $Data);
+				self::$driver->insertData('visitors', $data);
 			}
 			else
 			{
-				self::$Driver->updateData('visitors', array('lastvisit' => $_SERVER['REQUEST_TIME'], 'visitsamount' => array(EstatsDriver::ELEMENT_EXPRESSION, array('visitsamount', EstatsDriver::OPERATOR_INCREASE))), array(array(EstatsDriver::ELEMENT_OPERATION, array('id', EstatsDriver::OPERATOR_EQUAL, array(EstatsDriver::ELEMENT_VALUE, self::$VisitorID)))));
+				self::$driver->updateData('visitors', array('lastvisit' => $_SERVER['REQUEST_TIME'], 'visitsamount' => array(EstatsDriver::ELEMENT_EXPRESSION, array('visitsamount', EstatsDriver::OPERATOR_INCREASE))), array(array(EstatsDriver::ELEMENT_OPERATION, array('id', EstatsDriver::OPERATOR_EQUAL, array(EstatsDriver::ELEMENT_VALUE, self::$visitorID)))));
 			}
 
-			self::$Driver->insertData('details', array('id' => self::$VisitorID, 'address' => $Address, 'time' => $_SERVER['REQUEST_TIME']));
-			self::increaseAmount('sites', array('name' => $Title, 'address' => $Address));
+			self::$driver->insertData('details', array('id' => self::$visitorID, 'address' => $address, 'time' => $_SERVER['REQUEST_TIME']));
+			self::increaseAmount('sites', array('name' => $title, 'address' => $address));
 
-			if (self::$Robot && !self::option('CountRobots'))
+			if (self::$robot && !self::option('CountRobots'))
 			{
 				return;
 			}
 
-			if (self::$IsNewVisit)
+			if (self::$isNewVisit)
 			{
-				if (self::$PreviousVisitorID)
+				if (self::$previousVisitorID)
 				{
-					$Type = 'returns';
+					$type = 'returns';
 				}
 				else
 				{
-					$Type = 'unique';
+					$type = 'unique';
 				}
 			}
 			else
 			{
-				$Type = 'views';
+				$type = 'views';
 			}
 
-			if (!self::$Driver->updateData('time', array($Type => array(EstatsDriver::ELEMENT_EXPRESSION, array($Type, EstatsDriver::OPERATOR_INCREASE))), array(array(EstatsDriver::ELEMENT_OPERATION, array('time', EstatsDriver::OPERATOR_EQUAL, array(EstatsDriver::ELEMENT_VALUE, date('Y-m-d 00:00:00', $_SERVER['REQUEST_TIME'])))))))
+			if (!self::$driver->updateData('time', array($type => array(EstatsDriver::ELEMENT_EXPRESSION, array($type, EstatsDriver::OPERATOR_INCREASE))), array(array(EstatsDriver::ELEMENT_OPERATION, array('time', EstatsDriver::OPERATOR_EQUAL, array(EstatsDriver::ELEMENT_VALUE, date('Y-m-d 00:00:00', $_SERVER['REQUEST_TIME'])))))))
 			{
-				self::$Driver->insertData('time', array('time' => date('Y-m-d 00:00:00', $_SERVER['REQUEST_TIME']), 'views' => (($Type == 'views')?1:0), 'unique' => (($Type == 'unique')?1:0), 'returns' => (($Type == 'returns')?1:0)));
+				self::$driver->insertData('time', array('time' => date('Y-m-d 00:00:00', $_SERVER['REQUEST_TIME']), 'views' => (($type == 'views')?1:0), 'unique' => (($type == 'unique')?1:0), 'returns' => (($type == 'returns')?1:0)));
 			}
 		}
 	}
@@ -1166,70 +1166,70 @@ class EstatsCore
 
 	static function visitorID()
 	{
-		if (self::$VisitorID == -2)
+		if (self::$visitorID == -2)
 		{
 			if (EstatsCookie::exists('ignore'))
 			{
-				self::$VisitorID = -1;
+				self::$visitorID = -1;
 			}
-			else if (self::containsIP(self::$IP, self::option('IgnoredIPs')))
+			else if (self::containsIP(self::$iP, self::option('IgnoredIPs')))
 			{
 				if (self::option('BlacklistMonitor'))
 				{
 					self::ignoreVisit(FALSE);
 				}
 
-				self::$VisitorID = -1;
+				self::$visitorID = -1;
 			}
 			else
 			{
-				self::$Robot = self::detectRobot($_SERVER['HTTP_USER_AGENT']);
+				self::$robot = self::detectRobot($_SERVER['HTTP_USER_AGENT']);
 
 				if (EstatsCookie::get('visitor'))
 				{
-					if (!isset($_SESSION[self::$Session]['visitor']))
+					if (!isset($_SESSION[self::$session]['visitor']))
 					{
-						$_SESSION[self::$Session]['visitor'] = EstatsCookie::get('visitor');
+						$_SESSION[self::$session]['visitor'] = EstatsCookie::get('visitor');
 					}
 
-					if (!isset($_SESSION[self::$Session]['visits']))
+					if (!isset($_SESSION[self::$session]['visits']))
 					{
-						$_SESSION[self::$Session]['visits'] = EstatsCookie::get('visits');
+						$_SESSION[self::$session]['visits'] = EstatsCookie::get('visits');
 					}
 				}
 
-				if (!isset($_SESSION[self::$Session]['visits']))
+				if (!isset($_SESSION[self::$session]['visits']))
 				{
-					$_SESSION[self::$Session]['visits'] = array();
+					$_SESSION[self::$session]['visits'] = array();
 				}
 
-				if (isset($_SESSION[self::$Session]['visitor']) && (($_SERVER['REQUEST_TIME'] - $_SESSION[self::$Session]['visitor']['time']) > self::option('VisitTime') || $_SESSION[self::$Session]['visitor']['time'] < self::option('CollectedFrom') || ($_SESSION[self::$Session]['visitor'] && !self::$Driver->selectAmount('visitors', array(array(EstatsDriver::ELEMENT_OPERATION, array('id', EstatsDriver::OPERATOR_EQUAL, array(EstatsDriver::ELEMENT_VALUE, $_SESSION[self::$Session]['visitor']['id']))))))))
+				if (isset($_SESSION[self::$session]['visitor']) && (($_SERVER['REQUEST_TIME'] - $_SESSION[self::$session]['visitor']['time']) > self::option('VisitTime') || $_SESSION[self::$session]['visitor']['time'] < self::option('CollectedFrom') || ($_SESSION[self::$session]['visitor'] && !self::$driver->selectAmount('visitors', array(array(EstatsDriver::ELEMENT_OPERATION, array('id', EstatsDriver::OPERATOR_EQUAL, array(EstatsDriver::ELEMENT_VALUE, $_SESSION[self::$session]['visitor']['id']))))))))
 				{
-					unset($_SESSION[self::$Session]['visitor']);
+					unset($_SESSION[self::$session]['visitor']);
 				}
 
-				if (isset($_SESSION[self::$Session]['visitor']))
+				if (isset($_SESSION[self::$session]['visitor']))
 				{
-					self::$VisitorID = $_SESSION[self::$Session]['visitor']['id'];
+					self::$visitorID = $_SESSION[self::$session]['visitor']['id'];
 				}
 				else
 				{
-					self::$VisitorID = (int) self::$Driver->selectField('visitors', 'id', array(array(EstatsDriver::ELEMENT_OPERATION, array('firstvisit', EstatsDriver::OPERATOR_GREATER, array(EstatsDriver::ELEMENT_VALUE, date('Y-m-d H:i:s', ($_SERVER['REQUEST_TIME'] - (self::option('VisitTime') / 2)))))), EstatsDriver::OPERATOR_AND, array(EstatsDriver::ELEMENT_OPERATION, array('ip', EstatsDriver::OPERATOR_EQUAL, array(EstatsDriver::ELEMENT_VALUE, self::$IP)))), 0, array('id'), FALSE);
+					self::$visitorID = (int) self::$driver->selectField('visitors', 'id', array(array(EstatsDriver::ELEMENT_OPERATION, array('firstvisit', EstatsDriver::OPERATOR_GREATER, array(EstatsDriver::ELEMENT_VALUE, date('Y-m-d H:i:s', ($_SERVER['REQUEST_TIME'] - (self::option('VisitTime') / 2)))))), EstatsDriver::OPERATOR_AND, array(EstatsDriver::ELEMENT_OPERATION, array('ip', EstatsDriver::OPERATOR_EQUAL, array(EstatsDriver::ELEMENT_VALUE, self::$iP)))), 0, array('id'), FALSE);
 				}
 
-				if (self::$VisitorID)
+				if (self::$visitorID)
 				{
-					self::$HasJSInformation = self::$Driver->selectField('visitors', 'info', array(array(EstatsDriver::ELEMENT_OPERATION, array('id', EstatsDriver::OPERATOR_EQUAL, array(EstatsDriver::ELEMENT_VALUE, self::$VisitorID)))));
+					self::$hasJSInformation = self::$driver->selectField('visitors', 'info', array(array(EstatsDriver::ELEMENT_OPERATION, array('id', EstatsDriver::OPERATOR_EQUAL, array(EstatsDriver::ELEMENT_VALUE, self::$visitorID)))));
 				}
 				else
 				{
-					self::$IsNewVisit = TRUE;
-					self::$VisitorID = (max(self::$Driver->selectField('visitors', array(EstatsDriver::ELEMENT_FUNCTION, array(EstatsDriver::FUNCTION_MAX, 'id'))), self::visitsAmount('unique')) + 1);
+					self::$isNewVisit = TRUE;
+					self::$visitorID = (max(self::$driver->selectField('visitors', array(EstatsDriver::ELEMENT_FUNCTION, array(EstatsDriver::FUNCTION_MAX, 'id'))), self::visitsAmount('unique')) + 1);
 				}
 			}
 		}
 
-		return self::$VisitorID;
+		return self::$visitorID;
 	}
 
 /**
@@ -1238,9 +1238,9 @@ class EstatsCore
  * @return string
  */
 
-	static function path($DataDirectory = FALSE)
+	static function path($dataDirectory = FALSE)
 	{
-		return ($DataDirectory?self::$DataDirectory:self::$Path);
+		return ($dataDirectory?self::$dataDirectory:self::$path);
 	}
 
 /**
@@ -1250,7 +1250,7 @@ class EstatsCore
 
 	static function session()
 	{
-		return (self::$Session?self::$Session:'gb3kg4lehjl67bnd55fn');
+		return (self::$session?self::$session:'gb3kg4lehjl67bnd55fn');
 	}
 
 /**
@@ -1260,7 +1260,7 @@ class EstatsCore
 
 	static function security()
 	{
-		return self::$Security;
+		return self::$security;
 	}
 
 /**
@@ -1270,7 +1270,7 @@ class EstatsCore
 
 	static function language()
 	{
-		return self::$Language;
+		return self::$language;
 	}
 
 /**
@@ -1280,7 +1280,7 @@ class EstatsCore
 
 	static function IP()
 	{
-		return self::$IP;
+		return self::$iP;
 	}
 
 /**
@@ -1290,7 +1290,7 @@ class EstatsCore
 
 	static function statistics()
 	{
-		return self::$Statistics;
+		return self::$statistics;
 	}
 
 /**
@@ -1300,7 +1300,7 @@ class EstatsCore
 
 	static function driver()
 	{
-		return self::$Driver;
+		return self::$driver;
 	}
 }
 ?>

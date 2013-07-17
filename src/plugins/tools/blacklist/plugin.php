@@ -24,9 +24,9 @@ if (isset($_POST['SaveConfiguration']) || isset($_POST['Defaults']))
 	}
 }
 
-if (!isset($Path[3]))
+if (!isset($path[3]))
 {
-	$Path[3] = 0;
+	$path[3] = 0;
 }
 
 EstatsTheme::add('page', '<form action="{selfpath}" method="post">
@@ -68,73 +68,73 @@ EstatsTheme::add('page', '<form action="{selfpath}" method="post">
 </tr>
 ');
 
-$EntriesAmount = EstatsCore::driver()->selectAmount('ignored');
-$IgnoredAmount = 30;
+$entriesAmount = EstatsCore::driver()->selectAmount('ignored');
+$ignoredAmount = 30;
 
-if (!$Path[3])
+if (!$path[3])
 {
-	$Path[3] = ceil($EntriesAmount / $IgnoredAmount);
+	$path[3] = ceil($entriesAmount / $ignoredAmount);
 }
 
-$From = ($IgnoredAmount * ($Path[3] - 1));
+$from = ($ignoredAmount * ($path[3] - 1));
 
-if ($From > $EntriesAmount)
+if ($from > $entriesAmount)
 {
-	$From = 0;
-	$Path[3] = 1;
+	$from = 0;
+	$path[3] = 1;
 }
 
-$Entries = EstatsCore::driver()->selectData(array('ignored'), NULL, NULL, $IgnoredAmount, $From, array('lastview' => FALSE));
+$entries = EstatsCore::driver()->selectData(array('ignored'), NULL, NULL, $ignoredAmount, $from, array('lastview' => FALSE));
 
-for ($i = 0, $c = count($Entries); $i < $c; ++$i)
+for ($i = 0, $c = count($entries); $i < $c; ++$i)
 {
-	$Robot = EstatsCore::detectRobot($Entries[$i]['useragent']);
+	$robot = EstatsCore::detectRobot($entries[$i]['useragent']);
 
-	if (!$Robot)
+	if (!$robot)
 	{
-		$Browser = implode(' ', EstatsCore::detectBrowser($Entries[$i]['useragent']));
-		$OS = implode(' ', EstatsCore::detectOperatingSystem($Entries[$i]['useragent']));
+		$browser = implode(' ', EstatsCore::detectBrowser($entries[$i]['useragent']));
+		$oS = implode(' ', EstatsCore::detectOperatingSystem($entries[$i]['useragent']));
 	}
 
 	EstatsTheme::append('page', '<tr>
 <td>
 <p>
-'.(($Entries[$i]['ip'] == '127.0.0.1')?$Entries[$i]['ip']:EstatsGUI::whoisLink($Entries[$i]['ip'], $Entries[$i]['ip'])).'
-'.EstatsGUI::ignoreIPLink(($Entries[$i]['type']?$BlockedIPs:EstatsCore::option('IgnoredIPs')), $Entries[$i]['ip'], !$Entries[$i]['type']).'
+'.(($entries[$i]['ip'] == '127.0.0.1')?$entries[$i]['ip']:EstatsGUI::whoisLink($entries[$i]['ip'], $entries[$i]['ip'])).'
+'.EstatsGUI::ignoreIPLink(($entries[$i]['type']?$blockedIPs:EstatsCore::option('IgnoredIPs')), $entries[$i]['ip'], !$entries[$i]['type']).'
 </p>
 </td>
 <td>
 <p>
-'.date('d.m.Y H:i:s', (is_numeric($Entries[$i]['firstvisit'])?$Entries[$i]['firstvisit']:strtotime($Entries[$i]['firstvisit']))).'
+'.date('d.m.Y H:i:s', (is_numeric($entries[$i]['firstvisit'])?$entries[$i]['firstvisit']:strtotime($entries[$i]['firstvisit']))).'
 </p>
 </td>
 <td>
 <p>
-'.date('d.m.Y H:i:s', (is_numeric($Entries[$i]['lastview'])?$Entries[$i]['lastview']:strtotime($Entries[$i]['lastview']))).'
+'.date('d.m.Y H:i:s', (is_numeric($entries[$i]['lastview'])?$entries[$i]['lastview']:strtotime($entries[$i]['lastview']))).'
 </p>
 </td>
 <td>
 <p>
-<span title="'.EstatsLocale::translate('Unique').'">'.$Entries[$i]['unique'].'</span>
+<span title="'.EstatsLocale::translate('Unique').'">'.$entries[$i]['unique'].'</span>
 /
-<span title="'.EstatsLocale::translate('Views').'">'.($Entries[$i]['unique'] + $Entries[$i]['views']).'</span>
+<span title="'.EstatsLocale::translate('Views').'">'.($entries[$i]['unique'] + $entries[$i]['views']).'</span>
 </p>
 </td>
 <td>
 <p>
-'.EstatsGUI::cutString($Entries[$i]['useragent'], 40, 1).'
+'.EstatsGUI::cutString($entries[$i]['useragent'], 40, 1).'
 </p>
 </td>
 <td>
 <p>
-'.($Robot?EstatsGUI::iconTag(EstatsGUI::iconPath($Robot, 'robots'), EstatsLocale::translate('Network bot').': '.EstatsGUI::itemText($Robot, 'robots')).'
-':EstatsGUI::iconTag(EstatsGUI::iconPath($Browser, 'browser-versions'), EstatsLocale::translate('Browser').': '.EstatsGUI::itemText($Browser, 'browser-versions')).'
-'.EstatsGUI::iconTag(EstatsGUI::iconPath($OS, 'operatingsystem-versions'), EstatsLocale::translate('Operating system').': '.EstatsGUI::itemText($OS, 'operatingsystem-versions')).'
+'.($robot?EstatsGUI::iconTag(EstatsGUI::iconPath($robot, 'robots'), EstatsLocale::translate('Network bot').': '.EstatsGUI::itemText($robot, 'robots')).'
+':EstatsGUI::iconTag(EstatsGUI::iconPath($browser, 'browser-versions'), EstatsLocale::translate('Browser').': '.EstatsGUI::itemText($browser, 'browser-versions')).'
+'.EstatsGUI::iconTag(EstatsGUI::iconPath($oS, 'operatingsystem-versions'), EstatsLocale::translate('Operating system').': '.EstatsGUI::itemText($oS, 'operatingsystem-versions')).'
 ').'</p>
 </td>
 <td>
 <p>
-'.($Entries[$i]['type']?EstatsLocale::translate('Blocked'):EstatsLocale::translate('Ignored')).'
+'.($entries[$i]['type']?EstatsLocale::translate('Blocked'):EstatsLocale::translate('Ignored')).'
 </p>
 </td>
 </tr>
@@ -148,5 +148,5 @@ EstatsTheme::append('page', ($c?'':'<tr>
 </tr>
 ').'</table>
 {table-end}</form>
-'.EstatsGUI::linksWIdget($Path[3], ceil($EntriesAmount / $IgnoredAmount), '{path}tools/blacklist/{page}{suffix}'));
+'.EstatsGUI::linksWIdget($path[3], ceil($entriesAmount / $ignoredAmount), '{path}tools/blacklist/{page}{suffix}'));
 ?>

@@ -10,159 +10,159 @@ if (!defined('eStats'))
 	die();
 }
 
-$EntriesSearch = array();
+$entriesSearch = array();
 
 if (isset($_GET['search']) && !isset($_POST['search']))
 {
-	$Search = $_POST = $_GET;
+	$search = $_POST = $_GET;
 }
 
 if (isset($_POST['search']))
 {
-	$Search = $_POST;
+	$search = $_POST;
 
-	foreach ($_POST as $Key => $Value)
+	foreach ($_POST as $key => $value)
 	{
-		if (is_array($Value))
+		if (is_array($value))
 		{
-			for ($i = 0, $c = count($Value); $i < $c; ++$i)
+			for ($i = 0, $c = count($value); $i < $c; ++$i)
 			{
-				$EntriesSearch[] = $Key.'[]='.urlencode($Value[$i]);
+				$entriesSearch[] = $key.'[]='.urlencode($value[$i]);
 			}
 		}
 		else
 		{
-			$EntriesSearch[] = $Key.'='.urlencode($Value);
+			$entriesSearch[] = $key.'='.urlencode($value);
 		}
 	}
 }
 else
 {
-	$Search = NULL;
+	$search = NULL;
 }
 
-if (!isset($Path[3]))
+if (!isset($path[3]))
 {
-	$Path[3] = 0;
+	$path[3] = 0;
 }
 
-$EntriesPerPage = 50;
+$entriesPerPage = 50;
 
 if (EstatsCookie::get('logsPerPage'))
 {
-	$EntriesPerPage = EstatsCookie::get('logsPerPage');
+	$entriesPerPage = EstatsCookie::get('logsPerPage');
 }
 
 if (isset($_POST['amount']))
 {
-	$EntriesPerPage = (int) $_POST['amount'];
+	$entriesPerPage = (int) $_POST['amount'];
 
-	EstatsCookie::set('logsPerPage', $EntriesPerPage);
+	EstatsCookie::set('logsPerPage', $entriesPerPage);
 }
 
 if (isset($_POST['export']))
 {
-	$EntriesPerPage = 0;
-	$Page = 0;
+	$entriesPerPage = 0;
+	$page = 0;
 }
 else
 {
-	$Page = (int) $Path[3];
+	$page = (int) $path[3];
 }
 
-if ($Search)
+if ($search)
 {
-	$Where = EstatsCore::timeClause('time', strtotime($Search['from']), strtotime($Search['to']));
+	$where = EstatsCore::timeClause('time', strtotime($search['from']), strtotime($search['to']));
 
-	if (isset($Search['filter']))
+	if (isset($search['filter']))
 	{
-		if ($Where)
+		if ($where)
 		{
-			$Where[] = EstatsDriver::OPERATOR_AND;
+			$where[] = EstatsDriver::OPERATOR_AND;
 		}
 
-		$Where[] = array(EstatsDriver::ELEMENT_OPERATION, array('log', EstatsDriver::OPERATOR_IN, $Search['filter']));
+		$where[] = array(EstatsDriver::ELEMENT_OPERATION, array('log', EstatsDriver::OPERATOR_IN, $search['filter']));
 	}
 
-	if (!empty($Search['search']))
+	if (!empty($search['search']))
 	{
-		if ($Where)
+		if ($where)
 		{
-			$Where[] = EstatsDriver::OPERATOR_AND;
+			$where[] = EstatsDriver::OPERATOR_AND;
 		}
 
-		$Where[] = EstatsDriver::OPERATOR_GROUPING_START;
-		$Where[] = array(EstatsDriver::ELEMENT_OPERATION, array('log', EstatsDriver::OPERATOR_LIKE, '%'.$Search['search'].'%'));
-		$Where[] = EstatsDriver::OPERATOR_OR;
-		$Where[] = array(EstatsDriver::ELEMENT_OPERATION, array('time', EstatsDriver::OPERATOR_LIKE, '%'.$Search['search'].'%'));
-		$Where[] = EstatsDriver::OPERATOR_OR;
-		$Where[] = array(EstatsDriver::ELEMENT_OPERATION, array('info', EstatsDriver::OPERATOR_LIKE, '%'.$Search['search'].'%'));
-		$Where[] = EstatsDriver::OPERATOR_GROUPING_END;
+		$where[] = EstatsDriver::OPERATOR_GROUPING_START;
+		$where[] = array(EstatsDriver::ELEMENT_OPERATION, array('log', EstatsDriver::OPERATOR_LIKE, '%'.$search['search'].'%'));
+		$where[] = EstatsDriver::OPERATOR_OR;
+		$where[] = array(EstatsDriver::ELEMENT_OPERATION, array('time', EstatsDriver::OPERATOR_LIKE, '%'.$search['search'].'%'));
+		$where[] = EstatsDriver::OPERATOR_OR;
+		$where[] = array(EstatsDriver::ELEMENT_OPERATION, array('info', EstatsDriver::OPERATOR_LIKE, '%'.$search['search'].'%'));
+		$where[] = EstatsDriver::OPERATOR_GROUPING_END;
 	}
 }
 else
 {
-	$Where = array();
+	$where = array();
 }
 
-$EntriesAmount = EstatsCore::driver()->selectAmount('logs');
-$EntriesFilteredAmount = ($Where?EstatsCore::driver()->selectAmount('logs', $Where):$EntriesAmount);
+$entriesAmount = EstatsCore::driver()->selectAmount('logs');
+$entriesFilteredAmount = ($where?EstatsCore::driver()->selectAmount('logs', $where):$entriesAmount);
 
-if (!$Page && $EntriesPerPage)
+if (!$page && $entriesPerPage)
 {
-	$Page = ceil($EntriesFilteredAmount / $EntriesPerPage);
+	$page = ceil($entriesFilteredAmount / $entriesPerPage);
 }
 
-$From = ($EntriesPerPage * ($Page - 1));
+$from = ($entriesPerPage * ($page - 1));
 
-if ($From > $EntriesFilteredAmount)
+if ($from > $entriesFilteredAmount)
 {
-	$From = 0;
-	$Page = 1;
+	$from = 0;
+	$page = 1;
 }
 
-if ($EntriesFilteredAmount)
+if ($entriesFilteredAmount)
 {
-	$Entries = EstatsCore::driver()->selectData(array('logs'), NULL, $Where, $EntriesPerPage, $From, array('time' => TRUE));
+	$entries = EstatsCore::driver()->selectData(array('logs'), NULL, $where, $entriesPerPage, $from, array('time' => TRUE));
 }
 else
 {
-	$Entries = array();
+	$entries = array();
 }
 
-$EventStrings = EstatsCore::loadData('share/data/events.ini');
+$eventStrings = EstatsCore::loadData('share/data/events.ini');
 
 if (isset($_POST['export']))
 {
-	$Export = 'eStats v'.ESTATS_VERSIONSTRING.' logs backup
+	$export = 'eStats v'.ESTATS_VERSIONSTRING.' logs backup
 Creation date: '.date('m.d.Y H:i:s').'
 
 ';
 
-	for ($i = 0, $c = count($Entries); $i < $c; ++$i)
+	for ($i = 0, $c = count($entries); $i < $c; ++$i)
 	{
-		$Export.= '
-'.$Entries[$i]['time'].' - '.(isset($EventStrings[$Entries[$i]['log']])?EstatsLocale::translate($EventStrings[$Entries[$i]['log']]):htmlspecialchars($Entries[$i]['log'])).($Entries[$i]['info']?'('.$Entries[$i]['info'].')':'');
+		$export.= '
+'.$entries[$i]['time'].' - '.(isset($eventStrings[$entries[$i]['log']])?EstatsLocale::translate($eventStrings[$entries[$i]['log']]):htmlspecialchars($entries[$i]['log'])).($entries[$i]['info']?'('.$entries[$i]['info'].')':'');
 	}
 
 	header('Content-Type: application/force-download');
 	header('Content-Disposition: attachment; filename=eStats_'.date('Y-m-d').'.log.bak');
-	die(trim($Export));
+	die(trim($export));
 }
 
-$Amount = count($Entries);
-$Filters = array();
+$amount = count($entries);
+$filters = array();
 
-foreach ($EventStrings as $Key => $Value)
+foreach ($eventStrings as $key => $value)
 {
-	$Filters[] = array($Key, EstatsLocale::translate($Value));
+	$filters[] = array($key, EstatsLocale::translate($value));
 }
 
 EstatsTheme::add('page', '<form action="{selfpath}" method="post">
 <h3>
 {heading-start}'.EstatsLocale::translate('Search').'{heading-end}
 </h3>
-'.EstatsGUI::optionRowWidget(EstatsLocale::translate('Find entry (search in all fields)'), '', 'search', (isset($_POST['search'])?stripslashes($_POST['search']):'')).EstatsGUI::optionRowWidget(EstatsLocale::translate('Results per page'), '', 'amount', $EntriesPerPage).EstatsGUI::optionRowWidget(EstatsLocale::translate('Filter'), '', 'filter[]', (isset($_POST['filter'])?$_POST['filter']:array()), EstatsGUI::FIELD_SELECT, $Filters).EstatsGUI::optionRowWidget(EstatsLocale::translate('In period'), '', '', EstatsLocale::translate('From').' <input name="from" value="'.(isset($_POST['from'])?$_POST['from']:date('Y-m-d H:00:00', eStats)).'">
+'.EstatsGUI::optionRowWidget(EstatsLocale::translate('Find entry (search in all fields)'), '', 'search', (isset($_POST['search'])?stripslashes($_POST['search']):'')).EstatsGUI::optionRowWidget(EstatsLocale::translate('Results per page'), '', 'amount', $entriesPerPage).EstatsGUI::optionRowWidget(EstatsLocale::translate('Filter'), '', 'filter[]', (isset($_POST['filter'])?$_POST['filter']:array()), EstatsGUI::FIELD_SELECT, $filters).EstatsGUI::optionRowWidget(EstatsLocale::translate('In period'), '', '', EstatsLocale::translate('From').' <input name="from" value="'.(isset($_POST['from'])?$_POST['from']:date('Y-m-d H:00:00', eStats)).'">
 '.EstatsLocale::translate('To').' <input name="to" value="'.(isset($_POST['to'])?$_POST['to']:date('Y-m-d H:00:00', strtotime('next hour'))).'">
 ', EstatsGUI::FIELD_CUSTOM).'<div class="buttons">
 <input type="submit" value="'.EstatsLocale::translate('Show').'">
@@ -173,7 +173,7 @@ EstatsTheme::add('page', '<form action="{selfpath}" method="post">
 {heading-start}'.EstatsLocale::translate('Browse').'{heading-end}
 </h3>
 <p>
-'.EstatsLocale::translate('Entries amount').': '.$EntriesAmount.'. '.EstatsLocale::translate('Meeting conditions').': '.$EntriesFilteredAmount.'. '.EstatsLocale::translate('Showed').': '.$Amount.'.
+'.EstatsLocale::translate('Entries amount').': '.$entriesAmount.'. '.EstatsLocale::translate('Meeting conditions').': '.$entriesFilteredAmount.'. '.EstatsLocale::translate('Showed').': '.$amount.'.
 </p>
 {table-start}<table cellspacing="0" cellpadding="1">
 <tr>
@@ -192,34 +192,34 @@ EstatsTheme::add('page', '<form action="{selfpath}" method="post">
 </tr>
 ');
 
-for ($i = 0; $i < $Amount; ++$i)
+for ($i = 0; $i < $amount; ++$i)
 {
 	EstatsTheme::append('page', '<tr>
 <td>
 <p>
-<em>'.($i + 1 + (($Page - 1) * $EntriesPerPage)).'</em>.
+<em>'.($i + 1 + (($page - 1) * $entriesPerPage)).'</em>.
 </p>
 </td>
 <td>
 <p>
-'.date('d.m.Y H:i:s', (is_numeric($Entries[$i]['time'])?$Entries[$i]['time']:strtotime($Entries[$i]['time']))).'
+'.date('d.m.Y H:i:s', (is_numeric($entries[$i]['time'])?$entries[$i]['time']:strtotime($entries[$i]['time']))).'
 </p>
 </td>
 <td>
 <p>
-'.(isset($EventStrings[$Entries[$i]['log']])?EstatsLocale::translate($EventStrings[$Entries[$i]['log']]):htmlspecialchars($Entries[$i]['log'])).'
+'.(isset($eventStrings[$entries[$i]['log']])?EstatsLocale::translate($eventStrings[$entries[$i]['log']]):htmlspecialchars($entries[$i]['log'])).'
 </p>
 </td>
 <td>
 <p>
-'.($Entries[$i]['info']?$Entries[$i]['info']:' ').'
+'.($entries[$i]['info']?$entries[$i]['info']:' ').'
 </p>
 </td>
 </tr>
 ');
 }
 
-if (!$Amount)
+if (!$amount)
 {
 	EstatsTheme::append('page', '<td colspan="4">
 <strong>'.EstatsLocale::translate('None').'</strong>
@@ -229,5 +229,5 @@ if (!$Amount)
 
 EstatsTheme::append('page', '</table>
 {table-end}</form>
-'.EstatsGUI::linksWIdget($Page, ceil($EntriesFilteredAmount / $EntriesPerPage), '{path}tools/logs/{page}{suffix}'.($EntriesSearch?'{separator}'.implode('&amp;', $EntriesSearch):'')));
+'.EstatsGUI::linksWIdget($page, ceil($entriesFilteredAmount / $entriesPerPage), '{path}tools/logs/{page}{suffix}'.($entriesSearch?'{separator}'.implode('&amp;', $entriesSearch):'')));
 ?>

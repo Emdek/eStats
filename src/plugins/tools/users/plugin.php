@@ -70,19 +70,19 @@ EstatsTheme::add('page', '<h3>
 </tr>
 ');
 
-$Users = EstatsCore::driver()->selectData(array('users'));
+$users = EstatsCore::driver()->selectData(array('users'));
 
-for ($i = 0, $c = count($Users); $i < $c; ++$i)
+for ($i = 0, $c = count($users); $i < $c; ++$i)
 {
 	EstatsTheme::append('page', '<tr>
 <td>
 <p>
-<em>'.(int) $Users[$i]['level'].'</em>.
+<em>'.(int) $users[$i]['level'].'</em>.
 </p>
 </td>
 <td>
 <p>
-<a href="mailto:'.htmlspecialchars($Users[$i]['email']).'">'.htmlspecialchars($Users[$i]['email']).'</a>
+<a href="mailto:'.htmlspecialchars($users[$i]['email']).'">'.htmlspecialchars($users[$i]['email']).'</a>
 </p>
 </td>
 <td>

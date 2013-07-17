@@ -15,7 +15,7 @@ if (function_exists('set_time_limit') && !ini_get('safe_mode'))
 	set_time_limit(60);
 }
 
-$Error = FALSE;
+$error = FALSE;
 
 if (isset($_POST['RootPassword']) && isset($_POST['RepeatPassword']))
 {
@@ -49,20 +49,20 @@ if (isset($_POST['Email']))
 
 if (isset($_POST['DatabaseDriver']) && !isset($_POST['Execute']) && isset($_SESSION[EstatsCore::session()]['password']) && isset($_SESSION[EstatsCore::session()]['email']))
 {
-	$Step = 2;
+	$step = 2;
 
 	if (!include ('./plugins/drivers/'.$_POST['DatabaseDriver'].'/plugin.php'))
 	{
 		estats_error_message('plugins/drivers/'.$_POST['DatabaseDriver'].'/plugin.php', __FILE__, __LINE__);
 	}
 
-	$ClassName = 'EstatsDriver'.ucfirst(strtolower($_POST['DatabaseDriver']));
+	$className = 'EstatsDriver'.ucfirst(strtolower($_POST['DatabaseDriver']));
 
-	if (class_exists($ClassName))
+	if (class_exists($className))
 	{
-		$Driver = new $ClassName;
+		$driver = new $className;
 
-		if (!$Driver->isAvailable())
+		if (!$driver->isAvailable())
 		{
 			EstatsGUI::notify(EstatsLocale::translate('This database module is not supported on this server!<br>
 Continuation of installation can cause unexpected results!'), 'error');
@@ -70,7 +70,7 @@ Continuation of installation can cause unexpected results!'), 'error');
 
 		if (isset($_POST['TestConnection']))
 		{
-			if ($Driver->connect($Driver->connectionString($_POST), (isset($_POST['DatabaseUser'])?$_POST['DatabaseUser']:''), (isset($_POST['DatabasePassword'])?$_POST['DatabasePassword']:'')))
+			if ($driver->connect($driver->connectionString($_POST), (isset($_POST['DatabaseUser'])?$_POST['DatabaseUser']:''), (isset($_POST['DatabasePassword'])?$_POST['DatabasePassword']:'')))
 			{
 				EstatsGUI::notify(EstatsLocale::translate('Connection established successfully.'), 'success');
 			}
@@ -85,16 +85,16 @@ Continuation of installation can cause unexpected results!'), 'error');
 {heading-start}'.EstatsLocale::translate('Driver information').'{heading-end}
 </h3>
 <p>
-<a href="'.htmlspecialchars($Driver->option('URL')).'" title="'.EstatsLocale::translate('Author').': '.htmlspecialchars($Driver->option('Author')).'"><strong>'.htmlspecialchars($Driver->option('Name')).' v'.htmlspecialchars($Driver->option('Version')).' - '.htmlspecialchars($Driver->option('Status')).'</strong></a> ('.date('d.m.Y H:i:s', $Driver->option('Time')).').
+<a href="'.htmlspecialchars($driver->option('URL')).'" title="'.EstatsLocale::translate('Author').': '.htmlspecialchars($driver->option('Author')).'"><strong>'.htmlspecialchars($driver->option('Name')).' v'.htmlspecialchars($driver->option('Version')).' - '.htmlspecialchars($driver->option('Status')).'</strong></a> ('.date('d.m.Y H:i:s', $driver->option('Time')).').
 </p>
 ');
 
-		$Information = EstatsCore::loadData('plugins/drivers/'.$_POST['DatabaseDriver'].'/plugin.ini', TRUE);
+		$information = EstatsCore::loadData('plugins/drivers/'.$_POST['DatabaseDriver'].'/plugin.ini', TRUE);
 
-		$OptionSelects = array(
+		$optionSelects = array(
 	'PathMode' => array('GET', 'PATH_INFO', 'Rewrite'),
 	);
-		$OptionsNames = array(
+		$optionsNames = array(
 	'databasehost' => EstatsLocale::translate('Database host'),
 	'databaseaddress' => EstatsLocale::translate('Database address'),
 	'databaseport' => EstatsLocale::translate('Database port'),
@@ -110,7 +110,7 @@ Continuation of installation can cause unexpected results!'), 'error');
 	'graphicsenabled' => EstatsLocale::translate('Enable generation of maps and graphical charts (<em>GD</em> extension)'),
 	'logfile' => EstatsLocale::translate('Log events to text file'),
 	);
-		$Options = array((isset($Information['Defaults'])?$Information['Defaults']:array()), array(
+		$options = array((isset($information['Defaults'])?$information['Defaults']:array()), array(
 	'PersistentConnection' => array(FALSE, EstatsGUI::FIELD_BOOLEAN),
 	'Overwrite' => array(FALSE, EstatsGUI::FIELD_BOOLEAN),
 	'Gzip' => array(FALSE, EstatsGUI::FIELD_BOOLEAN),
@@ -120,7 +120,7 @@ Continuation of installation can cause unexpected results!'), 'error');
 	'PathMode' => array('hourly', EstatsGUI::FIELD_SELECT)
 	));
 
-		if (count($Options[0]))
+		if (count($options[0]))
 		{
 			EstatsTheme::append('page', '<h3>
 {heading-start}'.EstatsLocale::translate('Database settings').'{heading-end}
@@ -139,15 +139,15 @@ Continuation of installation can cause unexpected results!'), 'error');
 ');
 			}
 
-			foreach ($Options[$i] as $Key => $Value)
+			foreach ($options[$i] as $key => $value)
 			{
-				if (!is_array($Value))
+				if (!is_array($value))
 				{
-					$Value = array($Value, EstatsGUI::FIELD_VALUE);
-					$Key = 'Database'.$Key;
+					$value = array($value, EstatsGUI::FIELD_VALUE);
+					$key = 'Database'.$key;
 				}
 
-				EstatsTheme::append('page', EstatsGUI::optionRowWidget((isset($OptionsNames[strtolower($Key)])?$OptionsNames[strtolower($Key)]:$Key), '', $Key, (isset($_POST[$Key])?$_POST[$Key]:$Value[0]), $Value[1], (($Value[1] == EstatsGUI::FIELD_SELECT)?$OptionSelects[$Key]:NULL)));
+				EstatsTheme::append('page', EstatsGUI::optionRowWidget((isset($optionsNames[strtolower($key)])?$optionsNames[strtolower($key)]:$key), '', $key, (isset($_POST[$key])?$_POST[$key]:$value[0]), $value[1], (($value[1] == EstatsGUI::FIELD_SELECT)?$optionSelects[$key]:NULL)));
 			}
 		}
 
@@ -167,145 +167,145 @@ document.getElementById(\'install_advanced\').style.display = \'none\';
 	}
 	else
 	{
-		estats_error_message(sprintf(EstatsLocale::translate('Can not found class %s!'), $ClassName), __FILE__, __LINE__);
+		estats_error_message(sprintf(EstatsLocale::translate('Can not found class %s!'), $className), __FILE__, __LINE__);
 	}
 }
 else if (isset($_POST['Execute']))
 {
-	$Step = 3;
+	$step = 3;
 
 	if (!include ('./plugins/drivers/'.$_POST['DatabaseDriver'].'/plugin.php'))
 	{
 		estats_error_message('plugins/drivers/'.$_POST['DatabaseDriver'].'/plugin.php', __FILE__, __LINE__);
 	}
 
-	$ClassName = 'EstatsDriver'.ucfirst(strtolower($_POST['DatabaseDriver']));
+	$className = 'EstatsDriver'.ucfirst(strtolower($_POST['DatabaseDriver']));
 
-	if (class_exists($ClassName))
+	if (class_exists($className))
 	{
-		$Driver = new $ClassName;
-		$Connection = $Driver->connectionString($_POST);
+		$driver = new $className;
+		$connection = $driver->connectionString($_POST);
 
-		if (!$Driver->isAvailable())
+		if (!$driver->isAvailable())
 		{
 			EstatsGUI::notify(EstatsLocale::translate('This database module is not supported on this server!<br>
 Continuation of installation can cause unexpected results!'), 'error');
 		}
-		else if (!$Driver->connect($Connection, (isset($_POST['DatabaseUser'])?$_POST['DatabaseUser']:''), (isset($_POST['DatabasePassword'])?$_POST['DatabasePassword']:''), (isset($_POST['DatabasePrefix'])?$_POST['DatabasePrefix']:'')))
+		else if (!$driver->connect($connection, (isset($_POST['DatabaseUser'])?$_POST['DatabaseUser']:''), (isset($_POST['DatabasePassword'])?$_POST['DatabasePassword']:''), (isset($_POST['DatabasePrefix'])?$_POST['DatabasePrefix']:'')))
 		{
 			EstatsGUI::notify(EstatsLocale::translate('Can not connect to database!'), 'error');
 		}
 		else
 		{
-			$Configuration = EstatsCore::loadData('share/data/configuration.ini');
-			$Configuration = array_merge($Configuration['Core'], $Configuration['GUI']);
-			$Configuration['CollectedFrom'] = $_SERVER['REQUEST_TIME'];
-			$Configuration['UniqueID'] = md5(uniqid(mt_rand(0, 1000000000)));
-			$Configuration['Version'] = ESTATS_VERSIONSTRING;
-			$Configuration['LastBackup'] = 0;
-			$Configuration['StatsEnabled'] = 1;
-			$Configuration['Maintenance'] = 0;
-			$Configuration['LastCheck'] = date('Ymd');
-			$Configuration['LastClean'] = $_SERVER['REQUEST_TIME'];
-			$Configuration['Header'] = str_replace('\r\n', "\r\n", $Configuration['Header']['value']);
+			$configuration = EstatsCore::loadData('share/data/configuration.ini');
+			$configuration = array_merge($configuration['Core'], $configuration['GUI']);
+			$configuration['CollectedFrom'] = $_SERVER['REQUEST_TIME'];
+			$configuration['UniqueID'] = md5(uniqid(mt_rand(0, 1000000000)));
+			$configuration['Version'] = ESTATS_VERSIONSTRING;
+			$configuration['LastBackup'] = 0;
+			$configuration['StatsEnabled'] = 1;
+			$configuration['Maintenance'] = 0;
+			$configuration['LastCheck'] = date('Ymd');
+			$configuration['LastClean'] = $_SERVER['REQUEST_TIME'];
+			$configuration['Header'] = str_replace('\r\n', "\r\n", $configuration['Header']['value']);
 
 			if ($_POST['PathMode'] == 1)
 			{
-				$Configuration['Path/mode'] = 1;
-				$Configuration['Path/prefix'] = 'index.php/';
-				$Configuration['Path/separator'] = '?';
+				$configuration['Path/mode'] = 1;
+				$configuration['Path/prefix'] = 'index.php/';
+				$configuration['Path/separator'] = '?';
 			}
 			else if ($_POST['PathMode'] == 2)
 			{
-				$Configuration['Path/prefix'] = '';
-				$Configuration['Path/suffix'] = '/';
+				$configuration['Path/prefix'] = '';
+				$configuration['Path/suffix'] = '/';
 			}
 
-			$Security = uniqid(mt_rand(0, 999));
-			$DataDirectory = $_POST['DataDirectory'];
-			$ExistingTables = array();
-			$Schema = EstatsCore::loadData('share/data/database.ini');
+			$security = uniqid(mt_rand(0, 999));
+			$dataDirectory = $_POST['DataDirectory'];
+			$existingTables = array();
+			$schema = EstatsCore::loadData('share/data/database.ini');
 
-			foreach ($Schema as $Table => $Structure)
+			foreach ($schema as $table => $structure)
 			{
-				if ($Driver->tableExists($Table) && empty($_POST['Overwrite']))
+				if ($driver->tableExists($table) && empty($_POST['Overwrite']))
 				{
-					$ExistingTables[] = (isset($_POST['DatabasePrefix'])?$_POST['DatabasePrefix']:'').$Table;
+					$existingTables[] = (isset($_POST['DatabasePrefix'])?$_POST['DatabasePrefix']:'').$table;
 				}
 				else
 				{
-					if (!$Driver->createTable($Table, $Structure))
+					if (!$driver->createTable($table, $structure))
 					{
-						$Errors['DatabaseStructure'] = TRUE;
+						$errors['DatabaseStructure'] = TRUE;
 					}
 				}
 			}
 
-			if ($ExistingTables)
+			if ($existingTables)
 			{
-				EstatsGUI::notify(sprintf(EstatsLocale::translate('Database tables already exists: <em>%s</em>!'), implode(', ', $ExistingTables)), 'error');
+				EstatsGUI::notify(sprintf(EstatsLocale::translate('Database tables already exists: <em>%s</em>!'), implode(', ', $existingTables)), 'error');
 
-				$Errors['DatabaseStructure'] = TRUE;
+				$errors['DatabaseStructure'] = TRUE;
 			}
 			else
 			{
-				if (!$Driver->insertData('users', array('id' => 1, 'email' => $_SESSION[EstatsCore::session()]['email'], 'password' => $_SESSION[EstatsCore::session()]['password'], 'level' => 3)))
+				if (!$driver->insertData('users', array('id' => 1, 'email' => $_SESSION[EstatsCore::session()]['email'], 'password' => $_SESSION[EstatsCore::session()]['password'], 'level' => 3)))
 				{
-					$Errors['DatabaseStructure'] = TRUE;
+					$errors['DatabaseStructure'] = TRUE;
 				}
 
-				if (!$Driver->insertData('statistics', array('id' => 1, 'key' => md5(uniqid(mt_rand(0, 999))), 'user' => 1)))
+				if (!$driver->insertData('statistics', array('id' => 1, 'key' => md5(uniqid(mt_rand(0, 999))), 'user' => 1)))
 				{
-					$Errors['DatabaseStructure'] = TRUE;
+					$errors['DatabaseStructure'] = TRUE;
 				}
 
-				foreach ($Configuration as $Key => $Value)
+				foreach ($configuration as $key => $value)
 				{
-					if (!$Driver->insertData('configuration', array('statistics' => 1, 'key' => $Key, 'value' => (is_array($Value)?$Value['value']:$Value))))
+					if (!$driver->insertData('configuration', array('statistics' => 1, 'key' => $key, 'value' => (is_array($value)?$value['value']:$value))))
 					{
-						$Errors['DatabaseStructure'] = TRUE;
+						$errors['DatabaseStructure'] = TRUE;
 					}
 				}
 			}
 
-			$ConfigurationFile = '<?php
+			$configurationFile = '<?php
 define(\'ESTATS_DATABASE_DRIVER\', \''.str_replace('\'', '\\\'', $_POST['DatabaseDriver']).'\');
-define(\'ESTATS_DATABASE_CONNECTION\', \''.str_replace('\'', '\\\'', $Connection).'\');
+define(\'ESTATS_DATABASE_CONNECTION\', \''.str_replace('\'', '\\\'', $connection).'\');
 define(\'ESTATS_DATABASE_USER\', \''.(isset($_POST['DatabaseUser'])?str_replace('\'', '\\\'', $_POST['DatabaseUser']):'').'\');
 define(\'ESTATS_DATABASE_PASSWORD\', \''.(isset($_POST['DatabasePassword'])?str_replace('\'', '\\\'', $_POST['DatabasePassword']):'').'\');
 define(\'ESTATS_DATABASE_PREFIX\', \''.(isset($_POST['DatabasePrefix'])?str_replace('\'', '\\\'', $_POST['DatabasePrefix']):'').'\');
 define(\'ESTATS_DATABASE_PERSISTENT\', '.(isset($_POST['PersistentConnection'])?'TRUE':'FALSE').');
-define(\'ESTATS_SECURITY\', \''.str_replace('\'', '\\\'', $Security).'\');
+define(\'ESTATS_SECURITY\', \''.str_replace('\'', '\\\'', $security).'\');
 define(\'ESTATS_DATA\', \''.str_replace('\'', '\\\'', $_POST['DataDirectory']).'\');
 define(\'ESTATS_GZIP\', '.(int) isset($_POST['Gzip']).');
 define(\'eStats\', '.(int) $_SERVER['REQUEST_TIME'].');
 define(\'eStatsVersion\', \''.number_format((double) ESTATS_VERSIONSTRING, 1, '.', '').'\');
 ?>';
 
-			if (isset($Errors['DatabaseStructure']))
+			if (isset($errors['DatabaseStructure']))
 			{
 				EstatsGUI::notify(EstatsLocale::translate('Errors occured during database structure creation!'), 'error');
 				EstatsGUI::notify(EstatsLocale::translate('Configuration file could not be saved!'), 'error');
 
-				$Errors['SaveConfigurationFile'] = TRUE;
+				$errors['SaveConfigurationFile'] = TRUE;
 			}
 			else
 			{
 				EstatsGUI::notify(EstatsLocale::translate('Database structure created successfully.'), 'success');
 
-				$Driver->insertData('logs', array('time' => date('Y-m-d H:i:s'), 'log' => 0, 'info' => 'Version: '.ESTATS_VERSIONSTRING));
+				$driver->insertData('logs', array('time' => date('Y-m-d H:i:s'), 'log' => 0, 'info' => 'Version: '.ESTATS_VERSIONSTRING));
 
 				if (isset($_POST['LogFile']))
 				{
-					file_put_contents($DataDirectory.'estats_'.$Security.'.log', '
+					file_put_contents($dataDirectory.'estats_'.$security.'.log', '
 '.$_SERVER['REQUEST_TIME'].' ('.date('Y-m-d H:i:s').'): eStats was installed (Version '.ESTATS_VERSIONSTRING.')');
 				}
 
-				if (!file_put_contents('conf/config.php', $ConfigurationFile))
+				if (!file_put_contents('conf/config.php', $configurationFile))
 				{
 					EstatsGUI::notify(EstatsLocale::translate('An error occured during saving of configuration file!'), 'error');
 
-					$Errors['SaveConfigurationFile'] = TRUE;
+					$errors['SaveConfigurationFile'] = TRUE;
 				}
 				else
 				{
@@ -313,22 +313,22 @@ define(\'eStatsVersion\', \''.number_format((double) ESTATS_VERSIONSTRING, 1, '.
 				}
 			}
 
-			$RandomIdentifier = md5(mt_rand());
-			$Session = md5('estats_'.substr($Configuration['UniqueID'], 0, 10));
-			$_SESSION[$Session]['password'] = $_SESSION[EstatsCore::session()]['password'];
-			$_SESSION[$Session]['email'] = $_SESSION[EstatsCore::session()]['email'];
+			$randomIdentifier = md5(mt_rand());
+			$session = md5('estats_'.substr($configuration['UniqueID'], 0, 10));
+			$_SESSION[$session]['password'] = $_SESSION[EstatsCore::session()]['password'];
+			$_SESSION[$session]['email'] = $_SESSION[EstatsCore::session()]['email'];
 
 			EstatsTheme::add('page', '<h3>
 {heading-start}'.EstatsLocale::translate('End of installation').'{heading-end}
 </h3>
-'.(isset($Errors['SaveConfigurationFile'])?'
+'.(isset($errors['SaveConfigurationFile'])?'
 <h4>
 '.EstatsLocale::translate('Save configuration file').'
 </h4>
 <p>
 '.EstatsLocale::translate('Copy following code and save it as file <em>conf/config.php</em>').':
 <textarea rows="12" cols="100" id="configfile">
-'.htmlspecialchars($ConfigurationFile).'</textarea>
+'.htmlspecialchars($configurationFile).'</textarea>
 </p>
 <div class="buttons">
 <input type="button" value="'.EstatsLocale::translate('Select').'" onclick="document.getElementById(\'configfile\').select(); document.getElementById(\'configfile\').focus()">
@@ -337,7 +337,7 @@ define(\'eStatsVersion\', \''.number_format((double) ESTATS_VERSIONSTRING, 1, '.
 '.EstatsLocale::translate('Fine tune configuration').'
 </h4>
 <p>
-'.sprintf(EstatsLocale::translate('If no actions remain for execution go to <a href="%s"><strong>configuration</strong></a> page and perform after installation setup.'), '{datapath}index.php'.(($_POST['PathMode'] == 1)?'/':'?path=').$Path[0].'/tools/configuration').'
+'.sprintf(EstatsLocale::translate('If no actions remain for execution go to <a href="%s"><strong>configuration</strong></a> page and perform after installation setup.'), '{datapath}index.php'.(($_POST['PathMode'] == 1)?'/':'?path=').$path[0].'/tools/configuration').'
 </p>
 <h4>
 '.EstatsLocale::translate('Place activation code on your page').'
@@ -385,7 +385,7 @@ define(\'ESTATS_COUNT\', 1);
 <label>
 <strong>'.EstatsLocale::translate('JavaScript code').'</strong>:
 <textarea cols="150" rows="5" id="javascriptcode">&lt;a href="http://estats.emdek.pl/"&gt;
-&lt;img src="{datapath}antipixel.php?count=0" alt="eStats" id="estats_'.$RandomIdentifier.'" title="eStats" /&gt;
+&lt;img src="{datapath}antipixel.php?count=0" alt="eStats" id="estats_'.$randomIdentifier.'" title="eStats" /&gt;
 &lt;/a&gt;
 &lt;script type="text/javascript"&gt;
 var eCount = 0;
@@ -393,7 +393,7 @@ var ePath = \'{datapath}\';
 var eTitle = \'\';
 var eAddress = \'\';
 var eAntipixel = \'\';
-var eImage = \'estats_'.$RandomIdentifier.'\';
+var eImage = \'estats_'.$randomIdentifier.'\';
 &lt;/script&gt;
 &lt;script type="text/javascript" src="{datapath}stats.js"&gt;&lt;/script&gt;</textarea>
 </label>
@@ -441,20 +441,20 @@ document.getElementById(\'canusephpno\').style.display = \'none\';
 	}
 	else
 	{
-		estats_error_message(sprintf(EstatsLocale::translate('Can not found class %s!'), $ClassName), __FILE__, __LINE__);
+		estats_error_message(sprintf(EstatsLocale::translate('Can not found class %s!'), $className), __FILE__, __LINE__);
 	}
 }
 else
 {
-	$Step = 1;
+	$step = 1;
 
 	if (!version_compare(PHP_VERSION, '5.2.0', '>='))
 	{
 		EstatsGUI::notify(EstatsLocale::translate('Too old PHP version!'), 'error');
-		$Error = TRUE;
+		$error = TRUE;
 	}
 
-	$Locations = array(
+	$locations = array(
 	'data/' => TRUE,
 	'data/backups/' => TRUE,
 	'data/cache/' => TRUE,
@@ -462,17 +462,17 @@ else
 	'conf/config.php' => FALSE
 	);
 
-	foreach ($Locations as $Key => $Value)
+	foreach ($locations as $key => $value)
 	{
-		$Locations[$Key] = (file_exists($Key)?(((substr(sprintf('%o', fileperms($Key)), -1)) >= ($Value?7:6))):0);
+		$locations[$key] = (file_exists($key)?(((substr(sprintf('%o', fileperms($key)), -1)) >= ($value?7:6))):0);
 
-		if (!$Locations[$Key])
+		if (!$locations[$key])
 		{
-			$Error = TRUE;
+			$error = TRUE;
 		}
 	 }
 
-	$Requirements = array(
+	$requirements = array(
 	'gd' => array(function_exists('gd_info'), EstatsLocale::translate('Graphics generation support')),
 	'geoip' => array(function_exists('geoip_record_by_name'), EstatsLocale::translate('Geolocation support')),
 	'gettext' => array(function_exists('gettext'), EstatsLocale::translate('Reliable translations support')),
@@ -482,37 +482,37 @@ else
 	'zip' => array(class_exists('ZipArchive'), EstatsLocale::translate('ZIP compression support')),
 	);
 
-	$DatabaseDrivers = glob('./plugins/drivers/*');
-	$DriverSelect = '';
+	$databaseDrivers = glob('./plugins/drivers/*');
+	$driverSelect = '';
 
-	for ($i = 0, $c = count($DatabaseDrivers); $i < $c; ++$i)
+	for ($i = 0, $c = count($databaseDrivers); $i < $c; ++$i)
 	{
-		if (file_exists($DatabaseDrivers[$i].'/plugin.php') && include ($DatabaseDrivers[$i].'/plugin.php'))
+		if (file_exists($databaseDrivers[$i].'/plugin.php') && include ($databaseDrivers[$i].'/plugin.php'))
 		{
-			$DriverName = basename($DatabaseDrivers[$i]);
-			$ClassName = 'EstatsDriver'.ucfirst(strtolower($DriverName));
+			$driverName = basename($databaseDrivers[$i]);
+			$className = 'EstatsDriver'.ucfirst(strtolower($driverName));
 
-			if (class_exists($ClassName))
+			if (class_exists($className))
 			{
-				$Object = new $ClassName;
+				$object = new $className;
 
-				if ($Object->isAvailable())
+				if ($object->isAvailable())
 				{
-					$DriverSelect.= '<option>'.htmlspecialchars($DriverName).'</option>
+					$driverSelect.= '<option>'.htmlspecialchars($driverName).'</option>
 ';
 				}
 			}
 		}
 	}
 
-	if (!$DriverSelect)
+	if (!$driverSelect)
 	{
 		EstatsGUI::notify(EstatsLocale::translate('Lack of support for any of available modules!'), 'error');
 
-		$Error = TRUE;
+		$error = TRUE;
 	}
 
-	if ($Error)
+	if ($error)
 	{
 		 EstatsGUI::notify(EstatsLocale::translate('Could not continue!'), 'error');
 	}
@@ -531,11 +531,11 @@ After you fill all fields click <em>Continue</em> button to configure the script
 <h3>
 {heading-start}'.EstatsLocale::translate('Settings').'{heading-end}
 </h3>
-'.($DriverSelect?'<p>
+'.($driverSelect?'<p>
 <label>
 <span>
 <select name="DatabaseDriver">
-'.$DriverSelect.'</select>
+'.$driverSelect.'</select>
 </span>
 '.EstatsLocale::translate('Database module').':
 </label>
@@ -569,10 +569,10 @@ After you fill all fields click <em>Continue</em> button to configure the script
 </h3>
 ');
 
-	foreach ($Locations as $Key => $Value)
+	foreach ($locations as $key => $value)
 	{
 		EstatsTheme::append('page', '<p>
-<em>'.$Key.'</em> - <strong class="'.($Value?'green':'red').'">'.($Value?EstatsLocale::translate('OK'):(file_exists($Key)?EstatsLocale::translate('Not writeable'):EstatsLocale::translate('Not exists'))).'</strong>
+<em>'.$key.'</em> - <strong class="'.($value?'green':'red').'">'.($value?EstatsLocale::translate('OK'):(file_exists($key)?EstatsLocale::translate('Not writeable'):EstatsLocale::translate('Not exists'))).'</strong>
 </p>
 ');
 	}
@@ -582,20 +582,20 @@ After you fill all fields click <em>Continue</em> button to configure the script
 </h3>
 ');
 
-	foreach ($Requirements as $Key => $Value)
+	foreach ($requirements as $key => $value)
 	{
 		EstatsTheme::append('page', '<p>
-'.$Value[1].' (<em>'.$Key.'</em>) - <strong class="'.($Value[0]?'green':'yellow').'">'.($Value[0]?EstatsLocale::translate('Available'):EstatsLocale::translate('Not available')).'</strong>
+'.$value[1].' (<em>'.$key.'</em>) - <strong class="'.($value[0]?'green':'yellow').'">'.($value[0]?EstatsLocale::translate('Available'):EstatsLocale::translate('Not available')).'</strong>
 </p>
 ');
 	}
 
 	EstatsTheme::append('page', '<div class="buttons">
-<input type="submit" value="'.($Error?EstatsLocale::translate('Continue anyway'):EstatsLocale::translate('Continue')).'"'.($Error?' onclick="alert(\''.EstatsLocale::translate('Continuation despite errors threatens unexpected results!\nYou continue on your own risk!').'\')"':'').'>
+<input type="submit" value="'.($error?EstatsLocale::translate('Continue anyway'):EstatsLocale::translate('Continue')).'"'.($error?' onclick="alert(\''.EstatsLocale::translate('Continuation despite errors threatens unexpected results!\nYou continue on your own risk!').'\')"':'').'>
 </div>
 </form>
 ');
 }
 
-EstatsTheme::add('title', EstatsLocale::translate('Installer').' - '.sprintf(EstatsLocale::translate('Step %d of 3'), $Step));
+EstatsTheme::add('title', EstatsLocale::translate('Installer').' - '.sprintf(EstatsLocale::translate('Step %d of 3'), $step));
 ?>

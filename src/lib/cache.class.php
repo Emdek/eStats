@@ -12,22 +12,22 @@ class EstatsCache
  * Defines if cache is enabled
  */
 
-	static private $Enabled = FALSE;
+	static private $enabled = FALSE;
 
 /**
  * In memory cached data
  */
 
-	static private $Cache;
+	static private $cache;
 
 /**
  * Enable or disable cache
  * @param boolean Enabled
  */
 
-	static function enable($Enabled = TRUE)
+	static function enable($enabled = TRUE)
 	{
-		self::$Enabled = $Enabled;
+		self::$enabled = $enabled;
 	}
 
 /**
@@ -37,15 +37,15 @@ class EstatsCache
 
 	static function size()
 	{
-		$Size = 0;
-		$Files = glob(EstatsCore::path(TRUE).'cache/'.(EstatsCore::statistics()?EstatsCore::statistics().'_':'').'*.dat');
+		$size = 0;
+		$files = glob(EstatsCore::path(TRUE).'cache/'.(EstatsCore::statistics()?EstatsCore::statistics().'_':'').'*.dat');
 
-		for ($i = 0, $c = count($Files); $i < $c; ++$i)
+		for ($i = 0, $c = count($files); $i < $c; ++$i)
 		{
-			$Size += filesize($Files[$i]);
+			$size += filesize($files[$i]);
 		}
 
-		return $Size;
+		return $size;
 	}
 
 /**
@@ -55,9 +55,9 @@ class EstatsCache
  * @return string
  */
 
-	static function path($ID, $Extension = '.dat')
+	static function path($iD, $extension = '.dat')
 	{
-		return EstatsCore::path(TRUE).'cache/'.EstatsCore::statistics().'_'.$ID.'_'.EstatsCore::security().$Extension;
+		return EstatsCore::path(TRUE).'cache/'.EstatsCore::statistics().'_'.$iD.'_'.EstatsCore::security().$extension;
 	}
 
 /**
@@ -67,14 +67,14 @@ class EstatsCache
  * @return boolean
  */
 
-	static function exists($ID, $Extension = '.dat')
+	static function exists($iD, $extension = '.dat')
 	{
-		if (!self::$Enabled)
+		if (!self::$enabled)
 		{
 			return FALSE;
 		}
 
-		return file_exists(self::path($ID, $Extension));
+		return file_exists(self::path($iD, $extension));
 	}
 
 /**
@@ -84,9 +84,9 @@ class EstatsCache
  * @return integer
  */
 
-	static function timestamp($ID, $Extension = '.dat')
+	static function timestamp($iD, $extension = '.dat')
 	{
-		return filemtime(self::path($ID, $Extension));
+		return filemtime(self::path($iD, $extension));
 	}
 
 /**
@@ -97,9 +97,9 @@ class EstatsCache
  * @return boolean
  */
 
-	static function status($ID, $Time = 0, $Extension = '.dat')
+	static function status($iD, $time = 0, $extension = '.dat')
 	{
-		return (!isset(self::$Cache[$ID]) && (!self::$Enabled || !self::exists($ID, $Extension) || ($Time &&  ($_SERVER['REQUEST_TIME'] - self::timestamp($ID)) > $Time)));
+		return (!isset(self::$cache[$iD]) && (!self::$enabled || !self::exists($iD, $extension) || ($time &&  ($_SERVER['REQUEST_TIME'] - self::timestamp($iD)) > $time)));
 	}
 
 /**
@@ -109,22 +109,22 @@ class EstatsCache
  * @return array
  */
 
-	static function read($ID, $Store = FALSE)
+	static function read($iD, $store = FALSE)
 	{
-		if (isset(self::$Cache[$ID]))
+		if (isset(self::$cache[$iD]))
 		{
-			return self::$Cache[$ID];
+			return self::$cache[$iD];
 		}
-		else if (self::exists($ID))
+		else if (self::exists($iD))
 		{
-			$Data = unserialize(file_get_contents(self::path($ID, '.dat')));
+			$data = unserialize(file_get_contents(self::path($iD, '.dat')));
 
-			if ($Store)
+			if ($store)
 			{
-				self::$Cache[$ID] = $Data;
+				self::$cache[$iD] = $data;
 			}
 
-			return $Data;
+			return $data;
 		}
 		else
 		{
@@ -140,27 +140,27 @@ class EstatsCache
  * @return boolean
  */
 
-	static function save($ID, $Data, $Store = FALSE)
+	static function save($iD, $data, $store = FALSE)
 	{
-		if ($Store || isset(self::$Cache[$ID]))
+		if ($store || isset(self::$cache[$iD]))
 		{
-			self::$Cache[$ID] = $Data;
+			self::$cache[$iD] = $data;
 		}
 
-		if (!self::$Enabled)
+		if (!self::$enabled)
 		{
 			return FALSE;
 		}
 
-		$FileName = self::path($ID, '.dat');
+		$fileName = self::path($iD, '.dat');
 
-		if (!is_writable($FileName))
+		if (!is_writable($fileName))
 		{
-			touch($FileName);
-			chmod($FileName, 0666);
+			touch($fileName);
+			chmod($fileName, 0666);
 		}
 
-		return (is_writable($FileName)?file_put_contents($FileName, serialize($Data)):FALSE);
+		return (is_writable($fileName)?file_put_contents($fileName, serialize($data)):FALSE);
 	}
 
 /**
@@ -170,20 +170,20 @@ class EstatsCache
  * @return boolean
  */
 
-	static function delete($Pattern = '*', $Extension = '{.dat,.png}')
+	static function delete($pattern = '*', $extension = '{.dat,.png}')
 	{
-		$Status = TRUE;
-		$Files = glob(EstatsCore::path(TRUE).'cache/'.(EstatsCore::statistics()?EstatsCore::statistics().'_':'').$Pattern.'_'.EstatsCore::security().$Extension, GLOB_BRACE);
+		$status = TRUE;
+		$files = glob(EstatsCore::path(TRUE).'cache/'.(EstatsCore::statistics()?EstatsCore::statistics().'_':'').$pattern.'_'.EstatsCore::security().$extension, GLOB_BRACE);
 
-		for ($i = 0, $c = count($Files); $i < $c; ++$i)
+		for ($i = 0, $c = count($files); $i < $c; ++$i)
 		{
-			if (is_file($Files[$i]) && !unlink($Files[$i]))
+			if (is_file($files[$i]) && !unlink($files[$i]))
 			{
-				$Status = FALSE;
+				$status = FALSE;
 			}
 		}
 
-		return $Status;
+		return $status;
 	}
 }
 ?>

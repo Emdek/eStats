@@ -15,15 +15,15 @@ class EstatsBackups
 
 	static function size()
 	{
-		$Size = 0;
-		$Files = glob(EstatsCore::path(TRUE).'backups/*.bak');
+		$size = 0;
+		$files = glob(EstatsCore::path(TRUE).'backups/*.bak');
 
-		for ($i = 0, $c = count($Files); $i < $c; ++$i)
+		for ($i = 0, $c = count($files); $i < $c; ++$i)
 		{
-			$Size += filesize($Files[$i]);
+			$size += filesize($files[$i]);
 		}
 
-		return $Size;
+		return $size;
 	}
 
 /**
@@ -42,9 +42,9 @@ class EstatsBackups
  * @return array
  */
 
-	static function available($Profile)
+	static function available($profile)
 	{
-		return glob(EstatsCore::path(TRUE).'backups/*.'.$Profile.'.bak', GLOB_BRACE);
+		return glob(EstatsCore::path(TRUE).'backups/*.'.$profile.'.bak', GLOB_BRACE);
 	}
 
 /**
@@ -56,18 +56,18 @@ class EstatsBackups
  * @return string
  */
 
-	static function create($Version = '', $Profile = '', $Tables = NULL, $ReplaceData = TRUE)
+	static function create($version = '', $profile = '', $tables = NULL, $replaceData = TRUE)
 	{
-		$Status = TRUE;
-		$BackupID = EstatsCore::option('CollectedFrom').'-'.$_SERVER['REQUEST_TIME'].'.'.$Profile;
-		$FileName = EstatsCore::path(TRUE).'backups/'.$BackupID.'.bak';
+		$status = TRUE;
+		$backupID = EstatsCore::option('CollectedFrom').'-'.$_SERVER['REQUEST_TIME'].'.'.$profile;
+		$fileName = EstatsCore::path(TRUE).'backups/'.$backupID.'.bak';
 
-		if (touch($FileName))
+		if (touch($fileName))
 		{
-			chmod($FileName, 0666);
-			file_put_contents($FileName, '/*
-eStats v'.$Version.' database backup
-Mode: '.$Profile.($ReplaceData?' (replace data)':'').'
+			chmod($fileName, 0666);
+			file_put_contents($fileName, '/*
+eStats v'.$version.' database backup
+Mode: '.$profile.($replaceData?' (replace data)':'').'
 Time range: '.date('m.d.Y H:i:s', EstatsCore::option('CollectedFrom')).' - '.date('m.d.Y H:i:s').'
 Database: '.EstatsCore::driver()->option('Database').((EstatsCore::driver()->option('DatabaseVersion') != '?')?' '.EstatsCore::driver()->option('DatabaseVersion'):'').'
 Module: '.EstatsCore::driver()->option('Name').' v'.EstatsCore::driver()->option('Version').' ('.EstatsCore::driver()->option('URL').')
@@ -75,59 +75,59 @@ Module: '.EstatsCore::driver()->option('Name').' v'.EstatsCore::driver()->option
 
 ');
 
-			$Schema = EstatsCore::loadData('share/data/database.ini');
+			$schema = EstatsCore::loadData('share/data/database.ini');
 
-			if (!$Tables)
+			if (!$tables)
 			{
-				$Tables = array_keys($Schema);
+				$tables = array_keys($schema);
 
-				if ($Profile == 'data')
+				if ($profile == 'data')
 				{
-					unset($Tables[array_search('configuration')]);
-					unset($Tables[array_search('logs')]);
+					unset($tables[array_search('configuration')]);
+					unset($tables[array_search('logs')]);
 				}
 			}
 
-			for ($i = 0, $c = count($Tables); $i < $c; ++$i)
+			for ($i = 0, $c = count($tables); $i < $c; ++$i)
 			{
-				$Result = EstatsCore::driver()->selectData(array($Tables[$i]), NULL, NULL, 0, 0, NULL, NULL, NULL, FALSE, EstatsDriver::RETURN_OBJECT);
-				$Amount = count($Schema[$Tables[$i]]);
+				$result = EstatsCore::driver()->selectData(array($tables[$i]), NULL, NULL, 0, 0, NULL, NULL, NULL, FALSE, EstatsDriver::RETURN_OBJECT);
+				$amount = count($schema[$tables[$i]]);
 
-				if (!file_put_contents($FileName, '
-/*Table: '.$Tables[$i].'*/
+				if (!file_put_contents($fileName, '
+/*Table: '.$tables[$i].'*/
 
 ', FILE_APPEND))
 				{
-					$Status = FALSE;
+					$status = FALSE;
 				}
 
-				while ($Result && ($Row = $Result->fetch(PDO::FETCH_NUM)))
+				while ($result && ($row = $result->fetch(PDO::FETCH_NUM)))
 				{
-					$Values = array();
+					$values = array();
 
-					for ($k = 0; $k < $Amount; ++$k)
+					for ($k = 0; $k < $amount; ++$k)
 					{
-						$Values[] = strtr($Row[$k], array(
+						$values[] = strtr($row[$k], array(
 	"\r" => '\r',
 	"\n" => '\n',
 	chr(30) => ''
 	));
 					}
 
-					if (!file_put_contents($FileName, implode(chr(30), $Values).'
+					if (!file_put_contents($fileName, implode(chr(30), $values).'
 ', FILE_APPEND))
 					{
-						$Status = FALSE;
+						$status = FALSE;
 					}
 				}
 			}
 		}
 		else
 		{
-			$Status = FALSE;
+			$status = FALSE;
 		}
 
-		return ($Status?$BackupID:FALSE);
+		return ($status?$backupID:FALSE);
 	}
 
 /**
@@ -136,31 +136,31 @@ Module: '.EstatsCore::driver()->option('Name').' v'.EstatsCore::driver()->option
  * @return boolean
  */
 
-	static function restore($BackupID)
+	static function restore($backupID)
 	{
-		$File = fopen(EstatsCore::path(TRUE).'backups/'.$BackupID.'.bak', 'r');
+		$file = fopen(EstatsCore::path(TRUE).'backups/'.$backupID.'.bak', 'r');
 
-		if ($File == FALSE)
+		if ($file == FALSE)
 		{
 			return FALSE;
 		}
 
-		$Status = TRUE;
-		$Buffer = '';
-		$Replace = $Recreate = $Create = $Table = $Fields = $Line = 0;
-		$Schema = EstatsCore::loadData('share/data/database.ini');
+		$status = TRUE;
+		$buffer = '';
+		$replace = $recreate = $create = $table = $fields = $line = 0;
+		$schema = EstatsCore::loadData('share/data/database.ini');
 
-		while (!feof($File))
+		while (!feof($file))
 		{
-			$Byte = fread($File, 1);
+			$byte = fread($file, 1);
 
-			if ($Byte == "\n")
+			if ($byte == "\n")
 			{
-				if (!$Buffer || $Line < 10)
+				if (!$buffer || $line < 10)
 				{
-					if ($Line == 2)
+					if ($line == 2)
 					{
-						if (preg_match('#eStats v[\d\.]+ database backup#', $Buffer))
+						if (preg_match('#eStats v[\d\.]+ database backup#', $buffer))
 						{
 							EstatsCore::driver()->beginTransaction();
 						}
@@ -169,100 +169,100 @@ Module: '.EstatsCore::driver()->option('Name').' v'.EstatsCore::driver()->option
 							return FALSE;
 						}
 					}
-					else if ($Line == 3)
+					else if ($line == 3)
 					{
-						if (strstr($Buffer, 'replace data'))
+						if (strstr($buffer, 'replace data'))
 						{
-							$Replace = TRUE;
+							$replace = TRUE;
 						}
 
-						if (strstr($Buffer, 'create tables'))
+						if (strstr($buffer, 'create tables'))
 						{
-							if (strstr ($Buffer, 'recreate tables'))
+							if (strstr ($buffer, 'recreate tables'))
 							{
-								$Recreate = TRUE;
+								$recreate = TRUE;
 							}
 							else
 							{
-								$Create = TRUE;
+								$create = TRUE;
 							}
 						}
 					}
 
-					++$Line;
+					++$line;
 
-					$Buffer = '';
+					$buffer = '';
 
 					continue;
 				}
 
-				if (substr($Buffer, 0, 8) == '/*Table:')
+				if (substr($buffer, 0, 8) == '/*Table:')
 				{
-					$Table = substr($Buffer, 9, -2);
-					$Fields = NULL;
-					$Amount = 0;
+					$table = substr($buffer, 9, -2);
+					$fields = NULL;
+					$amount = 0;
 
-					if ($Replace)
+					if ($replace)
 					{
-						EstatsCore::driver()->deleteData($Table);
+						EstatsCore::driver()->deleteData($table);
 					}
-					else if ($Recreate || $Create)
+					else if ($recreate || $create)
 					{
-						if (EstatsCore::driver()->tableExists($Table))
+						if (EstatsCore::driver()->tableExists($table))
 						{
-							if ($Create)
+							if ($create)
 							{
 								return FALSE;
 							}
 							else
 							{
-								EstatsCore::driver()->deleteTable($Table);
+								EstatsCore::driver()->deleteTable($table);
 							}
 						}
 
-						if (!EstatsCore::driver()->createTable($Table, $Schema[$Table]))
+						if (!EstatsCore::driver()->createTable($table, $schema[$table]))
 						{
-							$Status = FALSE;
+							$status = FALSE;
 						}
 					}
 				}
 				else
 				{
-					$Array = explode(chr(30), strtr($Buffer, array(
+					$array = explode(chr(30), strtr($buffer, array(
 	'\r' => "\r",
 	'\n' =>"\n"
 	)));
 
-					if (!$Fields)
+					if (!$fields)
 					{
-						$Fields = array_keys($Schema[$Table]);
-						$Amount = count($Fields);
+						$fields = array_keys($schema[$table]);
+						$amount = count($fields);
 					}
 
-					$Row = array();
+					$row = array();
 
-					for ($i = 0; $i < $Amount; ++$i)
+					for ($i = 0; $i < $amount; ++$i)
 					{
-						$Row[$Fields[$i]] = &$Array[$i];
+						$row[$fields[$i]] = &$array[$i];
 					}
 
-					if (!EstatsCore::driver()->insertData($Table, $Row))
+					if (!EstatsCore::driver()->insertData($table, $row))
 					{
-						$Status = FALSE;
+						$status = FALSE;
 					}
 				}
 
-				$Buffer = '';
+				$buffer = '';
 			}
 			else
 			{
-				$Buffer.= $Byte;
+				$buffer.= $byte;
 			}
 		}
 
 		EstatsCore::driver()->commitTransaction();
 
-		return $Status;
+		return $status;
 	}
 
 /**
@@ -271,20 +271,20 @@ Module: '.EstatsCore::driver()->option('Name').' v'.EstatsCore::driver()->option
  * @return boolean
  */
 
-	static function delete($Pattern = '*')
+	static function delete($pattern = '*')
 	{
-		$Status = TRUE;
-		$Files = glob(EstatsCore::path(TRUE).'backups/'.$Pattern.'.bak');
+		$status = TRUE;
+		$files = glob(EstatsCore::path(TRUE).'backups/'.$pattern.'.bak');
 
-		for ($i = 0, $c = count($Files); $i < $c; ++$i)
+		for ($i = 0, $c = count($files); $i < $c; ++$i)
 		{
-			if (!unlink($Files[$i]))
+			if (!unlink($files[$i]))
 			{
-				$Status = FALSE;
+				$status = FALSE;
 			}
 		}
 
-		return $Status;
+		return $status;
 	}
 }
 ?>

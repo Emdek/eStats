@@ -12,13 +12,13 @@ class EstatsGeolocation
  * Geolocation availability indicator
  */
 
-	static private $Available = NULL;
+	static private $available = NULL;
 
 /**
  * PDO object
  */
 
-	static private $PDO = NULL;
+	static private $pDO = NULL;
 
 /**
  * Checks if geolocation information is available
@@ -27,12 +27,12 @@ class EstatsGeolocation
 
 	static function isAvailable()
 	{
-		if (self::$Available === NULL)
+		if (self::$available === NULL)
 		{
-			self::$Available = ((function_exists('geoip_record_by_name') && geoip_db_avail(GEOIP_CITY_EDITION_REV0)) || (is_readable(EstatsCore::path(TRUE).'geoip_'.EstatsCore::security().'.sqlite') && class_exists('PDO')));
+			self::$available = ((function_exists('geoip_record_by_name') && geoip_db_avail(GEOIP_CITY_EDITION_REV0)) || (is_readable(EstatsCore::path(TRUE).'geoip_'.EstatsCore::security().'.sqlite') && class_exists('PDO')));
 		}
 
-		return self::$Available;
+		return self::$available;
 	}
 
 /**
@@ -41,24 +41,24 @@ class EstatsGeolocation
  * @return array
  */
 
-	static function information($IP)
+	static function information($iP)
 	{
-		if ($IP == '127.0.0.1' || $IP == 'unknown' || !self::isAvailable())
+		if ($iP == '127.0.0.1' || $iP == 'unknown' || !self::isAvailable())
 		{
 			return array();
 		}
 
 		if (function_exists('geoip_record_by_name') && geoip_db_avail(GEOIP_CITY_EDITION_REV0))
 		{
-			$Data = geoip_record_by_name($IP);
+			$data = geoip_record_by_name($iP);
 		}
 		else
 		{
-			if (!self::$PDO)
+			if (!self::$pDO)
 			{
 				try
 				{
-					self::$PDO = new PDO('sqlite:'.realpath(EstatsCore::path(TRUE).'geoip_'.EstatsCore::security().'.sqlite'), '', '', array(PDO::ATTR_PERSISTENT => TRUE));
+					self::$pDO = new PDO('sqlite:'.realpath(EstatsCore::path(TRUE).'geoip_'.EstatsCore::security().'.sqlite'), '', '', array(PDO::ATTR_PERSISTENT => TRUE));
 				}
 				catch (Exception $e)
 				{
@@ -66,24 +66,24 @@ class EstatsGeolocation
 				}
 			}
 
-			$Statement = self::$PDO->prepare('SELECT * FROM "locations" WHERE "location" = (SELECT "location" FROM "blocks" WHERE ? BETWEEN "ipstart" AND "ipend")');
+			$statement = self::$pDO->prepare('SELECT * FROM "locations" WHERE "location" = (SELECT "location" FROM "blocks" WHERE ? BETWEEN "ipstart" AND "ipend")');
 
-			if (!$Statement)
+			if (!$statement)
 			{
 				return array();
 			}
 
-			$IP = explode('.', $IP);
-			$Result = $Statement->execute(array((16777216 * $IP[0]) + (65536 * $IP[1]) + (256 * $IP[2]) + $IP[3]));
-			$Data = (isset($Result[0])?$Result[0]:array());
+			$iP = explode('.', $iP);
+			$result = $statement->execute(array((16777216 * $iP[0]) + (65536 * $iP[1]) + (256 * $iP[2]) + $iP[3]));
+			$data = (isset($result[0])?$result[0]:array());
 		}
 
-		if (!$Data || $Data['continent_code'] == '--')
+		if (!$data || $data['continent_code'] == '--')
 		{
 			return array();
 		}
 
-		$Continents = array(
+		$continents = array(
 	'EU' => 4,
 	'NA' => 5,
 	'SA' => 6,
@@ -94,22 +94,22 @@ class EstatsGeolocation
 	'AN' => 7
 );
 
-		$RegionCorrections = EstatsCore::loadData('share/data/region-corrections.ini');
-		$Data['country_code'] = strtolower($Data['country_code']);
-		$Data['region'] = (int) $Data['region'];
+		$regionCorrections = EstatsCore::loadData('share/data/region-corrections.ini');
+		$data['country_code'] = strtolower($data['country_code']);
+		$data['region'] = (int) $data['region'];
 
-		if (isset($RegionCorrections[$Data['country_code']][$Data['region']]))
+		if (isset($regionCorrections[$data['country_code']][$data['region']]))
 		{
-			$Data['region'] = $RegionCorrections[$Data['country_code']][$Data['region']];
+			$data['region'] = $regionCorrections[$data['country_code']][$data['region']];
 		}
 
 		return array(
-	'city' => $Data['city'],
-	'region' => $Data['region'],
-	'country' => $Data['country_code'],
-	'continent' => $Continents[$Data['continent_code']],
-	'latitude' => round($Data['latitude'], 3),
-	'longitude' => round($Data['longitude'], 3)
+	'city' => $data['city'],
+	'region' => $data['region'],
+	'country' => $data['country_code'],
+	'continent' => $continents[$data['continent_code']],
+	'latitude' => round($data['latitude'], 3),
+	'longitude' => round($data['longitude'], 3)
 	);
 	}
 
@@ -120,12 +120,12 @@ class EstatsGeolocation
  * @return string
  */
 
-	static function coordinates($Latitude, $Longitude)
+	static function coordinates($latitude, $longitude)
 	{
-		$LatitudeSuffix = (($Latitude < 0)?'S':'N');
-		$LongitudeSuffix = (($Longitude < 0)?'W':'E');
+		$latitudeSuffix = (($latitude < 0)?'S':'N');
+		$longitudeSuffix = (($longitude < 0)?'W':'E');
 
-		return round(abs($Latitude), 2).'&#176; '.$LatitudeSuffix.' '.round(abs($Longitude), 2).'&#176; '.$LongitudeSuffix;
+		return round(abs($latitude), 2).'&#176; '.$latitudeSuffix.' '.round(abs($longitude), 2).'&#176; '.$longitudeSuffix;
 	}
 }
 ?>

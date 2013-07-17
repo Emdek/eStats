@@ -10,26 +10,26 @@ if (!defined('eStats'))
 	die();
 }
 
-if (isset($Path[2]) && in_array($Path[2], $Groups['general']))
+if (isset($path[2]) && in_array($path[2], $groups['general']))
 {
 	EstatsTheme::load('group');
 	EstatsTheme::load('chart');
-	EstatsTheme::append('title', ' - '.$Titles[$Path[2]]);
-	EstatsTheme::add('group', EstatsGroup::create($Path[2], $Path[2], $Titles[$Path[2]], $Date, (isset($Path[4])?(int) $Path[4]:1), TRUE, '{path}general/'.$Path[2].'/{date}{suffix}'));
+	EstatsTheme::append('title', ' - '.$titles[$path[2]]);
+	EstatsTheme::add('group', EstatsGroup::create($path[2], $path[2], $titles[$path[2]], $date, (isset($path[4])?(int) $path[4]:1), TRUE, '{path}general/'.$path[2].'/{date}{suffix}'));
 	EstatsTheme::link('group-page', 'page');
 }
 else
 {
-	for ($i = 0, $c = count($Groups['general']); $i < $c; ++$i)
+	for ($i = 0, $c = count($groups['general']); $i < $c; ++$i)
 	{
-		EstatsTheme::add($Groups['general'][$i], EstatsGroup::create($Groups['general'][$i], $Groups['general'][$i], $Titles[$Groups['general'][$i]], $Date, 1, FALSE, '{path}general/'.$Groups['general'][$i].'/{date}{suffix}'));
+		EstatsTheme::add($groups['general'][$i], EstatsGroup::create($groups['general'][$i], $groups['general'][$i], $titles[$groups['general'][$i]], $date, 1, FALSE, '{path}general/'.$groups['general'][$i].'/{date}{suffix}'));
 	}
 
-	$Summary = EstatsCore::summary();
+	$summary = EstatsCore::summary();
 
-	foreach ($Summary as $Key => $Value)
+	foreach ($summary as $key => $value)
 	{
-		EstatsTheme::add($Key, (is_array($Value)?EstatsGUI::formatNumber($Value['amount']).' ('.($Value['amount']?date('d.m.Y', $Value['time']):'-').')':EstatsGUI::formatNumber($Value)));
+		EstatsTheme::add($key, (is_array($value)?EstatsGUI::formatNumber($value['amount']).' ('.($value['amount']?date('d.m.Y', $value['time']):'-').')':EstatsGUI::formatNumber($value)));
 	}
 }
 

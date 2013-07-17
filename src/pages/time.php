@@ -12,117 +12,117 @@ if (!defined('eStats'))
 
 EstatsTheme::load('chart');
 
-$Graphics = (class_exists('EstatsGraphics') && EstatsGraphics::isAvailable() && !EstatsTheme::option('ChartSimple'));
-$CurrentTime = (!$Date[0] || ((int) $Date[0] == date('Y') && (int) $Date[1] == date('n') && (int) $Date[2] == date('j')));
+$graphics = (class_exists('EstatsGraphics') && EstatsGraphics::isAvailable() && !EstatsTheme::option('ChartSimple'));
+$currentTime = (!$date[0] || ((int) $date[0] == date('Y') && (int) $date[1] == date('n') && (int) $date[2] == date('j')));
 
-if ($CurrentTime)
+if ($currentTime)
 {
-	$Date = array(0, 0, 0, 0);
+	$date = array(0, 0, 0, 0);
 }
 
-$Compare = (isset($Path[$Var + 1]) && $Path[$Var + 1] == 'compare');
+$compare = (isset($path[$var + 1]) && $path[$var + 1] == 'compare');
 
-if ($Compare)
+if ($compare)
 {
-	$ViewTypes = array_slice($ViewTypes, 0, 1);
+	$viewTypes = array_slice($viewTypes, 0, 1);
 
-	if ($CurrentTime)
+	if ($currentTime)
 	{
-		$Date = explode('-', date('Y-n-j-G'));
+		$date = explode('-', date('Y-n-j-G'));
 	}
 
-	$CurrentTime = 0;
+	$currentTime = 0;
 }
 
 for ($i = 0; $i < 3; ++$i)
 {
-	EstatsTheme::append('selectview', '<option value="'.$AvailableViewTypes[$i].'"'.(in_array ($AvailableViewTypes[$i], $ViewTypes)?' selected="selected"':'').'>'.EstatsLocale::translate(ucfirst($AvailableViewTypes[$i])).'</option>
+	EstatsTheme::append('selectview', '<option value="'.$availableViewTypes[$i].'"'.(in_array ($availableViewTypes[$i], $viewTypes)?' selected="selected"':'').'>'.EstatsLocale::translate(ucfirst($availableViewTypes[$i])).'</option>
 ');
 }
 
-EstatsTheme::add('checkboxcomparechecked', ($Compare?' checked="checked"':''));
+EstatsTheme::add('checkboxcomparechecked', ($compare?' checked="checked"':''));
 
-if (!$CurrentTime)
+if (!$currentTime)
 {
 	EstatsTheme::append('title', ' - ');
 
-	if ($Date[2])
+	if ($date[2])
 	{
-		EstatsTheme::append('title', $Date[2]);
+		EstatsTheme::append('title', $date[2]);
 	}
 
-	if ($Date[1])
+	if ($date[1])
 	{
-		EstatsTheme::append('title', strftime('%B', mktime(0, 0, 0, $Date[1])));
+		EstatsTheme::append('title', strftime('%B', mktime(0, 0, 0, $date[1])));
 	}
 
-	EstatsTheme::append('title', $Date[0]);
+	EstatsTheme::append('title', $date[0]);
 }
 
-$ChartsAmount = 0;
-$CompareTypes = array('current', 'previous');
+$chartsAmount = 0;
+$compareTypes = array('current', 'previous');
 
-for ($i = 0, $c = count($Groups['time']); $i < $c; ++$i)
+for ($i = 0, $c = count($groups['time']); $i < $c; ++$i)
 {
-	$TimeDifference = (EstatsCore::option('AmountDifferences') && !$Compare && $Groups['time'][$i] != 'years' && (!$CurrentTime || !in_array($Groups['time'][$i], array ('hours', 'weekdays'))));
-	$ChartArea = $ChartFooter = '';
+	$timeDifference = (EstatsCore::option('AmountDifferences') && !$compare && $groups['time'][$i] != 'years' && (!$currentTime || !in_array($groups['time'][$i], array ('hours', 'weekdays'))));
+	$chartArea = $chartFooter = '';
 
-	EstatsTheme::add($Groups['time'][$i], '');
+	EstatsTheme::add($groups['time'][$i], '');
 
-	if ($Var == 4 && $Groups['time'][$i] !== $Path[2])
+	if ($var == 4 && $groups['time'][$i] !== $path[2])
 	{
 		continue;
 	}
 
-	$Popularity = in_array($Groups['time'][$i], array('hours', 'weekdays'));
+	$popularity = in_array($groups['time'][$i], array('hours', 'weekdays'));
 
-	switch ($Groups['time'][$i])
+	switch ($groups['time'][$i])
 	{
 		case '24hours':
-			if (!$CurrentTime && !$Date[2])
+			if (!$currentTime && !$date[2])
 			{
 				continue 2;
 			}
 		break;
 		case 'month':
-			if (!$CurrentTime && !$Date[1])
+			if (!$currentTime && !$date[1])
 			{
 				continue 2;
 			}
 		break;
 		case 'years':
-			if (!$CurrentTime || $Compare)
+			if (!$currentTime || $compare)
 			{
 				continue 2;
 			}
 		break;
 		case 'hours':
 		case 'weekdays':
-			if ($Date[2] || ($CurrentTime && $Compare))
+			if ($date[2] || ($currentTime && $compare))
 			{
 				continue 2;
 			}
 		break;
 	}
 
-	++$ChartsAmount;
+	++$chartsAmount;
 
-	$ChartInformation = EstatsChart::information($Groups['time'][$i], $Date, $CurrentTime);
-	$FileName = $Groups['time'][$i].'-'.implode('+', $ViewTypes).'-'.implode('_', $Date).($Compare?'-compare':'');
-	$Data = array(array(), array());
+	$chartInformation = EstatsChart::information($groups['time'][$i], $date, $currentTime);
+	$fileName = $groups['time'][$i].'-'.implode('+', $viewTypes).'-'.implode('_', $date).($compare?'-compare':'');
+	$data = array(array(), array());
 
-	if (EstatsCache::status($FileName, EstatsCore::option('Cache/time')))
+	if (EstatsCache::status($fileName, EstatsCore::option('Cache/time')))
 	{
-		$Ranges = array(array($ChartInformation['range'][0], $ChartInformation['range'][1]));
+		$ranges = array(array($chartInformation['range'][0], $chartInformation['range'][1]));
 
-		if ($TimeDifference || $Compare)
+		if ($timeDifference || $compare)
 		{
-			$Ranges[] = array(($ChartInformation['range'][0] - ($ChartInformation['range'][1] - $ChartInformation['range'][0])), $ChartInformation['range'][0]);
+			$ranges[] = array(($chartInformation['range'][0] - ($chartInformation['range'][1] - $chartInformation['range'][0])), $chartInformation['range'][0]);
 		}
 
-		for ($j = 0, $l = count($Ranges); $j < $l; ++$j)
+		for ($j = 0, $l = count($ranges); $j < $l; ++$j)
 		{
-			$Units = array(
+			$units = array(
 	'hour' => '%Y.%m.%d %H',
 	'dayhour' => '%H',
 	'day' => '%Y.%m.%d',
@@ -130,136 +130,136 @@ for ($i = 0, $c = count($Groups['time']); $i < $c; ++$i)
 	'month' => '%Y.%m',
 	'year' => '%Y'
 	);
-			$Fields = array(array(EstatsDriver::ELEMENT_FUNCTION, array(EstatsDriver::FUNCTION_DATETIME, array('time', $Units[$ChartInformation['unit']])), 'unit'));
-			$Bits = 0;
-			$Bit = 1;
+			$fields = array(array(EstatsDriver::ELEMENT_FUNCTION, array(EstatsDriver::FUNCTION_DATETIME, array('time', $units[$chartInformation['unit']])), 'unit'));
+			$bits = 0;
+			$bit = 1;
 
 			for ($k = 0; $k < 3; ++$k)
 			{
-				$Add = in_array($AvailableViewTypes[$k], $ViewTypes);
+				$add = in_array($availableViewTypes[$k], $viewTypes);
 
-				if ($Add)
+				if ($add)
 				{
-					$Bits += $Bit;
+					$bits += $bit;
 				}
 
-				$Bit *= 2;
+				$bit *= 2;
 
-				if ($Fields || $Add)
+				if ($fields || $add)
 				{
-					$Fields[] = array(EstatsDriver::ELEMENT_FUNCTION, array(EstatsDriver::FUNCTION_SUM, $AvailableViewTypes[$k]), $AvailableViewTypes[$k]);
+					$fields[] = array(EstatsDriver::ELEMENT_FUNCTION, array(EstatsDriver::FUNCTION_SUM, $availableViewTypes[$k]), $availableViewTypes[$k]);
 				}
 			}
 
-			$Result = EstatsCore::driver()->selectData(array('time'), $Fields, EstatsCore::timeClause('time', $Ranges[$j][0], $Ranges[$j][1]), 0, 0, array('unit' => TRUE), array('unit'));
+			$result = EstatsCore::driver()->selectData(array('time'), $fields, EstatsCore::timeClause('time', $ranges[$j][0], $ranges[$j][1]), 0, 0, array('unit' => TRUE), array('unit'));
 
-			for ($k = 0, $a = count($Result); $k < $a; ++$k)
+			for ($k = 0, $a = count($result); $k < $a; ++$k)
 			{
-				if ($Bits & 1)
+				if ($bits & 1)
 				{
-					$Data[$j][$Result[$k]['unit']]['views'] = ($Result[$k]['views'] + $Result[$k]['unique'] + $Result[$k]['returns']);
+					$data[$j][$result[$k]['unit']]['views'] = ($result[$k]['views'] + $result[$k]['unique'] + $result[$k]['returns']);
 				}
 
-				if ($Bits & 2)
+				if ($bits & 2)
 				{
-					$Data[$j][$Result[$k]['unit']]['unique'] = ($Result[$k]['unique'] + $Result[$k]['returns']);
+					$data[$j][$result[$k]['unit']]['unique'] = ($result[$k]['unique'] + $result[$k]['returns']);
 				}
 
-				if ($Bits & 4)
+				if ($bits & 4)
 				{
-					$Data[$j][$Result[$k]['unit']]['returns'] = (int) $Result[$k]['returns'];
+					$data[$j][$result[$k]['unit']]['returns'] = (int) $result[$k]['returns'];
 				}
 			}
 		}
 
-		if ($Compare)
+		if ($compare)
 		{
-			$Timestamp = ($Popularity?-1:$ChartInformation['range'][0]);
-			$TimestampBefore = ($Popularity?-1:($ChartInformation['range'][0] - ($ChartInformation['range'][1] - $ChartInformation['range'][0])));
-			$TimeUnit = array(0, $Timestamp);
-			$TimeUnitBefore = array(0, $TimestampBefore);
+			$timestamp = ($popularity?-1:$chartInformation['range'][0]);
+			$timestampBefore = ($popularity?-1:($chartInformation['range'][0] - ($chartInformation['range'][1] - $chartInformation['range'][0])));
+			$timeUnit = array(0, $timestamp);
+			$timeUnitBefore = array(0, $timestampBefore);
 
-			if ($Groups['time'][$i] == 'year')
+			if ($groups['time'][$i] == 'year')
 			{
-				$Timestamp = strtotime(date('Y-m-01', $Timestamp));
+				$timestamp = strtotime(date('Y-m-01', $timestamp));
 			}
 
-			$TmpData = array();
+			$tmpData = array();
 
-			for ($j = 0; $j < $ChartInformation['amount']; ++$j)
+			for ($j = 0; $j < $chartInformation['amount']; ++$j)
 			{
-				$TimeUnit = EstatsGUI::timeUnit($Groups['time'][$i], $TimeUnit[1], $ChartInformation['step'], $ChartInformation['format'], $ChartInformation['currenttime']);
-				$UnitID = $TimeUnit[0];
-				$Timestamp = $TimeUnit[1];
+				$timeUnit = EstatsGUI::timeUnit($groups['time'][$i], $timeUnit[1], $chartInformation['step'], $chartInformation['format'], $chartInformation['currenttime']);
+				$unitID = $timeUnit[0];
+				$timestamp = $timeUnit[1];
 
-				if ($Popularity)
+				if ($popularity)
 				{
-					$TimeUnitBefore = &$TimeUnit;
-					$UnitIDBefore = &$UnitID;
-					$TimestampBefore = &$Timestamp;
+					$timeUnitBefore = &$timeUnit;
+					$unitIDBefore = &$unitID;
+					$timestampBefore = &$timestamp;
 				}
 				else
 				{
-					$TimeUnitBefore = EstatsGUI::timeUnit($Groups['time'][$i], $TimeUnitBefore[1], $ChartInformation['step'], $ChartInformation['format'], 0);
-					$UnitIDBefore = $TimeUnitBefore[0];
-					$TimestampBefore = $TimeUnitBefore[1];
+					$timeUnitBefore = EstatsGUI::timeUnit($groups['time'][$i], $timeUnitBefore[1], $chartInformation['step'], $chartInformation['format'], 0);
+					$unitIDBefore = $timeUnitBefore[0];
+					$timestampBefore = $timeUnitBefore[1];
 				}
 
-			$TmpData[$UnitID] = array(
-	$CompareTypes[0] => (isset($Data[0][$UnitID][$ViewTypes[0]])?$Data[0][$UnitID][$ViewTypes[0]]:0),
-	$CompareTypes[1] => (isset($Data[1][$UnitIDBefore][$ViewTypes[0]])?$Data[1][$UnitIDBefore][$ViewTypes[0]]:0),
+			$tmpData[$unitID] = array(
+	$compareTypes[0] => (isset($data[0][$unitID][$viewTypes[0]])?$data[0][$unitID][$viewTypes[0]]:0),
+	$compareTypes[1] => (isset($data[1][$unitIDBefore][$viewTypes[0]])?$data[1][$unitIDBefore][$viewTypes[0]]:0),
 	);
 			}
 
-			$Data[0] = $TmpData;
+			$data[0] = $tmpData;
 		}
 
-		$Summary = EstatsChart::summary($Groups['time'][$i], $Data[0], $Data[1], $ChartInformation, ($Compare?$CompareTypes:$ViewTypes), $TimeDifference);
-		EstatsCache::save($FileName, array(
-	'data' => &$Data[0],
-	'data_before' => &$Data[1],
-	'summary' => $Summary,
+		$summary = EstatsChart::summary($groups['time'][$i], $data[0], $data[1], $chartInformation, ($compare?$compareTypes:$viewTypes), $timeDifference);
+		EstatsCache::save($fileName, array(
+	'data' => &$data[0],
+	'data_before' => &$data[1],
+	'summary' => $summary,
 	));
-		$CacheTime = 0;
+		$cacheTime = 0;
 	}
 	else
 	{
-		$Data = EstatsCache::read($FileName);
-		$Summary = $Data['summary'];
-		$Data[0] = $Data['data'];
-		$CacheTime = EstatsCache::timestamp($FileName);
+		$data = EstatsCache::read($fileName);
+		$summary = $data['summary'];
+		$data[0] = $data['data'];
+		$cacheTime = EstatsCache::timestamp($fileName);
 	}
 
-	$Summary['types'] = ($Compare?$CompareTypes:$ViewTypes);
-	$ChartID = $Groups['time'][$i].($CurrentTime?'':'-'.$Date[0].'_'.$Date[1].'_'.$Date[2]).($Compare?'-compare]':'');
+	$summary['types'] = ($compare?$compareTypes:$viewTypes);
+	$chartID = $groups['time'][$i].($currentTime?'':'-'.$date[0].'_'.$date[1].'_'.$date[2]).($compare?'-compare]':'');
 
-	if ($Graphics)
+	if ($graphics)
 	{
-		$GraphicsSummary = $Summary;
-		$GraphicsSummary['amount'] = $ChartInformation['amount'];
-		$GraphicsSummary['chart'] = $Groups['time'][$i];
-		$GraphicsSummary['step'] = $ChartInformation['step'];
-		$GraphicsSummary['timestamp'] = $ChartInformation['range'][0];
-		$GraphicsSummary['format'] = $ChartInformation['format'];
-		$GraphicsSummary['currenttime'] = $CurrentTime;
-		$_SESSION[EstatsCore::session()]['imagedata'][$ChartID] = array(
+		$graphicsSummary = $summary;
+		$graphicsSummary['amount'] = $chartInformation['amount'];
+		$graphicsSummary['chart'] = $groups['time'][$i];
+		$graphicsSummary['step'] = $chartInformation['step'];
+		$graphicsSummary['timestamp'] = $chartInformation['range'][0];
+		$graphicsSummary['format'] = $chartInformation['format'];
+		$graphicsSummary['currenttime'] = $currentTime;
+		$_SESSION[EstatsCore::session()]['imagedata'][$chartID] = array(
 	'type' => 'chart',
 	'chart' => EstatsCore::option('ChartsType'),
-	'diagram' => $Groups['time'][$i],
-	'data' => $Data[0],
-	'summary' => $GraphicsSummary,
-	'mode' => implode ('+', $ViewTypes),
+	'diagram' => $groups['time'][$i],
+	'data' => $data[0],
+	'summary' => $graphicsSummary,
+	'mode' => implode ('+', $viewTypes),
 	'cache' => EstatsCore::option('Cache/time'),
-	'join' => $Popularity
+	'join' => $popularity
 	);
 	}
 
-	EstatsTheme::add($Groups['time'][$i], EstatsChart::create($Groups['time'][$i], ($Graphics?EstatsCore::option('ChartsType'):'html'), 'time', $ChartID, ((!$Popularity && $Groups['time'][$i] != '24hours')?'location.href = \'{path}time/'.implode('+', $Summary['types']).'/{date}{suffix}\'':''), $ChartInformation, $Data[0], $Data[1], $Summary, '<a href="{path}time/'.$Groups['time'][$i].'/'.implode('+', $Summary['types']).($CurrentTime?'':'/{period}').($Compare?'/compare':'').'{suffix}">
-'.$Titles[$Groups['time'][$i]].'
-</a>', $CurrentTime, $TimeDifference, EstatsCookie::get('visits'), $CacheTime));
+	EstatsTheme::add($groups['time'][$i], EstatsChart::create($groups['time'][$i], ($graphics?EstatsCore::option('ChartsType'):'html'), 'time', $chartID, ((!$popularity && $groups['time'][$i] != '24hours')?'location.href = \'{path}time/'.implode('+', $summary['types']).'/{date}{suffix}\'':''), $chartInformation, $data[0], $data[1], $summary, '<a href="{path}time/'.$groups['time'][$i].'/'.implode('+', $summary['types']).($currentTime?'':'/{period}').($compare?'/compare':'').'{suffix}">
+'.$titles[$groups['time'][$i]].'
+</a>', $currentTime, $timeDifference, EstatsCookie::get('visits'), $cacheTime));
 }
 
-if (!$ChartsAmount)
+if (!$chartsAmount)
 {
 	EstatsGUI::notify(EstatsLocale::translate('No data to display!'), 'error');
 

@@ -48,7 +48,7 @@ class EstatsGUI
  * Contains notifications
  */
 
-	static private $Notifications;
+	static private $notifications;
 
 /**
  * Generates cache for icons information
@@ -56,31 +56,31 @@ class EstatsGUI
  * @return array
  */
 
-	private static function iconCache($Type)
+	private static function iconCache($type)
 	{
-		$FileName = 'icons-'.$Type;
+		$fileName = 'icons-'.$type;
 
-		if (EstatsCache::status($FileName, 31536000))
+		if (EstatsCache::status($fileName, 31536000))
 		{
-			$Data = array();
-			$Array = EstatsCore::loadData('share/data/'.$Type.'.ini');
+			$data = array();
+			$array = EstatsCore::loadData('share/data/'.$type.'.ini');
 
-			foreach ($Array as $Key => $Value)
+			foreach ($array as $key => $value)
 			{
-				if (isset($Value['icon']))
+				if (isset($value['icon']))
 				{
-					$Data[strtolower(str_replace('.', ' ', $Key))] = $Value['icon'];
+					$data[strtolower(str_replace('.', ' ', $key))] = $value['icon'];
 				}
 			}
 
-			EstatsCache::save($FileName, $Data);
+			EstatsCache::save($fileName, $data);
 		}
 		else
 		{
-			$Data = EstatsCache::read($FileName);
+			$data = EstatsCache::read($fileName);
 		}
 
-		return $Data;
+		return $data;
 	}
 
 /**
@@ -90,14 +90,14 @@ class EstatsGUI
  * @return string
  */
 
-	static function iconTag($FileName, $Title = '')
+	static function iconTag($fileName, $title = '')
 	{
 		if (!is_dir('./share/icons/') || !EstatsTheme::option('Icons'))
 		{
 			return '';
 		}
 
-		return '<img src="'.EstatsTheme::get('datapath').$FileName.'" alt="'.$Title.'"'.($Title?' title="'.$Title.'"':'').'>';
+		return '<img src="'.EstatsTheme::get('datapath').$fileName.'" alt="'.$title.'"'.($title?' title="'.$title.'"':'').'>';
 	}
 
 /**
@@ -107,56 +107,56 @@ class EstatsGUI
  * @return string
  */
 
-	static function iconPath($Icon, $Category)
+	static function iconPath($icon, $category)
 	{
-		$Icon = str_replace('/', '', strtolower(trim($Icon)));
+		$icon = str_replace('/', '', strtolower(trim($icon)));
 
-		switch ($Category)
+		switch ($category)
 		{
 			case 'cities':
-				if (substr($Icon, -3, 1) != '-')
+				if (substr($icon, -3, 1) != '-')
 				{
 					return '';
 				}
 
-				$Category = 'countries';
-				$Icon = substr($Icon, -2);
+				$category = 'countries';
+				$icon = substr($icon, -2);
 			break;
 			case 'continents':
-				$Continents = EstatsCore::loadData('share/data/continents.ini');
-				$Icon = (isset($Continents[$Icon])?$Continents[$Icon]:'');
+				$continents = EstatsCore::loadData('share/data/continents.ini');
+				$icon = (isset($continents[$icon])?$continents[$icon]:'');
 			break;
 			case 'languages':
-				$LanguageToCountry = EstatsCore::loadData('share/data/language-to-country.ini');
-				$Countries = EstatsCore::loadData('share/data/countries.ini');
-				$Category = 'countries';
-				$Language = explode('-', strtolower($Icon));
+				$languageToCountry = EstatsCore::loadData('share/data/language-to-country.ini');
+				$countries = EstatsCore::loadData('share/data/countries.ini');
+				$category = 'countries';
+				$language = explode('-', strtolower($icon));
 
-				if (isset($Language[1]) && isset($Countries[$Language[1]]))
+				if (isset($language[1]) && isset($countries[$language[1]]))
 				{
-					$Icon = $Language[1];
+					$icon = $language[1];
 				}
-				else if (isset($LanguageToCountry[$Language[0]]))
+				else if (isset($languageToCountry[$language[0]]))
 				{
-					$Icon = $LanguageToCountry[$Language[0]];
+					$icon = $languageToCountry[$language[0]];
 				}
 				else
 				{
-					$Icon = '?';
+					$icon = '?';
 				}
 			break;
 			case 'screens':
-				$Category = 'miscellaneous';
-				$Array = array(0, 800, 1024, 1280, 1600, 5000);
-				$Screens = array('smallest', 'small', 'medium', 'big', 'biggest');
+				$category = 'miscellaneous';
+				$array = array(0, 800, 1024, 1280, 1600, 5000);
+				$screens = array('smallest', 'small', 'medium', 'big', 'biggest');
 
-				if ((int) $Icon)
+				if ((int) $icon)
 				{
 					for ($i = 0; $i < 5; ++$i)
 					{
-						if ((int) $Icon >= $Array[$i] &&(int) $Icon < $Array[$i + 1])
+						if ((int) $icon >= $array[$i] &&(int) $icon < $array[$i + 1])
 						{
-							$Icon = 'screen_'.$Screens[$i];
+							$icon = 'screen_'.$screens[$i];
 
 							break;
 						}
@@ -164,59 +164,59 @@ class EstatsGUI
 				}
 				else
 				{
-					$Icon = '?';
+					$icon = '?';
 				}
 			break;
 			case 'browser-versions':
-				$Icon = preg_replace('#\s[\d\.]+\w*$#', '', $Icon);
+				$icon = preg_replace('#\s[\d\.]+\w*$#', '', $icon);
 			case 'browsers':
-				$Category = 'browsers';
-				$Array = self::iconCache('browsers');
+				$category = 'browsers';
+				$array = self::iconCache('browsers');
 
-				if (isset($Array[$Icon]))
+				if (isset($array[$icon]))
 				{
-					$Icon = $Array[$Icon];
+					$icon = $array[$icon];
 				}
 			break;
 			case 'operatingsystem-versions':
 			case 'operatingsystems':
-				$Category = 'operatingsystems';
-				$Array = self::iconCache('operating-systems');
+				$category = 'operatingsystems';
+				$array = self::iconCache('operating-systems');
 
-				if (isset($Array[$Icon]))
+				if (isset($array[$icon]))
 				{
-					$Icon = $Array[$Icon];
+					$icon = $array[$icon];
 				}
-				else if (strstr(trim($Icon), ' '))
+				else if (strstr(trim($icon), ' '))
 				{
-					$Array = explode(' ', $Icon);
+					$array = explode(' ', $icon);
 
-					if (is_file('./share/icons/operatingsystems/'.$Array[1].'.png'))
+					if (is_file('./share/icons/operatingsystems/'.$array[1].'.png'))
 					{
-						$Icon = &$Array[1];
+						$icon = &$array[1];
 					}
 					else
 					{
-						$Icon = &$Array[0];
+						$icon = &$array[0];
 					}
 				}
 			break;
 			case 'robots':
-				$Array = self::iconCache('robots');
+				$array = self::iconCache('robots');
 
-				if (isset($Array[$Icon]))
+				if (isset($array[$icon]))
 				{
-					$Icon = $Array[$Icon];
+					$icon = $array[$icon];
 				}
 			break;
 			case 'pages':
-				if (!is_file('./share/icons/pages/'.$Icon.'.png'))
+				if (!is_file('./share/icons/pages/'.$icon.'.png'))
 				{
-					$Icon = 'plugin';
+					$icon = 'plugin';
 				}
 			break;
 			case 'countries':
-				$Category = 'flags';
+				$category = 'flags';
 			break;
 			case 'miscellaneous':
 			break;
@@ -224,20 +224,20 @@ class EstatsGUI
 				return '';
 		}
 
-		$Icon = str_replace(' ', '', $Icon);
+		$icon = str_replace(' ', '', $icon);
 
-		if ($Icon == '?' || !is_file('./share/icons/'.$Category.'/'.$Icon.'.png'))
+		if ($icon == '?' || !is_file('./share/icons/'.$category.'/'.$icon.'.png'))
 		{
-			$Icon = 'unknown';
-			$Category = 'miscellaneous';
+			$icon = 'unknown';
+			$category = 'miscellaneous';
 		}
 
-		if ($Category == 'miscellaneous' && is_file('./share/themes/'.$_SESSION[EstatsCore::session()]['theme'].'/icons/'.$Icon.'.png'))
+		if ($category == 'miscellaneous' && is_file('./share/themes/'.$_SESSION[EstatsCore::session()]['theme'].'/icons/'.$icon.'.png'))
 		{
-			return 'share/themes/'.$_SESSION[EstatsCore::session()]['theme'].'/icons/'.$Icon.'.png';
+			return 'share/themes/'.$_SESSION[EstatsCore::session()]['theme'].'/icons/'.$icon.'.png';
 		}
 
-		return 'share/icons/'.$Category.'/'.$Icon.'.png';
+		return 'share/icons/'.$category.'/'.$icon.'.png';
 	}
 
 /**
@@ -247,92 +247,92 @@ class EstatsGUI
  * @return string
  */
 
-	static function itemText($String, $Category)
+	static function itemText($string, $category)
 	{
-		if (trim($String) == '?')
+		if (trim($string) == '?')
 		{
-			return (($Category == 'referrers')?EstatsLocale::translate('Direct entries'):EstatsLocale::translate('Unknown'));
+			return (($category == 'referrers')?EstatsLocale::translate('Direct entries'):EstatsLocale::translate('Unknown'));
 		}
-		else if (in_array($Category, array('java', 'javascript', 'cookies')))
+		else if (in_array($category, array('java', 'javascript', 'cookies')))
 		{
-			return ($String?EstatsLocale::translate('Yes'):EstatsLocale::translate('No'));
+			return ($string?EstatsLocale::translate('Yes'):EstatsLocale::translate('No'));
 		}
-		else if ($Category == 'flash' && !$String)
+		else if ($category == 'flash' && !$string)
 		{
 			return EstatsLocale::translate('No');
 		}
 
-		$Countries = EstatsCore::loadData('share/data/countries.ini');
+		$countries = EstatsCore::loadData('share/data/countries.ini');
 
-		switch ($Category)
+		switch ($category)
 		{
 			case 'time':
-				$Array = array(
+				$array = array(
 	'views' => EstatsLocale::translate('Views'),
 	'returns' => EstatsLocale::translate('Returns'),
 	'unique' => EstatsLocale::translate('Unique'),
 	'current' => EstatsLocale::translate('Current period'),
 	'previous' => EstatsLocale::translate('Previous period'),
 	);
-				if (isset($Array[$String]))
+				if (isset($array[$string]))
 				{
-					$String = $Array[$String];
+					$string = $array[$string];
 				}
 			break;
 			case 'cities':
-				$Country = (int) ($String[strlen($String) - 3] == '-');
-				$City = ($Country?substr($String, 0, -3):$String);
-				$String = (function_exists('utf8_encode')?utf8_encode($City):$City).($Country?', '.EstatsLocale::translate($Countries[substr($String, -2)]):'');
+				$country = (int) ($string[strlen($string) - 3] == '-');
+				$city = ($country?substr($string, 0, -3):$string);
+				$string = (function_exists('utf8_encode')?utf8_encode($city):$city).($country?', '.EstatsLocale::translate($countries[substr($string, -2)]):'');
 			break;
 			case 'countries':
-				$String = (isset($Countries[$String])?EstatsLocale::translate($Countries[$String]):EstatsLocale::translate('Unknown'));
+				$string = (isset($countries[$string])?EstatsLocale::translate($countries[$string]):EstatsLocale::translate('Unknown'));
 			break;
 			case 'continents':
-				$Continents = EstatsCore::loadData('share/data/continents.ini');
-				$String = ($String?EstatsLocale::translate($Continents[$String]):EstatsLocale::translate('Unknown'));
+				$continents = EstatsCore::loadData('share/data/continents.ini');
+				$string = ($string?EstatsLocale::translate($continents[$string]):EstatsLocale::translate('Unknown'));
 			break;
 			case 'languages':
-				$Languages = EstatsCore::loadData('share/data/languages.ini');
-				$Language = explode('-', strtolower($String));
+				$languages = EstatsCore::loadData('share/data/languages.ini');
+				$language = explode('-', strtolower($string));
 
-				if (isset($Languages[$Language[0]]))
+				if (isset($languages[$language[0]]))
 				{
-					$String = EstatsLocale::translate($Languages[$Language[0]]);
+					$string = EstatsLocale::translate($languages[$language[0]]);
 
-					if (isset($Language[1]) && isset($Countries[$Language[1]]))
+					if (isset($language[1]) && isset($countries[$language[1]]))
 					{
-						$String.= ' ('.EstatsLocale::translate($Countries[$Language[1]]).')';
+						$string.= ' ('.EstatsLocale::translate($countries[$language[1]]).')';
 					}
 				}
 				else
 				{
-					$String = EstatsLocale::translate('Unknown');
+					$string = EstatsLocale::translate('Unknown');
 				}
 			break;
 			case 'operatingsystems':
-				if ($String == 'mobile')
+				if ($string == 'mobile')
 				{
-					$String = EstatsLocale::translate('Mobile devices');
+					$string = EstatsLocale::translate('Mobile devices');
 				}
 			break;
 			case 'regions':
-				$Regions = EstatsCore::loadData('share/data/regions.ini');
-				$Region = explode('-', $String);
-				$String = (isset($Regions[$Region[0]][$Region[1]])?$Regions[$Region[0]][$Region[1]]:EstatsLocale::translate('Unknown'));
+				$regions = EstatsCore::loadData('share/data/regions.ini');
+				$region = explode('-', $string);
+				$string = (isset($regions[$region[0]][$region[1]])?$regions[$region[0]][$region[1]]:EstatsLocale::translate('Unknown'));
 			break;
 			case 'operatingsystem-versions':
-				if ($String == 'mobile')
+				if ($string == 'mobile')
 				{
-					$String = EstatsLocale::translate('Mobile devices');
+					$string = EstatsLocale::translate('Mobile devices');
 				}
-				else if (substr($String, 0, 6) == 'mobile')
+				else if (substr($string, 0, 6) == 'mobile')
 				{
-					$String = substr($String, 7);
+					$string = substr($string, 7);
 				}
 			break;
 		}
 
-		return $String;
+		return $string;
 	}
 
 /**
@@ -342,47 +342,47 @@ class EstatsGUI
  * @return string
  */
 
-	static function formatDifference($Current, $Before)
+	static function formatDifference($current, $before)
 	{
-		if ($Current == $Before)
+		if ($current == $before)
 		{
 			return 0;
 		}
-		else if (!$Before)
+		else if (!$before)
 		{
 			return 100;
 		}
-		else if (!$Current)
+		else if (!$current)
 		{
 			return -100;
 		}
-		else if ($Current < $Before)
+		else if ($current < $before)
 		{
-			return -round(((($Before - $Current) / $Before) * 100), 2);
+			return -round(((($before - $current) / $before) * 100), 2);
 		}
 		else
 		{
-			return round((($Current / $Before) * 100), 2);
+			return round((($current / $before) * 100), 2);
 		}
 	}
 
 /**
  * Formats number
- * @param float $Number
+ * @param float $number
  * @param boolean Tag
  * @return string
  */
 
-	static function formatNumber($Number, $Tag = TRUE)
+	static function formatNumber($number, $tag = TRUE)
 	{
-		$Value = (($Number < 1000)?round($Number, 2):(($Number < 1000000)?(round($Number / 1000, 1)).'K':(round($Number / 1000000, 1)).'M'));
+		$value = (($number < 1000)?round($number, 2):(($number < 1000000)?(round($number / 1000, 1)).'K':(round($number / 1000000, 1)).'M'));
 
-		if ($Tag)
+		if ($tag)
 		{
-			return '<em'.(($Number >= 1000 || is_float($Number))?' title="'.round($Number, 5).'"':'').'>'.$Value.'</em>';
+			return '<em'.(($number >= 1000 || is_float($number))?' title="'.round($number, 5).'"':'').'>'.$value.'</em>';
 		}
 
-		return $Value;
+		return $value;
 	}
 
 /**
@@ -392,9 +392,9 @@ class EstatsGUI
  * @return string
  */
 
-	static function formatSize($Size, $Title = TRUE)
+	static function formatSize($size, $title = TRUE)
 	{
-		return ($Title?'<span title="'.number_format($Size, 0, '', ' ').' B">':'').(($Size > 1024)?(($Size > 1048576)?(($Size > 1073741824)?round($Size / 1073741824, 2).' GB':round($Size / 1048576, 2).' MB'):round($Size / 1024, 2).' KB'):(int) $Size.' B').($Title?'</span>':'');
+		return ($title?'<span title="'.number_format($size, 0, '', ' ').' B">':'').(($size > 1024)?(($size > 1048576)?(($size > 1073741824)?round($size / 1073741824, 2).' GB':round($size / 1048576, 2).' MB'):round($size / 1024, 2).' KB'):(int) $size.' B').($title?'</span>':'');
 	}
 
 /**
@@ -406,20 +406,20 @@ class EstatsGUI
  * @return string
  */
 
-	static function cutString($String, $Length, $Title = FALSE, $Dots = TRUE)
+	static function cutString($string, $length, $title = FALSE, $dots = TRUE)
 	{
-		if (!$Length)
+		if (!$length)
 		{
-			return htmlspecialchars($String);
+			return htmlspecialchars($string);
 		}
 
 		if (function_exists('mb_substr'))
 		{
-			return (mb_strwidth($String, 'UTF-8') > ($Length + 3) || !$Dots)?($Title?'<span title="'.htmlspecialchars($String).'">'.htmlspecialchars(mb_substr($String, 0, $Length, 'UTF-8')).($Dots?'...':'').'</span>':htmlspecialchars(mb_substr($String, 0, $Length, 'UTF-8')).($Dots?'...':'')):htmlspecialchars($String);
+			return (mb_strwidth($string, 'UTF-8') > ($length + 3) || !$dots)?($title?'<span title="'.htmlspecialchars($string).'">'.htmlspecialchars(mb_substr($string, 0, $length, 'UTF-8')).($dots?'...':'').'</span>':htmlspecialchars(mb_substr($string, 0, $length, 'UTF-8')).($dots?'...':'')):htmlspecialchars($string);
 		}
 		else
 		{
-			return (strlen($String) > ($Length + 3) || !$Dots)?($Title?'<span title="'.htmlspecialchars($String).'">'.htmlspecialchars(substr_replace($String, ($Dots?'...':''), $Length)).'</span>':htmlspecialchars(substr_replace($String, ($Dots?'...':''), $Length))):htmlspecialchars($String);
+			return (strlen($string) > ($length + 3) || !$dots)?($title?'<span title="'.htmlspecialchars($string).'">'.htmlspecialchars(substr_replace($string, ($dots?'...':''), $length)).'</span>':htmlspecialchars(substr_replace($string, ($dots?'...':''), $length))):htmlspecialchars($string);
 		}
 	}
 
@@ -431,17 +431,17 @@ class EstatsGUI
  * @return string
  */
 
-	static function ignoreIPLink($IPs, $IP, $Ignored = TRUE)
+	static function ignoreIPLink($iPs, $iP, $ignored = TRUE)
 	{
-		for ($i = 0, $c = count($IPs); $i < $c; ++$i)
+		for ($i = 0, $c = count($iPs); $i < $c; ++$i)
 		{
-			if ($IP == $IPs[$i] || (strstr($IPs[$i], '*') && substr($IP, 0, (strlen($IPs[$i]) - 1)) == substr($IPs[$i], 0, -1)))
+			if ($iP == $iPs[$i] || (strstr($iPs[$i], '*') && substr($iP, 0, (strlen($iPs[$i]) - 1)) == substr($iPs[$i], 0, -1)))
 			{
-				return '<a href="{selfpath}{separator}'.($Ignored?'ignored':'blocked').'IP='.htmlspecialchars($IPs[$i]).'" class="green" title="'.(($IP == $IPs[$i])?EstatsLocale::translate('Unblock IP'):EstatsLocale::translate('Unblock IPs range')).(($IP == $IPs[$i])?'':' ('.htmlspecialchars($IPs[$i]).')').'"><strong>&#187;</strong></a>';
+				return '<a href="{selfpath}{separator}'.($ignored?'ignored':'blocked').'IP='.htmlspecialchars($iPs[$i]).'" class="green" title="'.(($iP == $iPs[$i])?EstatsLocale::translate('Unblock IP'):EstatsLocale::translate('Unblock IPs range')).(($iP == $iPs[$i])?'':' ('.htmlspecialchars($iPs[$i]).')').'"><strong>&#187;</strong></a>';
 			}
 		}
 
-		return '<a href="{selfpath}{separator}'.($Ignored?'ignored':'blocked').'IP='.$IP.'" class="red" title="'.EstatsLocale::translate('Block this IP').'" onclick="if (!confirm (\''.EstatsLocale::translate('Do You really want to ban this IP address?').'\')) return false"><strong>&#187;</strong></a>';
+		return '<a href="{selfpath}{separator}'.($ignored?'ignored':'blocked').'IP='.$iP.'" class="red" title="'.EstatsLocale::translate('Block this IP').'" onclick="if (!confirm (\''.EstatsLocale::translate('Do You really want to ban this IP address?').'\')) return false"><strong>&#187;</strong></a>';
 	}
 
 /**
@@ -451,9 +451,9 @@ class EstatsGUI
  * @return string
  */
 
-	static function whoisLink($Data, $String = '')
+	static function whoisLink($data, $string = '')
 	{
-		return '<a href="'.str_replace('{data}', htmlspecialchars($Data), EstatsCore::option('WhoisLink')).'" title="'.EstatsLocale::translate('Whois').'">'.($String?$String:EstatsLocale::translate('Whois')).'</a>';
+		return '<a href="'.str_replace('{data}', htmlspecialchars($data), EstatsCore::option('WhoisLink')).'" title="'.EstatsLocale::translate('Whois').'">'.($string?$string:EstatsLocale::translate('Whois')).'</a>';
 	}
 
 /**
@@ -463,9 +463,9 @@ class EstatsGUI
  * @return string
  */
 
-	static function mapLink($Latitude, $Longitude)
+	static function mapLink($latitude, $longitude)
 	{
-		return str_replace(array('{latitude}', '{longitude}'), array(number_format($Latitude, 2, '.', ''), number_format($Longitude, 2, '.', '')), htmlspecialchars(EstatsCore::option('MapLink')));
+		return str_replace(array('{latitude}', '{longitude}'), array(number_format($latitude, 2, '.', ''), number_format($longitude, 2, '.', '')), htmlspecialchars(EstatsCore::option('MapLink')));
 	}
 
 /**
@@ -477,39 +477,39 @@ class EstatsGUI
  * @return array
  */
 
-	static function timeRange($Year = 0, $Month = 0, $Day = 0, $Hour = 0)
+	static function timeRange($year = 0, $month = 0, $day = 0, $hour = 0)
 	{
-		if (!$Year)
+		if (!$year)
 		{
 			return array(0, $_SERVER['REQUEST_TIME']);
 		}
 
-		if ($Month)
+		if ($month)
 		{
-			if ($Day)
+			if ($day)
 			{
-				if ($Hour)
+				if ($hour)
 				{
-					$From = strtotime($Year.'-'.(($Month < 10)?'0':'').$Month.'-'.(($Day < 10)?'0':'').$Day.' '.(($Hour < 10)?'0':'').$Hour.':00');
+					$from = strtotime($year.'-'.(($month < 10)?'0':'').$month.'-'.(($day < 10)?'0':'').$day.' '.(($hour < 10)?'0':'').$hour.':00');
 
-					return array($From, ($From + 3600));
+					return array($from, ($from + 3600));
 				}
 				else
 				{
-					$From = strtotime($Year.'-'.(($Month < 10)?'0':'').$Month.'-'.(($Day < 10)?'0':'').$Day);
+					$from = strtotime($year.'-'.(($month < 10)?'0':'').$month.'-'.(($day < 10)?'0':'').$day);
 
-					return array($From, ($From + 86400));
+					return array($from, ($from + 86400));
 				}
 			}
 			else
 			{
-				$From = strtotime($Year.'-'.(($Month < 10)?'0':'').$Month.'-01');
+				$from = strtotime($year.'-'.(($month < 10)?'0':'').$month.'-01');
 
-				return array($From, ($From + (date('t', $From) * 86400)));
+				return array($from, ($from + (date('t', $from) * 86400)));
 			}
 		}
 
-		return array(strtotime($Year.'-01-01'), strtotime(($Year + 1).'-01-01'));
+		return array(strtotime($year.'-01-01'), strtotime(($year + 1).'-01-01'));
 	}
 
 /**
@@ -522,56 +522,56 @@ class EstatsGUI
  * @return array
  */
 
-	static function timeUnit($Period, $Timestamp, $Step, $Format, $CurrentTime)
+	static function timeUnit($period, $timestamp, $step, $format, $currentTime)
 	{
-		$Popularity = in_array($Period, array('hours', 'weekdays'));
+		$popularity = in_array($period, array('hours', 'weekdays'));
 
-		if ($Period == 'weekdays' && EstatsLocale::option('WeekStartDay'))
+		if ($period == 'weekdays' && EstatsLocale::option('WeekStartDay'))
 		{
-			$WeekDayTransition = range(0, 6);
-			$WeekDayTransition = array_merge(array_slice($WeekDayTransition, EstatsLocale::option('WeekStartDay')), array_slice($WeekDayTransition, 0, EstatsLocale::option('WeekStartDay')));
-		}
-
-		if ($Period == 'year')
-		{
-			$Step = (date('t', $Timestamp) * 86400);
-		}
-		else if ($Period == 'years')
-		{
-			$Step = ((date('L', $Timestamp) + 365) * 86400);
+			$weekDayTransition = range(0, 6);
+			$weekDayTransition = array_merge(array_slice($weekDayTransition, EstatsLocale::option('WeekStartDay')), array_slice($weekDayTransition, 0, EstatsLocale::option('WeekStartDay')));
 		}
 
-		if (($CurrentTime || $Popularity) && $Step)
+		if ($period == 'year')
 		{
-			$Timestamp += $Step;
+			$step = (date('t', $timestamp) * 86400);
+		}
+		else if ($period == 'years')
+		{
+			$step = ((date('L', $timestamp) + 365) * 86400);
 		}
 
-		if ($Period == 'hours')
+		if (($currentTime || $popularity) && $step)
 		{
-			$UnitID = (($Timestamp < 10)?'0':'').$Timestamp;
+			$timestamp += $step;
 		}
-		else if ($Period == 'weekdays')
+
+		if ($period == 'hours')
+		{
+			$unitID = (($timestamp < 10)?'0':'').$timestamp;
+		}
+		else if ($period == 'weekdays')
 		{
 			if (EstatsLocale::option('WeekStartDay'))
 			{
-				$UnitID = $WeekDayTransition[$Timestamp];
+				$unitID = $weekDayTransition[$timestamp];
 			}
 			else
 			{
-				$UnitID = $Timestamp;
+				$unitID = $timestamp;
 			}
 		}
 		else
 		{
-			$UnitID = date($Format, $Timestamp);
+			$unitID = date($format, $timestamp);
 		}
 
-		if (!$CurrentTime && !$Popularity && $Step)
+		if (!$currentTime && !$popularity && $step)
 		{
-			$Timestamp += $Step;
+			$timestamp += $step;
 		}
 
-		return array($UnitID, $Timestamp);
+		return array($unitID, $timestamp);
 	}
 
 /**
@@ -582,57 +582,57 @@ class EstatsGUI
  * @return string
  */
 
-	static function linksWidget($Page, $Amount, $Path)
+	static function linksWidget($page, $amount, $path)
 	{
-		if ($Amount < 2)
+		if ($amount < 2)
 		{
 			return '';
 		}
 
-		$Locale = array(
+		$locale = array(
 	'first' => EstatsLocale::translate('Go to first page (%d.)'),
 	'previous' => EstatsLocale::translate('Go to previous page (%d.)'),
 	'next' => EstatsLocale::translate('Go to next page (%d.)'),
 	'last' => EstatsLocale::translate('Go to last page (%d.)'),
 	'default' => EstatsLocale::translate('Go to page %d.')
 	);
-		$Array = array(
+		$array = array(
 	'first' => '&laquo;',
 	'previous' => '&lsaquo;',
 	'next' => '&rsaquo;',
 	'last' => '&raquo;'
 	);
-		$TmpArray = array_merge(array('first' => 1, 'previous' => ($Page - 1)), range(($Page - (($Page == 5)?4:3)), ($Page + (($Page == ($Amount - 4))?4:3))), array('next' => ($Page + 1), 'last' => $Amount));
-		$Links = array();
+		$tmpArray = array_merge(array('first' => 1, 'previous' => ($page - 1)), range(($page - (($page == 5)?4:3)), ($page + (($page == ($amount - 4))?4:3))), array('next' => ($page + 1), 'last' => $amount));
+		$links = array();
 
-		foreach ($TmpArray as $Key => $Value)
+		foreach ($tmpArray as $key => $value)
 		{
-			if (is_numeric($Key))
+			if (is_numeric($key))
 			{
-				$Key = $Value;
+				$key = $value;
 			}
 
-			if (!is_numeric($Key) || ($Key > 0 && $Key <= $Amount))
+			if (!is_numeric($key) || ($key > 0 && $key <= $amount))
 			{
-				if ($Value > 0 && $Value <= $Amount && $Value != $Page)
+				if ($value > 0 && $value <= $amount && $value != $page)
 				{
-					$Links[] = '<a href="'.str_replace('{page}', $Value, $Path).'" title="'.sprintf($Locale[is_numeric($Key)?'default':$Key], $Value).'">'.(is_numeric($Key)?$Key:$Array[$Key]).'</a>';
+					$links[] = '<a href="'.str_replace('{page}', $value, $path).'" title="'.sprintf($locale[is_numeric($key)?'default':$key], $value).'">'.(is_numeric($key)?$key:$array[$key]).'</a>';
 				}
 				else
 				{
-					$Links[] = '<strong>'.(is_numeric($Key)?$Key:$Array[$Key]).'</strong>';
+					$links[] = '<strong>'.(is_numeric($key)?$key:$array[$key]).'</strong>';
 				}
 
-				if (($Page > 4 && $Key == 'previous' && $Page != 5) || ($Page < ($Amount - 3) && $Key == ($Page + 3) && $Page != ($Amount - 4)))
+				if (($page > 4 && $key == 'previous' && $page != 5) || ($page < ($amount - 3) && $key == ($page + 3) && $page != ($amount - 4)))
 				{
-					$Links[] = '...';
+					$links[] = '...';
 				}
 			}
 		}
 
 		return str_replace('{links}', implode('
 |
-', $Links), EstatsTheme::get('links'));
+', $links), EstatsTheme::get('links'));
 	}
 
 /**
@@ -642,9 +642,9 @@ class EstatsGUI
  * @return string
  */
 
-	static function notificationWidget($Content, $Type)
+	static function notificationWidget($content, $type)
 	{
-		$Locale = array(
+		$locale = array(
 			'warning' => EstatsLocale::translate('Warning'),
 			'success' => EstatsLocale::translate('Success'),
 			'error' => EstatsLocale::translate('Error'),
@@ -652,12 +652,12 @@ class EstatsGUI
 			'loading' => EstatsLocale::translate('Loading...'),
 			);
 
-		$Type = str_replace('.', '', $Type);
+		$type = str_replace('.', '', $type);
 
 		return EstatsTheme::parse(EstatsTheme::get('announcement'), array(
-	'class' => $Type,
-	'type' => $Locale[$Type],
-	'content' => $Content
+	'class' => $type,
+	'type' => $locale[$type],
+	'content' => $content
 	));
 	}
 
@@ -673,76 +673,76 @@ class EstatsGUI
  * @return string
  */
 
-	static function optionRowWidget($Label, $Description, $Name, $Value = '', $Type = self::FIELD_VALUE, $Options = NULL, $Default = NULL)
+	static function optionRowWidget($label, $description, $name, $value = '', $type = self::FIELD_VALUE, $options = NULL, $default = NULL)
 	{
- 		$ID = str_replace(array('[]', '|'), '', $Name);
+ 		$iD = str_replace(array('[]', '|'), '', $name);
 
-		if (!is_array($Value) && $Type != self::FIELD_CUSTOM)
+		if (!is_array($value) && $type != self::FIELD_CUSTOM)
 		{
-			$Value = str_replace(array('{', '}'), array('&#123;', '&#125;'), $Value);
+			$value = str_replace(array('{', '}'), array('&#123;', '&#125;'), $value);
 		}
 
-		switch ($Type)
+		switch ($type)
 		{
 			case self::FIELD_CUSTOM:
-				$Form = &$Value;
+				$form = &$value;
 			break;
 			case self::FIELD_BOOLEAN:
-				$Form = '<input type="checkbox" name="'.$Name.'" id="F_'.$ID.'" value="1"'.($Value?' checked="checked"':'').(($Default !== NULL)?' onchange="checkDefault(\''.$ID.'\', '.($Default?1:0).')"':'').'>';
+				$form = '<input type="checkbox" name="'.$name.'" id="F_'.$iD.'" value="1"'.($value?' checked="checked"':'').(($default !== NULL)?' onchange="checkDefault(\''.$iD.'\', '.($default?1:0).')"':'').'>';
 			break;
 			case self::FIELD_VALUE:
-				$Form = '<input'.(stristr($Name, 'pass')?' type="password"':'').' name="'.$Name.'" id="F_'.$ID.'" value="'.htmlspecialchars($Value, ENT_QUOTES, 'UTF-8', FALSE).'"'.(($Default !== NULL)?' onkeyup="checkDefault(\''.$ID.'\', \''.str_replace(array("\r\n", "\n", '{', '}'), array('\r\n', '\n', '&#123;', '&#125;'), htmlspecialchars($Default, ENT_QUOTES, 'UTF-8')).'\')"':'').'>';
+				$form = '<input'.(stristr($name, 'pass')?' type="password"':'').' name="'.$name.'" id="F_'.$iD.'" value="'.htmlspecialchars($value, ENT_QUOTES, 'UTF-8', FALSE).'"'.(($default !== NULL)?' onkeyup="checkDefault(\''.$iD.'\', \''.str_replace(array("\r\n", "\n", '{', '}'), array('\r\n', '\n', '&#123;', '&#125;'), htmlspecialchars($default, ENT_QUOTES, 'UTF-8')).'\')"':'').'>';
 			break;
 			case self::FIELD_SELECT:
-				$Form = '<select name="'.$Name.'" id="F_'.$ID.'"'.(is_array($Value)?' multiple="multiple" size="3"':'').(($Default !== NULL)?' onchange="checkDefault(\''.$ID.'\', \''.str_replace(array('{', '}'), array('&#123;', '&#125;'), htmlspecialchars($Default, ENT_QUOTES, 'UTF-8')).'\')"':'').'>
+				$form = '<select name="'.$name.'" id="F_'.$iD.'"'.(is_array($value)?' multiple="multiple" size="3"':'').(($default !== NULL)?' onchange="checkDefault(\''.$iD.'\', \''.str_replace(array('{', '}'), array('&#123;', '&#125;'), htmlspecialchars($default, ENT_QUOTES, 'UTF-8')).'\')"':'').'>
 ';
 
-				for ($i = 0, $c = count($Options); $i < $c; ++$i)
+				for ($i = 0, $c = count($options); $i < $c; ++$i)
 				{
-					if (empty($Options[$i]))
+					if (empty($options[$i]))
 					{
 						continue;
 					}
 
-					if (is_array($Options[$i]))
+					if (is_array($options[$i]))
 					{
-						$Text = $Options[$i][1];
-						$Options[$i] = $Options[$i][0];
+						$text = $options[$i][1];
+						$options[$i] = $options[$i][0];
 					}
 					else
 					{
-						$Text = $Options[$i];
+						$text = $options[$i];
 					}
 
-					$Select = (is_array($Value)?in_array($Options[$i], $Value):($Options[$i] == $Value));
-					$Form.= '<option'.(($Text != $Options[$i])?' value="'.htmlspecialchars($Options[$i]).'"':'').($Select?' selected="selected"':'').'>'.htmlspecialchars($Text).'</option>
+					$select = (is_array($value)?in_array($options[$i], $value):($options[$i] == $value));
+					$form.= '<option'.(($text != $options[$i])?' value="'.htmlspecialchars($options[$i]).'"':'').($select?' selected="selected"':'').'>'.htmlspecialchars($text).'</option>
 ';
 				}
 
-				$Form.= '</select>';
+				$form.= '</select>';
 			break;
 			case self::FIELD_MULTILINE:
 			case self::FIELD_ARRAY:
-				$Form = '<textarea rows="1" cols="25" name="'.$Name.'" id="F_'.$ID.'"'.(($Type == self::FIELD_ARRAY)?' title="'.EstatsLocale::translate('Array, elements separated by |').'"':'').(($Default !== NULL)?' onkeyup="checkDefault(\''.$ID.'\', \''.str_replace(array("\r\n", "\n", '{', '}'), array('\r\n', '\n', '&#123;', '&#125;'), htmlspecialchars($Default, ENT_QUOTES, 'UTF-8')).'\')"':'').'>'.htmlspecialchars((is_array($Value)?implode('|', $Value):$Value), ENT_QUOTES, 'UTF-8', FALSE).'</textarea>';
+				$form = '<textarea rows="1" cols="25" name="'.$name.'" id="F_'.$iD.'"'.(($type == self::FIELD_ARRAY)?' title="'.EstatsLocale::translate('Array, elements separated by |').'"':'').(($default !== NULL)?' onkeyup="checkDefault(\''.$iD.'\', \''.str_replace(array("\r\n", "\n", '{', '}'), array('\r\n', '\n', '&#123;', '&#125;'), htmlspecialchars($default, ENT_QUOTES, 'UTF-8')).'\')"':'').'>'.htmlspecialchars((is_array($value)?implode('|', $value):$value), ENT_QUOTES, 'UTF-8', FALSE).'</textarea>';
 			break;
 			default:
 				return '';
 			break;
 		}
 
-		if ($Default !== NULL)
+		if ($default !== NULL)
 		{
-			$Form.= '
-<input type="button" value="'.EstatsLocale::translate('Default').'"  onclick="setDefault(\''.$ID.'\', \''.str_replace(array("\r\n", "\n", '{', '}'), array('\r\n', '\n', '&#123;', '&#125;'), htmlspecialchars($Default, ENT_QUOTES, 'UTF-8')).'\')" title="'.EstatsLocale::translate('Default value').': '.htmlspecialchars(str_replace(array("\r\n", "\n", '{', '}'), array(' ', ' ', '&#123;', '&#125;'), $Default)).'">';
+			$form.= '
+<input type="button" value="'.EstatsLocale::translate('Default').'"  onclick="setDefault(\''.$iD.'\', \''.str_replace(array("\r\n", "\n", '{', '}'), array('\r\n', '\n', '&#123;', '&#125;'), htmlspecialchars($default, ENT_QUOTES, 'UTF-8')).'\')" title="'.EstatsLocale::translate('Default value').': '.htmlspecialchars(str_replace(array("\r\n", "\n", '{', '}'), array(' ', ' ', '&#123;', '&#125;'), $default)).'">';
 		}
 
 		return EstatsTheme::parse(EstatsTheme::get('option-row'), array(
-	'changed' => (($Default === NULL || str_replace(array('{', '}', '\r\n'), array('&#123;', '&#125;', "\r\n"),$Default) == (is_array($Value)?implode('|', $Value):$Value))?'':' class="changed" title="'.EstatsLocale::translate('Field value is other than default').'"'),
-	'id' => &$ID,
-	'form' => &$Form,
-	'option' => &$Label,
-	'description' => ($Description?'<br>
-<dfn>'.$Description.'</dfn>':'')
+	'changed' => (($default === NULL || str_replace(array('{', '}', '\r\n'), array('&#123;', '&#125;', "\r\n"),$default) == (is_array($value)?implode('|', $value):$value))?'':' class="changed" title="'.EstatsLocale::translate('Field value is other than default').'"'),
+	'id' => &$iD,
+	'form' => &$form,
+	'option' => &$label,
+	'description' => ($description?'<br>
+<dfn>'.$description.'</dfn>':'')
 	));
 	}
 
@@ -752,15 +752,15 @@ class EstatsGUI
  * @return integer
  */
 
-	static function toolLevel($Tool)
+	static function toolLevel($tool)
 	{
-		if (is_file('./plugins/tools/'.$Tool.'/plugin.ini'))
+		if (is_file('./plugins/tools/'.$tool.'/plugin.ini'))
 		{
-			$Information = EstatsCore::loadData('plugins/tools/'.$Tool.'/plugin.ini', FALSE, FALSE);
+			$information = EstatsCore::loadData('plugins/tools/'.$tool.'/plugin.ini', FALSE, FALSE);
 
-			if (isset($Information['Level']))
+			if (isset($information['Level']))
 			{
-				return $Information['Level'];
+				return $information['Level'];
 			}
 			else
 			{
@@ -780,34 +780,34 @@ class EstatsGUI
  * @param boolean RestoreDefaults
  */
 
-	static function saveConfiguration($Options, $Values, $RestoreDefaults = FALSE)
+	static function saveConfiguration($options, $values, $restoreDefaults = FALSE)
 	{
-		if ($RestoreDefaults)
+		if ($restoreDefaults)
 		{
-			$Defaults = EstatsCore::loadData('share/data/configuration.ini');
-			$Defaults = array_merge($Defaults['Core'], $Defaults['GUI']);
+			$defaults = EstatsCore::loadData('share/data/configuration.ini');
+			$defaults = array_merge($defaults['Core'], $defaults['GUI']);
 
-			if (count($Defaults) == 0)
+			if (count($defaults) == 0)
 			{
 				return;
 			}
 		}
 
-		$Configuration = array();
+		$configuration = array();
 
-		for ($i = 0, $c = count($Options); $i < $c; ++$i)
+		for ($i = 0, $c = count($options); $i < $c; ++$i)
 		{
-			if ($RestoreDefaults)
+			if ($restoreDefaults)
 			{
-				$Configuration[$Options[$i]] = str_replace('\r\n', "\r\n", $Defaults[$Options[$i]]['value']);
+				$configuration[$options[$i]] = str_replace('\r\n', "\r\n", $defaults[$options[$i]]['value']);
 			}
 			else
 			{
-				$Configuration[$Options[$i]] = (isset($Values[$Options[$i]])?stripslashes($Values[$Options[$i]]):0);
+				$configuration[$options[$i]] = (isset($values[$options[$i]])?stripslashes($values[$options[$i]]):0);
 			}
 		}
 
-		EstatsCore::setConfiguration($Configuration);
+		EstatsCore::setConfiguration($configuration);
 		EstatsCore::logEvent(EstatsCore::EVENT_CONFIGURATIONCHANGED);
 		EstatsGUI::notify(EstatsLocale::translate('Configuration saved successfully.'), 'success');
 	}
@@ -818,9 +818,9 @@ class EstatsGUI
  * @param string Type
  */
 
-	static function notify($Message, $Type)
+	static function notify($message, $type)
 	{
-		self::$Notifications[] = array($Message, $Type);
+		self::$notifications[] = array($message, $type);
 	}
 
 /**
@@ -829,7 +829,7 @@ class EstatsGUI
  */
 	static function notifications()
 	{
-		return self::$Notifications;
+		return self::$notifications;
 	}
 }
 ?>

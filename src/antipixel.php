@@ -17,9 +17,9 @@ if (isset($_GET['count']))
 
 		if (!empty($_GET['address']))
 		{
-			$Address = parse_url($_GET['address']);
+			$address = parse_url($_GET['address']);
 
-			define('ESTATS_ADDRESS', $Address['path'].(isset($Address['query'])?'?'.$Address['query']:''));
+			define('ESTATS_ADDRESS', $address['path'].(isset($address['query'])?'?'.$address['query']:''));
 		}
 
 		if (!empty($_GET['title']))
@@ -35,7 +35,7 @@ if (isset($_GET['count']))
 
 	define('ESTATS_JSINFORMATION', TRUE);
 
-	$JSInformation = array
+	$jSInformation = array
 	(
 	'info' => 1,
 	'javascript' => (isset($_GET['javascript']) && $_GET['javascript']),
@@ -48,9 +48,9 @@ if (isset($_GET['count']))
 
 require ('./stats.php');
 
-$FileName = 'share/antipixels/'.((isset($_GET['antipixel']) && $_GET['antipixel'] && is_file('./share/antipixels/'.urldecode($_GET['antipixel'])))?urldecode($_GET['antipixel']):((defined('ESTATS_CRITICAL') || !class_exists('EstatsCore'))?'default/fresh.png':EstatsCore::option('Antipixel')));
-$TmpArray = explode('.', basename($FileName));
+$fileName = 'share/antipixels/'.((isset($_GET['antipixel']) && $_GET['antipixel'] && is_file('./share/antipixels/'.urldecode($_GET['antipixel'])))?urldecode($_GET['antipixel']):((defined('ESTATS_CRITICAL') || !class_exists('EstatsCore'))?'default/fresh.png':EstatsCore::option('Antipixel')));
+$tmpArray = explode('.', basename($fileName));
 
-header('Content-type: image/'.end($TmpArray));
-die(file_get_contents($FileName));
+header('Content-type: image/'.end($tmpArray));
+die(file_get_contents($fileName));
 ?>

@@ -10,10 +10,10 @@ if (!defined('eStats'))
 	die();
 }
 
-if (isset($Path[3]) && $Path[3] == 'advanced')
+if (isset($path[3]) && $path[3] == 'advanced')
 {
-	$Configuration = EstatsCore::loadData('share/data/configuration.ini');
-	$GroupNames = array(
+	$configuration = EstatsCore::loadData('share/data/configuration.ini');
+	$groupNames = array(
 	'Core' => EstatsLocale::translate('Settings requeired for correct data collecting'),
 	'Backups' => EstatsLocale::translate('Backups creation system configuration'),
 	'GUI' => EstatsLocale::translate('User interface behavior settings'),
@@ -22,7 +22,7 @@ if (isset($Path[3]) && $Path[3] == 'advanced')
 	'GroupAmount' => EstatsLocale::translate('Settings of amounts of displayed elements'),
 	'Path' => EstatsLocale::translate('Settings of passing variables in address'),
 	);
-	$OptionsNames = array(
+	$optionsNames = array(
 	'Backups/profile' => EstatsLocale::translate('Backup creating profile'),
 	'Backups/usertables' => EstatsLocale::translate('Tables to archivize (user profile)'),
 	'Backups/creationinterval' => EstatsLocale::translate('Create backups after specified time (seconds)'),
@@ -60,22 +60,22 @@ if (isset($Path[3]) && $Path[3] == 'advanced')
 	'MapLink' => EstatsLocale::translate('Link for showing locations on map'),
 	'WhoisLink' => EstatsLocale::translate('Link to Whois service')
 	);
-	$OptionSelects['DefaultLanguage'] = $Locales;
-	$OptionSelects['Antipixel'] = $OptionSelects['DefaultTheme'] = array();
-	$OptionSelects['Backups/profile'] = array('data', 'full', 'user');
-	$OptionSelects['ChartsType'] = array('areas', 'bars', 'html', 'lines');
-	$OptionSelects['Path/mode'] = range(0, 2);
-	$OptionSelects['DefaultTheme'] = array_keys(EstatsTheme::available());
-	$OptionSelects['Antipixel'] = glob('share/antipixels/*/*.{png,gif,jpg}', GLOB_BRACE);
+	$optionSelects['DefaultLanguage'] = $locales;
+	$optionSelects['Antipixel'] = $optionSelects['DefaultTheme'] = array();
+	$optionSelects['Backups/profile'] = array('data', 'full', 'user');
+	$optionSelects['ChartsType'] = array('areas', 'bars', 'html', 'lines');
+	$optionSelects['Path/mode'] = range(0, 2);
+	$optionSelects['DefaultTheme'] = array_keys(EstatsTheme::available());
+	$optionSelects['Antipixel'] = glob('share/antipixels/*/*.{png,gif,jpg}', GLOB_BRACE);
 
-	for ($i = 0, $c = count($OptionSelects['Antipixel']); $i < $c; ++$i)
+	for ($i = 0, $c = count($optionSelects['Antipixel']); $i < $c; ++$i)
 	{
-		$OptionSelects['Antipixel'][$i] = str_replace('share/antipixels/', '', $OptionSelects['Antipixel'][$i]);
+		$optionSelects['Antipixel'][$i] = str_replace('share/antipixels/', '', $optionSelects['Antipixel'][$i]);
 	}
 
 	if (isset($_POST['SaveConfiguration']) || isset($_POST['Defaults']))
 	{
-		EstatsGUI::saveConfiguration(array_keys(array_merge($Configuration['Core'], $Configuration['GUI'])), $_POST, isset($_POST['Defaults']));
+		EstatsGUI::saveConfiguration(array_keys(array_merge($configuration['Core'], $configuration['GUI'])), $_POST, isset($_POST['Defaults']));
 	}
 
 	EstatsTheme::add('page', '<div id="advanced">
@@ -95,55 +95,55 @@ if (isset($Path[3]) && $Path[3] == 'advanced')
 </div>
 <form action="{selfpath}" method="post">
 ');
-	$ResultsAmount = 0;
-	$CurrentSubGroup = '';
+	$resultsAmount = 0;
+	$currentSubGroup = '';
 
-	foreach ($Configuration as $Group => $Options)
+	foreach ($configuration as $group => $options)
 	{
-		EstatsTheme::append('page', '<fieldset class="expanded" id="g_'.$Group.'">
-<legend class="parent" onclick="changeClassName(\'g_'.$Group.'\')" title="'.$GroupNames[$Group].'">'.$Group.'</legend>
+		EstatsTheme::append('page', '<fieldset class="expanded" id="g_'.$group.'">
+<legend class="parent" onclick="changeClassName(\'g_'.$group.'\')" title="'.$groupNames[$group].'">'.$group.'</legend>
 <div>
-<dfn class="groupdesc">'.$GroupNames[$Group].'</dfn>
+<dfn class="groupdesc">'.$groupNames[$group].'</dfn>
 ');
 
-		$CurrentSubGroup = '';
+		$currentSubGroup = '';
 
-		foreach ($Options as $Option => $Value)
+		foreach ($options as $option => $value)
 		{
-			if (strstr($Option, '/'))
+			if (strstr($option, '/'))
 			{
-				$Option = str_replace('/', '|', $Option);
-				$Array = explode('|', $Option);
-				$SubGroup = reset($Array);
-				$OptionName = end($Array);
-				$Description = ((($SubGroup == 'GroupAmount'))?EstatsLocale::translate(($OptionName !== 'details')?$Titles[$OptionName]:'Details'):(isset($OptionsNames[$Option])?$OptionsNames[$Option]:''));
+				$option = str_replace('/', '|', $option);
+				$array = explode('|', $option);
+				$subGroup = reset($array);
+				$optionName = end($array);
+				$description = ((($subGroup == 'GroupAmount'))?EstatsLocale::translate(($optionName !== 'details')?$titles[$optionName]:'Details'):(isset($optionsNames[$option])?$optionsNames[$option]:''));
 			}
 			else
 			{
-				$SubGroup = '';
-				$OptionName = $Option;
-				$Description = (isset($OptionsNames[$Option])?$OptionsNames[$Option]:'');
+				$subGroup = '';
+				$optionName = $option;
+				$description = (isset($optionsNames[$option])?$optionsNames[$option]:'');
 			}
 
-			if ($SubGroup != $CurrentSubGroup)
+			if ($subGroup != $currentSubGroup)
 			{
-				EstatsTheme::append('page', ($CurrentSubGroup?'</div>
+				EstatsTheme::append('page', ($currentSubGroup?'</div>
 </fieldset>
-':'').'<fieldset class="expanded" id="g_'.$Group.'.'.$SubGroup.'">
-<legend onclick="changeClassName(\'g_'.$Group.'.'.$SubGroup.'\')" title="'.$GroupNames[$SubGroup].'">'.$SubGroup.'</legend>
+':'').'<fieldset class="expanded" id="g_'.$group.'.'.$subGroup.'">
+<legend onclick="changeClassName(\'g_'.$group.'.'.$subGroup.'\')" title="'.$groupNames[$subGroup].'">'.$subGroup.'</legend>
 <div>
-<dfn class="groupdesc">'.$GroupNames[$SubGroup].'</dfn>
+<dfn class="groupdesc">'.$groupNames[$subGroup].'</dfn>
 ');
 
-				$CurrentSubGroup = $SubGroup;
+				$currentSubGroup = $subGroup;
 			}
 
-			EstatsTheme::append('page', EstatsGUI::optionRowWidget($OptionName, $Description, $Option, EstatsCore::option($Option), $Value['type'], (($Value['type'] == EstatsGUI::FIELD_SELECT)?$OptionSelects[$Option]:NULL), $Value['value']));
+			EstatsTheme::append('page', EstatsGUI::optionRowWidget($optionName, $description, $option, EstatsCore::option($option), $value['type'], (($value['type'] == EstatsGUI::FIELD_SELECT)?$optionSelects[$option]:NULL), $value['value']));
 
-			++$ResultsAmount;
+			++$resultsAmount;
 		}
 
-		if ($CurrentSubGroup)
+		if ($currentSubGroup)
 		{
 			EstatsTheme::append('page', '</div>
 </fieldset>
@@ -181,7 +181,7 @@ for (var i = 0; i < 2; ++i)
 </script>
 </div>
 ');
-	EstatsTheme::add('resultsamount', $ResultsAmount);
+	EstatsTheme::add('resultsamount', $resultsAmount);
 }
 else
 {
@@ -230,7 +230,7 @@ else
 
 			if (EstatsCookie::get('password'))
 			{
-				EstatsCookie::set('password', md5($_SESSION[EstatsCore::session()]['password'].$UniqueID), 1209600);
+				EstatsCookie::set('password', md5($_SESSION[EstatsCore::session()]['password'].$uniqueID), 1209600);
 			}
 
 			EstatsCore::setConfiguration(array('AdminPass' => $_SESSION[EstatsCore::session()]['password']));
@@ -260,15 +260,15 @@ else
 </h3>
 ');
 
-	$Options = array(
+	$options = array(
 	'Current' => EstatsLocale::translate('Current password'),
 	'New' => EstatsLocale::translate('New password'),
 	'Repeat' => EstatsLocale::translate('Repeat password')
 	);
 
-	foreach ($Options as $Key => $Value)
+	foreach ($options as $key => $value)
 	{
-		EstatsTheme::append('page', EstatsGUI::optionRowWidget($Value, '', $Key.'Password'));
+		EstatsTheme::append('page', EstatsGUI::optionRowWidget($value, '', $key.'Password'));
 	}
 
 	EstatsTheme::append('page', '<div class="buttons">
@@ -281,7 +281,7 @@ else
 </h3>
 ');
 
-	$Options = array(
+	$options = array(
 	'AccessPassword' => array(EstatsLocale::translate('Password for viewing statistics (leave empty, if you allow free access)'), '', EstatsGUI::FIELD_VALUE),
 	'VisitTime' => array(EstatsLocale::translate('Time after that visit is count again (seconds)'), EstatsCore::option('VisitTime'), EstatsGUI::FIELD_VALUE),
 	'StatsEnabled' => array(EstatsLocale::translate('Enable data collecting'), EstatsCore::option('StatsEnabled'), EstatsGUI::FIELD_BOOLEAN),
@@ -290,43 +290,43 @@ else
 	'CountPhrases' => array(EstatsLocale::translate('Count whole phrases instead of keywords'), EstatsCore::option('CountPhrases'), EstatsGUI::FIELD_BOOLEAN)
 	);
 
-	foreach ($Options as $Key => $Value)
+	foreach ($options as $key => $value)
 	{
-		EstatsTheme::append('page', EstatsGUI::optionRowWidget($Value[0].(($Key == 'AccessPassword')?' <strong>['.(EstatsCore::option('AccessPassword')?EstatsLocale::translate('Currently enabled'):EstatsLocale::translate('Currently disabled')).']</strong>':''), '', $Key, $Value[1], $Value[2]));
+		EstatsTheme::append('page', EstatsGUI::optionRowWidget($value[0].(($key == 'AccessPassword')?' <strong>['.(EstatsCore::option('AccessPassword')?EstatsLocale::translate('Currently enabled'):EstatsLocale::translate('Currently disabled')).']</strong>':''), '', $key, $value[1], $value[2]));
 	}
 
-	$AntipixelSelect = $CurrentDirectory = '';
-	$Antipixels = glob('share/antipixels/*/*.{png,gif,jpg}', GLOB_BRACE);
+	$antipixelSelect = $currentDirectory = '';
+	$antipixels = glob('share/antipixels/*/*.{png,gif,jpg}', GLOB_BRACE);
 
-	natsort($Antipixels);
+	natsort($antipixels);
 
-	for ($i = 0, $c = count($Antipixels); $i < $c; ++$i)
+	for ($i = 0, $c = count($antipixels); $i < $c; ++$i)
 	{
-		$Antipixels[$i] = str_replace('share/antipixels/', '', $Antipixels[$i]);
-		$Directory = dirname($Antipixels[$i]);
+		$antipixels[$i] = str_replace('share/antipixels/', '', $antipixels[$i]);
+		$directory = dirname($antipixels[$i]);
 
-		if ($Directory != $CurrentDirectory)
+		if ($directory != $currentDirectory)
 		{
-			$AntipixelSelect.= ($CurrentDirectory?'</optgroup>
-':'').'<optgroup label="'.ucfirst(basename($Directory)).'">
+			$antipixelSelect.= ($currentDirectory?'</optgroup>
+':'').'<optgroup label="'.ucfirst(basename($directory)).'">
 ';
 
-			$CurrentDirectory = $Directory;
+			$currentDirectory = $directory;
 		}
 
-		$AntipixelSelect.= '<option value="'.htmlspecialchars($Antipixels[$i], ENT_QUOTES, 'UTF-8', FALSE).'"'.((EstatsCore::option('Antipixel') == $Antipixels[$i])?' selected="selected"':'').'>'.ucfirst(htmlspecialchars(str_replace('_', ' ', basename($Antipixels[$i])))).'</option>
+		$antipixelSelect.= '<option value="'.htmlspecialchars($antipixels[$i], ENT_QUOTES, 'UTF-8', FALSE).'"'.((EstatsCore::option('Antipixel') == $antipixels[$i])?' selected="selected"':'').'>'.ucfirst(htmlspecialchars(str_replace('_', ' ', basename($antipixels[$i])))).'</option>
 ';
 	}
 
-	if ($AntipixelSelect)
+	if ($antipixelSelect)
 	{
-		$AntipixelSelect.= '</optgroup>
+		$antipixelSelect.= '</optgroup>
 ';
 	}
 
 	EstatsTheme::append('page', EstatsGUI::optionRowWidget(EstatsLocale::translate('Statistics antipixel'), '', 'Antipixel', '<img src="{datapath}share/antipixels/'.htmlspecialchars(EstatsCore::option('Antipixel'), ENT_QUOTES, 'UTF-8', FALSE).'" alt="Preview" id="antipixelpreview">
 <select name="Antipixel" id="F_Antipixel" onchange="document.getElementById(\'antipixelpreview\').src = \'{datapath}share/antipixels/\' + this.options[selectedIndex].value">
-'.$AntipixelSelect.'</select>', EstatsGUI::FIELD_CUSTOM).EstatsGUI::optionRowWidget(EstatsLocale::translate('Default theme'), '', 'DefaultTheme', EstatsCore::option('DefaultTheme'), EstatsGUI::FIELD_SELECT, array_keys($Themes)).EstatsGUI::optionRowWidget(EstatsLocale::translate('Mode of passing data in the path'), '', 'PathMode', EstatsCore::option('Path/mode'), EstatsGUI::FIELD_SELECT, array('GET', 'PATH_INFO', 'Rewrite')).'<div class="buttons">
+'.$antipixelSelect.'</select>', EstatsGUI::FIELD_CUSTOM).EstatsGUI::optionRowWidget(EstatsLocale::translate('Default theme'), '', 'DefaultTheme', EstatsCore::option('DefaultTheme'), EstatsGUI::FIELD_SELECT, array_keys($themes)).EstatsGUI::optionRowWidget(EstatsLocale::translate('Mode of passing data in the path'), '', 'PathMode', EstatsCore::option('Path/mode'), EstatsGUI::FIELD_SELECT, array('GET', 'PATH_INFO', 'Rewrite')).'<div class="buttons">
 <input type="submit" onclick="if (!confirm(document.getElementById(\'F_Maintenance\').checked?\'Do you really want to enable maintenance mode?\nIf you log out before turning it off you will not be able to log in again!\':\''.EstatsLocale::translate('Do you really want to save?').'\')) return false" value="'.EstatsLocale::translate('Save').'" name="SaveConfiguration">
 <input type="submit" onclick="if (!confirm(\''.EstatsLocale::translate('Do you really want to restore defaults?').'\')) return false" value="'.EstatsLocale::translate('Defaults').'" name="Defaults">
 <input type="reset" value="'.EstatsLocale::translate('Reset').'">

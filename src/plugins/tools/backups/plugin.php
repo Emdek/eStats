@@ -18,45 +18,45 @@ if (isset($_POST['SaveConfiguration']) || isset($_POST['Defaults']))
 
 if (isset($_POST['DownloadBackup']))
 {
-	$BackupInfo = explode('.', $_POST['BackupID']);
-	$Data = file_get_contents($DataDir.'backups/'.$_POST['BackupID'].'.bak');
+	$backupInfo = explode('.', $_POST['BackupID']);
+	$data = file_get_contents($dataDir.'backups/'.$_POST['BackupID'].'.bak');
 
 	switch (strtolower($_POST['Compress']))
 	{
 		case 'gzip':
 			header('Content-Encoding: gzip');
-			$Size = strlen($Data);
-			$Data = gzcompress($Data, 9);
-			$Data = "\x1f\x8b\x08\x00\x00\x00\x00\x00".substr($Data, 0, $Size);
-			$Extension = '';
+			$size = strlen($data);
+			$data = gzcompress($data, 9);
+			$data = "\x1f\x8b\x08\x00\x00\x00\x00\x00".substr($data, 0, $size);
+			$extension = '';
 		break;
 		case 'bzip':
-			$Data = bzcompress($Data);
-			$Extension = '.bz2';
+			$data = bzcompress($data);
+			$extension = '.bz2';
 		break;
 		case 'zip':
-			$TmpFile = $DataDir.'/tmp/export.zip';
-			$ZIP = new ZipArchive;
-			$ZIP->open($TmpFile, ZipArchive::CREATE);
-			$ZIP->addFromString($FileName, $Data);
-			$ZIP->close();
-			$Data = file_get_contents($TmpFile);
-			$Extension = '.zip';
+			$tmpFile = $dataDir.'/tmp/export.zip';
+			$zIP = new ZipArchive;
+			$zIP->open($tmpFile, ZipArchive::CREATE);
+			$zIP->addFromString($fileName, $data);
+			$zIP->close();
+			$data = file_get_contents($tmpFile);
+			$extension = '.zip';
 
-			unlink($TmpFile);
+			unlink($tmpFile);
 	}
 
 	header('Content-Type: application/force-download');
-	header('Content-Disposition: attachment; filename=eStats_'.date('Y-m-d', (int) $BackupInfo[0]).'_'.date('Y-m-d').'.'.$BackupInfo[1].'.bak'.$Extension);
-	die(trim($Data));
+	header('Content-Disposition: attachment; filename=eStats_'.date('Y-m-d', (int) $backupInfo[0]).'_'.date('Y-m-d').'.'.$backupInfo[1].'.bak'.$extension);
+	die(trim($data));
 }
 
 if (isset($_POST['DeleteBackup']))
 {
-	$Status = EstatsBackups::delete($_POST['BackupID']);
+	$status = EstatsBackups::delete($_POST['BackupID']);
 
 
-	if ($Status)
+	if ($status)
 	{
 		EstatsCore::logEvent(EstatsCore::EVENT_BACKUPDELETED, 'ID: '.$_POST['BackupID']);
 		EstatsGUI::notify(EstatsLocale::translate('Backup deleted successfully.'), 'success');
@@ -70,11 +70,11 @@ if (isset($_POST['DeleteBackup']))
 
 if (isset($_POST['CreateBackup']))
 {
-	$BackupID = EstatsBackups::create(ESTATS_VERSIONSTRING, (($_POST['Backups/profile'] == 'user')?'manual':$_POST['Backups/profile']), (isset($_POST['Backups/usertables'])?$_POST['Backups/usertables']:array()), isset($_POST['Backups/replacedata']));
+	$backupID = EstatsBackups::create(ESTATS_VERSIONSTRING, (($_POST['Backups/profile'] == 'user')?'manual':$_POST['Backups/profile']), (isset($_POST['Backups/usertables'])?$_POST['Backups/usertables']:array()), isset($_POST['Backups/replacedata']));
 
-	if ($BackupID)
+	if ($backupID)
 	{
-		EstatsCore::logEvent(EstatsCore::EVENT_BACKUPCREATED, 'ID: '.$BackupID);
+		EstatsCore::logEvent(EstatsCore::EVENT_BACKUPCREATED, 'ID: '.$backupID);
 		EstatsGUI::notify(EstatsLocale::translate('Backup created successfully.'), 'success');
 		EstatsCore::setConfiguration(array('LastBackup' => $_SERVER['REQUEST_TIME']), 0);
 
@@ -82,7 +82,7 @@ if (isset($_POST['CreateBackup']))
 	}
 	else
 	{
-		EstatsCore::logEvent(EstatsCore::EVENT_FAILEDBACKUPCREATION, 'ID: '.$BackupID);
+		EstatsCore::logEvent(EstatsCore::EVENT_FAILEDBACKUPCREATION, 'ID: '.$backupID);
 		EstatsGUI::notify(EstatsLocale::translate('An error occured during backup create attempt!'), 'error');
 	}
 }
@@ -92,7 +92,7 @@ if (isset($_FILES['UploadBackup']) && is_uploaded_file($_FILES['UploadBackup']['
 	$_POST['BackupID'] = 'Upload-'.$_SERVER['REQUEST_TIME'].'.user';
 	$_POST['RestoreBackup'] = TRUE;
 
-	move_uploaded_file($_FILES['UploadBackup']['tmp_name'], $DataDir.'backups/'.$_POST['BackupID'].'.bak');
+	move_uploaded_file($_FILES['UploadBackup']['tmp_name'], $dataDir.'backups/'.$_POST['BackupID'].'.bak');
 }
 
 if (isset($_POST['RestoreBackup']))
@@ -108,21 +108,21 @@ if (isset($_POST['RestoreBackup']))
 	}
 }
 
-$Profiles = array();
-$SelectBackups = '';
-$BackupTypes = array('full', 'data', 'user');
-$BackupTypesNames = array(EstatsLocale::translate('Full'), EstatsLocale::translate('Only collected data'), EstatsLocale::translate('User definied'));
+$profiles = array();
+$selectBackups = '';
+$backupTypes = array('full', 'data', 'user');
+$backupTypesNames = array(EstatsLocale::translate('Full'), EstatsLocale::translate('Only collected data'), EstatsLocale::translate('User definied'));
 
 for ($i = 0; $i < 3; ++$i)
 {
-	$Profiles[] = array($BackupTypes[$i], $BackupTypesNames[$i]);
-	$AvailableBackups = EstatsBackups::available($BackupTypes[$i]);
+	$profiles[] = array($backupTypes[$i], $backupTypesNames[$i]);
+	$availableBackups = EstatsBackups::available($backupTypes[$i]);
 
-	 if ($AvailableBackups)
+	 if ($availableBackups)
 	{
-		$c = count($AvailableBackups);
-		$AvailableBackups = array_reverse($AvailableBackups);
-		$SelectBackups.= '<optgroup label="'.EstatsLocale::translate($BackupTypesNames[$i]).'">
+		$c = count($availableBackups);
+		$availableBackups = array_reverse($availableBackups);
+		$selectBackups.= '<optgroup label="'.EstatsLocale::translate($backupTypesNames[$i]).'">
 ';
 	}
 	else
@@ -132,14 +132,14 @@ for ($i = 0; $i < 3; ++$i)
 
 	for ($j = 0; $j < $c; ++$j)
 	{
-		$BackupTime = explode('-', basename($AvailableBackups[$j]));
-		$SelectBackups.= '<option value="'.basename($AvailableBackups[$j], '.bak').'">'.(is_numeric($BackupTime[0])?date('d.m.Y H:i:s', (int) $BackupTime[0]):$BackupTime[0]).' - '.date('d.m.Y H:i:s', (int) $BackupTime[1]).' ('.EstatsGUI::formatSize(filesize($AvailableBackups[$j])).')</option>
+		$backupTime = explode('-', basename($availableBackups[$j]));
+		$selectBackups.= '<option value="'.basename($availableBackups[$j], '.bak').'">'.(is_numeric($backupTime[0])?date('d.m.Y H:i:s', (int) $backupTime[0]):$backupTime[0]).' - '.date('d.m.Y H:i:s', (int) $backupTime[1]).' ('.EstatsGUI::formatSize(filesize($availableBackups[$j])).')</option>
 ';
 	}
 
 	if ($c)
 	{
-		$SelectBackups.= '</optgroup>
+		$selectBackups.= '</optgroup>
 ';
 	}
 }
@@ -148,8 +148,8 @@ EstatsTheme::add('page', '<h3>
 {heading-start}'.EstatsLocale::translate('Backups management').'{heading-end}
 </h3>
 <form action="{selfpath}" method="post" enctype="multipart/form-data">
-'.($SelectBackups?EstatsGUI::optionRowWidget(EstatsLocale::translate('Backup copy'), '', '', '<select name="BackupID">
-'.$SelectBackups.'</select><br>
+'.($selectBackups?EstatsGUI::optionRowWidget(EstatsLocale::translate('Backup copy'), '', '', '<select name="BackupID">
+'.$selectBackups.'</select><br>
 <label>
 '.EstatsLocale::translate('Compression').':
 <select name="Compress" title="'.EstatsLocale::translate('Type of compression of file for download').'">
@@ -167,7 +167,7 @@ EstatsTheme::add('page', '<h3>
 {heading-start}'.EstatsLocale::translate('Settings').'{heading-end}
 </h3>
 <form action="{selfpath}" method="post">
-'.EstatsGUI::optionRowWidget(EstatsLocale::translate('Backup creation profile'), '', 'Backups/profile', EstatsCore::option('Backups/profile'), EstatsGUI::FIELD_SELECT, $Profiles).EstatsGUI::optionRowWidget(EstatsLocale::translate('Create backups after specified time (s)'), '', 'Backups/creationinterval', EstatsCore::option('Backups/creationinterval')).EstatsGUI::optionRowWidget(EstatsLocale::translate('Tables to archivize'), '', 'Backups/usertables[]', EstatsCore::option('Backups/usertables'), EstatsGUI::FIELD_SELECT, array_keys(EstatsCore::loadData('share/data/database.ini'))).EstatsGUI::optionRowWidget(EstatsLocale::translate('Replace existing data'), '', 'Backups/replacedata', EstatsCore::option('Backups/replacedata'), EstatsGUI::FIELD_BOOLEAN).'<div class="buttons">
+'.EstatsGUI::optionRowWidget(EstatsLocale::translate('Backup creation profile'), '', 'Backups/profile', EstatsCore::option('Backups/profile'), EstatsGUI::FIELD_SELECT, $profiles).EstatsGUI::optionRowWidget(EstatsLocale::translate('Create backups after specified time (s)'), '', 'Backups/creationinterval', EstatsCore::option('Backups/creationinterval')).EstatsGUI::optionRowWidget(EstatsLocale::translate('Tables to archivize'), '', 'Backups/usertables[]', EstatsCore::option('Backups/usertables'), EstatsGUI::FIELD_SELECT, array_keys(EstatsCore::loadData('share/data/database.ini'))).EstatsGUI::optionRowWidget(EstatsLocale::translate('Replace existing data'), '', 'Backups/replacedata', EstatsCore::option('Backups/replacedata'), EstatsGUI::FIELD_BOOLEAN).'<div class="buttons">
 <input type="submit" onclick="if (!confirm(\''.EstatsLocale::translate('Do you really want to save?').'\')) return false" value="'.EstatsLocale::translate('Save').'" name="SaveConfiguration">
 <input type="submit" onclick="if (!confirm(\''.EstatsLocale::translate('Do you really want to restore defaults?').'\')) return false" value="'.EstatsLocale::translate('Defaults').'" name="Defaults">
 <input type="reset" value="'.EstatsLocale::translate('Reset').'">

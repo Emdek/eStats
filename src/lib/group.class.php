@@ -18,179 +18,179 @@ class EstatsGroup
  * @return array
  */
 
-	static function selectData($Group, $Amount, $Offset, $From = 0, $To = 0)
+	static function selectData($group, $amount, $offset, $from = 0, $to = 0)
 	{
-		$Data = array();
-		$FetchBefore = ($From && $To);
-		$WhereCurrent = EstatsCore::timeClause('time', $From, $To);
-		$WhereBefore = ($FetchBefore?EstatsCore::timeClause('time', ($From - ($To - $From)), $From):array());
-		$FieldSum = array(EstatsDriver::ELEMENT_FUNCTION, array(EstatsDriver::FUNCTION_SUM, 'amount'), 'sum');
+		$data = array();
+		$fetchBefore = ($from && $to);
+		$whereCurrent = EstatsCore::timeClause('time', $from, $to);
+		$whereBefore = ($fetchBefore?EstatsCore::timeClause('time', ($from - ($to - $from)), $from):array());
+		$fieldSum = array(EstatsDriver::ELEMENT_FUNCTION, array(EstatsDriver::FUNCTION_SUM, 'amount'), 'sum');
 
-		if ($WhereBefore)
+		if ($whereBefore)
 		{
-			$WhereBefore[] = EstatsDriver::OPERATOR_AND;
+			$whereBefore[] = EstatsDriver::OPERATOR_AND;
 		}
 
-		if ($Group == 'browser-versions')
+		if ($group == 'browser-versions')
 		{
-			$Table = 'browsers';
+			$table = 'browsers';
 		}
-		else if ($Group == 'operatingsystems' || $Group == 'operatingsystem-versions')
+		else if ($group == 'operatingsystems' || $group == 'operatingsystem-versions')
 		{
-			$Table = 'oses';
+			$table = 'oses';
 		}
-		else if ($Group == 'cities' || $Group == 'countries' || $Group == 'continents' || $Group == 'world' || substr($Group, 0, 7) == 'country' || substr($Group, 0, 6) == 'cities' || substr($Group, 0, 7) == 'regions')
+		else if ($group == 'cities' || $group == 'countries' || $group == 'continents' || $group == 'world' || substr($group, 0, 7) == 'country' || substr($group, 0, 6) == 'cities' || substr($group, 0, 7) == 'regions')
 		{
-			$Table = 'geoip';
-		}
-		else
-		{
-			$Table = $Group;
-		}
-
-		if ($Group == 'browser-versions' || $Group == 'operatingsystem-versions')
-		{
-			$Fields = array($FieldSum, array(EstatsDriver::ELEMENT_CONCATENATION, array('name', array(EstatsDriver::ELEMENT_VALUE, ' '), 'version'), 'name'));
-
-			if ($FetchBefore)
-			{
-				$Fields[] = array(EstatsDriver::ELEMENT_SUBQUERY, array(array(array($Table, $Table.'2')), array($FieldSum), array_merge($WhereBefore, array(array(EstatsDriver::ELEMENT_OPERATION, array($Table.'2.version', EstatsDriver::OPERATOR_EQUAL, array(EstatsDriver::ELEMENT_FIELD, $Table.'.version')), EstatsDriver::OPERATOR_AND, array($Table.'2.name', EstatsDriver::OPERATOR_EQUAL, array(EstatsDriver::ELEMENT_FIELD, $Table.'.name')))))), 'before');
-			}
-
-			$Result = EstatsCore::driver()->selectData(array($Table), $Fields, $WhereCurrent, $Amount, $Offset, array('sum' => FALSE), array('version', 'name'));
-		}
-		else if ($Group == 'sites')
-		{
-			$Fields = array($FieldSum, 'name', 'address');
-
-			if ($FetchBefore)
-			{
-				$Fields[] = array(EstatsDriver::ELEMENT_SUBQUERY, array(array(array($Table, $Table.'2')), array($FieldSum), array_merge($WhereBefore, array(array(EstatsDriver::ELEMENT_OPERATION, array($Table.'2.address', EstatsDriver::OPERATOR_EQUAL, array(EstatsDriver::ELEMENT_FIELD, $Table.'.address')))))), 'before');
-			}
-
-			$Result = EstatsCore::driver()->selectData(array($Table), $Fields, $WhereCurrent, $Amount, $Offset, array('sum' => FALSE), array('address', 'name'));
-
-			for ($i = 0, $c = count($Result); $i < $c; ++$i)
-			{
-				$Data[] = array(
-	'amount_current' => $Result[$i]['sum'],
-	'amount_before' => ($FetchBefore?$Result[$i]['before']:0),
-	'name' => ($Result[$i]['name']?$Result[$i]['name']:$Result[$i]['address']),
-	'address' => $Result[$i]['address']
-	);
-			}
-		}
-		else if (substr($Group, 0, 6) == 'cities')
-		{
-			$Fields = array($FieldSum, ((strlen($Group) < 7)?array(EstatsDriver::ELEMENT_CONCATENATION, array('city', array(EstatsDriver::ELEMENT_VALUE, '-'), 'country'), 'city'):'city'), 'latitude', 'longitude');
-
-			if ($FetchBefore)
-			{
-				$Fields[] = array(EstatsDriver::ELEMENT_SUBQUERY, array(array(array($Table, $Table.'2')), array($FieldSum), array_merge($WhereBefore, array(array(EstatsDriver::ELEMENT_OPERATION, array($Table.'2.latitude', EstatsDriver::OPERATOR_EQUAL, array(EstatsDriver::ELEMENT_FIELD, $Table.'.latitude')), EstatsDriver::OPERATOR_AND, array($Table.'2.longitude', EstatsDriver::OPERATOR_EQUAL, array(EstatsDriver::ELEMENT_FIELD, $Table.'.longitude')))))), 'before');
-			}
-
-			if ($WhereCurrent)
-			{
-				$WhereCurrent[] = EstatsDriver::OPERATOR_AND;
-			}
-
-			$WhereCurrent[] = array(EstatsDriver::ELEMENT_OPERATION, array('city', (EstatsDriver::OPERATOR_NOT | EstatsDriver::OPERATOR_EQUAL), ''));
-
-			if (isset($Group[6]) && $Group[6] == '-')
-			{
-				$WhereCurrent[] = EstatsDriver::OPERATOR_AND;
-				$WhereCurrent[] = array(EstatsDriver::ELEMENT_OPERATION, array('country', EstatsDriver::OPERATOR_EQUAL, substr($Group, 7)));
-			}
-
-			$Result = EstatsCore::driver()->selectData(array($Table), $Fields, $WhereCurrent, $Amount, $Offset, array('sum' => FALSE), array('city'));
-
-			for ($i = 0, $c = count($Result); $i < $c; ++$i)
-			{
-				$Data[] = array(
-	'amount_current' => $Result[$i]['sum'],
-	'amount_before' => ($FetchBefore?$Result[$i]['before']:0),
-	'name' => $Result[$i]['city'],
-	'latitude' => $Result[$i]['latitude'],
-	'longitude' => $Result[$i]['longitude']
-	);
-			}
-
-			$Group = 'cities';
-		}
-		else if (substr ($Group, 0, 7) == 'regions')
-		{
-			$Fields = array($FieldSum, array(EstatsDriver::ELEMENT_CONCATENATION, array('country', array(EstatsDriver::ELEMENT_VALUE, '-'), 'region'), 'name'));
-
-			if ($FetchBefore)
-			{
-				$Fields[] = array(EstatsDriver::ELEMENT_SUBQUERY, array(array(array($Table, $Table.'2')), array($FieldSum), array_merge($WhereBefore, array(array(EstatsDriver::ELEMENT_OPERATION, array($Table.'2.country', EstatsDriver::OPERATOR_EQUAL, array(EstatsDriver::ELEMENT_FIELD, $Table.'.country')), EstatsDriver::OPERATOR_AND, array($Table.'2.region', EstatsDriver::OPERATOR_EQUAL, array(EstatsDriver::ELEMENT_FIELD, $Table.'.region')))))), 'before');
-			}
-
-			if ($WhereCurrent)
-			{
-				$WhereCurrent[] = EstatsDriver::OPERATOR_AND;
-			}
-
-			$WhereCurrent[] = array(EstatsDriver::ELEMENT_OPERATION, array('country', EstatsDriver::OPERATOR_EQUAL, substr($Group, 8)));
-			$Result = EstatsCore::driver()->selectData(array($Table), $Fields, $WhereCurrent, $Amount, $Offset, array('sum' => FALSE), array('name'));
-		}
-		else if ($Group == 'continents')
-		{
-			$Fields = array($FieldSum, array(EstatsDriver::ELEMENT_FIELD, 'continent', 'name'));
-
-			if ($FetchBefore)
-			{
-				$Fields[] = array(EstatsDriver::ELEMENT_SUBQUERY, array(array(array($Table, $Table.'2')), array($FieldSum), array_merge($WhereBefore, array(array(EstatsDriver::ELEMENT_OPERATION, array($Table.'2.continent', EstatsDriver::OPERATOR_EQUAL, array(EstatsDriver::ELEMENT_FIELD, $Table.'.continent')))))), 'before');
-			}
-
-			$Result = EstatsCore::driver()->selectData(array($Table), $Fields, $WhereCurrent, $Amount, $Offset, array('sum' => FALSE), array('name'));
-		}
-		else if ($Group == 'countries')
-		{
-			$Fields = array($FieldSum, 'country', 'continent');
-
-			if ($FetchBefore)
-			{
-				$Fields[] = array(EstatsDriver::ELEMENT_SUBQUERY, array(array(array($Table, $Table.'2')), array($FieldSum), array_merge($WhereBefore, array(array(EstatsDriver::ELEMENT_OPERATION, array($Table.'2.country', EstatsDriver::OPERATOR_EQUAL, array(EstatsDriver::ELEMENT_FIELD, $Table.'.country')))))), 'before');
-			}
-
-			$Result = EstatsCore::driver()->selectData(array($Table), $Fields, $WhereCurrent, $Amount, $Offset, array('sum' => FALSE), array('country', 'continent'));
-
-			for ($i = 0, $c = count($Result); $i < $c; ++$i)
-			{
-				$Data[] = array(
-	'amount_current' => $Result[$i]['sum'],
-	'amount_before' => ($FetchBefore?$Result[$i]['before']:0),
-	'name' => $Result[$i]['country'],
-	'continent' => $Result[$i]['continent']
-	);
-			}
+			$table = 'geoip';
 		}
 		else
 		{
-			$Fields = array($FieldSum, 'name');
-
-			if ($FetchBefore)
-			{
-				$Fields[] = array(EstatsDriver::ELEMENT_SUBQUERY, array(array(array($Table, $Table.'2')), array($FieldSum), array_merge($WhereBefore, array(array(EstatsDriver::ELEMENT_OPERATION, array($Table.'2.name', EstatsDriver::OPERATOR_EQUAL, array(EstatsDriver::ELEMENT_FIELD, $Table.'.name')))))), 'before');
-			}
-
-			$Result = EstatsCore::driver()->selectData(array($Table), $Fields, $WhereCurrent, $Amount, $Offset, array('sum' => FALSE), array('name'));
+			$table = $group;
 		}
 
-		if ($Group != 'countries' && $Group != 'cities' && $Group != 'sites')
+		if ($group == 'browser-versions' || $group == 'operatingsystem-versions')
 		{
-			for ($i = 0, $c = count($Result); $i < $c; ++$i)
+			$fields = array($fieldSum, array(EstatsDriver::ELEMENT_CONCATENATION, array('name', array(EstatsDriver::ELEMENT_VALUE, ' '), 'version'), 'name'));
+
+			if ($fetchBefore)
 			{
-				$Data[] = array(
-	'amount_current' => $Result[$i]['sum'],
-	'amount_before' => ($FetchBefore?$Result[$i]['before']:0),
-	'name' => $Result[$i]['name']
+				$fields[] = array(EstatsDriver::ELEMENT_SUBQUERY, array(array(array($table, $table.'2')), array($fieldSum), array_merge($whereBefore, array(array(EstatsDriver::ELEMENT_OPERATION, array($table.'2.version', EstatsDriver::OPERATOR_EQUAL, array(EstatsDriver::ELEMENT_FIELD, $table.'.version')), EstatsDriver::OPERATOR_AND, array($table.'2.name', EstatsDriver::OPERATOR_EQUAL, array(EstatsDriver::ELEMENT_FIELD, $table.'.name')))))), 'before');
+			}
+
+			$result = EstatsCore::driver()->selectData(array($table), $fields, $whereCurrent, $amount, $offset, array('sum' => FALSE), array('version', 'name'));
+		}
+		else if ($group == 'sites')
+		{
+			$fields = array($fieldSum, 'name', 'address');
+
+			if ($fetchBefore)
+			{
+				$fields[] = array(EstatsDriver::ELEMENT_SUBQUERY, array(array(array($table, $table.'2')), array($fieldSum), array_merge($whereBefore, array(array(EstatsDriver::ELEMENT_OPERATION, array($table.'2.address', EstatsDriver::OPERATOR_EQUAL, array(EstatsDriver::ELEMENT_FIELD, $table.'.address')))))), 'before');
+			}
+
+			$result = EstatsCore::driver()->selectData(array($table), $fields, $whereCurrent, $amount, $offset, array('sum' => FALSE), array('address', 'name'));
+
+			for ($i = 0, $c = count($result); $i < $c; ++$i)
+			{
+				$data[] = array(
+	'amount_current' => $result[$i]['sum'],
+	'amount_before' => ($fetchBefore?$result[$i]['before']:0),
+	'name' => ($result[$i]['name']?$result[$i]['name']:$result[$i]['address']),
+	'address' => $result[$i]['address']
+	);
+			}
+		}
+		else if (substr($group, 0, 6) == 'cities')
+		{
+			$fields = array($fieldSum, ((strlen($group) < 7)?array(EstatsDriver::ELEMENT_CONCATENATION, array('city', array(EstatsDriver::ELEMENT_VALUE, '-'), 'country'), 'city'):'city'), 'latitude', 'longitude');
+
+			if ($fetchBefore)
+			{
+				$fields[] = array(EstatsDriver::ELEMENT_SUBQUERY, array(array(array($table, $table.'2')), array($fieldSum), array_merge($whereBefore, array(array(EstatsDriver::ELEMENT_OPERATION, array($table.'2.latitude', EstatsDriver::OPERATOR_EQUAL, array(EstatsDriver::ELEMENT_FIELD, $table.'.latitude')), EstatsDriver::OPERATOR_AND, array($table.'2.longitude', EstatsDriver::OPERATOR_EQUAL, array(EstatsDriver::ELEMENT_FIELD, $table.'.longitude')))))), 'before');
+			}
+
+			if ($whereCurrent)
+			{
+				$whereCurrent[] = EstatsDriver::OPERATOR_AND;
+			}
+
+			$whereCurrent[] = array(EstatsDriver::ELEMENT_OPERATION, array('city', (EstatsDriver::OPERATOR_NOT | EstatsDriver::OPERATOR_EQUAL), ''));
+
+			if (isset($group[6]) && $group[6] == '-')
+			{
+				$whereCurrent[] = EstatsDriver::OPERATOR_AND;
+				$whereCurrent[] = array(EstatsDriver::ELEMENT_OPERATION, array('country', EstatsDriver::OPERATOR_EQUAL, substr($group, 7)));
+			}
+
+			$result = EstatsCore::driver()->selectData(array($table), $fields, $whereCurrent, $amount, $offset, array('sum' => FALSE), array('city'));
+
+			for ($i = 0, $c = count($result); $i < $c; ++$i)
+			{
+				$data[] = array(
+	'amount_current' => $result[$i]['sum'],
+	'amount_before' => ($fetchBefore?$result[$i]['before']:0),
+	'name' => $result[$i]['city'],
+	'latitude' => $result[$i]['latitude'],
+	'longitude' => $result[$i]['longitude']
+	);
+			}
+
+			$group = 'cities';
+		}
+		else if (substr ($group, 0, 7) == 'regions')
+		{
+			$fields = array($fieldSum, array(EstatsDriver::ELEMENT_CONCATENATION, array('country', array(EstatsDriver::ELEMENT_VALUE, '-'), 'region'), 'name'));
+
+			if ($fetchBefore)
+			{
+				$fields[] = array(EstatsDriver::ELEMENT_SUBQUERY, array(array(array($table, $table.'2')), array($fieldSum), array_merge($whereBefore, array(array(EstatsDriver::ELEMENT_OPERATION, array($table.'2.country', EstatsDriver::OPERATOR_EQUAL, array(EstatsDriver::ELEMENT_FIELD, $table.'.country')), EstatsDriver::OPERATOR_AND, array($table.'2.region', EstatsDriver::OPERATOR_EQUAL, array(EstatsDriver::ELEMENT_FIELD, $table.'.region')))))), 'before');
+			}
+
+			if ($whereCurrent)
+			{
+				$whereCurrent[] = EstatsDriver::OPERATOR_AND;
+			}
+
+			$whereCurrent[] = array(EstatsDriver::ELEMENT_OPERATION, array('country', EstatsDriver::OPERATOR_EQUAL, substr($group, 8)));
+			$result = EstatsCore::driver()->selectData(array($table), $fields, $whereCurrent, $amount, $offset, array('sum' => FALSE), array('name'));
+		}
+		else if ($group == 'continents')
+		{
+			$fields = array($fieldSum, array(EstatsDriver::ELEMENT_FIELD, 'continent', 'name'));
+
+			if ($fetchBefore)
+			{
+				$fields[] = array(EstatsDriver::ELEMENT_SUBQUERY, array(array(array($table, $table.'2')), array($fieldSum), array_merge($whereBefore, array(array(EstatsDriver::ELEMENT_OPERATION, array($table.'2.continent', EstatsDriver::OPERATOR_EQUAL, array(EstatsDriver::ELEMENT_FIELD, $table.'.continent')))))), 'before');
+			}
+
+			$result = EstatsCore::driver()->selectData(array($table), $fields, $whereCurrent, $amount, $offset, array('sum' => FALSE), array('name'));
+		}
+		else if ($group == 'countries')
+		{
+			$fields = array($fieldSum, 'country', 'continent');
+
+			if ($fetchBefore)
+			{
+				$fields[] = array(EstatsDriver::ELEMENT_SUBQUERY, array(array(array($table, $table.'2')), array($fieldSum), array_merge($whereBefore, array(array(EstatsDriver::ELEMENT_OPERATION, array($table.'2.country', EstatsDriver::OPERATOR_EQUAL, array(EstatsDriver::ELEMENT_FIELD, $table.'.country')))))), 'before');
+			}
+
+			$result = EstatsCore::driver()->selectData(array($table), $fields, $whereCurrent, $amount, $offset, array('sum' => FALSE), array('country', 'continent'));
+
+			for ($i = 0, $c = count($result); $i < $c; ++$i)
+			{
+				$data[] = array(
+	'amount_current' => $result[$i]['sum'],
+	'amount_before' => ($fetchBefore?$result[$i]['before']:0),
+	'name' => $result[$i]['country'],
+	'continent' => $result[$i]['continent']
+	);
+			}
+		}
+		else
+		{
+			$fields = array($fieldSum, 'name');
+
+			if ($fetchBefore)
+			{
+				$fields[] = array(EstatsDriver::ELEMENT_SUBQUERY, array(array(array($table, $table.'2')), array($fieldSum), array_merge($whereBefore, array(array(EstatsDriver::ELEMENT_OPERATION, array($table.'2.name', EstatsDriver::OPERATOR_EQUAL, array(EstatsDriver::ELEMENT_FIELD, $table.'.name')))))), 'before');
+			}
+
+			$result = EstatsCore::driver()->selectData(array($table), $fields, $whereCurrent, $amount, $offset, array('sum' => FALSE), array('name'));
+		}
+
+		if ($group != 'countries' && $group != 'cities' && $group != 'sites')
+		{
+			for ($i = 0, $c = count($result); $i < $c; ++$i)
+			{
+				$data[] = array(
+	'amount_current' => $result[$i]['sum'],
+	'amount_before' => ($fetchBefore?$result[$i]['before']:0),
+	'name' => $result[$i]['name']
 	);
 			}
 		}
 
-		return $Data;
+		return $data;
 	}
 
 /**
@@ -202,104 +202,104 @@ class EstatsGroup
  * @return array
  */
 
-	static function selectDataPeriod($Group, $From = 0, $To = 0, $Unit = 'day')
+	static function selectDataPeriod($group, $from = 0, $to = 0, $unit = 'day')
 	{
-		$Data = array();
-	$Units = array(
+		$data = array();
+	$units = array(
 	'hour' => '%Y.%m.%d %H',
 	'day' => '%Y.%m.%d',
 	'month' => '%Y.%m',
 	'year' => '%Y'
 	);
 
-		$Where = EstatsCore::timeClause('time', $From, $To);
+		$where = EstatsCore::timeClause('time', $from, $to);
 
-		if ($Group == 'browser-versions')
+		if ($group == 'browser-versions')
 		{
-			$Table = 'browsers';
+			$table = 'browsers';
 		}
-		else if ($Group == 'operatingsystems' || $Group == 'operatingsystem-versions')
+		else if ($group == 'operatingsystems' || $group == 'operatingsystem-versions')
 		{
-			$Table = 'oses';
+			$table = 'oses';
 		}
-		else if ($Group == 'cities' || $Group == 'countries' || $Group == 'continents' || $Group == 'world' || substr($Group, 0, 7) == 'country' || substr($Group, 0, 6) == 'cities' || substr($Group, 0, 7) == 'regions')
+		else if ($group == 'cities' || $group == 'countries' || $group == 'continents' || $group == 'world' || substr($group, 0, 7) == 'country' || substr($group, 0, 6) == 'cities' || substr($group, 0, 7) == 'regions')
 		{
-			$Table = 'geoip';
+			$table = 'geoip';
 		}
 		else
 		{
-			$Table = $Group;
+			$table = $group;
 		}
 
-		$Fields = array(array(EstatsDriver::ELEMENT_FUNCTION, array(EstatsDriver::FUNCTION_DATETIME, array('time', $Units[$Unit])), 'unit'), array(EstatsDriver::ELEMENT_FUNCTION, array(EstatsDriver::FUNCTION_SUM, 'amount'), 'sum'));
-		$GroupBy = array('unit', 'title');
+		$fields = array(array(EstatsDriver::ELEMENT_FUNCTION, array(EstatsDriver::FUNCTION_DATETIME, array('time', $units[$unit])), 'unit'), array(EstatsDriver::ELEMENT_FUNCTION, array(EstatsDriver::FUNCTION_SUM, 'amount'), 'sum'));
+		$groupBy = array('unit', 'title');
 
-		if ($Group == 'browser-versions' || $Group == 'operatingsystem-versions')
+		if ($group == 'browser-versions' || $group == 'operatingsystem-versions')
 		{
-			$Fields[] = array(EstatsDriver::ELEMENT_CONCATENATION, array('name', array(EstatsDriver::ELEMENT_VALUE, ' '), 'version'), 'title');
+			$fields[] = array(EstatsDriver::ELEMENT_CONCATENATION, array('name', array(EstatsDriver::ELEMENT_VALUE, ' '), 'version'), 'title');
 		}
-		else if ($Group == 'sites')
+		else if ($group == 'sites')
 		{
-			$Fields[] = array(EstatsDriver::ELEMENT_CASE, array(array(array(EstatsDriver::ELEMENT_OPERATION, array('name', EstatsDriver::OPERATOR_EQUAL, array(EstatsDriver::ELEMENT_VALUE, ''))), 'address'), array('name')), 'title');
+			$fields[] = array(EstatsDriver::ELEMENT_CASE, array(array(array(EstatsDriver::ELEMENT_OPERATION, array('name', EstatsDriver::OPERATOR_EQUAL, array(EstatsDriver::ELEMENT_VALUE, ''))), 'address'), array('name')), 'title');
 		}
-		else if (substr($Group, 0, 6) == 'cities')
+		else if (substr($group, 0, 6) == 'cities')
 		{
-			if (strlen($Group) < 7)
+			if (strlen($group) < 7)
 			{
-				$Fields[] = array(EstatsDriver::ELEMENT_CONCATENATION, array('city', array(EstatsDriver::ELEMENT_VALUE, '-'), 'country'), 'title');
+				$fields[] = array(EstatsDriver::ELEMENT_CONCATENATION, array('city', array(EstatsDriver::ELEMENT_VALUE, '-'), 'country'), 'title');
 			}
 			else
 			{
-				$Fields[] = array(EstatsDriver::ELEMENT_FIELD, 'city', 'title');
+				$fields[] = array(EstatsDriver::ELEMENT_FIELD, 'city', 'title');
 			}
 
-			if ($Where)
+			if ($where)
 			{
-				$Where[] = EstatsDriver::OPERATOR_AND;
+				$where[] = EstatsDriver::OPERATOR_AND;
 			}
 
-			$Where[] = array(EstatsDriver::ELEMENT_OPERATION, array('city', (EstatsDriver::OPERATOR_NOT | EstatsDriver::OPERATOR_EQUAL), ''));
+			$where[] = array(EstatsDriver::ELEMENT_OPERATION, array('city', (EstatsDriver::OPERATOR_NOT | EstatsDriver::OPERATOR_EQUAL), ''));
 
-			if (isset($Group[6]) && $Group[6] == '-')
+			if (isset($group[6]) && $group[6] == '-')
 			{
-				$Where[] = EstatsDriver::OPERATOR_AND;
-				$Where[] = array(EstatsDriver::ELEMENT_OPERATION, array('country', EstatsDriver::OPERATOR_EQUAL, substr($Group, 7)));
+				$where[] = EstatsDriver::OPERATOR_AND;
+				$where[] = array(EstatsDriver::ELEMENT_OPERATION, array('country', EstatsDriver::OPERATOR_EQUAL, substr($group, 7)));
 			}
 
-			$GroupBy = array(array(EstatsDriver::ELEMENT_CONCATENATION, array('longitude', array(EstatsDriver::ELEMENT_VALUE, '-'), 'latitude')));
+			$groupBy = array(array(EstatsDriver::ELEMENT_CONCATENATION, array('longitude', array(EstatsDriver::ELEMENT_VALUE, '-'), 'latitude')));
 		}
-		else if (substr($Group, 0, 7) == 'regions')
+		else if (substr($group, 0, 7) == 'regions')
 		{
-			$Fields[] = array(EstatsDriver::ELEMENT_CONCATENATION, array(substr($Group, 8), array(EstatsDriver::ELEMENT_VALUE, '-'), 'region'), 'title');
+			$fields[] = array(EstatsDriver::ELEMENT_CONCATENATION, array(substr($group, 8), array(EstatsDriver::ELEMENT_VALUE, '-'), 'region'), 'title');
 
-			if ($Where)
+			if ($where)
 			{
-				$Where[] = EstatsDriver::OPERATOR_AND;
+				$where[] = EstatsDriver::OPERATOR_AND;
 			}
 
-			$Where[] = array(EstatsDriver::ELEMENT_OPERATION, array('country', EstatsDriver::OPERATOR_EQUAL, substr($Group, 8)));
+			$where[] = array(EstatsDriver::ELEMENT_OPERATION, array('country', EstatsDriver::OPERATOR_EQUAL, substr($group, 8)));
 		}
-		else if ($Group == 'countries')
+		else if ($group == 'countries')
 		{
-			$Fields[] = array(EstatsDriver::ELEMENT_FIELD, 'country', 'title');
+			$fields[] = array(EstatsDriver::ELEMENT_FIELD, 'country', 'title');
 		}
-		else if ($Group == 'continents')
+		else if ($group == 'continents')
 		{
-			$Fields[] = array(EstatsDriver::ELEMENT_FIELD, 'continent', 'title');
+			$fields[] = array(EstatsDriver::ELEMENT_FIELD, 'continent', 'title');
 		}
 		else
 		{
-			$Fields[] = array(EstatsDriver::ELEMENT_FIELD, 'name', 'title');
+			$fields[] = array(EstatsDriver::ELEMENT_FIELD, 'name', 'title');
 		}
 
-		$Result = EstatsCore::driver()->selectData(array($Table), $Fields, $Where, 0, 0, array('sum' => FALSE), $GroupBy);
+		$result = EstatsCore::driver()->selectData(array($table), $fields, $where, 0, 0, array('sum' => FALSE), $groupBy);
 
-		for ($i = 0, $c = count($Result); $i < $c; ++$i)
+		for ($i = 0, $c = count($result); $i < $c; ++$i)
 		{
-			$Data[$Result[$i]['unit']][$Result[$i]['title']] = $Result[$i]['sum'];
+			$data[$result[$i]['unit']][$result[$i]['title']] = $result[$i]['sum'];
 		}
 
-		return $Data;
+		return $data;
 	}
 
 /**
@@ -311,74 +311,74 @@ class EstatsGroup
  * @return integer
  */
 
-	static function selectAmount($Group, $Amount, $From = 0, $To = 0)
+	static function selectAmount($group, $amount, $from = 0, $to = 0)
 	{
-		$Where = EstatsCore::timeClause('time', $From, $To);
-		$Field = 'name';
+		$where = EstatsCore::timeClause('time', $from, $to);
+		$field = 'name';
 
-		if ($Group == 'browser-versions')
+		if ($group == 'browser-versions')
 		{
-			$Table = 'browsers';
+			$table = 'browsers';
 		}
-		else if ($Group == 'operatingsystems' || $Group == 'operatingsystem-versions')
+		else if ($group == 'operatingsystems' || $group == 'operatingsystem-versions')
 		{
-			$Table = 'oses';
+			$table = 'oses';
 		}
-		else if ($Group == 'cities' || $Group == 'countries' || $Group == 'continents' || $Group == 'world' || substr($Group, 0, 7) == 'country' || substr($Group, 0, 6) == 'cities' || substr($Group, 0, 7) == 'regions')
+		else if ($group == 'cities' || $group == 'countries' || $group == 'continents' || $group == 'world' || substr($group, 0, 7) == 'country' || substr($group, 0, 6) == 'cities' || substr($group, 0, 7) == 'regions')
 		{
-			$Table = 'geoip';
+			$table = 'geoip';
 		}
 		else
 		{
-			$Table = $Group;
+			$table = $group;
 		}
 
-		if ($Group == 'browser-versions' || $Group == 'operatingsystem-versions')
+		if ($group == 'browser-versions' || $group == 'operatingsystem-versions')
 		{
-			$Field = array(EstatsDriver::ELEMENT_CONCATENATION, array('name', array(EstatsDriver::ELEMENT_VALUE, '-'), 'version'));
+			$field = array(EstatsDriver::ELEMENT_CONCATENATION, array('name', array(EstatsDriver::ELEMENT_VALUE, '-'), 'version'));
 		}
-		else if ($Group == 'sites')
+		else if ($group == 'sites')
 		{
-			$Field = 'address';
+			$field = 'address';
 		}
-		else if (substr($Group, 0, 6) == 'cities')
+		else if (substr($group, 0, 6) == 'cities')
 		{
-			$Field = array(EstatsDriver::ELEMENT_CONCATENATION, array('longitude', array(EstatsDriver::ELEMENT_VALUE, '-'), 'latitude'));
+			$field = array(EstatsDriver::ELEMENT_CONCATENATION, array('longitude', array(EstatsDriver::ELEMENT_VALUE, '-'), 'latitude'));
 
-			if ($Where)
+			if ($where)
 			{
-				$Where[] = EstatsDriver::OPERATOR_AND;
+				$where[] = EstatsDriver::OPERATOR_AND;
 			}
 
-			$Where[] = array(EstatsDriver::ELEMENT_OPERATION, array('city', (EstatsDriver::OPERATOR_NOT | EstatsDriver::OPERATOR_EQUAL), ''));
+			$where[] = array(EstatsDriver::ELEMENT_OPERATION, array('city', (EstatsDriver::OPERATOR_NOT | EstatsDriver::OPERATOR_EQUAL), ''));
 
-			if (isset($Group[6]) && $Group[6] == '-')
+			if (isset($group[6]) && $group[6] == '-')
 			{
-				$Where[] = EstatsDriver::OPERATOR_AND;
-				$Where[] = array(EstatsDriver::ELEMENT_OPERATION, array('country', EstatsDriver::OPERATOR_EQUAL, substr($Group, 7)));
+				$where[] = EstatsDriver::OPERATOR_AND;
+				$where[] = array(EstatsDriver::ELEMENT_OPERATION, array('country', EstatsDriver::OPERATOR_EQUAL, substr($group, 7)));
 			}
 		}
-		else if (substr($Group, 0, 7) == 'regions')
+		else if (substr($group, 0, 7) == 'regions')
 		{
-			$Field = 'region';
+			$field = 'region';
 
-			if ($Where)
+			if ($where)
 			{
-				$Where[] = EstatsDriver::OPERATOR_AND;
+				$where[] = EstatsDriver::OPERATOR_AND;
 			}
 
-			$Where[] = array(EstatsDriver::ELEMENT_OPERATION, array('country', EstatsDriver::OPERATOR_EQUAL, substr($Group, 8)));
+			$where[] = array(EstatsDriver::ELEMENT_OPERATION, array('country', EstatsDriver::OPERATOR_EQUAL, substr($group, 8)));
 		}
-		else if ($Group == 'countries')
+		else if ($group == 'countries')
 		{
-			$Field = 'country';
+			$field = 'country';
 		}
-		else if ($Group == 'continents')
+		else if ($group == 'continents')
 		{
-			$Field = 'continent';
+			$field = 'continent';
 		}
 
-		return count(EstatsCore::driver()->selectData(array($Table), array($Field), $Where, 0, 0, NULL, NULL, NULL, TRUE));
+		return count(EstatsCore::driver()->selectData(array($table), array($field), $where, 0, 0, NULL, NULL, NULL, TRUE));
 	}
 
 /**
@@ -389,60 +389,60 @@ class EstatsGroup
  * @return integer
  */
 
-	static function selectSum($Group, $From = 0, $To = 0)
+	static function selectSum($group, $from = 0, $to = 0)
 	{
-		if ($From)
+		if ($from)
 		{
-			$Where = array(array(EstatsDriver::ELEMENT_OPERATION, array('time', EstatsDriver::OPERATOR_GREATEROREQUAL, date('Y-m-d H:i:s', $From))), EstatsDriver::OPERATOR_AND, array(EstatsDriver::ELEMENT_OPERATION, array('time', EstatsDriver::OPERATOR_LESSOREQUAL, date('Y-m-d H:i:s', $To))));
+			$where = array(array(EstatsDriver::ELEMENT_OPERATION, array('time', EstatsDriver::OPERATOR_GREATEROREQUAL, date('Y-m-d H:i:s', $from))), EstatsDriver::OPERATOR_AND, array(EstatsDriver::ELEMENT_OPERATION, array('time', EstatsDriver::OPERATOR_LESSOREQUAL, date('Y-m-d H:i:s', $to))));
 		}
 		else
 		{
-			$Where = array();
+			$where = array();
 		}
 
-		if ($Group == 'browser-versions')
+		if ($group == 'browser-versions')
 		{
-			$Table = 'browsers';
+			$table = 'browsers';
 		}
-		else if ($Group == 'operatingsystems' || $Group == 'operatingsystem-versions')
+		else if ($group == 'operatingsystems' || $group == 'operatingsystem-versions')
 		{
-			$Table = 'oses';
+			$table = 'oses';
 		}
-		else if ($Group == 'cities' || $Group == 'countries' || $Group == 'continents' || $Group == 'world' || substr($Group, 0, 7) == 'country' || substr($Group, 0, 6) == 'cities' || substr($Group, 0, 7) == 'regions')
+		else if ($group == 'cities' || $group == 'countries' || $group == 'continents' || $group == 'world' || substr($group, 0, 7) == 'country' || substr($group, 0, 6) == 'cities' || substr($group, 0, 7) == 'regions')
 		{
-			$Table = 'geoip';
+			$table = 'geoip';
 		}
 		else
 		{
-			$Table = $Group;
+			$table = $group;
 		}
 
-		if (substr($Group, 0, 6) == 'cities')
+		if (substr($group, 0, 6) == 'cities')
 		{
-			if ($Where)
+			if ($where)
 			{
-				$Where[] = EstatsDriver::OPERATOR_AND;
+				$where[] = EstatsDriver::OPERATOR_AND;
 			}
 
-			$Where[] = array(EstatsDriver::ELEMENT_OPERATION, array('city', (EstatsDriver::OPERATOR_NOT | EstatsDriver::OPERATOR_EQUAL), ''));
+			$where[] = array(EstatsDriver::ELEMENT_OPERATION, array('city', (EstatsDriver::OPERATOR_NOT | EstatsDriver::OPERATOR_EQUAL), ''));
 
-			if (isset($Group[6]) && $Group[6] == '-')
+			if (isset($group[6]) && $group[6] == '-')
 			{
-				$Where[] = EstatsDriver::OPERATOR_AND;
-				$Where[] = array(EstatsDriver::ELEMENT_OPERATION, array('country', EstatsDriver::OPERATOR_EQUAL, substr($Group, 7)));
+				$where[] = EstatsDriver::OPERATOR_AND;
+				$where[] = array(EstatsDriver::ELEMENT_OPERATION, array('country', EstatsDriver::OPERATOR_EQUAL, substr($group, 7)));
 			}
 		}
-		else if (substr($Group, 0, 7) == 'regions')
+		else if (substr($group, 0, 7) == 'regions')
 		{
-			if ($Where)
+			if ($where)
 			{
-				$Where[] = EstatsDriver::OPERATOR_AND;
+				$where[] = EstatsDriver::OPERATOR_AND;
 			}
 
-			$Where[] = array(EstatsDriver::ELEMENT_OPERATION, array('country', EstatsDriver::OPERATOR_EQUAL, substr($Group, 8)));
+			$where[] = array(EstatsDriver::ELEMENT_OPERATION, array('country', EstatsDriver::OPERATOR_EQUAL, substr($group, 8)));
 		}
 
-		return EstatsCore::driver()->selectField($Table, array(EstatsDriver::ELEMENT_FUNCTION, array(EstatsDriver::FUNCTION_SUM, 'amount')), $Where);
+		return EstatsCore::driver()->selectField($table, array(EstatsDriver::ELEMENT_FUNCTION, array(EstatsDriver::FUNCTION_SUM, 'amount')), $where);
 	}
 
 /**
@@ -457,354 +457,354 @@ class EstatsGroup
  * @return string
  */
 
-	static function create($ID, $Group, $Title, $Date, $Page = 1, $Extended = FALSE, $Link = '')
+	static function create($iD, $group, $title, $date, $page = 1, $extended = FALSE, $link = '')
 	{
-		$Range = EstatsGUI::timeRange($Date[0], $Date[1], $Date[2], $Date[3]);
-		$ThisYear = date('Y');
+		$range = EstatsGUI::timeRange($date[0], $date[1], $date[2], $date[3]);
+		$thisYear = date('Y');
 
-		if ($Date[1] == date('n') && $Date[0] == $ThisYear)
+		if ($date[1] == date('n') && $date[0] == $thisYear)
 		{
-			$Suffix = 'current-month';
+			$suffix = 'current-month';
 		}
-		else if ($Date[0] == $ThisYear && !$Date[1])
+		else if ($date[0] == $thisYear && !$date[1])
 		{
-			$Suffix = 'current-year';
+			$suffix = 'current-year';
 		}
-		else if ($Date[0] || $Date[1])
+		else if ($date[0] || $date[1])
 		{
-			$Suffix = ($Date[0]?$Date[0]:'').($Date[1]?'-'.$Date[1]:'');
+			$suffix = ($date[0]?$date[0]:'').($date[1]?'-'.$date[1]:'');
 		}
 		else
 		{
-			$Suffix = '';
+			$suffix = '';
 		}
 
-		$Options = array();
-		$Information = '';
-		$FileName = $Group.'-'.$Page.($Suffix?'-'.$Suffix:'');
+		$options = array();
+		$information = '';
+		$fileName = $group.'-'.$page.($suffix?'-'.$suffix:'');
 
-		if (EstatsCache::status($FileName, EstatsCore::option('Cache/others')))
+		if (EstatsCache::status($fileName, EstatsCore::option('Cache/others')))
 		{
-			if (ESTATS_USERLEVEL > 1 && EstatsCore::option('GroupAmount/'.$ID) == 0)
+			if (ESTATS_USERLEVEL > 1 && EstatsCore::option('GroupAmount/'.$iD) == 0)
 			{
-				$Information.= EstatsGUI::notificationWidget(EstatsLocale::translate('This group is disabled!'), 'warning');
+				$information.= EstatsGUI::notificationWidget(EstatsLocale::translate('This group is disabled!'), 'warning');
 			}
 
-			$Amount = self::selectAmount($Group, EstatsCore::option('GroupAmount/'.$ID), $Range[0], $Range[1]);
-			$PagesAmount = ceil($Amount / EstatsCore::option('GroupAmount/'.$ID));
+			$amount = self::selectAmount($group, EstatsCore::option('GroupAmount/'.$iD), $range[0], $range[1]);
+			$pagesAmount = ceil($amount / EstatsCore::option('GroupAmount/'.$iD));
 
-			if ($Page < 1 || $Page > $PagesAmount)
+			if ($page < 1 || $page > $pagesAmount)
 			{
-				$Page = 1;
+				$page = 1;
 			}
 
-			$Data = array(
-	'data' => self::selectData($Group, EstatsCore::option('GroupAmount/'.$ID), (($Page - 1) * EstatsCore::option('GroupAmount/'.$ID)), $Range[0], $Range[1]),
-	'amount' => $Amount,
-	'sum_current' => self::selectSum($Group, $Range[0], $Range[1]),
-	'sum_before' => ((EstatsCore::option('AmountDifferences') && $Date[0])?self::selectSum($Group, ($Range[0] -($Range[1] - $Range[0])), $Range[0]):0),
+			$data = array(
+	'data' => self::selectData($group, EstatsCore::option('GroupAmount/'.$iD), (($page - 1) * EstatsCore::option('GroupAmount/'.$iD)), $range[0], $range[1]),
+	'amount' => $amount,
+	'sum_current' => self::selectSum($group, $range[0], $range[1]),
+	'sum_before' => ((EstatsCore::option('AmountDifferences') && $date[0])?self::selectSum($group, ($range[0] -($range[1] - $range[0])), $range[0]):0),
 	);
 
-			rsort($Data['data']);
+			rsort($data['data']);
 
-			EstatsCache::save($FileName, $Data);
+			EstatsCache::save($fileName, $data);
 		}
 		else
 		{
-			$Data = EstatsCache::read($FileName);
+			$data = EstatsCache::read($fileName);
 
-			if (isset($Data['amount']) && $Data['amount'])
+			if (isset($data['amount']) && $data['amount'])
 			{
-				$PagesAmount = ceil($Data['amount'] / EstatsCore::option('GroupAmount/'.$ID));
-				$Information.= EstatsGUI::notificationWidget(sprintf(EstatsLocale::translate('Data from <em>cache</em>, refreshed: %s.'), date('d.m.Y H:i:s', EstatsCache::timestamp($FileName))), 'information');
+				$pagesAmount = ceil($data['amount'] / EstatsCore::option('GroupAmount/'.$iD));
+				$information.= EstatsGUI::notificationWidget(sprintf(EstatsLocale::translate('Data from <em>cache</em>, refreshed: %s.'), date('d.m.Y H:i:s', EstatsCache::timestamp($fileName))), 'information');
 			}
 			else
 			{
-				$PagesAmount = 0;
+				$pagesAmount = 0;
 			}
 		}
 
-		if (!isset($Data['amount']) || !$Data['amount'] || !EstatsCore::option('GroupAmount/'.$ID))
+		if (!isset($data['amount']) || !$data['amount'] || !EstatsCore::option('GroupAmount/'.$iD))
 		{
-			$Information.= EstatsGUI::notificationWidget(EstatsLocale::translate('No data to display!'), 'error');
+			$information.= EstatsGUI::notificationWidget(EstatsLocale::translate('No data to display!'), 'error');
 		}
 
-		if ($ID == 'countries' || $ID == 'regions')
+		if ($iD == 'countries' || $iD == 'regions')
 		{
-			$GLOBALS['Data'] = &$Data;
+			$gLOBALS['Data'] = &$data;
 		}
-		else if ($ID == 'cities')
+		else if ($iD == 'cities')
 		{
-			$GLOBALS['Cities'] = &$Data;
+			$gLOBALS['Cities'] = &$data;
 		}
 
-		EstatsTheme::add('group_chart', ($Extended && isset($Data['amount']) && $Data['amount'] && EstatsGraphics::isAvailable() && $Page == 1));
-		EstatsTheme::add('group_difference', (EstatsCore::option('AmountDifferences') && $Date[0]));
+		EstatsTheme::add('group_chart', ($extended && isset($data['amount']) && $data['amount'] && EstatsGraphics::isAvailable() && $page == 1));
+		EstatsTheme::add('group_difference', (EstatsCore::option('AmountDifferences') && $date[0]));
 
-		if ($Extended && isset($Data['amount']) && $Data['amount'])
+		if ($extended && isset($data['amount']) && $data['amount'])
 		{
-			if (EstatsGraphics::isAvailable() && $Page == 1)
+			if (EstatsGraphics::isAvailable() && $page == 1)
 			{
-				EstatsTheme::add('chartidpie', $ID.'-pie');
+				EstatsTheme::add('chartidpie', $iD.'-pie');
 
-				$_SESSION[EstatsCore::session()]['imagedata'][$ID.'-pie'] = array(
+				$_SESSION[EstatsCore::session()]['imagedata'][$iD.'-pie'] = array(
 	'type' => 'chart',
 	'chart' => 'pie',
-	'diagram' => &$ID,
+	'diagram' => &$iD,
 	'cache' => EstatsCore::option('Cache/others'),
-	'data' => &$Data,
+	'data' => &$data,
 	);
 			}
 
-			$CurrentTime = 0;
+			$currentTime = 0;
 
-			if ($Date[1])
+			if ($date[1])
 			{
-				$Period = 'month';
-				$ChartTitle = EstatsLocale::translate('Month');
-				$DatePeriod = array(&$Date[0], &$Date[1], 0);
+				$period = 'month';
+				$chartTitle = EstatsLocale::translate('Month');
+				$datePeriod = array(&$date[0], &$date[1], 0);
 			}
-			else if ($Date[0])
+			else if ($date[0])
 			{
-				$Period = 'year';
-				$ChartTitle = EstatsLocale::translate('Year');
-				$DatePeriod = array(&$Date[0], 0, 0);
+				$period = 'year';
+				$chartTitle = EstatsLocale::translate('Year');
+				$datePeriod = array(&$date[0], 0, 0);
 			}
 			else
 			{
-				$Period = 'years';
-				$ChartTitle = EstatsLocale::translate('Years');
-				$DatePeriod = array(0, 0, 0);
-				$CurrentTime = 1;
+				$period = 'years';
+				$chartTitle = EstatsLocale::translate('Years');
+				$datePeriod = array(0, 0, 0);
+				$currentTime = 1;
 			}
 
-			$ChartInformation = EstatsChart::information($Period, $DatePeriod, $CurrentTime);
-			$DataPeriod = self::selectDataPeriod($Group, $ChartInformation['range'][0], $ChartInformation['range'][1], $ChartInformation['unit']);
-			$Types = array();
-			$Max = 0;
+			$chartInformation = EstatsChart::information($period, $datePeriod, $currentTime);
+			$dataPeriod = self::selectDataPeriod($group, $chartInformation['range'][0], $chartInformation['range'][1], $chartInformation['unit']);
+			$types = array();
+			$max = 0;
 
-			foreach ($DataPeriod as $Unit)
+			foreach ($dataPeriod as $unit)
 			{
-				foreach ($Unit as $Key => $Value)
+				foreach ($unit as $key => $value)
 				{
-					if ($Value > $Max)
+					if ($value > $max)
 					{
-						$Max = $Value;
+						$max = $value;
 					}
 
-					if (isset($Types[$Key]))
+					if (isset($types[$key]))
 					{
-						$Types[$Key] += $Value;
+						$types[$key] += $value;
 					}
 					else
 					{
-						$Types[$Key] = $Value;
+						$types[$key] = $value;
 					}
 				}
 			}
 
-			arsort($Types);
+			arsort($types);
 
 			$i = 0;
-			$Tmp = array();
+			$tmp = array();
 
-			foreach ($Types as $Key => $Value)
+			foreach ($types as $key => $value)
 			{
 				if (++$i >= 10)
 				{
 					break;
 				}
 
-				if ((($Value / $Max) * 100) < 5)
+				if ((($value / $max) * 100) < 5)
 				{
 					continue;
 				}
 
-				$Tmp[] = $Key;
+				$tmp[] = $key;
 			}
 
-			$Types = $Tmp;
-			$ChartID = $ID.($DatePeriod[0]?'-'.$DatePeriod[0].'_'.$DatePeriod[1].'_'.$DatePeriod[2]:'').'-time';
-			$ChartSummary = array_merge(EstatsChart::summary($Period, $DataPeriod, array(), $ChartInformation, $Types, 0), array(
-	'amount' => $ChartInformation['amount'],
-	'chart' => $Period,
-	'step' => $ChartInformation['step'],
-	'timestamp' => $ChartInformation['range'][0],
-	'format' => $ChartInformation['format'],
-	'currenttime' => $CurrentTime,
-	'maxall' => $Max,
-	'types' => &$Types,
+			$types = $tmp;
+			$chartID = $iD.($datePeriod[0]?'-'.$datePeriod[0].'_'.$datePeriod[1].'_'.$datePeriod[2]:'').'-time';
+			$chartSummary = array_merge(EstatsChart::summary($period, $dataPeriod, array(), $chartInformation, $types, 0), array(
+	'amount' => $chartInformation['amount'],
+	'chart' => $period,
+	'step' => $chartInformation['step'],
+	'timestamp' => $chartInformation['range'][0],
+	'format' => $chartInformation['format'],
+	'currenttime' => $currentTime,
+	'maxall' => $max,
+	'types' => &$types,
 	));
-			$_SESSION[EstatsCore::session()]['imagedata'][$ChartID] = array(
+			$_SESSION[EstatsCore::session()]['imagedata'][$chartID] = array(
 	'type' => 'chart',
 	'chart' => 'lines',
-	'diagram' => &$ID,
-	'data' => &$DataPeriod,
-	'summary' => $ChartSummary,
+	'diagram' => &$iD,
+	'data' => &$dataPeriod,
+	'summary' => $chartSummary,
 	'cache' => EstatsCore::option('Cache/others'),
 	'join' => 0
 	);
 
-			EstatsTheme::add('chartidtime', $ChartID);
+			EstatsTheme::add('chartidtime', $chartID);
 			EstatsTheme::add('lang_sum', EstatsLocale::translate('Sum'));
 			EstatsTheme::add('lang_most', EstatsLocale::translate('Most'));
 			EstatsTheme::add('lang_average', EstatsLocale::translate('Average'));
 			EstatsTheme::add('lang_least', EstatsLocale::translate('Least'));
-			EstatsTheme::add('chart', EstatsChart::create($Period, 'lines', $ID, $ChartID, 'location.href = \''.$Link.'\'', $ChartInformation, $DataPeriod, array(), $ChartSummary, $ChartTitle, $CurrentTime, 0));
+			EstatsTheme::add('chart', EstatsChart::create($period, 'lines', $iD, $chartID, 'location.href = \''.$link.'\'', $chartInformation, $dataPeriod, array(), $chartSummary, $chartTitle, $currentTime, 0));
 		}
 		else
 		{
 			EstatsTheme::add('chart', '');
 		}
 
-		$Colours = explode('|', EstatsTheme::option('ChartPieColours'));
+		$colours = explode('|', EstatsTheme::option('ChartPieColours'));
 
 		for ($i = 0; $i < 2; ++$i)
 		{
-			$Colours[$i] = EstatsGraphics::colour($Colours[$i]);
+			$colours[$i] = EstatsGraphics::colour($colours[$i]);
 		}
 
-		$Amount = -1;
-		$Others = $Number = $j = 0;
+		$amount = -1;
+		$others = $number = $j = 0;
 
-		for ($i = 0, $c = count($Data['data']); $i < $c; ++$i)
+		for ($i = 0, $c = count($data['data']); $i < $c; ++$i)
 		{
-			$Percent = (($Data['data'][$i]['amount_current'] / $Data['sum_current']) * 100);
+			$percent = (($data['data'][$i]['amount_current'] / $data['sum_current']) * 100);
 
-			if (++$j <= 20 && ($Percent >= 5 || (!$Others && $j == $c)))
+			if (++$j <= 20 && ($percent >= 5 || (!$others && $j == $c)))
 			{
-				++$Amount;
+				++$amount;
 
-				$Number += $Data['data'][$i]['amount_current'];
+				$number += $data['data'][$i]['amount_current'];
 			}
 			else
 			{
-				++$Others;
+				++$others;
 			}
 		}
 
-		if (($Data['sum_current'] - $Number) > 0)
+		if (($data['sum_current'] - $number) > 0)
 		{
-			++$Amount;
+			++$amount;
 		}
 
-		$Number = 0;
+		$number = 0;
 
-		if ($Extended)
+		if ($extended)
 		{
-			$ColoursStep = array();
+			$coloursStep = array();
 
 			for ($i = 0; $i < 3; ++$i)
 			{
-				$ColoursStep[$i] = ($Amount?(($Colours[1][$i] - $Colours[0][$i]) / $Amount):0);
+				$coloursStep[$i] = ($amount?(($colours[1][$i] - $colours[0][$i]) / $amount):0);
 			}
 		}
 
-		$Contents = '';
+		$contents = '';
 
-		for ($i = 0, $c = count($Data['data']); $i < $c; ++$i)
+		for ($i = 0, $c = count($data['data']); $i < $c; ++$i)
 		{
-			$Row = &$Data['data'][$i];
-			$Name = trim($Row['name']);
-			$Address = '';
+			$row = &$data['data'][$i];
+			$name = trim($row['name']);
+			$address = '';
 
-			if ($ID == 'sites')
+			if ($iD == 'sites')
 			{
-				$Address = htmlspecialchars($Row['address']);
+				$address = htmlspecialchars($row['address']);
 			}
-			else if ($ID == 'websearchers')
+			else if ($iD == 'websearchers')
 			{
-				$Address = htmlspecialchars($Name);
+				$address = htmlspecialchars($name);
 			}
-			else if ($ID == 'referrers' && $Name && $Name != '?')
+			else if ($iD == 'referrers' && $name && $name != '?')
 			{
-				$Address = htmlspecialchars($Name);
+				$address = htmlspecialchars($name);
 			}
-			else if ($ID == 'cities' && $Name && $Name != '?')
+			else if ($iD == 'cities' && $name && $name != '?')
 			{
-				$Address = EstatsGUI::mapLink($Row['latitude'], $Row['longitude']);
+				$address = EstatsGUI::mapLink($row['latitude'], $row['longitude']);
 			}
-			else if ($ID == 'countries' && $Name && $Name != '?')
+			else if ($iD == 'countries' && $name && $name != '?')
 			{
-				$Address = '{path}geolocation/'.$Name.'/'.implode('-', $Date).'{suffix}';
+				$address = '{path}geolocation/'.$name.'/'.implode('-', $date).'{suffix}';
 			}
 
-			$String = EstatsGUI::itemText($Name, $ID);
+			$string = EstatsGUI::itemText($name, $iD);
 
-			if (ESTATS_USERLEVEL > 1 && ($ID == 'referrers' || $ID == 'keywords') && $Name != '?')
+			if (ESTATS_USERLEVEL > 1 && ($iD == 'referrers' || $iD == 'keywords') && $name != '?')
 			{
-				if ($ID == 'referrers')
+				if ($iD == 'referrers')
 				{
-					$Referrer = parse_url($Name);
+					$referrer = parse_url($name);
 				}
 
-				$AdminOptions = '
-<a href="{selfpath}{separator}'.(($ID == 'referrers')?'referrer='.urlencode($Referrer['host']):'keyword='.urlencode($Name)).'" class="red" title="'.(($ID == 'referrers')?EstatsLocale::translate('Block counting of this referrer'):EstatsLocale::translate('Block counting of this keyword / phrase')).'" onclick="if (!confirm(\''.(($ID == 'referrers')?EstatsLocale::translate('Do you really want to exclude this referrer?'):EstatsLocale::translate('Do you really want to exclude this keyword / phrase?')).'\')) return false">
+				$adminOptions = '
+<a href="{selfpath}{separator}'.(($iD == 'referrers')?'referrer='.urlencode($referrer['host']):'keyword='.urlencode($name)).'" class="red" title="'.(($iD == 'referrers')?EstatsLocale::translate('Block counting of this referrer'):EstatsLocale::translate('Block counting of this keyword / phrase')).'" onclick="if (!confirm(\''.(($iD == 'referrers')?EstatsLocale::translate('Do you really want to exclude this referrer?'):EstatsLocale::translate('Do you really want to exclude this keyword / phrase?')).'\')) return false">
 <strong>&#187;</strong>
 </a>';
 			}
 			else
 			{
-				$AdminOptions = '';
+				$adminOptions = '';
 			}
 
-			$Colour = '#';
+			$colour = '#';
 
 			for ($j = 0; $j < 3; ++$j)
 			{
-				$Colour.= dechex($Colours[0][$j]);
+				$colour.= dechex($colours[0][$j]);
 			}
 
-			if ($i < $Amount && $Extended)
+			if ($i < $amount && $extended)
 			{
 				for ($j = 0; $j < 3; ++$j)
 				{
-					$Colours[0][$j] += $ColoursStep[$j];
+					$colours[0][$j] += $coloursStep[$j];
 				}
 			}
 
-			$Colour = strtoupper($Colour);
-			$Difference = EstatsGUI::formatDifference($Row['amount_current'], $Row['amount_before']);
-			$Icon = EstatsGUI::iconPath($Name, $ID);
-			$Contents.= EstatsTheme::parse(EstatsTheme::get('group-row'), array(
-	'title' => str_replace('{', '&#123;', htmlspecialchars($String)),
-	'number' => (++$Number + (($Page - 1) * EstatsCore::option('GroupAmount/'.$ID))),
-	'icon' => ($Icon?EstatsGUI::iconTag($Icon, $String).'
+			$colour = strtoupper($colour);
+			$difference = EstatsGUI::formatDifference($row['amount_current'], $row['amount_before']);
+			$icon = EstatsGUI::iconPath($name, $iD);
+			$contents.= EstatsTheme::parse(EstatsTheme::get('group-row'), array(
+	'title' => str_replace('{', '&#123;', htmlspecialchars($string)),
+	'number' => (++$number + (($page - 1) * EstatsCore::option('GroupAmount/'.$iD))),
+	'icon' => ($icon?EstatsGUI::iconTag($icon, $string).'
 ':''),
-	'value' => ($Address?'<a href="'.htmlspecialchars($Address).'" title="'.htmlspecialchars($String).'" rel="nofollow">
-':'').str_replace('{', '&#123;', EstatsGUI::cutString($String, EstatsTheme::option('Group'.($Extended?'Single':'').'RowValueLength'))).($Address?'
-</a>':'').$AdminOptions,
-	'amount' => EstatsGUI::formatNumber($Row['amount_current']),
-	'percent' => round((($Row['amount_current'] / $Data['sum_current']) * 100), 2).'%',
-	'bar' => ceil(($Row['amount_current'] / $Data['sum_current']) * 100),
-	'colour' => $Colour,
-	'class' => (($Difference == 0)?'remain':(($Difference > 0)?'increase':'decrease')),
-	'difference' => (($Difference > 0)?'+':'').$Difference.'%',
+	'value' => ($address?'<a href="'.htmlspecialchars($address).'" title="'.htmlspecialchars($string).'" rel="nofollow">
+':'').str_replace('{', '&#123;', EstatsGUI::cutString($string, EstatsTheme::option('Group'.($extended?'Single':'').'RowValueLength'))).($address?'
+</a>':'').$adminOptions,
+	'amount' => EstatsGUI::formatNumber($row['amount_current']),
+	'percent' => round((($row['amount_current'] / $data['sum_current']) * 100), 2).'%',
+	'bar' => ceil(($row['amount_current'] / $data['sum_current']) * 100),
+	'colour' => $colour,
+	'class' => (($difference == 0)?'remain':(($difference > 0)?'increase':'decrease')),
+	'difference' => (($difference > 0)?'+':'').$difference.'%',
 	));
 		}
 
-		if ($Data['sum_current'] && EstatsCore::option('GroupAmount/'.$ID))
+		if ($data['sum_current'] && EstatsCore::option('GroupAmount/'.$iD))
 		{
-			$Difference = EstatsGUI::formatDifference($Data['sum_current'], $Data['sum_before']);
-			$Summary = EstatsTheme::parse(EstatsTheme::get('group-amount'), array(
-	'amount' => EstatsGUI::formatNumber($Data['sum_current']),
-	'class' => (($Difference == 0)?'remain':(($Difference > 0)?'increase':'decrease')),
-	'difference' => (($Difference > 0)?'+':'').$Difference.'%',
+			$difference = EstatsGUI::formatDifference($data['sum_current'], $data['sum_before']);
+			$summary = EstatsTheme::parse(EstatsTheme::get('group-amount'), array(
+	'amount' => EstatsGUI::formatNumber($data['sum_current']),
+	'class' => (($difference == 0)?'remain':(($difference > 0)?'increase':'decrease')),
+	'difference' => (($difference > 0)?'+':'').$difference.'%',
 	));
 		}
 		else
 		{
-			$Summary = EstatsTheme::get('group-none');
+			$summary = EstatsTheme::get('group-none');
 		}
 
 		return EstatsTheme::parse(EstatsTheme::get('group'), array(
-	'title' => ((!$Extended && EstatsCore::option('GroupAmount/'.$ID) && $Data['amount'] > EstatsCore::option('GroupAmount/'.$ID))?sprintf(EstatsLocale::translate('%s (%d of %d)'), $Title, (int) ((EstatsCore::option('GroupAmount/'.$ID) > $Data['amount'])?$Data['amount']:EstatsCore::option('GroupAmount/'.$ID)), (int) $Data['amount']):$Title),
-	'link' => ($Link?str_replace('{date}', '{period}', $Link):''),
-	'links' => (($PagesAmount > 1)?EstatsGUI::linksWidget($Page, $PagesAmount, str_replace('{date}', '{period}/{page}', $Link)):''),
-	'information' => ($Information?str_replace('{information}', $Information, EstatsTheme::get('group-information')):''),
-	'rows' => $Contents,
-	'summary' => $Summary,
-	'id' => $ID,
+	'title' => ((!$extended && EstatsCore::option('GroupAmount/'.$iD) && $data['amount'] > EstatsCore::option('GroupAmount/'.$iD))?sprintf(EstatsLocale::translate('%s (%d of %d)'), $title, (int) ((EstatsCore::option('GroupAmount/'.$iD) > $data['amount'])?$data['amount']:EstatsCore::option('GroupAmount/'.$iD)), (int) $data['amount']):$title),
+	'link' => ($link?str_replace('{date}', '{period}', $link):''),
+	'links' => (($pagesAmount > 1)?EstatsGUI::linksWidget($page, $pagesAmount, str_replace('{date}', '{period}/{page}', $link)):''),
+	'information' => ($information?str_replace('{information}', $information, EstatsTheme::get('group-information')):''),
+	'rows' => $contents,
+	'summary' => $summary,
+	'id' => $iD,
 	'lang_sum' => EstatsLocale::translate('Sum'),
 	'lang_none' => EstatsLocale::translate('None'),
 	));

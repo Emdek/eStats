@@ -12,13 +12,13 @@ class EstatsCookie
  * Cookies data
  */
 
-	static private $Cookies;
+	static private $cookies;
 
 /**
  * Server name
  */
 
-	static private $Server = NULL;
+	static private $server = NULL;
 
 /**
  * Checks if cookie exists
@@ -26,9 +26,9 @@ class EstatsCookie
  * @return boolean
  */
 
-	static function exists($Key)
+	static function exists($key)
 	{
-		return isset($_COOKIE[md5(EstatsCore::security().$Key)]);
+		return isset($_COOKIE[md5(EstatsCore::security().$key)]);
 	}
 
 /**
@@ -37,23 +37,23 @@ class EstatsCookie
  * @return mixed
  */
 
-	static function get($Key)
+	static function get($key)
 	{
-		$Name = md5(EstatsCore::security().$Key);
+		$name = md5(EstatsCore::security().$key);
 
-		if (!isset($_COOKIE[$Name]))
+		if (!isset($_COOKIE[$name]))
 		{
 			return NULL;
 		}
 
-		if (isset(self::$Cookies[$Key]))
+		if (isset(self::$cookies[$key]))
 		{
-			return self::$Cookies[$Key];
+			return self::$cookies[$key];
 		}
 
-		self::$Cookies[$Key] = unserialize(stripslashes($_COOKIE[$Name]));
+		self::$cookies[$key] = unserialize(stripslashes($_COOKIE[$name]));
 
-		return self::$Cookies[$Key];
+		return self::$cookies[$key];
 	}
 
 /**
@@ -64,20 +64,20 @@ class EstatsCookie
  * @param string Path
  */
 
-	static function set($Key, $Value, $Time = 31356000, $Path = '')
+	static function set($key, $value, $time = 31356000, $path = '')
 	{
-		if (empty(self::$Server))
+		if (empty(self::$server))
 		{
-			self::$Server = ((substr($_SERVER['SERVER_NAME'], 0, 4) == 'www.')?substr($_SERVER['SERVER_NAME'], 4):$_SERVER['SERVER_NAME']);
+			self::$server = ((substr($_SERVER['SERVER_NAME'], 0, 4) == 'www.')?substr($_SERVER['SERVER_NAME'], 4):$_SERVER['SERVER_NAME']);
 		}
 
-		$Name = md5(EstatsCore::security().$Key);
+		$name = md5(EstatsCore::security().$key);
 
-		setcookie($Name, serialize($Value), ($_SERVER['REQUEST_TIME'] + $Time), ($Path?$Path:'/'), self::$Server);
+		setcookie($name, serialize($value), ($_SERVER['REQUEST_TIME'] + $time), ($path?$path:'/'), self::$server);
 
-		self::$Cookies[$Key] = $Value;
+		self::$cookies[$key] = $value;
 
-		$_COOKIE[$Name] = serialize($Value);
+		$_COOKIE[$name] = serialize($value);
 	}
 
 /**
@@ -86,20 +86,20 @@ class EstatsCookie
  * @param string Path
  */
 
-	static function delete($Key, $Path = '')
+	static function delete($key, $path = '')
 	{
-		$Name = md5(EstatsCore::security().$Key);
+		$name = md5(EstatsCore::security().$key);
 
-		setcookie($Name, '', 1, ($Path?$Path:'/'), self::$Server);
+		setcookie($name, '', 1, ($path?$path:'/'), self::$server);
 
-		if (isset(self::$Cookies[$Key]))
+		if (isset(self::$cookies[$key]))
 		{
-			unset(self::$Cookies[$Key]);
+			unset(self::$cookies[$key]);
 		}
 
-		if (isset($_COOKIE[$Name]))
+		if (isset($_COOKIE[$name]))
 		{
-			unset($_COOKIE[$Name]);
+			unset($_COOKIE[$name]);
 		}
 	}
 }

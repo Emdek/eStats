@@ -10,404 +10,404 @@ if (!defined('eStats'))
 	die();
 }
 
-$ShowDetails = (isset($Path[2]) && $Path[2] == 'visit');
-$UpdateIDs = $UpdateFiles = array();
+$showDetails = (isset($path[2]) && $path[2] == 'visit');
+$updateIDs = $updateFiles = array();
 
-if ($ShowDetails)
+if ($showDetails)
 {
-	$ShowID = (int) (isset($Path[3])?$Path[3]:1);
-	$Where = array(array(EstatsDriver::ELEMENT_OPERATION, array('id', EstatsDriver::OPERATOR_EQUAL, $ShowID)));
-	$Data = EstatsCore::driver()->selectData(array('visitors'), array('id', 'lastvisit'), $Where);
+	$showID = (int) (isset($path[3])?$path[3]:1);
+	$where = array(array(EstatsDriver::ELEMENT_OPERATION, array('id', EstatsDriver::OPERATOR_EQUAL, $showID)));
+	$data = EstatsCore::driver()->selectData(array('visitors'), array('id', 'lastvisit'), $where);
 
-	if ($Data)
+	if ($data)
 	{
-		$UpdateIDs = array($ShowID);
-		$UpdateFiles = array('visit-'.$ShowID.'-'.strtotime($Data[0]['lastvisit']));
-		$Data = array(0);
+		$updateIDs = array($showID);
+		$updateFiles = array('visit-'.$showID.'-'.strtotime($data[0]['lastvisit']));
+		$data = array(0);
 	}
 	else
 	{
-		$ShowDetails = FALSE;
+		$showDetails = FALSE;
 
 		EstatsGUI::notify(EstatsLocale::translate('Invalid visit identifier!'), 'error');
 	}
 }
 
-if (!$ShowDetails)
+if (!$showDetails)
 {
-	$ShowRobots = (int) (isset($Path[2])?$Path[2]:((EstatsCookie::get('visitsShowRobots') !== NULL)?EstatsCookie::get('visitsShowRobots'):0));
-	$Page = (int) (isset($Path[3])?$Path[3]:1);
+	$showRobots = (int) (isset($path[2])?$path[2]:((EstatsCookie::get('visitsShowRobots') !== NULL)?EstatsCookie::get('visitsShowRobots'):0));
+	$page = (int) (isset($path[3])?$path[3]:1);
 
 	if (isset($_POST['ChangeRobots']))
 	{
-		$ShowRobots = isset($_POST['ShowRobots']);
+		$showRobots = isset($_POST['ShowRobots']);
 
-		EstatsCookie::set('visitsShowRobots', $ShowRobots);
+		EstatsCookie::set('visitsShowRobots', $showRobots);
 	}
 
-	$Where = ($ShowRobots?NULL:array(EstatsDriver::OPERATOR_GROUPING_START, array(EstatsDriver::ELEMENT_OPERATION, array('robot', EstatsDriver::OPERATOR_EQUAL, '')), EstatsDriver::OPERATOR_OR, array(EstatsDriver::ELEMENT_OPERATION, array('robot', EstatsDriver::OPERATOR_EQUAL, '0')), EstatsDriver::OPERATOR_GROUPING_END));
-	$Amount = EstatsCore::driver()->selectAmount('visitors', $Where);
-	$PagesAmount = ceil($Amount / EstatsCore::option('Visits/amount'));
+	$where = ($showRobots?NULL:array(EstatsDriver::OPERATOR_GROUPING_START, array(EstatsDriver::ELEMENT_OPERATION, array('robot', EstatsDriver::OPERATOR_EQUAL, '')), EstatsDriver::OPERATOR_OR, array(EstatsDriver::ELEMENT_OPERATION, array('robot', EstatsDriver::OPERATOR_EQUAL, '0')), EstatsDriver::OPERATOR_GROUPING_END));
+	$amount = EstatsCore::driver()->selectAmount('visitors', $where);
+	$pagesAmount = ceil($amount / EstatsCore::option('Visits/amount'));
 
-	if ($PagesAmount > EstatsCore::option('Visits/maxpages') && ESTATS_USERLEVEL < 2)
+	if ($pagesAmount > EstatsCore::option('Visits/maxpages') && ESTATS_USERLEVEL < 2)
 	{
-		$Amount = (EstatsCore::option('Visits/amount') * EstatsCore::option('Visits/maxpages'));
-		$PagesAmount = EstatsCore::option('Visits/maxpages');
+		$amount = (EstatsCore::option('Visits/amount') * EstatsCore::option('Visits/maxpages'));
+		$pagesAmount = EstatsCore::option('Visits/maxpages');
 	}
 
-	if ($Page < 1 || $Page > $PagesAmount)
+	if ($page < 1 || $page > $pagesAmount)
 	{
-		$Page = 1;
+		$page = 1;
 	}
 
-	$FileName = 'visits-'.$Page.($ShowRobots?'':'-norobots');
+	$fileName = 'visits-'.$page.($showRobots?'':'-norobots');
 
-	if (EstatsCache::status($FileName, EstatsCore::option('Cache/visits')))
+	if (EstatsCache::status($fileName, EstatsCore::option('Cache/visits')))
 	{
-		$Data = EstatsCore::driver()->selectData(array('visitors'), array('id', 'lastvisit'), $Where, EstatsCore::option('Visits/amount'), (EstatsCore::option('Visits/amount') * ($Page - 1)), array('lastvisit' => FALSE));
+		$data = EstatsCore::driver()->selectData(array('visitors'), array('id', 'lastvisit'), $where, EstatsCore::option('Visits/amount'), (EstatsCore::option('Visits/amount') * ($page - 1)), array('lastvisit' => FALSE));
 
-		EstatsCache::save($FileName, $Data);
+		EstatsCache::save($fileName, $data);
 		EstatsTheme::add('cacheinformation', '');
 	}
 	else
 	{
-		$Data = EstatsCache::read($FileName);
+		$data = EstatsCache::read($fileName);
 
-		EstatsTheme::add('cacheinformation', EstatsGUI::notificationWidget(sprintf(EstatsLocale::translate('Data from <em>cache</em>, refreshed: %s.'), date('d.m.Y H:i:s', EstatsCache::timestamp($FileName))), 'information'));
+		EstatsTheme::add('cacheinformation', EstatsGUI::notificationWidget(sprintf(EstatsLocale::translate('Data from <em>cache</em>, refreshed: %s.'), date('d.m.Y H:i:s', EstatsCache::timestamp($fileName))), 'information'));
 	}
 
 	$j = -1;
 
-	for ($i = 0, $c = count($Data); $i < $c; ++$i)
+	for ($i = 0, $c = count($data); $i < $c; ++$i)
 	{
-		$FileName = 'visit-'.$Data[$i]['id'].'-'.strtotime($Data[$i]['lastvisit']);
+		$fileName = 'visit-'.$data[$i]['id'].'-'.strtotime($data[$i]['lastvisit']);
 
-		if (EstatsCache::status($FileName, 86400))
+		if (EstatsCache::status($fileName, 86400))
 		{
-			$UpdateIDs[] = $Data[$i]['id'];
-			$UpdateFiles[] = $FileName;
-			$Data[$i] = ++$j;
+			$updateIDs[] = $data[$i]['id'];
+			$updateFiles[] = $fileName;
+			$data[$i] = ++$j;
 		}
 		else
 		{
-			$Data[$i] = EstatsCache::read($FileName);
+			$data[$i] = EstatsCache::read($fileName);
 		}
 	}
 }
 
-if ($UpdateIDs)
+if ($updateIDs)
 {
-	if (!$ShowDetails)
+	if (!$showDetails)
 	{
-		if ($Where)
+		if ($where)
 		{
-			$Where[] = EstatsDriver::OPERATOR_AND;
+			$where[] = EstatsDriver::OPERATOR_AND;
 		}
 
-		$Where[] = array(EstatsDriver::ELEMENT_OPERATION, array('visitors.id', EstatsDriver::OPERATOR_IN, $UpdateIDs));
+		$where[] = array(EstatsDriver::ELEMENT_OPERATION, array('visitors.id', EstatsDriver::OPERATOR_IN, $updateIDs));
 	}
 
-	$NewData = EstatsCore::driver()->selectData(array('visitors', array(EstatsDriver::JOIN_LEFT, EstatsDriver::OPERATOR_JOIN_USING, array('id')), 'details'), array('visitors.*', array(EstatsDriver::ELEMENT_FIELD, 'details.id', 'details')), $Where, 0, 0, array('visitors.lastvisit' => FALSE), NULL, NULL, TRUE);
+	$newData = EstatsCore::driver()->selectData(array('visitors', array(EstatsDriver::JOIN_LEFT, EstatsDriver::OPERATOR_JOIN_USING, array('id')), 'details'), array('visitors.*', array(EstatsDriver::ELEMENT_FIELD, 'details.id', 'details')), $where, 0, 0, array('visitors.lastvisit' => FALSE), NULL, NULL, TRUE);
 }
 
-for ($i = 0, $c = count($Data); $i < $c; ++$i)
+for ($i = 0, $c = count($data); $i < $c; ++$i)
 {
-	if (is_int($Data[$i]))
+	if (is_int($data[$i]))
 	{
-		EstatsCache::delete('visit-'.$UpdateIDs[$Data[$i]].'-*');
+		EstatsCache::delete('visit-'.$updateIDs[$data[$i]].'-*');
 
-		$Index = $Data[$i];
-		$Data[$i] = &$NewData[$Data[$i]];
-		$Data[$i]['browser'] = implode(' ', EstatsCore::detectBrowser($Data[$i]['useragent']));
-		$Data[$i]['operatingsystem'] = implode(' ', EstatsCore::detectOperatingSystem($Data[$i]['useragent']));
-		$Data[$i]['keywords'] = '';
+		$index = $data[$i];
+		$data[$i] = &$newData[$data[$i]];
+		$data[$i]['browser'] = implode(' ', EstatsCore::detectBrowser($data[$i]['useragent']));
+		$data[$i]['operatingsystem'] = implode(' ', EstatsCore::detectOperatingSystem($data[$i]['useragent']));
+		$data[$i]['keywords'] = '';
 
-		if ($Data[$i]['referrer'] && !$Data[$i]['robot'])
+		if ($data[$i]['referrer'] && !$data[$i]['robot'])
 		{
-			$Referrer = parse_url($Data[$i]['referrer']);
-			$Data[$i]['referrer-host'] = $Referrer['host'];
-			$Data[$i]['websearch'] = EstatsCore::detectWebsearcher($Data[$i]['referrer'], TRUE);
+			$referrer = parse_url($data[$i]['referrer']);
+			$data[$i]['referrer-host'] = $referrer['host'];
+			$data[$i]['websearch'] = EstatsCore::detectWebsearcher($data[$i]['referrer'], TRUE);
 
-			if ($Data[$i]['websearch'])
+			if ($data[$i]['websearch'])
 			{
-				$Data[$i]['keywords'] = implode(', ', $Data[$i]['websearch'][1]);
+				$data[$i]['keywords'] = implode(', ', $data[$i]['websearch'][1]);
 			}
 
-			if (in_array($Referrer['host'], EstatsCore::option('Referrers')))
+			if (in_array($referrer['host'], EstatsCore::option('Referrers')))
 			{
-				$Data[$i]['referrer'] = '';
+				$data[$i]['referrer'] = '';
 			}
 		}
 
-		$Data[$i]['geolocation'] = (EstatsGeolocation::isAvailable()?EstatsGeolocation::information($Data[$i]['ip']):NULL);
+		$data[$i]['geolocation'] = (EstatsGeolocation::isAvailable()?EstatsGeolocation::information($data[$i]['ip']):NULL);
 
-		EstatsCache::save($UpdateFiles[$Index], $Data[$i]);
+		EstatsCache::save($updateFiles[$index], $data[$i]);
 	}
 
-	if ($Data[$i]['robot'])
+	if ($data[$i]['robot'])
 	{
-		$Class = 'robot';
-		$Type = '$';
+		$class = 'robot';
+		$type = '$';
 	}
-	else if (isset($_SESSION[EstatsCore::session()]['visits'][$Data[$i]['id']]))
+	else if (isset($_SESSION[EstatsCore::session()]['visits'][$data[$i]['id']]))
 	{
-		$Class = 'user';
-		$Type = '!';
+		$class = 'user';
+		$type = '!';
 	}
-	else if (($_SERVER['REQUEST_TIME'] - strtotime($Data[$i]['lastvisit'])) < 300)
+	else if (($_SERVER['REQUEST_TIME'] - strtotime($data[$i]['lastvisit'])) < 300)
 	{
-		$Class = 'online';
-		$Type = '+';
+		$class = 'online';
+		$type = '+';
 	}
-	else if ($Data[$i]['previous'])
+	else if ($data[$i]['previous'])
 	{
-		$Class = 'returns';
-		$Type = '^';
+		$class = 'returns';
+		$type = '^';
 	}
 	else
 	{
-		$Class = '';
-		$Type = '&nbsp;';
+		$class = '';
+		$type = '&nbsp;';
 	}
 
-	if (!$ShowDetails)
+	if (!$showDetails)
 	{
-		EstatsTheme::add('details-'.$Data[$i]['id'], (boolean) $Data[$i]['details']);
+		EstatsTheme::add('details-'.$data[$i]['id'], (boolean) $data[$i]['details']);
 	}
 
-	if (strstr($Data[$i]['host'], '.') && ESTATS_USERLEVEL < 2)
+	if (strstr($data[$i]['host'], '.') && ESTATS_USERLEVEL < 2)
 	{
-		$Data[$i]['host'] = '*'.substr($Data[$i]['host'], strpos($Data[$i]['host'], '.'));
+		$data[$i]['host'] = '*'.substr($data[$i]['host'], strpos($data[$i]['host'], '.'));
 	}
 
-	$First = (is_numeric($Data[$i]['firstvisit'])?$Data[$i]['firstvisit']:strtotime($Data[$i]['firstvisit']));
-	$Last = (is_numeric($Data[$i]['lastvisit'])?$Data[$i]['lastvisit']:strtotime($Data[$i]['lastvisit']));
-	$Robot = (($Data[$i]['robot'] == '?')?EstatsLocale::translate('Unknown'):htmlspecialchars($Data[$i]['robot']));
-	$RobotIcon = ($Robot?EstatsGUI::iconTag(EstatsGUI::iconPath($Robot, 'robots'), EstatsLocale::translate('Network robot').': '.EstatsGUI::itemText($Robot, 'robots')):'');
-	$OperatingSystem = EstatsGUI::itemText($Data[$i]['operatingsystem'], 'operatingsystem-versions');
-	$OperatingSystemIcon = EstatsGUI::iconTag(EstatsGUI::iconPath($Data[$i]['operatingsystem'], 'operatingsystem-versions'), EstatsLocale::translate('Operating system').': '.$OperatingSystem);
-	$Browser = EstatsGUI::itemText($Data[$i]['browser'], 'browser-versions');
-	$BrowserIcon = EstatsGUI::iconTag(EstatsGUI::iconPath($Data[$i]['browser'], 'browser-versions'), EstatsLocale::translate('Browser').': '.$Browser);
-	$Language = EstatsGUI::itemText($Data[$i]['language'], 'languages');
-	$LanguageIcon = ($Language?EstatsGUI::iconTag(EstatsGUI::iconPath($Data[$i]['language'], 'languages'), EstatsLocale::translate('Language').': '.$Language):'');
-	$Screen = htmlspecialchars(EstatsGUI::itemText($Data[$i]['screen'], 'screens'));
-	$ScreenIcon = ($Screen?EstatsGUI::iconTag(EstatsGUI::iconPath($Data[$i]['screen'], 'screens'), EstatsLocale::translate('Screen resolution').': '.$Screen):'');
-	$Flash = (($Data[$i]['flash'] != 0 || $Data[$i]['flash'] == '?')?EstatsGUI::itemText($Data[$i]['flash'], 'flash'):EstatsLocale::translate('No plugin'));
-	$FlashIcon = (($Data[$i]['flash'] != 0 || $Data[$i]['flash'] == '?')?EstatsGUI::iconTag(EstatsGUI::iconPath('flash', 'miscellaneous'), EstatsLocale::translate('Flash plugin version').': '.$Flash):'');
-	$Java = ($Data[$i]['java']?EstatsLocale::translate('Yes'):EstatsLocale::translate('No'));
-	$JavaIcon = ($Data[$i]['java']?EstatsGUI::iconTag(EstatsGUI::iconPath('java', 'miscellaneous'), EstatsLocale::translate('Java enabled')):'');
-	$JavaScript = ($Data[$i]['javascript']?EstatsLocale::translate('Yes'):EstatsLocale::translate('No'));
-	$JavaScriptIcon = ($Data[$i]['javascript']?EstatsGUI::iconTag(EstatsGUI::iconPath('javascript', 'miscellaneous'), EstatsLocale::translate('JavaScript enabled')):'');
-	$Cookies = ($Data[$i]['cookies']?EstatsLocale::translate('Yes'):EstatsLocale::translate('No'));
-	$CookiesIcon = ($Data[$i]['cookies']?EstatsGUI::iconTag(EstatsGUI::iconPath('cookies', 'miscellaneous'), EstatsLocale::translate('Cookies enabled')):'');
-	$Proxy = ($Data[$i]['proxy']?EstatsGUI::whoisLink($Data[$i]['proxyip'], EstatsLocale::translate('Proxy')).': '.htmlspecialchars($Data[$i]['proxy']):'');
-	$ProxyIcon = ($Proxy?EstatsGUI::whoisLink($Data[$i]['proxyip'], '
-'.EstatsGUI::iconTag(EstatsGUI::iconPath('proxy', 'miscellaneous'), EstatsLocale::translate('Proxy').': '.htmlspecialchars($Data[$i]['proxy'])).'
+	$first = (is_numeric($data[$i]['firstvisit'])?$data[$i]['firstvisit']:strtotime($data[$i]['firstvisit']));
+	$last = (is_numeric($data[$i]['lastvisit'])?$data[$i]['lastvisit']:strtotime($data[$i]['lastvisit']));
+	$robot = (($data[$i]['robot'] == '?')?EstatsLocale::translate('Unknown'):htmlspecialchars($data[$i]['robot']));
+	$robotIcon = ($robot?EstatsGUI::iconTag(EstatsGUI::iconPath($robot, 'robots'), EstatsLocale::translate('Network robot').': '.EstatsGUI::itemText($robot, 'robots')):'');
+	$operatingSystem = EstatsGUI::itemText($data[$i]['operatingsystem'], 'operatingsystem-versions');
+	$operatingSystemIcon = EstatsGUI::iconTag(EstatsGUI::iconPath($data[$i]['operatingsystem'], 'operatingsystem-versions'), EstatsLocale::translate('Operating system').': '.$operatingSystem);
+	$browser = EstatsGUI::itemText($data[$i]['browser'], 'browser-versions');
+	$browserIcon = EstatsGUI::iconTag(EstatsGUI::iconPath($data[$i]['browser'], 'browser-versions'), EstatsLocale::translate('Browser').': '.$browser);
+	$language = EstatsGUI::itemText($data[$i]['language'], 'languages');
+	$languageIcon = ($language?EstatsGUI::iconTag(EstatsGUI::iconPath($data[$i]['language'], 'languages'), EstatsLocale::translate('Language').': '.$language):'');
+	$screen = htmlspecialchars(EstatsGUI::itemText($data[$i]['screen'], 'screens'));
+	$screenIcon = ($screen?EstatsGUI::iconTag(EstatsGUI::iconPath($data[$i]['screen'], 'screens'), EstatsLocale::translate('Screen resolution').': '.$screen):'');
+	$flash = (($data[$i]['flash'] != 0 || $data[$i]['flash'] == '?')?EstatsGUI::itemText($data[$i]['flash'], 'flash'):EstatsLocale::translate('No plugin'));
+	$flashIcon = (($data[$i]['flash'] != 0 || $data[$i]['flash'] == '?')?EstatsGUI::iconTag(EstatsGUI::iconPath('flash', 'miscellaneous'), EstatsLocale::translate('Flash plugin version').': '.$flash):'');
+	$java = ($data[$i]['java']?EstatsLocale::translate('Yes'):EstatsLocale::translate('No'));
+	$javaIcon = ($data[$i]['java']?EstatsGUI::iconTag(EstatsGUI::iconPath('java', 'miscellaneous'), EstatsLocale::translate('Java enabled')):'');
+	$javaScript = ($data[$i]['javascript']?EstatsLocale::translate('Yes'):EstatsLocale::translate('No'));
+	$javaScriptIcon = ($data[$i]['javascript']?EstatsGUI::iconTag(EstatsGUI::iconPath('javascript', 'miscellaneous'), EstatsLocale::translate('JavaScript enabled')):'');
+	$cookies = ($data[$i]['cookies']?EstatsLocale::translate('Yes'):EstatsLocale::translate('No'));
+	$cookiesIcon = ($data[$i]['cookies']?EstatsGUI::iconTag(EstatsGUI::iconPath('cookies', 'miscellaneous'), EstatsLocale::translate('Cookies enabled')):'');
+	$proxy = ($data[$i]['proxy']?EstatsGUI::whoisLink($data[$i]['proxyip'], EstatsLocale::translate('Proxy')).': '.htmlspecialchars($data[$i]['proxy']):'');
+	$proxyIcon = ($proxy?EstatsGUI::whoisLink($data[$i]['proxyip'], '
+'.EstatsGUI::iconTag(EstatsGUI::iconPath('proxy', 'miscellaneous'), EstatsLocale::translate('Proxy').': '.htmlspecialchars($data[$i]['proxy'])).'
 '):'');
-	$City = htmlspecialchars($Data[$i]['geolocation']?$Data[$i]['geolocation']['city']:'');
-	$Region = htmlspecialchars(($Data[$i]['geolocation'] && $Data[$i]['geolocation']['region'])?EstatsGUI::itemText($Data[$i]['geolocation']['country'].'-'.$Data[$i]['geolocation']['region'], 'regions'):'');
-	$Country = htmlspecialchars(($Data[$i]['geolocation'] && $Data[$i]['geolocation']['country'])?EstatsGUI::itemText($Data[$i]['geolocation']['country'], 'countries'):'');
-	$Continent = htmlspecialchars(($Data[$i]['geolocation'] && $Data[$i]['geolocation']['continent'])?EstatsGUI::itemText($Data[$i]['geolocation']['continent'], 'continents'):'');
-	$Coordinates = ($Data[$i]['geolocation']?EstatsGeolocation::coordinates($Data[$i]['geolocation']['latitude'], $Data[$i]['geolocation']['longitude']):'');
-	$Location = ($Data[$i]['geolocation']?'<a href="'.EstatsGUI::mapLink($Data[$i]['geolocation']['latitude'], $Data[$i]['geolocation']['longitude']).'">'.($City?$City.', ':'').$Country.'</a>':'');
-	$Hours = intval(($Last + 5 - $First) / 3600);
-	$Minutes = intval((($Last + 5 - $First) / 60) - (($Hours * 60)));
-	$Seconds = intval($Last + 5 - $First - (($Minutes * 60) + ($Hours * 3600)));
-	$Difference = ($Hours?$Hours.':':'').(($Minutes < 10)?'0':'').$Minutes.':'.(($Seconds < 10)?'0':'').$Seconds;
-	$Entry = EstatsTheme::parse(EstatsTheme::get($ShowDetails?'details':'visits-row'), array(
-	'class' => $Class,
-	'simpletype' => $Type,
-	'id' => $Data[$i]['id'],
-	'first' => date('d.m.Y H:i:s', $First),
-	'last' => date('d.m.Y H:i:s', $Last),
-	'visits' => (int) $Data[$i]['visitsamount'],
-	'time' => $Difference,
-	'referrer' => (($Data[$i]['referrer'] && !$Data[$i]['robot'])?'<a href="'.htmlspecialchars($Data[$i]['referrer']).'"'.($Data[$i]['keywords']?' title="'.EstatsLocale::translate('Keywords').': '.htmlspecialchars($Data[$i]['keywords']).'" class="tooltip"':'').' rel="nofollow">
-'.EstatsGUI::cutString($Data[$i]['referrer'], EstatsTheme::option('VisitsRowValueLength')).'
-'.($Data[$i]['keywords']?'<span>
+	$city = htmlspecialchars($data[$i]['geolocation']?$data[$i]['geolocation']['city']:'');
+	$region = htmlspecialchars(($data[$i]['geolocation'] && $data[$i]['geolocation']['region'])?EstatsGUI::itemText($data[$i]['geolocation']['country'].'-'.$data[$i]['geolocation']['region'], 'regions'):'');
+	$country = htmlspecialchars(($data[$i]['geolocation'] && $data[$i]['geolocation']['country'])?EstatsGUI::itemText($data[$i]['geolocation']['country'], 'countries'):'');
+	$continent = htmlspecialchars(($data[$i]['geolocation'] && $data[$i]['geolocation']['continent'])?EstatsGUI::itemText($data[$i]['geolocation']['continent'], 'continents'):'');
+	$coordinates = ($data[$i]['geolocation']?EstatsGeolocation::coordinates($data[$i]['geolocation']['latitude'], $data[$i]['geolocation']['longitude']):'');
+	$location = ($data[$i]['geolocation']?'<a href="'.EstatsGUI::mapLink($data[$i]['geolocation']['latitude'], $data[$i]['geolocation']['longitude']).'">'.($city?$city.', ':'').$country.'</a>':'');
+	$hours = intval(($last + 5 - $first) / 3600);
+	$minutes = intval((($last + 5 - $first) / 60) - (($hours * 60)));
+	$seconds = intval($last + 5 - $first - (($minutes * 60) + ($hours * 3600)));
+	$difference = ($hours?$hours.':':'').(($minutes < 10)?'0':'').$minutes.':'.(($seconds < 10)?'0':'').$seconds;
+	$entry = EstatsTheme::parse(EstatsTheme::get($showDetails?'details':'visits-row'), array(
+	'class' => $class,
+	'simpletype' => $type,
+	'id' => $data[$i]['id'],
+	'first' => date('d.m.Y H:i:s', $first),
+	'last' => date('d.m.Y H:i:s', $last),
+	'visits' => (int) $data[$i]['visitsamount'],
+	'time' => $difference,
+	'referrer' => (($data[$i]['referrer'] && !$data[$i]['robot'])?'<a href="'.htmlspecialchars($data[$i]['referrer']).'"'.($data[$i]['keywords']?' title="'.EstatsLocale::translate('Keywords').': '.htmlspecialchars($data[$i]['keywords']).'" class="tooltip"':'').' rel="nofollow">
+'.EstatsGUI::cutString($data[$i]['referrer'], EstatsTheme::option('VisitsRowValueLength')).'
+'.($data[$i]['keywords']?'<span>
 <strong>'.EstatsLocale::translate('Keywords').':</strong><br>
-'.$Data[$i]['keywords'].'
+'.$data[$i]['keywords'].'
 </span>
 ':'').'</a>'.((ESTATS_USERLEVEL == 2)?'
-<a href="{selfpath}{separator}referrer='.$Data[$i]['referrer-host'].'" class="'.(in_array($Data[$i]['referrer-host'], EstatsCore::option('Referrers'))?'green" title="'.EstatsLocale::translate('Unblock counting of this referrer').'"':'red" onclick="if (!confirm(\''.EstatsLocale::translate('Do You really want to exclude this referrer?').'\')) return false" title="'.EstatsLocale::translate('Block counting of this referrer').'"').'><strong>&#187;</strong></a>':''):'&nbsp;'),
-	'keywords' => EstatsGUI::cutString($Data[$i]['keywords'], EstatsTheme::option('VisitsRowValueLength'), 1),
-	'host' => (($Data[$i]['host'] && $Data[$i]['host'] !== '?')?EstatsGUI::cutString($Data[$i]['host'], EstatsTheme::option('VisitsRowValueLength'), 1):EstatsLocale::translate('Unknown')),
-	'ip' => ((ESTATS_USERLEVEL == 2 && $Data[$i]['ip'])?(($Data[$i]['ip'] == 'unknown')?EstatsLocale::translate('Unknown'):(($Data[$i]['ip'] == '127.0.0.1')?$Data[$i]['ip']:EstatsGUI::whoisLink($Data[$i]['ip'], $Data[$i]['ip'])).'
-'.EstatsGUI::ignoreIPLink(EstatsCore::option('IgnoredIPs'), $Data[$i]['ip'])):'&nbsp;'),
-	'useragent' => htmlspecialchars($Data[$i]['useragent']),
-	'robot' => &$Robot,
-	'robot_icon' => &$RobotIcon,
-	'operatingsystem' => &$OperatingSystem,
-	'operatingsystem_icon' => &$OperatingSystemIcon,
-	'browser' => &$Browser,
-	'browser_icon' => &$BrowserIcon,
-	'language' => &$Language,
-	'language_icon' => &$LanguageIcon,
-	'screen' => &$Screen,
-	'screen_icon' => &$ScreenIcon,
-	'flash' => &$Flash,
-	'flash_icon' => &$FlashIcon,
-	'java' => &$Java,
-	'java_icon' => &$JavaIcon,
-	'javascript' => &$JavaScript,
-	'javascript_icon' => &$JavaScriptIcon,
-	'cookies' => &$Cookies,
-	'cookies_icon' => &$CookiesIcon,
-	'location' => &$Location,
-	'city' => &$City,
-	'region' => &$Region,
-	'country' => &$Country,
-	'continent' => &$Continent,
-	'coordinates' => &$Coordinates,
-	'longitude' => ($Data[$i]['geolocation']?$Data[$i]['geolocation']['longitude']:''),
-	'latitude' => ($Data[$i]['geolocation']?$Data[$i]['geolocation']['latitude']:''),
-	'country_id' => htmlspecialchars($Data[$i]['geolocation']?$Data[$i]['geolocation']['country']:''),
-	'country_icon' => ($Country?EstatsGUI::iconTag(EstatsGUI::iconPath($Data[$i]['geolocation']['country'], 'countries'), $Country):''),
-	'configuration' => (EstatsTheme::option('Icons')?($Robot?$RobotIcon.'
-':$BrowserIcon.'
-'.$OperatingSystemIcon.'
-'.$LanguageIcon.'
-'.($ScreenIcon?$ScreenIcon.'
-':'').($FlashIcon?$FlashIcon.'
-':'').($JavaIcon?$JavaIcon.'
-':'').($JavaScriptIcon?$JavaScriptIcon.'
-':'').($CookiesIcon?$CookiesIcon.'
-':'').($ProxyIcon?$ProxyIcon.'
+<a href="{selfpath}{separator}referrer='.$data[$i]['referrer-host'].'" class="'.(in_array($data[$i]['referrer-host'], EstatsCore::option('Referrers'))?'green" title="'.EstatsLocale::translate('Unblock counting of this referrer').'"':'red" onclick="if (!confirm(\''.EstatsLocale::translate('Do You really want to exclude this referrer?').'\')) return false" title="'.EstatsLocale::translate('Block counting of this referrer').'"').'><strong>&#187;</strong></a>':''):'&nbsp;'),
+	'keywords' => EstatsGUI::cutString($data[$i]['keywords'], EstatsTheme::option('VisitsRowValueLength'), 1),
+	'host' => (($data[$i]['host'] && $data[$i]['host'] !== '?')?EstatsGUI::cutString($data[$i]['host'], EstatsTheme::option('VisitsRowValueLength'), 1):EstatsLocale::translate('Unknown')),
+	'ip' => ((ESTATS_USERLEVEL == 2 && $data[$i]['ip'])?(($data[$i]['ip'] == 'unknown')?EstatsLocale::translate('Unknown'):(($data[$i]['ip'] == '127.0.0.1')?$data[$i]['ip']:EstatsGUI::whoisLink($data[$i]['ip'], $data[$i]['ip'])).'
+'.EstatsGUI::ignoreIPLink(EstatsCore::option('IgnoredIPs'), $data[$i]['ip'])):'&nbsp;'),
+	'useragent' => htmlspecialchars($data[$i]['useragent']),
+	'robot' => &$robot,
+	'robot_icon' => &$robotIcon,
+	'operatingsystem' => &$operatingSystem,
+	'operatingsystem_icon' => &$operatingSystemIcon,
+	'browser' => &$browser,
+	'browser_icon' => &$browserIcon,
+	'language' => &$language,
+	'language_icon' => &$languageIcon,
+	'screen' => &$screen,
+	'screen_icon' => &$screenIcon,
+	'flash' => &$flash,
+	'flash_icon' => &$flashIcon,
+	'java' => &$java,
+	'java_icon' => &$javaIcon,
+	'javascript' => &$javaScript,
+	'javascript_icon' => &$javaScriptIcon,
+	'cookies' => &$cookies,
+	'cookies_icon' => &$cookiesIcon,
+	'location' => &$location,
+	'city' => &$city,
+	'region' => &$region,
+	'country' => &$country,
+	'continent' => &$continent,
+	'coordinates' => &$coordinates,
+	'longitude' => ($data[$i]['geolocation']?$data[$i]['geolocation']['longitude']:''),
+	'latitude' => ($data[$i]['geolocation']?$data[$i]['geolocation']['latitude']:''),
+	'country_id' => htmlspecialchars($data[$i]['geolocation']?$data[$i]['geolocation']['country']:''),
+	'country_icon' => ($country?EstatsGUI::iconTag(EstatsGUI::iconPath($data[$i]['geolocation']['country'], 'countries'), $country):''),
+	'configuration' => (EstatsTheme::option('Icons')?($robot?$robotIcon.'
+':$browserIcon.'
+'.$operatingSystemIcon.'
+'.$languageIcon.'
+'.($screenIcon?$screenIcon.'
+':'').($flashIcon?$flashIcon.'
+':'').($javaIcon?$javaIcon.'
+':'').($javaScriptIcon?$javaScriptIcon.'
+':'').($cookiesIcon?$cookiesIcon.'
+':'').($proxyIcon?$proxyIcon.'
 ':'')):'<small>
-'.EstatsLocale::translate('User Agent').': <em>'.EstatsGUI::cutString($Data[$i]['useragent'], 75).'</em>.<br>
-'.($Robot?EstatsLocale::translate('Network robot').': '.$Robot.'<br>
-':EstatsLocale::translate('Browser').': <em>'.$Browser.'</em>.<br>
-'.EstatsLocale::translate('Operating system').': <em>'.$OperatingSystem.'</em>.<br>
-'.(($Data[$i]['language'] != '?')?EstatsLocale::translate('Language').': <em>'.$Language.'</em>.<br>
-':'')).($Screen?EstatsLocale::translate('Screen resolution').': <em>'.$Screen.'</em>.<br>
-':'').EstatsLocale::translate('Flash plugin version').': <em>'.($Flash?$Flash:EstatsLocale::translate('Lack')).'.</em><br>
-'.EstatsLocale::translate('Java').': <em>'.$Java.'.</em><br>
-'.EstatsLocale::translate('JavaScript').': <em>'.$JavaScript.'.</em><br>
-'.EstatsLocale::translate('Cookies').': <em>'.$Cookies.'.</em><br>
-'.($Proxy?$Proxy.'<br>
+'.EstatsLocale::translate('User Agent').': <em>'.EstatsGUI::cutString($data[$i]['useragent'], 75).'</em>.<br>
+'.($robot?EstatsLocale::translate('Network robot').': '.$robot.'<br>
+':EstatsLocale::translate('Browser').': <em>'.$browser.'</em>.<br>
+'.EstatsLocale::translate('Operating system').': <em>'.$operatingSystem.'</em>.<br>
+'.(($data[$i]['language'] != '?')?EstatsLocale::translate('Language').': <em>'.$language.'</em>.<br>
+':'')).($screen?EstatsLocale::translate('Screen resolution').': <em>'.$screen.'</em>.<br>
+':'').EstatsLocale::translate('Flash plugin version').': <em>'.($flash?$flash:EstatsLocale::translate('Lack')).'.</em><br>
+'.EstatsLocale::translate('Java').': <em>'.$java.'.</em><br>
+'.EstatsLocale::translate('JavaScript').': <em>'.$javaScript.'.</em><br>
+'.EstatsLocale::translate('Cookies').': <em>'.$cookies.'.</em><br>
+'.($proxy?$proxy.'<br>
 ':'').'</small>
-').($Data[$i]['geolocation']?'<a href="'.EstatsGUI::mapLink($Data[$i]['geolocation']['latitude'], $Data[$i]['geolocation']['longitude']).'" class="tooltip">
+').($data[$i]['geolocation']?'<a href="'.EstatsGUI::mapLink($data[$i]['geolocation']['latitude'], $data[$i]['geolocation']['longitude']).'" class="tooltip">
 '.(EstatsTheme::option('Icons')?EstatsGUI::iconTag(EstatsGUI::iconPath('geolocation', 'miscellaneous'), EstatsLocale::translate('Show location on map')).'
 ':'').'<span>
 <strong>'.EstatsLocale::translate('Location').':</strong><br>
-'.($City?EstatsLocale::translate('City').': <em>'.EstatsGUI::itemText($City, 'cities').'</em><br>
-':'').($Region?EstatsLocale::translate('Region').': <em>'.$Region.'</em><br>
-':'').($Country?EstatsLocale::translate('Country').': <em>'.$Country.'</em><br>
-':'').($Continent?EstatsLocale::translate('Continent').': <em>'.$Continent.'</em><br>
-':'').EstatsLocale::translate('Co-ordinates').': <em>'.$Coordinates.'</em>
+'.($city?EstatsLocale::translate('City').': <em>'.EstatsGUI::itemText($city, 'cities').'</em><br>
+':'').($region?EstatsLocale::translate('Region').': <em>'.$region.'</em><br>
+':'').($country?EstatsLocale::translate('Country').': <em>'.$country.'</em><br>
+':'').($continent?EstatsLocale::translate('Continent').': <em>'.$continent.'</em><br>
+':'').EstatsLocale::translate('Co-ordinates').': <em>'.$coordinates.'</em>
 </span>
 </a>
 ':''),
 	), array(
-	'referrer' => (boolean) $Data[$i]['referrer'],
-	'keywords' => (boolean) $Data[$i]['keywords'],
-	'robot' => (boolean) $Robot,
-	'location' => (boolean) $Data[$i]['geolocation'],
-	'technical' => (boolean) $Data[$i]['javascript'],
+	'referrer' => (boolean) $data[$i]['referrer'],
+	'keywords' => (boolean) $data[$i]['keywords'],
+	'robot' => (boolean) $robot,
+	'location' => (boolean) $data[$i]['geolocation'],
+	'technical' => (boolean) $data[$i]['javascript'],
 	));
 
-	if (!$ShowDetails)
+	if (!$showDetails)
 	{
-		EstatsTheme::append('rows', $Entry);
+		EstatsTheme::append('rows', $entry);
 	}
 }
 
-if ($ShowDetails)
+if ($showDetails)
 {
-	$Page = (int) (isset($Path[4])?$Path[4]:1);
+	$page = (int) (isset($path[4])?$path[4]:1);
 
-	EstatsTheme::add('title', sprintf(EstatsLocale::translate('Visit details #%d'), $ShowID));
+	EstatsTheme::add('title', sprintf(EstatsLocale::translate('Visit details #%d'), $showID));
 
-	if ($Page < 1 || $Page > ceil($Data[0]['visitsamount'] / EstatsCore::option('Visits/detailsamount')))
+	if ($page < 1 || $page > ceil($data[0]['visitsamount'] / EstatsCore::option('Visits/detailsamount')))
 	{
-		$Page = 1;
+		$page = 1;
 	}
 
-	$Sites = EstatsCore::driver()->selectData(array('details'), array('time', 'address', array(EstatsDriver::ELEMENT_SUBQUERY, array(array('sites'), array('sites.name'), array(array(EstatsDriver::ELEMENT_OPERATION, array('sites.address', EstatsDriver::OPERATOR_EQUAL, 'details.address')))), 'title')), $Where, EstatsCore::option('Visits/detailsamount'), (EstatsCore::option('Visits/detailsamount') * ($Page - 1)), array('time' => FALSE));
+	$sites = EstatsCore::driver()->selectData(array('details'), array('time', 'address', array(EstatsDriver::ELEMENT_SUBQUERY, array(array('sites'), array('sites.name'), array(array(EstatsDriver::ELEMENT_OPERATION, array('sites.address', EstatsDriver::OPERATOR_EQUAL, 'details.address')))), 'title')), $where, EstatsCore::option('Visits/detailsamount'), (EstatsCore::option('Visits/detailsamount') * ($page - 1)), array('time' => FALSE));
 
 	EstatsTheme::add('rows', '');
 
-	for ($i = 0, $c = count($Sites); $i < $c; ++$i)
+	for ($i = 0, $c = count($sites); $i < $c; ++$i)
 	{
-		$Title = htmlspecialchars($Sites[$i][empty($Sites[$i]['title'])?'address':'title']);
+		$title = htmlspecialchars($sites[$i][empty($sites[$i]['title'])?'address':'title']);
 
 		EstatsTheme::append('rows', EstatsTheme::parse(EstatsTheme::get('details-row'), array(
-	'num' => ($Data[0]['visitsamount'] - $i - (($Page - 1) * EstatsCore::option('Visits/detailsamount'))),
-	'date' => date('d.m.Y H:i:s', (is_numeric($Sites[$i]['time'])?$Sites[$i]['time']:strtotime($Sites[$i]['time']))),
-	'title' => $Title,
-	'link' => '<a href="'.htmlspecialchars($Sites[$i]['address']).'">'.EstatsGUI::cutString($Title, EstatsTheme::option('DetailsRowValueLength')).'</a>'
+	'num' => ($data[0]['visitsamount'] - $i - (($page - 1) * EstatsCore::option('Visits/detailsamount'))),
+	'date' => date('d.m.Y H:i:s', (is_numeric($sites[$i]['time'])?$sites[$i]['time']:strtotime($sites[$i]['time']))),
+	'title' => $title,
+	'link' => '<a href="'.htmlspecialchars($sites[$i]['address']).'">'.EstatsGUI::cutString($title, EstatsTheme::option('DetailsRowValueLength')).'</a>'
 	)));
 	}
 
-	$PagesAmount = ceil($Data[0]['visitsamount'] / EstatsCore::option('Visits/detailsamount'));
+	$pagesAmount = ceil($data[0]['visitsamount'] / EstatsCore::option('Visits/detailsamount'));
 
-	if ($PagesAmount > 1)
+	if ($pagesAmount > 1)
 	{
-		EstatsTheme::add('title', sprintf(EstatsLocale::translate('%s - page %d. of %d'), EstatsTheme::get('title'), $Page, $PagesAmount));
+		EstatsTheme::add('title', sprintf(EstatsLocale::translate('%s - page %d. of %d'), EstatsTheme::get('title'), $page, $pagesAmount));
 	}
 
-	$OtherIDs = array();
-	$PreviousVisit = $Data[0]['previous'];
-	$NextVisit = $Data[0]['id'];
+	$otherIDs = array();
+	$previousVisit = $data[0]['previous'];
+	$nextVisit = $data[0]['id'];
 	$i = 0;
 
-	while ($PreviousVisit && $i < 10)
+	while ($previousVisit && $i < 10)
 	{
-		$OtherIDs[] = $PreviousVisit;
+		$otherIDs[] = $previousVisit;
 
-		$PreviousVisit = EstatsCore::driver()->selectField('visitors', 'previous', array(array(EstatsDriver::ELEMENT_OPERATION, array('id', EstatsDriver::OPERATOR_EQUAL, $PreviousVisit))));
+		$previousVisit = EstatsCore::driver()->selectField('visitors', 'previous', array(array(EstatsDriver::ELEMENT_OPERATION, array('id', EstatsDriver::OPERATOR_EQUAL, $previousVisit))));
 
 		++$i;
 	}
 
-	while ($NextVisit && $i < 20)
+	while ($nextVisit && $i < 20)
 	{
-		$NextVisit = EstatsCore::driver()->selectField('visitors', 'id', array(array(EstatsDriver::ELEMENT_OPERATION, array('previous', EstatsDriver::OPERATOR_EQUAL, $NextVisit))));
+		$nextVisit = EstatsCore::driver()->selectField('visitors', 'id', array(array(EstatsDriver::ELEMENT_OPERATION, array('previous', EstatsDriver::OPERATOR_EQUAL, $nextVisit))));
 
-		if ($NextVisit)
+		if ($nextVisit)
 		{
-			$OtherIDs[] = $NextVisit;
+			$otherIDs[] = $nextVisit;
 		}
 
 		++$i;
 	}
 
-	EstatsTheme::add('page', str_replace('{rowspan}', (count($Sites) + (($Data[0]['visitsamount'] > EstatsCore::option('Visits/detailsamount'))?3:2) - 1), $Entry));
+	EstatsTheme::add('page', str_replace('{rowspan}', (count($sites) + (($data[0]['visitsamount'] > EstatsCore::option('Visits/detailsamount'))?3:2) - 1), $entry));
 
-	sort($OtherIDs);
+	sort($otherIDs);
 
-	$Data = EstatsCore::driver()->selectData(array('visitors', array(EstatsDriver::JOIN_LEFT, EstatsDriver::OPERATOR_JOIN_USING, array('id')), 'details'), array('visitors.id', 'visitors.firstvisit', 'visitors.lastvisit', 'visitors.visitsamount', array(EstatsDriver::ELEMENT_FIELD, 'details.id', 'details')), array(array(EstatsDriver::ELEMENT_OPERATION, array('visitors.id', EstatsDriver::OPERATOR_IN, $OtherIDs))), 0, 0, array('visitors.lastvisit' => FALSE), NULL, NULL, TRUE);
+	$data = EstatsCore::driver()->selectData(array('visitors', array(EstatsDriver::JOIN_LEFT, EstatsDriver::OPERATOR_JOIN_USING, array('id')), 'details'), array('visitors.id', 'visitors.firstvisit', 'visitors.lastvisit', 'visitors.visitsamount', array(EstatsDriver::ELEMENT_FIELD, 'details.id', 'details')), array(array(EstatsDriver::ELEMENT_OPERATION, array('visitors.id', EstatsDriver::OPERATOR_IN, $otherIDs))), 0, 0, array('visitors.lastvisit' => FALSE), NULL, NULL, TRUE);
 
-	EstatsTheme::add('other-visits', (count($Data) > 0));
+	EstatsTheme::add('other-visits', (count($data) > 0));
 
-	if ($Data)
+	if ($data)
 	{
-		for ($i = 0, $c = count($Data); $i < $c; ++$i)
+		for ($i = 0, $c = count($data); $i < $c; ++$i)
 		{
-			EstatsTheme::add('details-'.$Data[$i]['id'], $Data[$i]['details']);
+			EstatsTheme::add('details-'.$data[$i]['id'], $data[$i]['details']);
 			EstatsTheme::append('othervisits', EstatsTheme::parse(EstatsTheme::get('other-visits-row'), array(
-	'id' => $Data[$i]['id'],
-	'first' => date('d.m.Y H:i:s', (is_numeric($Data[$i]['firstvisit'])?$Data[$i]['firstvisit']:strtotime($Data[$i]['firstvisit']))),
-	'last' => date('d.m.Y H:i:s', (is_numeric($Data[$i]['lastvisit'])?$Data[$i]['lastvisit']:strtotime($Data[$i]['lastvisit']))),
-	'amount' => (int) $Data[$i]['visitsamount'],
+	'id' => $data[$i]['id'],
+	'first' => date('d.m.Y H:i:s', (is_numeric($data[$i]['firstvisit'])?$data[$i]['firstvisit']:strtotime($data[$i]['firstvisit']))),
+	'last' => date('d.m.Y H:i:s', (is_numeric($data[$i]['lastvisit'])?$data[$i]['lastvisit']:strtotime($data[$i]['lastvisit']))),
+	'amount' => (int) $data[$i]['visitsamount'],
 	)));
 		}
 	}
 
-	EstatsTheme::add('links', (($PagesAmount > 1)?EstatsGUI::linksWIdget($Page, $PagesAmount, '{path}visits/visit/'.$ShowID.'/{page}{suffix}'):''));
+	EstatsTheme::add('links', (($pagesAmount > 1)?EstatsGUI::linksWIdget($page, $pagesAmount, '{path}visits/visit/'.$showID.'/{page}{suffix}'):''));
 }
 else
 {
-	EstatsTheme::add('robotscheckbox', ($ShowRobots?' checked="checked"':''));
+	EstatsTheme::add('robotscheckbox', ($showRobots?' checked="checked"':''));
 
-	if ($PagesAmount > 1 && EstatsCore::option('Visits/maxpages') > 1)
+	if ($pagesAmount > 1 && EstatsCore::option('Visits/maxpages') > 1)
 	{
-		EstatsTheme::add('title', sprintf(EstatsLocale::translate('%s - page %d. of %d'), EstatsTheme::get('title'), $Page, $PagesAmount));
+		EstatsTheme::add('title', sprintf(EstatsLocale::translate('%s - page %d. of %d'), EstatsTheme::get('title'), $page, $pagesAmount));
 	}
 
-	EstatsTheme::add('links', (($PagesAmount > 1)?EstatsGUI::linksWIdget($Page, $PagesAmount, '{path}visits/'.$ShowRobots.'/{page}{suffix}'):''));
+	EstatsTheme::add('links', (($pagesAmount > 1)?EstatsGUI::linksWIdget($page, $pagesAmount, '{path}visits/'.$showRobots.'/{page}{suffix}'):''));
 
-	if (!count($Data))
+	if (!count($data))
 	{
 		EstatsTheme::link('visits-none', 'rows');
 	}

@@ -10,7 +10,7 @@ if (!defined('eStats'))
 	die();
 }
 
-$DatabaseTables = array_keys(EstatsCore::loadData('share/data/database.ini'));
+$databaseTables = array_keys(EstatsCore::loadData('share/data/database.ini'));
 
 if (isset($_POST['ResetBackups']))
 {
@@ -26,28 +26,28 @@ if (isset($_POST['ResetCache']))
 
 if (isset($_POST['CreateBackup']))
 {
-	$BackupID = EstatsBackups::create(ESTATS_VERSIONSTRING, 'data');
+	$backupID = EstatsBackups::create(ESTATS_VERSIONSTRING, 'data');
 
-	if ($BackupID)
+	if ($backupID)
 	{
-		EstatsCore::logEvent(EstatsCore::EVENT_BACKUPCREATED, 'ID: '.$BackupID);
+		EstatsCore::logEvent(EstatsCore::EVENT_BACKUPCREATED, 'ID: '.$backupID);
 		EstatsGUI::notify(EstatsLocale::translate('Backup created successfully.'), 'success');
 		EstatsCore::setConfiguration(array('LastBackup' => $_SERVER['REQUEST_TIME']), 0);
 	}
 	else
 	{
-		EstatsCore::logEvent(EstatsCore::EVENT_FAILEDBACKUPCREATION, 'ID: '.$BackupID);
+		EstatsCore::logEvent(EstatsCore::EVENT_FAILEDBACKUPCREATION, 'ID: '.$backupID);
 		EstatsGUI::notify(EstatsLocale::translate('An error occured during backup create attempt!'), 'error');
 	}
 }
 
 if (isset($_POST['ResetData']))
 {
-	for ($i = 0, $c = count($DatabaseTables); $i < $c; ++$i)
+	for ($i = 0, $c = count($databaseTables); $i < $c; ++$i)
 	{
-		if (!in_array($DatabaseTables[$i], array('configuration', 'logs')))
+		if (!in_array($databaseTables[$i], array('configuration', 'logs')))
 		{
-			EstatsCore::driver()->deleteData($DatabaseTables[$i]);
+			EstatsCore::driver()->deleteData($databaseTables[$i]);
 		}
 	}
 
@@ -56,19 +56,19 @@ if (isset($_POST['ResetData']))
 	EstatsCore::setConfiguration(array('CollectedFrom' => $_SERVER['REQUEST_TIME']), 0);
 }
 
-$DatabaseSize = 0;
+$databaseSize = 0;
 
-for ($i = 0, $c = count($DatabaseTables); $i < $c; ++$i)
+for ($i = 0, $c = count($databaseTables); $i < $c; ++$i)
 {
-	$DatabaseSize += EstatsCore::driver()->tableSize($DatabaseTables[$i]);
+	$databaseSize += EstatsCore::driver()->tableSize($databaseTables[$i]);
 }
 
-$ResetOptions = array(
-	'Data' => $DatabaseSize,
+$resetOptions = array(
+	'Data' => $databaseSize,
 	'Backups' => EstatsBackups::size(),
 	'Cache' => EstatsCache::size()
 	);
-$OptionNames = array(
+$optionNames = array(
 	'Data' => 'Delete all statistics data',
 	'Backups' => 'Delete backups',
 	'Cache' => 'Reset cache'
@@ -76,9 +76,9 @@ $OptionNames = array(
 EstatsTheme::add('page', '<form action="{selfpath}" method="post">
 ');
 
-foreach ($ResetOptions as $Key => $Value)
+foreach ($resetOptions as $key => $value)
 {
-	EstatsTheme::append('page', EstatsGUI::optionRowWidget(EstatsLocale::translate($OptionNames[$Key]).' (<strong>'.EstatsGUI::formatSize($Value).'</strong>)', '', 'Reset'.$Key, FALSE, EstatsGUI::FIELD_BOOLEAN));
+	EstatsTheme::append('page', EstatsGUI::optionRowWidget(EstatsLocale::translate($optionNames[$key]).' (<strong>'.EstatsGUI::formatSize($value).'</strong>)', '', 'Reset'.$key, FALSE, EstatsGUI::FIELD_BOOLEAN));
 }
 
 EstatsTheme::append('page', EstatsGUI::optionRowWidget(EstatsLocale::translate('Create backup'), '', 'CreateBackup', 1, EstatsGUI::FIELD_BOOLEAN).'<div class="buttons">

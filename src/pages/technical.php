@@ -10,19 +10,19 @@ if (!defined('eStats'))
 	die();
 }
 
-if (isset ($Path[2]) && in_array ($Path[2], $Groups['technical']))
+if (isset ($path[2]) && in_array ($path[2], $groups['technical']))
 {
 	EstatsTheme::load('group');
 	EstatsTheme::load('chart');
-	EstatsTheme::append('title', ' - '.$Titles[$Path[2]]);
-	EstatsTheme::add('group', EstatsGroup::create($Path[2], $Path[2], $Titles[$Path[2]], $Date, (isset($Path[4])?(int) $Path[4]:1), TRUE, '{path}technical/'.$Path[2].'/{date}{suffix}'));
+	EstatsTheme::append('title', ' - '.$titles[$path[2]]);
+	EstatsTheme::add('group', EstatsGroup::create($path[2], $path[2], $titles[$path[2]], $date, (isset($path[4])?(int) $path[4]:1), TRUE, '{path}technical/'.$path[2].'/{date}{suffix}'));
 	EstatsTheme::link('group-page', 'page');
 }
 else
 {
-	for ($i = 0, $c = count($Groups['technical']); $i < $c; ++$i)
+	for ($i = 0, $c = count($groups['technical']); $i < $c; ++$i)
 	{
-		EstatsTheme::add($Groups['technical'][$i], EstatsGroup::create($Groups['technical'][$i], $Groups['technical'][$i], $Titles[$Groups['technical'][$i]], $Date, 1, FALSE, '{path}technical/'.$Groups['technical'][$i].'/{date}{suffix}'));
+		EstatsTheme::add($groups['technical'][$i], EstatsGroup::create($groups['technical'][$i], $groups['technical'][$i], $titles[$groups['technical'][$i]], $date, 1, FALSE, '{path}technical/'.$groups['technical'][$i].'/{date}{suffix}'));
 	}
 }
 

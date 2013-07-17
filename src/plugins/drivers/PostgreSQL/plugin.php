@@ -14,19 +14,19 @@ class EstatsDriverPostgresql extends EstatsDriver
  * @return string
  */
 
-	private function fieldString($Field)
+	private function fieldString($field)
 	{
-		if (preg_match('#^.+\.#', $Field) > 0)
+		if (preg_match('#^.+\.#', $field) > 0)
 		{
-			$Position = strpos($Field, '.');
-			$Table = substr($Field, 0, $Position);
-			$Field = substr($Field, ($Position + 1));
+			$position = strpos($field, '.');
+			$table = substr($field, 0, $position);
+			$field = substr($field, ($position + 1));
 
-			return '"'.$Table.'".'.(($Field == '*')?'*':'"'.$Field.'"');
+			return '"'.$table.'".'.(($field == '*')?'*':'"'.$field.'"');
 		}
 		else
 		{
-			return '"'.$Field.'"';
+			return '"'.$field.'"';
 		}
 	}
 
@@ -36,29 +36,29 @@ class EstatsDriverPostgresql extends EstatsDriver
  * @return string
  */
 
-	private function operatorString($Operator)
+	private function operatorString($operator)
 	{
-		if ($Operator == self::OPERATOR_NOT)
+		if ($operator == self::OPERATOR_NOT)
 		{
 			return 'NOT';
 		}
 		else
 		{
-			$Not = ($Operator & self::OPERATOR_NOT);
-			$Operator = ($Operator & ~self::OPERATOR_NOT);
+			$not = ($operator & self::OPERATOR_NOT);
+			$operator = ($operator & ~self::OPERATOR_NOT);
 
-			switch ($Operator)
+			switch ($operator)
 			{
 				case self::OPERATOR_AND:
 					return 'AND';
 				case self::OPERATOR_OR:
 					return 'OR';
 				case self::OPERATOR_EQUAL:
-					return ($Not?'!':'').'=';
+					return ($not?'!':'').'=';
 				case self::OPERATOR_REGEXP:
 					return 'REGEXP';
 				case self::OPERATOR_LIKE:
-					return ($Not?'NOT ':'').'LIKE';
+					return ($not?'NOT ':'').'LIKE';
 				case self::OPERATOR_GREATER:
 					return '>';
 				case self::OPERATOR_GREATEROREQUAL:
@@ -68,7 +68,7 @@ class EstatsDriverPostgresql extends EstatsDriver
 				case self::OPERATOR_LESSOREQUAL:
 					return '<=';
 				case self::OPERATOR_ISNULL:
-					return 'IS '.($Not?'NOT ':'').'NULL';
+					return 'IS '.($not?'NOT ':'').'NULL';
 				case self::OPERATOR_PLUS:
 					return '+';
 				case self::OPERATOR_MINUS:
@@ -98,188 +98,188 @@ class EstatsDriverPostgresql extends EstatsDriver
  * @return string
  */
 
-	private function elementString($Element, $Data)
+	private function elementString($element, $data)
 	{
-		switch ($Element)
+		switch ($element)
 		{
 			case self::ELEMENT_FIELD:
-				return $this->fieldString($Data);
+				return $this->fieldString($data);
 			case self::ELEMENT_VALUE:
-				return $this->PDO->quote($Data);
+				return $this->PDO->quote($data);
 			case self::ELEMENT_FUNCTION:
-				if ($Data[0] == self::FUNCTION_COUNT)
+				if ($data[0] == self::FUNCTION_COUNT)
 				{
-					return 'COUNT('.($Data[1]?$this->fieldString($Data[1]):'*').')';
+					return 'COUNT('.($data[1]?$this->fieldString($data[1]):'*').')';
 				}
-				else if ($Data[0] == self::FUNCTION_DATETIME)
+				else if ($data[0] == self::FUNCTION_DATETIME)
 				{
-					$Parts = array();
-					$Field = $this->fieldString($Data[1][0]);
-					$String = '';
+					$parts = array();
+					$field = $this->fieldString($data[1][0]);
+					$string = '';
 
-					for ($i = 0, $c = strlen($Data[1][1]); $i < $c; ++$i)
+					for ($i = 0, $c = strlen($data[1][1]); $i < $c; ++$i)
 					{
-						if ($Data[1][1][$i] == '%')
+						if ($data[1][1][$i] == '%')
 						{
 							++$i;
 
-							if ($Data[1][1][$i] == '%')
+							if ($data[1][1][$i] == '%')
 							{
-								$String.= '%';
+								$string.= '%';
 
 								continue;
 							}
-							else if ($String)
+							else if ($string)
 							{
-								$Parts[] = $this->PDo->quote($String);
-								$String = '';
+								$parts[] = $this->PDo->quote($string);
+								$string = '';
 							}
 
-							switch ($Data[1][1][$i])
+							switch ($data[1][1][$i])
 							{
 								case 'M':
-									$Placeholder = 'MINUTE';
+									$placeholder = 'MINUTE';
 								break;
 								case 'H':
-									$Placeholder = 'HOUR';
+									$placeholder = 'HOUR';
 								break;
 								case 'w':
-									$Placeholder = 'DOW';
+									$placeholder = 'DOW';
 								break;
 								case 'd':
-									$Placeholder = 'DAY';
+									$placeholder = 'DAY';
 								break;
 								case 'j':
-									$Placeholder = 'DOY';
+									$placeholder = 'DOY';
 								break;
 								case 'W':
-									$Placeholder = 'WEEK';
+									$placeholder = 'WEEK';
 								break;
 								case 'm':
-									$Placeholder = 'MONTH';
+									$placeholder = 'MONTH';
 								break;
 								case 'Y':
-									$Placeholder = 'YEAR';
+									$placeholder = 'YEAR';
 								break;
 								default:
 									continue;
 								break;
 							}
 
-							$Parts[] = 'EXTRACT('.$Placeholder.' FROM '.$Field.')';
+							$parts[] = 'EXTRACT('.$placeholder.' FROM '.$field.')';
 						}
 					}
 
-					return implode(' || ', $Parts);
+					return implode(' || ', $parts);
 				}
 				else
 				{
-					if (is_array($Data[1]))
+					if (is_array($data[1]))
 					{
-						$Data[1] = $this->elementString($Data[1][0], $Data[1][1]);
+						$data[1] = $this->elementString($data[1][0], $data[1][1]);
 					}
 					else
 					{
-						$Data[1] = $this->fieldString($Data[1]);
+						$data[1] = $this->fieldString($data[1]);
 					}
 
-					switch ($Data[0])
+					switch ($data[0])
 					{
 						case self::FUNCTION_SUM:
-							return 'SUM('.$Data[1].')';
+							return 'SUM('.$data[1].')';
 						case self::FUNCTION_MIN:
-							return 'MIN('.$Data[1].')';
+							return 'MIN('.$data[1].')';
 						case self::FUNCTION_MAX:
-							return 'MAX('.$Data[1].')';
+							return 'MAX('.$data[1].')';
 						case self::FUNCTION_AVG:
-							return 'AVG('.$Data[1].')';
+							return 'AVG('.$data[1].')';
 						case self::FUNCTION_TIMESTAMP:
-							return 'EXTRACT(EPOCH FROM '.$Data[1].')';
+							return 'EXTRACT(EPOCH FROM '.$data[1].')';
 						default:
 							return '';
 					}
 				}
 			case self::ELEMENT_OPERATION:
-				if ($Data[1] & self::OPERATOR_BETWEEN)
+				if ($data[1] & self::OPERATOR_BETWEEN)
 				{
-					return (is_array($Data[0])?$this->elementString($Data[0][0], $Data[0][1]):$this->PDO->quote($Data[2])).' '.(($Data[1] & self::OPERATOR_NOT)?'NOT ':'').'BETWEEN '.$this->fieldString($Data[2]).' AND '.$this->fieldString($Data[3]);
+					return (is_array($data[0])?$this->elementString($data[0][0], $data[0][1]):$this->PDO->quote($data[2])).' '.(($data[1] & self::OPERATOR_NOT)?'NOT ':'').'BETWEEN '.$this->fieldString($data[2]).' AND '.$this->fieldString($data[3]);
 				}
-				else if ($Data[1] & self::OPERATOR_IN)
+				else if ($data[1] & self::OPERATOR_IN)
 				{
-					$Items = array();
+					$items = array();
 
-					for ($i = 0, $c = count($Data[2]); $i < $c; ++$i)
+					for ($i = 0, $c = count($data[2]); $i < $c; ++$i)
 					{
-						$Items[] = $this->PDO->quote($Data[2][$i]);
+						$items[] = $this->PDO->quote($data[2][$i]);
 					}
 
-					return $this->fieldString($Data[0]).' '.(($Data[1] & self::OPERATOR_NOT)?'NOT ':'').'IN('.implode(', ', $Items).')';
+					return $this->fieldString($data[0]).' '.(($data[1] & self::OPERATOR_NOT)?'NOT ':'').'IN('.implode(', ', $items).')';
 				}
 				else
 				{
-					return (is_array($Data[0])?$this->elementString($Data[0][0], $Data[0][1]):$this->fieldString($Data[0])).' '.$this->operatorString($Data[1]).(isset($Data[2])?' '.(is_array($Data[2])?$this->elementString($Data[2][0], $Data[2][1]):$this->PDO->quote($Data[2])):'');
+					return (is_array($data[0])?$this->elementString($data[0][0], $data[0][1]):$this->fieldString($data[0])).' '.$this->operatorString($data[1]).(isset($data[2])?' '.(is_array($data[2])?$this->elementString($data[2][0], $data[2][1]):$this->PDO->quote($data[2])):'');
 				}
 			case self::ELEMENT_EXPRESSION:
-				$String = '';
+				$string = '';
 
-				for ($i = 0, $c = count($Data); $i < $c; ++$i)
+				for ($i = 0, $c = count($data); $i < $c; ++$i)
 				{
-					if (is_array($Data[$i]))
+					if (is_array($data[$i]))
 					{
-						$String.= $this->elementString($Data[$i][0], $Data[$i][1]);
+						$string.= $this->elementString($data[$i][0], $data[$i][1]);
 					}
-					else if (is_int($Data[$i]))
+					else if (is_int($data[$i]))
 					{
-						if ($Data[$i] == self::OPERATOR_GROUPING_START || $Data[$i] == self::OPERATOR_GROUPING_END)
+						if ($data[$i] == self::OPERATOR_GROUPING_START || $data[$i] == self::OPERATOR_GROUPING_END)
 						{
-							$String.= $this->operatorString($Data[$i]);
+							$string.= $this->operatorString($data[$i]);
 						}
 						else
 						{
-							$String.= ' '.$this->operatorString($Data[$i]).' ';
+							$string.= ' '.$this->operatorString($data[$i]).' ';
 						}
 					}
 					else
 					{
-						$String.= $this->fieldString($Data[$i]);
+						$string.= $this->fieldString($data[$i]);
 					}
 				}
 
-				return $String;
+				return $string;
 			case self::ELEMENT_CONCATENATION:
-				$Parts = array();
+				$parts = array();
 
-				for ($i = 0, $c = count($Data); $i < $c; ++$i)
+				for ($i = 0, $c = count($data); $i < $c; ++$i)
 				{
-					if (is_array($Data[$i]))
+					if (is_array($data[$i]))
 					{
-						$Parts[] = $this->elementString($Data[$i][0], $Data[$i][1]);
+						$parts[] = $this->elementString($data[$i][0], $data[$i][1]);
 					}
 					else
 					{
-						$Parts[] = $this->fieldString($Data[$i]);
+						$parts[] = $this->fieldString($data[$i]);
 					}
 				}
 
-				return implode(' || ', $Parts);
+				return implode(' || ', $parts);
 			case self::ELEMENT_CASE:
-				$Parts = array();
+				$parts = array();
 
-				for ($i = 0, $c = count($Data); $i < $c; ++$i)
+				for ($i = 0, $c = count($data); $i < $c; ++$i)
 				{
-					if (isset($Data[$i][1]))
+					if (isset($data[$i][1]))
 					{
-						$Parts[] = 'WHEN '.(is_array($Data[$i][0])?$this->elementString($Data[$i][0][0], $Data[$i][0][1]):$this->fieldString($Data[$i][0])).' THEN '.(is_array($Data[$i][1])?$this->elementString($Data[$i][1][0], $Data[$i][1][1]):$this->fieldString($Data[$i][1]));
+						$parts[] = 'WHEN '.(is_array($data[$i][0])?$this->elementString($data[$i][0][0], $data[$i][0][1]):$this->fieldString($data[$i][0])).' THEN '.(is_array($data[$i][1])?$this->elementString($data[$i][1][0], $data[$i][1][1]):$this->fieldString($data[$i][1]));
 					}
 					else
 					{
-						$Parts[] = 'ELSE '.(is_array($Data[$i][0])?$this->elementString($Data[$i][0][0], $Data[$i][0][1]):$this->fieldString($Data[$i][0]));
+						$parts[] = 'ELSE '.(is_array($data[$i][0])?$this->elementString($data[$i][0][0], $data[$i][0][1]):$this->fieldString($data[$i][0]));
 					}
 				}
 
-				return 'CASE '.implode(' ', $Parts).' END';
+				return 'CASE '.implode(' ', $parts).' END';
 			CASE self::ELEMENT_SUBQUERY:
-				return ('('.self::selectData($Data[0], (isset($Data[1])?$Data[1]:NULL), (isset($Data[2])?$Data[2]:NULL), (isset($Data[3])?$Data[3]:0), (isset($Data[4])?$Data[4]:0), (isset($Data[5])?$Data[5]:NULL), (isset($Data[6])?$Data[6]:NULL), (isset($Data[7])?$Data[7]:NULL), (isset($Data[8])?$Data[8]:FALSE), self::RETURN_QUERY).')');
+				return ('('.self::selectData($data[0], (isset($data[1])?$data[1]:NULL), (isset($data[2])?$data[2]:NULL), (isset($data[3])?$data[3]:0), (isset($data[4])?$data[4]:0), (isset($data[5])?$data[5]:NULL), (isset($data[6])?$data[6]:NULL), (isset($data[7])?$data[7]:NULL), (isset($data[8])?$data[8]:FALSE), self::RETURN_QUERY).')');
 			default:
 				return '';
 		}
@@ -301,9 +301,9 @@ class EstatsDriverPostgresql extends EstatsDriver
  * @return string
  */
 
-	public function connectionString($Parameters)
+	public function connectionString($parameters)
 	{
-		return 'pgsql:host='.$Parameters['DatabaseHost'].($Parameters['DatabasePort']?';port='.$Parameters['DatabasePort']:'').';dbname='.$Parameters['DatabaseName'];
+		return 'pgsql:host='.$parameters['DatabaseHost'].($parameters['DatabasePort']?';port='.$parameters['DatabasePort']:'').';dbname='.$parameters['DatabaseName'];
 	}
 
 /**
@@ -312,15 +312,15 @@ class EstatsDriverPostgresql extends EstatsDriver
  * @return string
  */
 
-	public function option($Option)
+	public function option($option)
 	{
 		if (!$this->Information || count($this->Information) < 2)
 		{
-			$Information =  parse_ini_file(dirname(__FILE__).'/plugin.ini', TRUE);
-			$this->Information = &$Information['Information'];
+			$information =  parse_ini_file(dirname(__FILE__).'/plugin.ini', TRUE);
+			$this->Information = &$information['Information'];
 		}
 
-		return (isset($this->Information[$Option])?$this->Information[$Option]:'');
+		return (isset($this->Information[$option])?$this->Information[$option]:'');
 	}
 
 /**
@@ -333,9 +333,9 @@ class EstatsDriverPostgresql extends EstatsDriver
  * @return boolean
  */
 
-	public function connect($Connection, $User, $Password, $Prefix = '', $Persistent = FALSE)
+	public function connect($connection, $user, $password, $prefix = '', $persistent = FALSE)
 	{
-		if (parent::connect($Connection, $User, $Password, $Prefix, $Persistent))
+		if (parent::connect($connection, $user, $password, $prefix, $persistent))
 		{
 			$this->Information['DatabaseVersion'] = $this->PDO->getAttribute(PDO::ATTR_SERVER_VERSION);
 		}
@@ -351,15 +351,15 @@ class EstatsDriverPostgresql extends EstatsDriver
  * @return boolean
  */
 
-	public function createTable($Table, $Attributes, $Replace = FALSE)
+	public function createTable($table, $attributes, $replace = FALSE)
 	{
-		$Parts = $PrimaryKeys = $ForeignKeys = $IndexKeys = $Constraints = array();
+		$parts = $primaryKeys = $foreignKeys = $indexKeys = $constraints = array();
 
-		if ($this->tableExists($Table))
+		if ($this->tableExists($table))
 		{
-			if ($Replace)
+			if ($replace)
 			{
-				deleteTable($Table);
+				deleteTable($table);
 			}
 			else
 			{
@@ -367,80 +367,80 @@ class EstatsDriverPostgresql extends EstatsDriver
 			}
 		}
 
-		foreach ($Attributes as $Key => $Value)
+		foreach ($attributes as $key => $value)
 		{
-			if ($Value['type'] == 'DATETIME')
+			if ($value['type'] == 'DATETIME')
 			{
-				$Value['type'] = 'TIMESTAMP';
+				$value['type'] = 'TIMESTAMP';
 			}
 
-			$SQL = '"'.$Key.'" '.(isset($Value['autoincrement'])?'SERIAL':$Value['type'].((isset($Value['length']) && $Value['type'] != 'INTEGER')?'('.$Value['length'].')':'')).(isset($Value['null'])?'':' NOT NULL');
+			$sQL = '"'.$key.'" '.(isset($value['autoincrement'])?'SERIAL':$value['type'].((isset($value['length']) && $value['type'] != 'INTEGER')?'('.$value['length'].')':'')).(isset($value['null'])?'':' NOT NULL');
 
-			if (isset($Value['unique']))
+			if (isset($value['unique']))
 			{
-				if ($Value['unique'] !== 'TRUE')
+				if ($value['unique'] !== 'TRUE')
 				{
-					if (isset($Constraints[$Value['unique']]))
+					if (isset($constraints[$value['unique']]))
 					{
-						$Constraints[$Value['unique']][1][] = $Key;
+						$constraints[$value['unique']][1][] = $key;
 					}
 					else
 					{
-						$Constraints[$Value['unique']] = array('UNIQUE', array($Key));
+						$constraints[$value['unique']] = array('UNIQUE', array($key));
 					}
 				}
 				else
 				{
-					$SQL.= ' UNIQUE';
+					$sQL.= ' UNIQUE';
 				}
 			}
-			else if (isset($Value['default']))
+			else if (isset($value['default']))
 			{
-				$SQL.= ' DEFAULT '.$this->PDO->quote($Value['default']);
+				$sQL.= ' DEFAULT '.$this->PDO->quote($value['default']);
 			}
 
-			$Parts[] = $SQL;
+			$parts[] = $sQL;
 
-			if (isset($Value['primary']))
+			if (isset($value['primary']))
 			{
-				$PrimaryKeys[] = '"'.$Key.'"';
+				$primaryKeys[] = '"'.$key.'"';
 			}
 
-			if (isset($Value['foreign']))
+			if (isset($value['foreign']))
 			{
-				$Field = explode('.', $Value['foreign']);
-				$ForeignKeys[] = 'FOREIGN KEY("'.$Key.'") REFERENCES "'.$this->Prefix.$Field[0].'" ("'.$Field[1].'")'.(isset($Value['onupdate'])?' ON UPDATE '.$Value['onupdate']:'').(isset($Value['ondelete'])?' ON DELETE '.$Value['ondelete']:'');
+				$field = explode('.', $value['foreign']);
+				$foreignKeys[] = 'FOREIGN KEY("'.$key.'") REFERENCES "'.$this->Prefix.$field[0].'" ("'.$field[1].'")'.(isset($value['onupdate'])?' ON UPDATE '.$value['onupdate']:'').(isset($value['ondelete'])?' ON DELETE '.$value['ondelete']:'');
 			}
 
-			if (isset($Value['index']) && !isset($Value['unique']))
+			if (isset($value['index']) && !isset($value['unique']))
 			{
-				$IndexKeys[] = $Key;
+				$indexKeys[] = $key;
 			}
 		}
 
-		if ($PrimaryKeys)
+		if ($primaryKeys)
 		{
-			$Parts[] = 'PRIMARY KEY('.implode (', ', $PrimaryKeys).')';
+			$parts[] = 'PRIMARY KEY('.implode (', ', $primaryKeys).')';
 		}
 
-		foreach ($Constraints as $Key => $Value)
+		foreach ($constraints as $key => $value)
 		{
-			if ($Value[0] == 'UNIQUE')
+			if ($value[0] == 'UNIQUE')
 			{
-				$Parts[] = 'UNIQUE(`'.implode('`, `', $Value[1]).'`)';
+				$parts[] = 'UNIQUE(`'.implode('`, `', $value[1]).'`)';
 			}
 		}
 
-		$Parts = array_merge($Parts, $ForeignKeys);
+		$parts = array_merge($parts, $foreignKeys);
 
-		$this->PDO->exec('CREATE TABLE "'.$this->Prefix.$Table.'" ('.implode(', ', $Parts).')');
+		$this->PDO->exec('CREATE TABLE "'.$this->Prefix.$table.'" ('.implode(', ', $parts).')');
 
-		for ($i = 0, $c = count($IndexKeys); $i < $c; ++$i)
+		for ($i = 0, $c = count($indexKeys); $i < $c; ++$i)
 		{
-			$this->PDO->exec('CREATE INDEX "'.$this->Prefix.$Table.'_'.$IndexKeys[$i].'_index" ON "'.$this->Prefix.$Table.'" ("'.$IndexKeys[$i].'")');
+			$this->PDO->exec('CREATE INDEX "'.$this->Prefix.$table.'_'.$indexKeys[$i].'_index" ON "'.$this->Prefix.$table.'" ("'.$indexKeys[$i].'")');
 		}
 
-		return $this->tableExists($Table);
+		return $this->tableExists($table);
 	}
 
 /**
@@ -449,11 +449,11 @@ class EstatsDriverPostgresql extends EstatsDriver
  * @return boolean
  */
 
-	public function deleteTable($Table)
+	public function deleteTable($table)
 	{
-		$this->PDO->exec('DROP TABLE "'.$this->Prefix.$Table.'"');
+		$this->PDO->exec('DROP TABLE "'.$this->Prefix.$table.'"');
 
-		return !$this->tableExists($Table);
+		return !$this->tableExists($table);
 	}
 
 /**
@@ -462,11 +462,11 @@ class EstatsDriverPostgresql extends EstatsDriver
  * @return boolean
  */
 
-	public function tableExists($Table)
+	public function tableExists($table)
 	{
-		$Result = $this->PDO->query('SELECT "table_name" FROM "information_schema"."tables" WHERE "table_type" = \'BASE TABLE\' AND "table_name" = '.$this->PDO->quote($this->Prefix.$Table).' AND "table_schema" NOT IN (\'pg_catalog\', \'information_schema\')');
+		$result = $this->PDO->query('SELECT "table_name" FROM "information_schema"."tables" WHERE "table_type" = \'BASE TABLE\' AND "table_name" = '.$this->PDO->quote($this->Prefix.$table).' AND "table_schema" NOT IN (\'pg_catalog\', \'information_schema\')');
 
-		return ($Result?(strlen($Result->fetchColumn(0)) > 1):0);
+		return ($result?(strlen($result->fetchColumn(0)) > 1):0);
 	}
 
 /**
@@ -475,11 +475,11 @@ class EstatsDriverPostgresql extends EstatsDriver
  * @return integer
  */
 
-	public function tableSize($Table)
+	public function tableSize($table)
 	{
-		$Result = $this->PDO->query('SELECT "relpages" FROM "pg_class" WHERE "relname" = '.$this->PDO->quote($this->Prefix.$Table));
+		$result = $this->PDO->query('SELECT "relpages" FROM "pg_class" WHERE "relname" = '.$this->PDO->quote($this->Prefix.$table));
 
-		return ($Result?($Result->fetchColumn(0) * 8192):FALSE);
+		return ($result?($result->fetchColumn(0) * 8192):FALSE);
 	}
 
 /**
@@ -497,148 +497,148 @@ class EstatsDriverPostgresql extends EstatsDriver
  * @return mixed
  */
 
-	public function selectData($Tables, $Fields = NULL, $Where = NULL, $Amount = 0, $Offset = 0, $OrderBy = NULL, $GroupBy = NULL, $Having = NULL, $Distinct = FALSE, $Mode = self::RETURN_RESULT)
+	public function selectData($tables, $fields = NULL, $where = NULL, $amount = 0, $offset = 0, $orderBy = NULL, $groupBy = NULL, $having = NULL, $distinct = FALSE, $mode = self::RETURN_RESULT)
 	{
-		if (is_array($Fields))
+		if (is_array($fields))
 		{
-			$Parts = array();
+			$parts = array();
 
-			for ($i = 0, $c = count($Fields); $i < $c; ++$i)
+			for ($i = 0, $c = count($fields); $i < $c; ++$i)
 			{
-				if ($Fields[$i] == self::FUNCTION_COUNT)
+				if ($fields[$i] == self::FUNCTION_COUNT)
 				{
-					$Parts[] = 'COUNT(*)';
+					$parts[] = 'COUNT(*)';
 				}
-				else if (is_array($Fields[$i]))
+				else if (is_array($fields[$i]))
 				{
-					$Parts[] = $this->elementString($Fields[$i][0], $Fields[$i][1]).(empty($Fields[$i][2])?'':' AS "'.$Fields[$i][2].'"');
+					$parts[] = $this->elementString($fields[$i][0], $fields[$i][1]).(empty($fields[$i][2])?'':' AS "'.$fields[$i][2].'"');
 				}
 				else
 				{
-					$Parts[] = $this->fieldString($Fields[$i]);
+					$parts[] = $this->fieldString($fields[$i]);
 				}
 			}
 
-			$FieldsPart = implode(', ', $Parts);
+			$fieldsPart = implode(', ', $parts);
 		}
 		else
 		{
-			$FieldsPart = '*';
+			$fieldsPart = '*';
 		}
 
-		$TablesPart = '';
+		$tablesPart = '';
 
-		for ($i = 0, $c = count($Tables); $i < $c; ++$i)
+		for ($i = 0, $c = count($tables); $i < $c; ++$i)
 		{
-			if (is_array($Tables[$i]))
+			if (is_array($tables[$i]))
 			{
-				if (is_int($Tables[$i][0]))
+				if (is_int($tables[$i][0]))
 				{
-					$Natural = ($Tables[$i][0] & self::JOIN_NATURAL);
-					$Tables[$i][0] = ($Tables[$i][0] & ~self::JOIN_NATURAL);
-					$TablesPart.= ($Natural?' NATURAL':'').' ';
+					$natural = ($tables[$i][0] & self::JOIN_NATURAL);
+					$tables[$i][0] = ($tables[$i][0] & ~self::JOIN_NATURAL);
+					$tablesPart.= ($natural?' NATURAL':'').' ';
 
-					switch ($Tables[$i][0])
+					switch ($tables[$i][0])
 					{
 						case self::JOIN_CROSS:
-							$TablesPart.= 'CROSS';
+							$tablesPart.= 'CROSS';
 						break;
 						case self::JOIN_LEFT:
-							$TablesPart.= 'LEFT';
+							$tablesPart.= 'LEFT';
 						break;
 						case self::JOIN_RIGHT:
-							$TablesPart.= 'RIGHT';
+							$tablesPart.= 'RIGHT';
 						break;
 						case self::JOIN_FULL:
-							$TablesPart.= 'FULL';
+							$tablesPart.= 'FULL';
 						break;
 						default:
-							$TablesPart.= 'INNER';
+							$tablesPart.= 'INNER';
 						break;
 					}
 
-					$TablesPart.= ' JOIN ';
+					$tablesPart.= ' JOIN ';
 				}
 				else
 				{
-					$TablesPart.= '"'.$this->Prefix.$Tables[$i][0].'" AS "'.$Tables[$i][1].'"';
+					$tablesPart.= '"'.$this->Prefix.$tables[$i][0].'" AS "'.$tables[$i][1].'"';
 				}
 			}
 			else
 			{
-				$TablesPart.= '"'.$this->Prefix.$Tables[$i].'"'.($this->Prefix?' AS "'.$Tables[$i].'"':'');
+				$tablesPart.= '"'.$this->Prefix.$tables[$i].'"'.($this->Prefix?' AS "'.$tables[$i].'"':'');
 			}
 
-			if ($i > 0 && is_array($Tables[$i - 1]) && is_int($Tables[$i - 1][0]))
+			if ($i > 0 && is_array($tables[$i - 1]) && is_int($tables[$i - 1][0]))
 			{
-				if ($Tables[$i - 1][1] == self::OPERATOR_JOIN_ON)
+				if ($tables[$i - 1][1] == self::OPERATOR_JOIN_ON)
 				{
-					$TablesPart.= ' ON '.$this->elementString(self::ELEMENT_EXPRESSION, $Tables[$i - 1][2]).' ';
+					$tablesPart.= ' ON '.$this->elementString(self::ELEMENT_EXPRESSION, $tables[$i - 1][2]).' ';
 				}
 				else
 				{
-					for ($j = 0, $c = count($Tables[$i - 1][2]); $j < $c; ++$j)
+					for ($j = 0, $c = count($tables[$i - 1][2]); $j < $c; ++$j)
 					{
-						if (is_array($Tables[$i - 1][2][$j]))
+						if (is_array($tables[$i - 1][2][$j]))
 						{
-							$Tables[$i - 1][2][$j] = $this->elementString($Tables[$i - 1][2][$j][0], $Tables[$i - 1][2][$j][1]);
+							$tables[$i - 1][2][$j] = $this->elementString($tables[$i - 1][2][$j][0], $tables[$i - 1][2][$j][1]);
 						}
 						else
 						{
-							$Tables[$i - 1][2][$j] = $this->fieldString($Tables[$i - 1][2][$j]);
+							$tables[$i - 1][2][$j] = $this->fieldString($tables[$i - 1][2][$j]);
 						}
 					}
 
-					$TablesPart.= ' USING('.implode(', ', $Tables[$i - 1][2]).') ';
+					$tablesPart.= ' USING('.implode(', ', $tables[$i - 1][2]).') ';
 				}
 			}
 		}
 
-		if (is_array($OrderBy))
+		if (is_array($orderBy))
 		{
-			foreach ($OrderBy as $Key => $Value)
+			foreach ($orderBy as $key => $value)
 			{
-				if (is_array($Value))
+				if (is_array($value))
 				{
-					$OrderBy[$Key] = $this->elementString($Key[0], $Key[1]).($Value?' ASC':' DESC');
+					$orderBy[$key] = $this->elementString($key[0], $key[1]).($value?' ASC':' DESC');
 				}
 				else
 				{
-					$OrderBy[$Key] = $this->fieldString($Key).($Value?' ASC':' DESC');
+					$orderBy[$key] = $this->fieldString($key).($value?' ASC':' DESC');
 				}
 			}
 
-			$OrderBy = array_values($OrderBy);
+			$orderBy = array_values($orderBy);
 		}
 
-		if (is_array($GroupBy))
+		if (is_array($groupBy))
 		{
-			for ($i = 0, $c = count($GroupBy); $i < $c; ++$i)
+			for ($i = 0, $c = count($groupBy); $i < $c; ++$i)
 			{
-				if (is_array($GroupBy[$i]))
+				if (is_array($groupBy[$i]))
 				{
-					$GroupBy[$i] = $this->elementString($GroupBy[$i][0], $GroupBy[$i][1]);
+					$groupBy[$i] = $this->elementString($groupBy[$i][0], $groupBy[$i][1]);
 				}
 				else
 				{
-					$GroupBy[$i] = $this->fieldString($GroupBy[$i]);
+					$groupBy[$i] = $this->fieldString($groupBy[$i]);
 				}
 			}
 		}
 
-		$SQL = 'SELECT '.($Distinct?'DISTINCT ':'').$FieldsPart.' FROM '.$TablesPart.($Where?' WHERE '.$this->elementString(self::ELEMENT_EXPRESSION, $Where):'').($GroupBy?' GROUP BY '.implode(', ', $GroupBy).($Having?' HAVING '.$this->elementString(self::ELEMENT_EXPRESSION, $Having):''):'').($OrderBy?' ORDER BY '.implode(', ', $OrderBy):'').($Amount?' LIMIT '.(int) $Amount:'').($Offset?' OFFSET '.(int) $Offset:'');
+		$sQL = 'SELECT '.($distinct?'DISTINCT ':'').$fieldsPart.' FROM '.$tablesPart.($where?' WHERE '.$this->elementString(self::ELEMENT_EXPRESSION, $where):'').($groupBy?' GROUP BY '.implode(', ', $groupBy).($having?' HAVING '.$this->elementString(self::ELEMENT_EXPRESSION, $having):''):'').($orderBy?' ORDER BY '.implode(', ', $orderBy):'').($amount?' LIMIT '.(int) $amount:'').($offset?' OFFSET '.(int) $offset:'');
 
-		if ($Mode == self::RETURN_QUERY)
+		if ($mode == self::RETURN_QUERY)
 		{
-			return $SQL;
+			return $sQL;
 		}
 
-		$Statement = $this->PDO->prepare($SQL);
-		$Result = ($Statement?$Statement->execute():NULL);
+		$statement = $this->PDO->prepare($sQL);
+		$result = ($statement?$statement->execute():NULL);
 
-		if ($Result)
+		if ($result)
 		{
-			return (($Mode == self::RETURN_RESULT)?$Statement->fetchAll(PDO::FETCH_ASSOC):$Statement);
+			return (($mode == self::RETURN_RESULT)?$statement->fetchAll(PDO::FETCH_ASSOC):$statement);
 		}
 		else
 		{
@@ -654,18 +654,18 @@ class EstatsDriverPostgresql extends EstatsDriver
  * @return integer
  */
 
-	public function insertData($Table, $Values, $ReturnID = FALSE)
+	public function insertData($table, $values, $returnID = FALSE)
 	{
-		$Statement = $this->PDO->prepare('INSERT INTO "'.$this->Prefix.$Table.'" ("'.implode('", "', array_keys($Values)).'") VALUES('.str_repeat('?, ', (count($Values) - 1)).'?)'.($ReturnID?' RETURNING CURRVAL("'.$this->Prefix.$Table.'_sequence")':''));
+		$statement = $this->PDO->prepare('INSERT INTO "'.$this->Prefix.$table.'" ("'.implode('", "', array_keys($values)).'") VALUES('.str_repeat('?, ', (count($values) - 1)).'?)'.($returnID?' RETURNING CURRVAL("'.$this->Prefix.$table.'_sequence")':''));
 
-		if (!$Statement || !$Statement->execute(array_values($Values)))
+		if (!$statement || !$statement->execute(array_values($values)))
 		{
 			return FALSE;
 		}
 
-		if ($ReturnID)
+		if ($returnID)
 		{
-			return $Statement->fetchColumn(0);
+			return $statement->fetchColumn(0);
 		}
 		else
 		{
@@ -681,30 +681,30 @@ class EstatsDriverPostgresql extends EstatsDriver
  * @return boolean
  */
 
-	public function updateData($Table, $Values, $Where)
+	public function updateData($table, $values, $where)
 	{
-		$Parts = array();
+		$parts = array();
 
-		if (!$this->selectAmount($Table, $Where))
+		if (!$this->selectAmount($table, $where))
 		{
 			return FALSE;
 		}
 
-		foreach ($Values as $Key => $Value)
+		foreach ($values as $key => $value)
 		{
-			if (is_array($Value))
+			if (is_array($value))
 			{
-				$Parts[] = '"'.$Key.'" = '.$this->elementString($Value[0], $Value[1]);
+				$parts[] = '"'.$key.'" = '.$this->elementString($value[0], $value[1]);
 			}
 			else
 			{
-				$Parts[] = '"'.$Key.'" = '.$this->PDO->quote($Value);
+				$parts[] = '"'.$key.'" = '.$this->PDO->quote($value);
 			}
 		}
 
-		$Statement = $this->PDO->prepare('UPDATE "'.$this->Prefix.$Table.'" SET '.implode(', ', $Parts).' WHERE '.$this->elementString(self::ELEMENT_EXPRESSION, $Where));
+		$statement = $this->PDO->prepare('UPDATE "'.$this->Prefix.$table.'" SET '.implode(', ', $parts).' WHERE '.$this->elementString(self::ELEMENT_EXPRESSION, $where));
 
-		return ($Statement?$Statement->execute():FALSE);
+		return ($statement?$statement->execute():FALSE);
 	}
 
 /**
@@ -714,11 +714,11 @@ class EstatsDriverPostgresql extends EstatsDriver
  * @return boolean
  */
 
-	public function deleteData($Table, $Where = NULL)
+	public function deleteData($table, $where = NULL)
 	{
-		$Statement = $this->PDO->prepare('DELETE FROM "'.$this->Prefix.$Table.'"'.($Where?' WHERE '.$this->elementString(self::ELEMENT_EXPRESSION, $Where):''));
+		$statement = $this->PDO->prepare('DELETE FROM "'.$this->Prefix.$table.'"'.($where?' WHERE '.$this->elementString(self::ELEMENT_EXPRESSION, $where):''));
 
-		return ($Statement?$Statement->execute():FALSE);
+		return ($statement?$statement->execute():FALSE);
 	}
 }
 ?>

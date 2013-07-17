@@ -10,7 +10,7 @@ if (!defined('eStats'))
 	die();
 }
 
-$Regions = EstatsCore::loadData('share/data/regions.ini');
+$regions = EstatsCore::loadData('share/data/regions.ini');
 
 if (!EstatsGeolocation::isAvailable())
 {
@@ -18,162 +18,162 @@ if (!EstatsGeolocation::isAvailable())
 }
 else
 {
-	$Array = array();
+	$array = array();
 
-	for ($i = 0, $c = count($AvailableCountries); $i < $c; ++$i)
+	for ($i = 0, $c = count($availableCountries); $i < $c; ++$i)
 	{
-		$Array[$AvailableCountries[$i]] = EstatsGUI::itemText($AvailableCountries[$i], 'countries');
+		$array[$availableCountries[$i]] = EstatsGUI::itemText($availableCountries[$i], 'countries');
 	}
 
-	asort($Array);
+	asort($array);
 
-	$MapsList = '';
+	$mapsList = '';
 
-	foreach ($Array as $Key => $Value)
+	foreach ($array as $key => $value)
 	{
-		$MapsList.= '<option'.(($Path[$Var - 1] == $Key)?' selected="selected"':'').' value="'.$Key.'">'.$Value.(is_file ('share/maps/'.$Key.'/map.ini')?' ('.EstatsLocale::translate('Map').')':'').'</option>
+		$mapsList.= '<option'.(($path[$var - 1] == $key)?' selected="selected"':'').' value="'.$key.'">'.$value.(is_file ('share/maps/'.$key.'/map.ini')?' ('.EstatsLocale::translate('Map').')':'').'</option>
 ';
 	}
 
 	EstatsTheme::add('selectmap', '<select name="map" id="map" title="'.EstatsLocale::translate('Map view').'">
 <optgroup label="'.EstatsLocale::translate('World').'">
-<option'.(($Path[$Var - 1] == 'countries')?' selected="selected"':'').' value="countries">'.EstatsLocale::translate('Countries').' ('.EstatsLocale::translate('Map').')</option>
-<option'.(($Path[$Var - 1] == 'continents')?' selected="selected"':'').' value="continents">'.EstatsLocale::translate('Continents').' ('.EstatsLocale::translate('Map').')</option>
+<option'.(($path[$var - 1] == 'countries')?' selected="selected"':'').' value="countries">'.EstatsLocale::translate('Countries').' ('.EstatsLocale::translate('Map').')</option>
+<option'.(($path[$var - 1] == 'continents')?' selected="selected"':'').' value="continents">'.EstatsLocale::translate('Continents').' ('.EstatsLocale::translate('Map').')</option>
 </optgroup>
-'.($MapsList?'<optgroup label="'.EstatsLocale::translate('Countries').'">
-'.$MapsList.'</optgroup>
+'.($mapsList?'<optgroup label="'.EstatsLocale::translate('Countries').'">
+'.$mapsList.'</optgroup>
 ':'').'</select>
 ');
 
-	$Map = ((!isset($Path[$Var - 1]) || !is_file('share/maps/'.$Path[$Var - 1].'/map.ini') || in_array($Path[$Var - 1], array('continents', 'countries')))?'world':$Path[$Var - 1]);
-	$SingleCountry = !in_array($Path[$Var - 1], array('continents', 'countries'));
+	$map = ((!isset($path[$var - 1]) || !is_file('share/maps/'.$path[$var - 1].'/map.ini') || in_array($path[$var - 1], array('continents', 'countries')))?'world':$path[$var - 1]);
+	$singleCountry = !in_array($path[$var - 1], array('continents', 'countries'));
 
-	EstatsTheme::add('singlecountry', $SingleCountry);
-	EstatsTheme::add('map', (EstatsGraphics::isAvailable() && is_file('./share/maps/'.(in_array($Path[$Var - 1], array('continents', 'countries', 'cities'))?'world':$Path[$Var - 1]).'/map.ini')));
+	EstatsTheme::add('singlecountry', $singleCountry);
+	EstatsTheme::add('map', (EstatsGraphics::isAvailable() && is_file('./share/maps/'.(in_array($path[$var - 1], array('continents', 'countries', 'cities'))?'world':$path[$var - 1]).'/map.ini')));
 
-	if ($SingleCountry)
+	if ($singleCountry)
 	{
-		$GeolocationGroups = array('cities', 'regions',);
+		$geolocationGroups = array('cities', 'regions',);
 	}
 	else
 	{
-		$GeolocationGroups = &$Groups['geolocation'];
+		$geolocationGroups = &$groups['geolocation'];
 	}
 
-	EstatsTheme::add('maptype', (((isset($Path[$Var - 1]) && in_array($Path[$Var - 1], array('continents', 'countries', 'cities')) && $Path[2] == 'world') || in_array($Path[2], array('countries', 'continents')))?EstatsLocale::translate('World').(($Path[2] != 'world')?': '.EstatsLocale::translate(ucfirst($Path[2])):''):EstatsGUI::itemText($Path[2], 'countries')));
+	EstatsTheme::add('maptype', (((isset($path[$var - 1]) && in_array($path[$var - 1], array('continents', 'countries', 'cities')) && $path[2] == 'world') || in_array($path[2], array('countries', 'continents')))?EstatsLocale::translate('World').(($path[2] != 'world')?': '.EstatsLocale::translate(ucfirst($path[2])):''):EstatsGUI::itemText($path[2], 'countries')));
 	EstatsTheme::append('title', ' - '.EstatsTheme::get('maptype'));
 
-	if ($Var == 4 && isset($Path[$Var - 1]) && in_array($Path[$Var - 1], $GeolocationGroups))
+	if ($var == 4 && isset($path[$var - 1]) && in_array($path[$var - 1], $geolocationGroups))
 	{
 		EstatsTheme::load('group');
 		EstatsTheme::load('chart');
-		EstatsTheme::append('title', ': '.EstatsLocale::translate(ucfirst ($Path[$Var - 1])));
-		EstatsTheme::add('group', EstatsGroup::create($Path[$Var - 1], $Path[$Var - 1].(($Path[$Var - 1] == 'regions' || ($Path[$Var - 1] == 'cities' && strlen($Path[2]) == 2))?'-'.$Path[2]:''), $Titles[$Path[$Var - 1]], $Date, (isset($Path[$Var + 1])?(int) $Path[$Var + 1]:1), TRUE, '{path}geolocation/'.(in_array($Path[2], array('countries', 'continents'))?'world':$Path[2]).'/'.$Path[$Var - 1].'/{date}{suffix}'));
+		EstatsTheme::append('title', ': '.EstatsLocale::translate(ucfirst ($path[$var - 1])));
+		EstatsTheme::add('group', EstatsGroup::create($path[$var - 1], $path[$var - 1].(($path[$var - 1] == 'regions' || ($path[$var - 1] == 'cities' && strlen($path[2]) == 2))?'-'.$path[2]:''), $titles[$path[$var - 1]], $date, (isset($path[$var + 1])?(int) $path[$var + 1]:1), TRUE, '{path}geolocation/'.(in_array($path[2], array('countries', 'continents'))?'world':$path[2]).'/'.$path[$var - 1].'/{date}{suffix}'));
 		EstatsTheme::link('group-page', 'page');
 	}
 	else
 	{
-		for ($i = 0, $c = count($GeolocationGroups); $i < $c; ++$i)
+		for ($i = 0, $c = count($geolocationGroups); $i < $c; ++$i)
 		{
-			EstatsTheme::add($GeolocationGroups[$i], EstatsGroup::create($GeolocationGroups[$i], $GeolocationGroups[$i].(($GeolocationGroups[$i] == 'regions' || ($GeolocationGroups[$i] == 'cities' && strlen($Path[2]) == 2))?'-'.$Path[2]:''), $Titles[$GeolocationGroups[$i]], $Date, 1, FALSE, '{path}geolocation/'.(in_array($Path[2], array('countries', 'continents'))?'world':$Path[2]).'/'.$GeolocationGroups[$i].'/{date}{suffix}'));
+			EstatsTheme::add($geolocationGroups[$i], EstatsGroup::create($geolocationGroups[$i], $geolocationGroups[$i].(($geolocationGroups[$i] == 'regions' || ($geolocationGroups[$i] == 'cities' && strlen($path[2]) == 2))?'-'.$path[2]:''), $titles[$geolocationGroups[$i]], $date, 1, FALSE, '{path}geolocation/'.(in_array($path[2], array('countries', 'continents'))?'world':$path[2]).'/'.$geolocationGroups[$i].'/{date}{suffix}'));
 		}
 
-		$Data['max'] = 0;
+		$data['max'] = 0;
 
-		if ($Path[$Var - 1] == 'continents')
+		if ($path[$var - 1] == 'continents')
 		{
-			$Data['continents'] = array_fill(0, 7, 0);
+			$data['continents'] = array_fill(0, 7, 0);
 		}
 
-		$MapData = array();
+		$mapData = array();
 
-		for ($i = 0, $c = count($Data['data']); $i < $c; ++$i)
+		for ($i = 0, $c = count($data['data']); $i < $c; ++$i)
 		{
-			$MapData[$Data['data'][$i]['name']] = (int) $Data['data'][$i]['amount_current'];
+			$mapData[$data['data'][$i]['name']] = (int) $data['data'][$i]['amount_current'];
 
-			if ($Path[$Var - 1] == 'continents')
+			if ($path[$var - 1] == 'continents')
 			{
-				$Data['continents'][$Data['data'][$i]['continent']] += $Data['data'][$i]['amount_current'];
+				$data['continents'][$data['data'][$i]['continent']] += $data['data'][$i]['amount_current'];
 
-				if ($Data['continents'][$Data['data'][$i]['continent']] > $Data['max'])
+				if ($data['continents'][$data['data'][$i]['continent']] > $data['max'])
 				{
-					$Data['max'] = $Data['continents'][$Data['data'][$i]['continent']];
+					$data['max'] = $data['continents'][$data['data'][$i]['continent']];
 				}
 			}
-			else if ($Data['data'][$i]['amount_current'] > $Data['max'])
+			else if ($data['data'][$i]['amount_current'] > $data['max'])
 			{
-				$Data['max'] = (int) $Data['data'][$i]['amount_current'];
+				$data['max'] = (int) $data['data'][$i]['amount_current'];
 			}
 		}
 
-		$MapID = $Map.(($Map == 'world')?'-'.$Path[$Var - 1]:'');
-		$MapInformation = EstatsCore::loadData('share/maps/'.$Map.'/map.ini', TRUE, FALSE);
-		$Data['data'] = &$MapData;
-		$Data['cities'] = &$Cities;
+		$mapID = $map.(($map == 'world')?'-'.$path[$var - 1]:'');
+		$mapInformation = EstatsCore::loadData('share/maps/'.$map.'/map.ini', TRUE, FALSE);
+		$data['data'] = &$mapData;
+		$data['cities'] = &$cities;
 
-		EstatsTheme::add('mapid', $MapID);
-		EstatsTheme::add('mapauthor', $MapInformation['Information']['Author']);
-		EstatsTheme::add('maplink', $MapInformation['Information']['URL']);
-		EstatsTheme::add('maptime', date('Y.m.d H:i:s', $MapInformation['Information']['Time']));
+		EstatsTheme::add('mapid', $mapID);
+		EstatsTheme::add('mapauthor', $mapInformation['Information']['Author']);
+		EstatsTheme::add('maplink', $mapInformation['Information']['URL']);
+		EstatsTheme::add('maptime', date('Y.m.d H:i:s', $mapInformation['Information']['Time']));
 		EstatsTheme::add('maphrefs', '');
 		EstatsTheme::add('maptooltips', '');
 
-		$_SESSION[EstatsCore::session()]['imagedata']['geolocation-'.$MapID] = array(
+		$_SESSION[EstatsCore::session()]['imagedata']['geolocation-'.$mapID] = array(
 		'type' => 'map',
-		'data' => $Data,
-		'map' => $Map.(($Map == 'world')?'-'.$Path[$Var - 1]:'')
+		'data' => $data,
+		'map' => $map.(($map == 'world')?'-'.$path[$var - 1]:'')
 		);
 
-		if (isset($MapInformation['Cities']) && $Data['sum_current'])
+		if (isset($mapInformation['Cities']) && $data['sum_current'])
 		{
-			foreach ($Data['cities']['data'] as $Key => $Value)
+			foreach ($data['cities']['data'] as $key => $value)
 			{
-				$Coordinates = number_format(round($Value['latitude'], 2), 2, '.', '').','.number_format(round($Value['longitude'], 2), 2, '.', '');
+				$coordinates = number_format(round($value['latitude'], 2), 2, '.', '').','.number_format(round($value['longitude'], 2), 2, '.', '');
 
-				if (!isset($MapInformation['Cities'][$Coordinates]))
+				if (!isset($mapInformation['Cities'][$coordinates]))
 				{
 					continue;
 				}
 
-				$Amount = &$Value['amount_current'];
-				$Entry = EstatsGUI::itemText($Value['name'], 'cities');
-				$ID = md5($Key);
+				$amount = &$value['amount_current'];
+				$entry = EstatsGUI::itemText($value['name'], 'cities');
+				$iD = md5($key);
 
-				EstatsTheme::append('maphrefs', '<area shape="circle" alt="'.$Entry.'" title="'.$Entry.' - '.$Amount.' '.round((($Amount / $Data['sum_current']) * 100), 2).'%" onmouseover="document.getElementById (\'geolocation_tooltip_'.$ID.'\').style.display = \'block\'" onmouseout="document.getElementById (\'geolocation_tooltip_'.$ID.'\').style.display = \'none\'" coords="'.$MapInformation['Cities'][$Coordinates].',4">
+				EstatsTheme::append('maphrefs', '<area shape="circle" alt="'.$entry.'" title="'.$entry.' - '.$amount.' '.round((($amount / $data['sum_current']) * 100), 2).'%" onmouseover="document.getElementById (\'geolocation_tooltip_'.$iD.'\').style.display = \'block\'" onmouseout="document.getElementById (\'geolocation_tooltip_'.$iD.'\').style.display = \'none\'" coords="'.$mapInformation['Cities'][$coordinates].',4">
 ');
 
-				$Icon = EstatsGUI::iconPath($Value['name'], 'cities');
+				$icon = EstatsGUI::iconPath($value['name'], 'cities');
 
-				EstatsTheme::append('maptooltips', '<div id="geolocation_tooltip_'.$ID.'" class="maptooltip">
-'.($Icon?EstatsGUI::iconTag($Icon, $Entry).'
-':'').$Entry.' - '.$Amount.'
-('.round ((($Amount / $Data['sum_current']) * 100), 2).'%)
+				EstatsTheme::append('maptooltips', '<div id="geolocation_tooltip_'.$iD.'" class="maptooltip">
+'.($icon?EstatsGUI::iconTag($icon, $entry).'
+':'').$entry.' - '.$amount.'
+('.round ((($amount / $data['sum_current']) * 100), 2).'%)
 </div>
 ');
 			}
 		}
 
-		if ($Map == 'world')
+		if ($map == 'world')
 		{
-			$MapInformation['Coordinates'] = EstatsCore::loadData('share/maps/world/'.$Path[$Var - 1].'.ini', TRUE, FALSE);
+			$mapInformation['Coordinates'] = EstatsCore::loadData('share/maps/world/'.$path[$var - 1].'.ini', TRUE, FALSE);
 		}
 
-		if (isset($MapInformation['Coordinates']) && $Data['sum_current'])
+		if (isset($mapInformation['Coordinates']) && $data['sum_current'])
 		{
-			foreach ($MapInformation['Coordinates'] as $Key => $Value)
+			foreach ($mapInformation['Coordinates'] as $key => $value)
 			{
-				$Amount = (isset($Data[($Path[$Var - 1] == 'continents')?'continents':'data'][(($Map != 'world')?$Path[$Var - 1].'-':'').$Key])?(int) $Data[($Path[$Var - 1] == 'continents')?'continents':'data'][(($Map != 'world')?$Path[$Var - 1].'-':'').$Key]:0);
-				$Entry = EstatsGUI::itemText((($Map == 'world')?'':$Path[$Var - 1].'-').$Key, (($Map == 'world')?(($Path[$Var - 1] == 'continents')?'continents':'countries'):'regions'));
+				$amount = (isset($data[($path[$var - 1] == 'continents')?'continents':'data'][(($map != 'world')?$path[$var - 1].'-':'').$key])?(int) $data[($path[$var - 1] == 'continents')?'continents':'data'][(($map != 'world')?$path[$var - 1].'-':'').$key]:0);
+				$entry = EstatsGUI::itemText((($map == 'world')?'':$path[$var - 1].'-').$key, (($map == 'world')?(($path[$var - 1] == 'continents')?'continents':'countries'):'regions'));
 
-				EstatsTheme::append('maphrefs', '<area shape="poly" alt="'.$Entry.'" title="'.$Entry.($Amount?' - '.$Amount.($Amount?' ('.round((($Amount / $Data['sum_current']) * 100), 2).'%)" onmouseover="document.getElementById(\'geolocation_tooltip_'.$Key.'\').style.display = \'block\'" onmouseout="document.getElementById (\'geolocation_tooltip_'.$Key.'\').style.display = \'none\''.(($Map == 'world')?'" href="{path}geolocation/'.$Key.'/'.implode('-', $Date).'{suffix}':''):''):'').'" coords="'.$Value.'">
+				EstatsTheme::append('maphrefs', '<area shape="poly" alt="'.$entry.'" title="'.$entry.($amount?' - '.$amount.($amount?' ('.round((($amount / $data['sum_current']) * 100), 2).'%)" onmouseover="document.getElementById(\'geolocation_tooltip_'.$key.'\').style.display = \'block\'" onmouseout="document.getElementById (\'geolocation_tooltip_'.$key.'\').style.display = \'none\''.(($map == 'world')?'" href="{path}geolocation/'.$key.'/'.implode('-', $date).'{suffix}':''):''):'').'" coords="'.$value.'">
 ');
 
-				if ($Amount)
+				if ($amount)
 				{
-					EstatsTheme::append('maptooltips', '<div id="geolocation_tooltip_'.$Key.'" class="maptooltip">
-'.(($Path[$Var - 1] == 'countries')?EstatsGUI::iconTag(EstatsGUI::iconPath($Key, 'countries'), EstatsGUI::itemText($Key, 'countries')).'
-':'').$Entry.' - '.$Amount.'
-('.round ((($Amount / $Data['sum_current']) * 100), 2).'%)
+					EstatsTheme::append('maptooltips', '<div id="geolocation_tooltip_'.$key.'" class="maptooltip">
+'.(($path[$var - 1] == 'countries')?EstatsGUI::iconTag(EstatsGUI::iconPath($key, 'countries'), EstatsGUI::itemText($key, 'countries')).'
+':'').$entry.' - '.$amount.'
+('.round ((($amount / $data['sum_current']) * 100), 2).'%)
 </div>
 ');
 				}

@@ -7,12 +7,12 @@
  * array(EstatsDriver::OPERATOR_GROUPING_START, EstatsDriver::OPERATOR_GROUPING_START, array(EstatsDriver::ELEMENT_OPERATION, array('key', EstatsDriver::OPERATOR_EQUAL, 'test')), EstatsDriver::OPERATOR_OR, array(EstatsDriver::ELEMENT_OPERATION, array('key', EstatsDriver::OPERATOR_ISNULL)), EstatsDriver::OPERATOR_GROUPING_END, EstatsDriver::OPERATOR_AND, array(EstatsDriver::ELEMENT_OPERATION, array('key2', EstatsDriver::OPERATOR_EQUAL, 'testr')), EstatsDriver::OPERATOR_GROUPING_END)
  * \endcode
  *
- * Select $Fields parameter example:
+ * Select $fields parameter example:
  * \code
  * array('key', array(EstatsDriver::ELEMENT_FUNCTION, array(EstatsDriver::FUNCTION_CONCATENATION, array(array(EstatsDriver::ELEMENT_FIELD, 'test'), array(EstatsDriver::ELEMENT_VALUE, ' - '), array(EstatsDriver::ELEMENT_FIELD, 'test2'))), 'alias'))
  * \endcode
  *
- * Update $Values parameter example (sets key to current value of key + 1 and key 2 to 'value'):
+ * Update $values parameter example (sets key to current value of key + 1 and key 2 to 'value'):
  * \code
  * array(
  * 	'key' => array(EstatsDriver::ELEMENT_EXPRESSION, array(array(EstatsDriver::ELEMENT_FIELD, 'key'), EstatsDriver::OPERATOR_PLUS, array(EstatsDriver::ELEMENT_VALUE, 1))),
@@ -325,25 +325,25 @@ abstract class EstatsDriver
  * Contains reference to PDO object
  */
 
-	protected $PDO = NULL;
+	protected $pDO = NULL;
 
 /**
  * Contains optional tables prefix
  */
 
-	protected $Prefix = '';
+	protected $prefix = '';
 
 /**
  * Contains true if connection is active
  */
 
-	protected $Connected = FALSE;
+	protected $connected = FALSE;
 
 /**
  * Contains driver information
  */
 
-	protected $Information = array();
+	protected $information = array();
 
 /**
  * Returns TRUE if driver is available
@@ -358,7 +358,7 @@ abstract class EstatsDriver
  * @return string
  */
 
-	abstract public function connectionString($Parameters);
+	abstract public function connectionString($parameters);
 
 /**
  * Returns option value
@@ -366,7 +366,7 @@ abstract class EstatsDriver
  * @return string
  */
 
-	abstract public function option($Option);
+	abstract public function option($option);
 
 /**
  * Connects to the database
@@ -378,11 +378,11 @@ abstract class EstatsDriver
  * @return boolean
  */
 
-	public function connect($Connection, $User, $Password, $Prefix = '', $Persistent = FALSE)
+	public function connect($connection, $user, $password, $prefix = '', $persistent = FALSE)
 	{
 		try
 		{
-			$this->PDO = new PDO($Connection, $User, $Password, ($Persistent?array(PDO::ATTR_PERSISTENT => TRUE):array()));
+			$this->PDO = new PDO($connection, $user, $password, ($persistent?array(PDO::ATTR_PERSISTENT => TRUE):array()));
 			$this->Connected = TRUE;
 		}
 		catch (Exception $e)
@@ -390,7 +390,7 @@ abstract class EstatsDriver
 			$this->Connected = FALSE;
 		}
 
-		$this->Prefix = $Prefix;
+		$this->Prefix = $prefix;
 
 		return $this->Connected;
 	}
@@ -413,7 +413,7 @@ abstract class EstatsDriver
  * @return boolean
  */
 
-	abstract public function createTable($Table, $Attributes, $Replace = FALSE);
+	abstract public function createTable($table, $attributes, $replace = FALSE);
 
 /**
  * Deletes database table
@@ -421,7 +421,7 @@ abstract class EstatsDriver
  * @return boolean
  */
 
-	abstract public function deleteTable($Table);
+	abstract public function deleteTable($table);
 
 /**
  * Checks if database table exists
@@ -429,7 +429,7 @@ abstract class EstatsDriver
  * @return boolean
  */
 
-	abstract public function tableExists($Table);
+	abstract public function tableExists($table);
 
 /**
  * Returns database table size in bytes or FALSE if failed
@@ -437,7 +437,7 @@ abstract class EstatsDriver
  * @return integer
  */
 
-	abstract public function tableSize($Table);
+	abstract public function tableSize($table);
 
 /**
  * Retrieves data from database table
@@ -454,7 +454,7 @@ abstract class EstatsDriver
  * @return mixed
  */
 
-	abstract public function selectData($Tables, $Fields = NULL, $Where = NULL, $Amount = 0, $Offset = 0, $OrderBy = NULL, $GroupBy = NULL, $Having = NULL, $Distinct = FALSE, $Mode = self::RETURN_RESULT);
+	abstract public function selectData($tables, $fields = NULL, $where = NULL, $amount = 0, $offset = 0, $orderBy = NULL, $groupBy = NULL, $having = NULL, $distinct = FALSE, $mode = self::RETURN_RESULT);
 
 /**
  * Returns value of single field from database table
@@ -466,11 +466,11 @@ abstract class EstatsDriver
  * @return string
  */
 
-	public function selectField($Table, $Field, $Where = NULL, $OrderBy = NULL, $Offset = 0)
+	public function selectField($table, $field, $where = NULL, $orderBy = NULL, $offset = 0)
 	{
-		$Data = $this->selectData(array($Table), array($Field), $Where, 1, $Offset, $OrderBy);
+		$data = $this->selectData(array($table), array($field), $where, 1, $offset, $orderBy);
 
-		return ($Data?array_shift($Data[0]):'');
+		return ($data?array_shift($data[0]):'');
 	}
 
 /**
@@ -487,17 +487,17 @@ abstract class EstatsDriver
  * @return array
  */
 
-	public function selectColumn($Table, $Field, $Where = NULL, $Amount = 0, $Offset = 0, $OrderBy = NULL, $GroupBy = NULL, $Having = NULL, $Distinct = FALSE)
+	public function selectColumn($table, $field, $where = NULL, $amount = 0, $offset = 0, $orderBy = NULL, $groupBy = NULL, $having = NULL, $distinct = FALSE)
 	{
-		$Data = $this->selectData(array($Table), array($Field), $Where, $Amount, $Offset, $OrderBy, $GroupBy, $Having, $Distinct);
-		$Column = array();
+		$data = $this->selectData(array($table), array($field), $where, $amount, $offset, $orderBy, $groupBy, $having, $distinct);
+		$column = array();
 
-		for ($i = 0, $c = count($Data); $i < $c; ++$i)
+		for ($i = 0, $c = count($data); $i < $c; ++$i)
 		{
-			$Column[] = array_shift($Data[$i]);
+			$column[] = array_shift($data[$i]);
 		}
 
-		return $Column;
+		return $column;
 	}
 
 /**
@@ -513,11 +513,11 @@ abstract class EstatsDriver
  * @return array
  */
 
-	public function selectRow($Table, $Fields = NULL, $Where = NULL, $Offset = 0, $OrderBy = NULL, $GroupBy = NULL, $Having = NULL, $Distinct = FALSE)
+	public function selectRow($table, $fields = NULL, $where = NULL, $offset = 0, $orderBy = NULL, $groupBy = NULL, $having = NULL, $distinct = FALSE)
 	{
-		$Data = $this->selectData(array($Table), $Fields, $Where, 1, $Offset, $OrderBy, $GroupBy, $Having, $Distinct);
+		$data = $this->selectData(array($table), $fields, $where, 1, $offset, $orderBy, $groupBy, $having, $distinct);
 
-		return ($Data?$Data[0]:array());
+		return ($data?$data[0]:array());
 	}
 
 /**
@@ -530,11 +530,11 @@ abstract class EstatsDriver
  * @return array
  */
 
-	public function selectAmount($Table, $Where = NULL, $GroupBy = NULL, $Having = NULL, $Distinct = FALSE)
+	public function selectAmount($table, $where = NULL, $groupBy = NULL, $having = NULL, $distinct = FALSE)
 	{
-		$Data = $this->selectData(array($Table), array(self::FUNCTION_COUNT), $Where, 0, 0, NULL, $GroupBy, $Having, $Distinct);
+		$data = $this->selectData(array($table), array(self::FUNCTION_COUNT), $where, 0, 0, NULL, $groupBy, $having, $distinct);
 
-		return ($Data?array_shift($Data[0]):FALSE);
+		return ($data?array_shift($data[0]):FALSE);
 	}
 
 /**
@@ -545,7 +545,7 @@ abstract class EstatsDriver
  * @return integer
  */
 
-	abstract public function insertData($Table, $Values, $ReturnID = FALSE);
+	abstract public function insertData($table, $values, $returnID = FALSE);
 
 /**
  * Changes data in database table
@@ -555,7 +555,7 @@ abstract class EstatsDriver
  * @return boolean
  */
 
-	abstract public function updateData($Table, $Values, $Where);
+	abstract public function updateData($table, $values, $where);
 
 /**
  * Deletes data from database table
@@ -564,7 +564,7 @@ abstract class EstatsDriver
  * @return boolean
  */
 
-	abstract public function deleteData($Table, $Where = NULL);
+	abstract public function deleteData($table, $where = NULL);
 
 /**
  * Initiates transaction

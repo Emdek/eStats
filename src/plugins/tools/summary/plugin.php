@@ -10,35 +10,35 @@ if (!defined('eStats'))
 	die();
 }
 
-if (isset($Path[3]) && $Path[3] == 'phpinfo')
+if (isset($path[3]) && $path[3] == 'phpinfo')
 {
 	die(phpinfo());
 }
 
-$CacheSize = EstatsCache::size();
-$BackupsSize = EstatsBackups::size();
-$PHPExtensions = get_loaded_extensions();
-$SystemLoad = (function_exists('sys_getloadavg')?sys_getloadavg():array());
+$cacheSize = EstatsCache::size();
+$backupsSize = EstatsBackups::size();
+$pHPExtensions = get_loaded_extensions();
+$systemLoad = (function_exists('sys_getloadavg')?sys_getloadavg():array());
 
-natcasesort($PHPExtensions);
+natcasesort($pHPExtensions);
 
 if (function_exists('apache_get_modules'))
 {
-	$ApacheModules = apache_get_modules();
+	$apacheModules = apache_get_modules();
 
-	natcasesort($ApacheModules);
+	natcasesort($apacheModules);
 }
 else
 {
-	$ApacheModules = 0;
+	$apacheModules = 0;
 }
 
-$DatabaseSize = 0;
-$DatabaseTables = array_keys(EstatsCore::loadData('share/data/database.ini'));
+$databaseSize = 0;
+$databaseTables = array_keys(EstatsCore::loadData('share/data/database.ini'));
 
-for ($i = 0, $c = count($DatabaseTables); $i < $c; ++$i)
+for ($i = 0, $c = count($databaseTables); $i < $c; ++$i)
 {
-	$DatabaseSize += EstatsCore::driver()->tableSize($DatabaseTables[$i]);
+	$databaseSize += EstatsCore::driver()->tableSize($databaseTables[$i]);
 }
 
 if (isset($_GET['checkversion']) && !isset($_SESSION[EstatsCore::session()]['CheckVersionError']) && !(isset($_SESSION[EstatsCore::session()]['NewerVersion']) && $_SESSION[EstatsCore::session()]['NewerVersion'] != ESTATS_VERSIONSTRING))
@@ -51,7 +51,7 @@ EstatsTheme::add('page', '<h3>
 </h3>
 <p>
 '.EstatsLocale::translate('<em>eStats</em> version').':
-<em><a href="http://estats.emdek.pl/index.php?path='.$Path[0].'/changelog/#event_'.ESTATS_VERSIONSTRING.'">'.ESTATS_VERSIONSTRING.' - '.ESTATS_VERSIONSTATUS.'</a> ('.date('d.m.Y H:i:s', ESTATS_VERSIONTIME).')</em>'.((isset($_SESSION[EstatsCore::session()]['NewerVersion']) && $_SESSION[EstatsCore::session()]['NewerVersion'] != ESTATS_VERSIONSTRING)?'(<strong>'.EstatsLocale::translate('New version is available!').' - <a href="http://estats.emdek.pl/index.php/'.$Path[0].'/changelog/#'.$_SESSION[EstatsCore::session()]['NewerVersion'].'">'.$_SESSION[EstatsCore::session()]['NewerVersion'].'</a></strong>)':'').' - <a href="{selfpath}{separator}checkversion">'.EstatsLocale::translate('Check for upgrade').'</a>;
+<em><a href="http://estats.emdek.pl/index.php?path='.$path[0].'/changelog/#event_'.ESTATS_VERSIONSTRING.'">'.ESTATS_VERSIONSTRING.' - '.ESTATS_VERSIONSTATUS.'</a> ('.date('d.m.Y H:i:s', ESTATS_VERSIONTIME).')</em>'.((isset($_SESSION[EstatsCore::session()]['NewerVersion']) && $_SESSION[EstatsCore::session()]['NewerVersion'] != ESTATS_VERSIONSTRING)?'(<strong>'.EstatsLocale::translate('New version is available!').' - <a href="http://estats.emdek.pl/index.php/'.$path[0].'/changelog/#'.$_SESSION[EstatsCore::session()]['NewerVersion'].'">'.$_SESSION[EstatsCore::session()]['NewerVersion'].'</a></strong>)':'').' - <a href="{selfpath}{separator}checkversion">'.EstatsLocale::translate('Check for upgrade').'</a>;
 </p>
 <p>
 '.EstatsLocale::translate('Database module').':
@@ -67,7 +67,7 @@ EstatsTheme::add('page', '<h3>
 </p>
 <p>
 '.EstatsLocale::translate('PHP loaded extensions').':
-<em>'.implode(', ', $PHPExtensions).'</em>;
+<em>'.implode(', ', $pHPExtensions).'</em>;
 </p>
 <p>
 '.EstatsLocale::translate('PHP safe mode').':
@@ -77,9 +77,9 @@ EstatsTheme::add('page', '<h3>
 '.EstatsLocale::translate('Server software').':
 <em>'.($_SERVER['SERVER_SOFTWARE']?htmlspecialchars($_SERVER['SERVER_SOFTWARE']):EstatsLocale::translate('N/A')).'</em>;
 </p>
-'.($ApacheModules?'<p>
+'.($apacheModules?'<p>
 '.EstatsLocale::translate('Apache modules').':
-<em>'.implode(', ', $ApacheModules).'</em>;
+<em>'.implode(', ', $apacheModules).'</em>;
 </p>
 ':'').'<p>
 '.EstatsLocale::translate('Operating system').':
@@ -87,7 +87,7 @@ EstatsTheme::add('page', '<h3>
 </p>
 <p>
 '.EstatsLocale::translate('Server load').':
-<em>'.($SystemLoad?implode(', ', $SystemLoad):EstatsLocale::translate('N/A')).'</em>;
+<em>'.($systemLoad?implode(', ', $systemLoad):EstatsLocale::translate('N/A')).'</em>;
 </p>
 <p>
 '.EstatsLocale::translate('Data collected from').':
@@ -95,7 +95,7 @@ EstatsTheme::add('page', '<h3>
 </p>
 <p>
 '.EstatsLocale::translate('Data size').':
-<em>'.EstatsGUI::formatSize($DatabaseSize + $CacheSize + $BackupsSize).' (<em title="'.EstatsLocale::translate('Data').'">'.EstatsGUI::formatSize($DatabaseSize).'</em> / <em title="'.EstatsLocale::translate('Cache').'">'.EstatsGUI::formatSize($CacheSize).'</em> / <em title="'.EstatsLocale::translate('Backups').'">'.EstatsGUI::formatSize($BackupsSize).'</em>)</em>;
+<em>'.EstatsGUI::formatSize($databaseSize + $cacheSize + $backupsSize).' (<em title="'.EstatsLocale::translate('Data').'">'.EstatsGUI::formatSize($databaseSize).'</em> / <em title="'.EstatsLocale::translate('Cache').'">'.EstatsGUI::formatSize($cacheSize).'</em> / <em title="'.EstatsLocale::translate('Backups').'">'.EstatsGUI::formatSize($backupsSize).'</em>)</em>;
 </p>
 <p>
 '.EstatsLocale::translate('Date of last backup creation').':

@@ -10,35 +10,35 @@ if (!defined('eStats') || EstatsCore::option('AccessPassword'))
 	die();
 }
 
-if (empty($Path[2]) || !isset($Feeds[$Path[2]]))
+if (empty($path[2]) || !isset($feeds[$path[2]]))
 {
-	$Path[2] = 'daily';
+	$path[2] = 'daily';
 }
 
-$TimeFormat = 'Y.m.d';
-$TimeUnitFormat = '%Y.%m.%d';
-$TimeUnitStep = 86400;
+$timeFormat = 'Y.m.d';
+$timeUnitFormat = '%Y.%m.%d';
+$timeUnitStep = 86400;
 
-switch ($Path[2])
+switch ($path[2])
 {
 	case 'daily':
-		$Title = EstatsLocale::translate('Daily visits summary for %A, %e %B %Y.');
-		$Period = array(mktime(23, 59, 59));
-		$EntriesAmount = 30;
-		$Step = 86400;
-		$TimeFormat = 'Y.m.d H';
-		$TimeUnitFormat = '%Y.%m.%d %H';
-		$TimeUnitStep = 3600;
-		$StepsAmount = 24;
-		$Groups = array();
+		$title = EstatsLocale::translate('Daily visits summary for %A, %e %B %Y.');
+		$period = array(mktime(23, 59, 59));
+		$entriesAmount = 30;
+		$step = 86400;
+		$timeFormat = 'Y.m.d H';
+		$timeUnitFormat = '%Y.%m.%d %H';
+		$timeUnitStep = 3600;
+		$stepsAmount = 24;
+		$groups = array();
 	break;
 	case 'weekly':
-		$Title = EstatsLocale::translate('Weekly visits summary for %W week of %Y.');
-		$Period = array(mktime(23, 59, 59) - (date('w') * 86400));
-		$EntriesAmount = 25;
-		$Step = 604800;
-		$StepsAmount = 7;
-		$Groups = array(
+		$title = EstatsLocale::translate('Weekly visits summary for %W week of %Y.');
+		$period = array(mktime(23, 59, 59) - (date('w') * 86400));
+		$entriesAmount = 25;
+		$step = 604800;
+		$stepsAmount = 7;
+		$groups = array(
 	'sites' => 20,
 	'keywords' => 15,
 	'operatingsystem-versions' => 15,
@@ -46,11 +46,11 @@ switch ($Path[2])
 	);
 	break;
 	case 'monthly':
-		$Title = EstatsLocale::translate('Monthly visits summary for %B %Y.');
-		$Period = array(mktime(23, 59, 59, (date('n') + 1), 0));
-		$EntriesAmount = 12;
-		$StepsAmount = date('t', $Period[1]);
-		$Groups = array(
+		$title = EstatsLocale::translate('Monthly visits summary for %B %Y.');
+		$period = array(mktime(23, 59, 59, (date('n') + 1), 0));
+		$entriesAmount = 12;
+		$stepsAmount = date('t', $period[1]);
+		$groups = array(
 	'sites' => 30,
 	'keywords' => 20,
 	'operatingsystem-versions' => 20,
@@ -59,17 +59,17 @@ switch ($Path[2])
 	break;
 }
 
-$Modified = FALSE;
-$FileName = 'feed-'.$Path[2];
-$StartTime = EstatsCore::option('CollectedFrom');
-$LastUpdate = (strtotime(EstatsCore::driver()->selectField('visitors', array(EstatsDriver::ELEMENT_FUNCTION, array(EstatsDriver::FUNCTION_MAX, 'lastvisit')))) - 60);
-$CacheUpdate = EstatsCache::timestamp();
-$CacheData = EstatsCache::read($FileName);
-$Data = array();
-$Entries = array();
-$Fields = array(array(EstatsDriver::ELEMENT_FUNCTION, array(EstatsDriver::FUNCTION_DATETIME, array('time', $TimeUnitFormat, 'unit')), 'unit'));
-$TimeTypes = array('unique', 'views', 'returns');
-$TimeSummary = array(
+$modified = FALSE;
+$fileName = 'feed-'.$path[2];
+$startTime = EstatsCore::option('CollectedFrom');
+$lastUpdate = (strtotime(EstatsCore::driver()->selectField('visitors', array(EstatsDriver::ELEMENT_FUNCTION, array(EstatsDriver::FUNCTION_MAX, 'lastvisit')))) - 60);
+$cacheUpdate = EstatsCache::timestamp();
+$cacheData = EstatsCache::read($fileName);
+$data = array();
+$entries = array();
+$fields = array(array(EstatsDriver::ELEMENT_FUNCTION, array(EstatsDriver::FUNCTION_DATETIME, array('time', $timeUnitFormat, 'unit')), 'unit'));
+$timeTypes = array('unique', 'views', 'returns');
+$timeSummary = array(
 	'sum' => EstatsLocale::translate('Sum'),
 	'max' => EstatsLocale::translate('Most'),
 	'average' => EstatsLocale::translate('Average'),
@@ -78,80 +78,80 @@ $TimeSummary = array(
 
 for ($i = 0; $i < 3; ++$i)
 {
-	$Fields[] = array(EstatsDriver::ELEMENT_FUNCTION, array(EstatsDriver::FUNCTION_SUM, $TimeTypes[$i]), $TimeTypes[$i]);
+	$fields[] = array(EstatsDriver::ELEMENT_FUNCTION, array(EstatsDriver::FUNCTION_SUM, $timeTypes[$i]), $timeTypes[$i]);
 }
 
-for ($i = 0; $i < $EntriesAmount; ++$i)
+for ($i = 0; $i < $entriesAmount; ++$i)
 {
-	$Period = array(($Period[0] - (($Path[2] == 'monthly')?(date('t', $Period[0]) * 86400):$Step)), $Period[0]);
+	$period = array(($period[0] - (($path[2] == 'monthly')?(date('t', $period[0]) * 86400):$step)), $period[0]);
 
-	if ($Period[1] < $StartTime)
+	if ($period[1] < $startTime)
 	{
 		break;
 	}
 
-	if (isset($CacheData[$Period[1]]) && $Period[1] <= $CacheUpdate && $LastUpdate <= $CacheUpdate)
+	if (isset($cacheData[$period[1]]) && $period[1] <= $cacheUpdate && $lastUpdate <= $cacheUpdate)
 	{
-		$Data[$Period[1]] = &$CacheData[$Period[1]];
+		$data[$period[1]] = &$cacheData[$period[1]];
 	}
 	else
 	{
-		$Modified = TRUE;
-		$Data[$Period[1]] = array(
-	'summary' => EstatsCore::summary($Period[0], $Period[1]),
+		$modified = TRUE;
+		$data[$period[1]] = array(
+	'summary' => EstatsCore::summary($period[0], $period[1]),
 	'time' => array('data' => array(), 'summary' => array()),
 	'groups' => array(),
 	);
-		$Result = EstatsCore::driver()->selectData(array('time'), $Fields, EstatsCore::timeClause('time', $Period[0], $Period[1]), 0, 0, array('unit' => TRUE), array('unit'));
-		$ResultAmount = count($Result);
-		$TimeData = &$Data[$Period[1]]['time'];
-		$Minimum = (($ResultAmount == $StepsAmount)?0:-1);
+		$result = EstatsCore::driver()->selectData(array('time'), $fields, EstatsCore::timeClause('time', $period[0], $period[1]), 0, 0, array('unit' => TRUE), array('unit'));
+		$resultAmount = count($result);
+		$timeData = &$data[$period[1]]['time'];
+		$minimum = (($resultAmount == $stepsAmount)?0:-1);
 
 		for ($j = 0; $j < 3; ++$j)
 		{
-			$TimeData['sum'][$TimeTypes[$j]] = $TimeData['max'][$TimeTypes[$j]] = 0;
-			$TimeData['min'][$TimeTypes[$j]] = $Minimum;
+			$timeData['sum'][$timeTypes[$j]] = $timeData['max'][$timeTypes[$j]] = 0;
+			$timeData['min'][$timeTypes[$j]] = $minimum;
 		}
 
-		for ($j = 0; $j < $ResultAmount; ++$j)
+		for ($j = 0; $j < $resultAmount; ++$j)
 		{
-			$TimeUnit = &$Result[$j]['unit'];
-			$TimeData['data'][$TimeUnit] = array(
-	'views' => ($Result[$j]['views'] + $Result[$j]['unique'] + $Result[$j]['returns']),
-	'unique' => ($Result[$j]['unique'] + $Result[$j]['returns']),
-	'returns' => (int) $Result[$j]['returns']
+			$timeUnit = &$result[$j]['unit'];
+			$timeData['data'][$timeUnit] = array(
+	'views' => ($result[$j]['views'] + $result[$j]['unique'] + $result[$j]['returns']),
+	'unique' => ($result[$j]['unique'] + $result[$j]['returns']),
+	'returns' => (int) $result[$j]['returns']
 	);
 
 			for ($k = 0; $k < 3; ++$k)
 			{
-				$TimeData['sum'][$TimeTypes[$k]] += $TimeData['data'][$TimeUnit][$TimeTypes[$k]];
+				$timeData['sum'][$timeTypes[$k]] += $timeData['data'][$timeUnit][$timeTypes[$k]];
 
-				if ($TimeData['max'][$TimeTypes[$k]] < $TimeData['data'][$TimeUnit][$TimeTypes[$k]])
+				if ($timeData['max'][$timeTypes[$k]] < $timeData['data'][$timeUnit][$timeTypes[$k]])
 				{
-					$TimeData['max'][$TimeTypes[$k]] = $TimeData['data'][$TimeUnit][$TimeTypes[$k]];
+					$timeData['max'][$timeTypes[$k]] = $timeData['data'][$timeUnit][$timeTypes[$k]];
 				}
 
-				if ($TimeData['min'][$TimeTypes[$k]] < 0 || $TimeData['min'][$TimeTypes[$k]] > $TimeData['data'][$TimeUnit][$TimeTypes[$k]])
+				if ($timeData['min'][$timeTypes[$k]] < 0 || $timeData['min'][$timeTypes[$k]] > $timeData['data'][$timeUnit][$timeTypes[$k]])
 				{
-					$TimeData['min'][$TimeTypes[$k]] = $TimeData['data'][$TimeUnit][$TimeTypes[$k]];
+					$timeData['min'][$timeTypes[$k]] = $timeData['data'][$timeUnit][$timeTypes[$k]];
 				}
 			}
 		}
 
 		for ($j = 0; $j < 3; ++$j)
 		{
-			$TimeData['average'][$TimeTypes[$j]] = round(($TimeData['sum'][$TimeTypes[$j]] / $StepsAmount), 2);
+			$timeData['average'][$timeTypes[$j]] = round(($timeData['sum'][$timeTypes[$j]] / $stepsAmount), 2);
 		}
 	}
 
-	$Summary = sprintf(($TimeData['sum']['views']?EstatsLocale::translate('Between %s and %s there were %d unique visits (%d views), of which %d were returns.'):EstatsLocale::translate('Between %s and %s there were no visits.')), date('Y-m-d H:i:s', (($StartTime > $Period[0])?$StartTime:($Period[0] + 1))), date('Y-m-d H:i:s', $Period[1]), $TimeData['sum']['unique'], $TimeData['sum']['views'], $TimeData['sum']['returns']);
-	$Content = '<h2>'.EstatsLocale::translate('Summary').'</h2>
-'.$Summary.'
+	$summary = sprintf(($timeData['sum']['views']?EstatsLocale::translate('Between %s and %s there were %d unique visits (%d views), of which %d were returns.'):EstatsLocale::translate('Between %s and %s there were no visits.')), date('Y-m-d H:i:s', (($startTime > $period[0])?$startTime:($period[0] + 1))), date('Y-m-d H:i:s', $period[1]), $timeData['sum']['unique'], $timeData['sum']['views'], $timeData['sum']['returns']);
+	$content = '<h2>'.EstatsLocale::translate('Summary').'</h2>
+'.$summary.'
 ';
 
-	if ($TimeData['data'])
+	if ($timeData['data'])
 	{
-		$Content.= '<h2>'.EstatsLocale::translate('Visits').'</h2>
+		$content.= '<h2>'.EstatsLocale::translate('Visits').'</h2>
 <table cellpadding="2px" cellspacing="0" border="1px" width="100%">
 <tr>
 <th>
@@ -169,103 +169,103 @@ for ($i = 0; $i < $EntriesAmount; ++$i)
 </tr>
 ';
 
-		$Timestamp = $Period[0];
+		$timestamp = $period[0];
 
-		for ($j = 0; $j < $StepsAmount; ++$j)
+		for ($j = 0; $j < $stepsAmount; ++$j)
 		{
-			$Timestamp += $TimeUnitStep;
-			$TimeUnit = date($TimeFormat, $Timestamp);
-			$Content.= '<tr>
+			$timestamp += $timeUnitStep;
+			$timeUnit = date($timeFormat, $timestamp);
+			$content.= '<tr>
 <th>
-'.$TimeUnit.'
+'.$timeUnit.'
 </th>
 ';
 
 			for ($k = 0; $k < 3; ++$k)
 			{
-				$Content.= '<td>
-'.(isset($TimeData['data'][$TimeUnit][$TimeTypes[$k]])?$TimeData['data'][$TimeUnit][$TimeTypes[$k]]:0).'
+				$content.= '<td>
+'.(isset($timeData['data'][$timeUnit][$timeTypes[$k]])?$timeData['data'][$timeUnit][$timeTypes[$k]]:0).'
 </td>
 ';
 			}
 
-			$Content.= '</tr>
+			$content.= '</tr>
 ';
 		}
 
-		$Content.= '<tr>
+		$content.= '<tr>
 ';
 
-		foreach ($TimeSummary as $Key => $Label)
+		foreach ($timeSummary as $key => $label)
 		{
-			$Content.= '<th>
-'.$Label.':
+			$content.= '<th>
+'.$label.':
 </th>
 ';
 
 			for ($k = 0; $k < 3; ++$k)
 			{
-				$Content.= '<td>
-'.$TimeData[$Key][$TimeTypes[$k]].'
+				$content.= '<td>
+'.$timeData[$key][$timeTypes[$k]].'
 </td>
 ';
 			}
 		}
 
-		$Content.= '</tr>
+		$content.= '</tr>
 </table>
 ';
 	}
 
-	foreach ($Groups as $Group => $Amount)
+	foreach ($groups as $group => $amount)
 	{
-		if (!isset($Data[$Period[1]]['groups'][$Group]))
+		if (!isset($data[$period[1]]['groups'][$group]))
 		{
-			$Data[$Period[1]]['groups'][$Group] = array(
-	'data' => EstatsGroup::selectData($Group, $Amount, 0, $Period[0], $Period[1]),
-	'amount' => EstatsGroup::selectAmount($Group, $Amount, $Period[0], $Period[1]),
-	'sum' => EstatsGroup::selectSum($Group, $Period[0], $Period[1]),
+			$data[$period[1]]['groups'][$group] = array(
+	'data' => EstatsGroup::selectData($group, $amount, 0, $period[0], $period[1]),
+	'amount' => EstatsGroup::selectAmount($group, $amount, $period[0], $period[1]),
+	'sum' => EstatsGroup::selectSum($group, $period[0], $period[1]),
 	);
 		}
 
-		$GroupData = &$Data[$Period[1]]['groups'][$Group];
+		$groupData = &$data[$period[1]]['groups'][$group];
 
-		if (!$GroupData['amount'])
+		if (!$groupData['amount'])
 		{
 			continue;
 		}
 
-		$Address = ($Group == 'sites');
-		$Content.= '<h2>'.(($GroupData['amount'] && $GroupData['amount'] !== (($Groups[$Group] > $GroupData['amount'])?$GroupData['amount']:$Groups[$Group]))?sprintf(EstatsLocale::translate('%s (%d of %d)'), $Titles[$Group], count($GroupData['data']), $GroupData['amount']):$Titles[$Group]).'</h2>
+		$address = ($group == 'sites');
+		$content.= '<h2>'.(($groupData['amount'] && $groupData['amount'] !== (($groups[$group] > $groupData['amount'])?$groupData['amount']:$groups[$group]))?sprintf(EstatsLocale::translate('%s (%d of %d)'), $titles[$group], count($groupData['data']), $groupData['amount']):$titles[$group]).'</h2>
 <ol>
 ';
 
-		for ($j = 0, $l = count($GroupData['data']); $j < $l; ++$j)
+		for ($j = 0, $l = count($groupData['data']); $j < $l; ++$j)
 		{
-			$Content.= '<li>
-'.($Address?'<a href="'.htmlspecialchars($GroupData['data'][$j]['address']).'">':'').htmlspecialchars(EstatsGUI::itemText(trim($GroupData['data'][$j]['name']), $Group)).($Address?'</a>':'').' - <em>'.$GroupData['data'][$j]['amount_current'].' ('.round((($GroupData['data'][$j]['amount_current'] / $GroupData['sum']) * 100), 2).'%)</em>
+			$content.= '<li>
+'.($address?'<a href="'.htmlspecialchars($groupData['data'][$j]['address']).'">':'').htmlspecialchars(EstatsGUI::itemText(trim($groupData['data'][$j]['name']), $group)).($address?'</a>':'').' - <em>'.$groupData['data'][$j]['amount_current'].' ('.round((($groupData['data'][$j]['amount_current'] / $groupData['sum']) * 100), 2).'%)</em>
 </li>
 ';
 		}
 
-		$Content.= '</ol>
-<strong>'.EstatsLocale::translate('Sum').': <em>'.$GroupData['sum'].'</em></strong>
+		$content.= '</ol>
+<strong>'.EstatsLocale::translate('Sum').': <em>'.$groupData['sum'].'</em></strong>
 ';
 	}
 
-	$Entries[$Period[1]] = '<entry>
+	$entries[$period[1]] = '<entry>
 <title type="text">
-'.strftime($Title, $Period[1]).'
+'.strftime($title, $period[1]).'
 </title>
 <summary type="text">
-'.$Summary.'
+'.$summary.'
 </summary>
 <content type="xhtml">
 <div xmlns="http://www.w3c.org/1999/xhtml">
-'.$Content.'</div>
+'.$content.'</div>
 </content>
-<id>http://{servername}{path}feed/'.$Path[2].'/'.($Period[1] + 1).'{suffix}</id>
-<updated>'.date(DATE_ATOM, (($Period[1] > $_SERVER['REQUEST_TIME'])?$_SERVER['REQUEST_TIME']:$Period[1])).'</updated>
+<id>http://{servername}{path}feed/'.$path[2].'/'.($period[1] + 1).'{suffix}</id>
+<updated>'.date(DATE_ATOM, (($period[1] > $_SERVER['REQUEST_TIME'])?$_SERVER['REQUEST_TIME']:$period[1])).'</updated>
 <author>
 <name>eStats</name>
 </author>
@@ -273,12 +273,12 @@ for ($i = 0; $i < $EntriesAmount; ++$i)
 ';
 }
 
-if ($Modified)
+if ($modified)
 {
-	EstatsCache::save($FileName, $Data);
+	EstatsCache::save($fileName, $data);
 }
 
-krsort($Entries);
+krsort($entries);
 header('Content-type: application/atom+xml; charset=utf-8');
 die(EstatsTheme::parse('<?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="{language}">
@@ -288,11 +288,11 @@ eStats :: '.EstatsLocale::translate('Feed channel for {servername}').'
 <subtitle type="text">
 '.EstatsLocale::translate('Short summary of collected data.').'
 </subtitle>
-<id>http://{servername}{path}feed/'.$Path[2].'{suffix}</id>
+<id>http://{servername}{path}feed/'.$path[2].'{suffix}</id>
 <icon>http://{servername}{datapath}share/icons/miscellaneous/estats.png</icon>
 <generator uri="http://estats.emdek.pl/">eStats</generator>
-<updated>'.date('Y-m-d\TH:i:s\Z', $LastUpdate).'</updated>
+<updated>'.date('Y-m-d\TH:i:s\Z', $lastUpdate).'</updated>
 <link rel="alternate" type="text/html" href="http://{servername}{path}" />
 <link rel="self" type="application/atom+xml" href="http://{servername}{path}feed{suffix}" />
-'.implode('', $Entries).'</feed>'));
+'.implode('', $entries).'</feed>'));
 ?>
