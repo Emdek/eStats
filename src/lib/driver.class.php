@@ -325,7 +325,7 @@ abstract class EstatsDriver
  * Contains reference to PDO object
  */
 
-	protected $pDO = NULL;
+	protected $connection = NULL;
 
 /**
  * Contains optional tables prefix
@@ -382,17 +382,17 @@ abstract class EstatsDriver
 	{
 		try
 		{
-			$this->PDO = new PDO($connection, $user, $password, ($persistent?array(PDO::ATTR_PERSISTENT => TRUE):array()));
-			$this->Connected = TRUE;
+			$this->connection = new PDO($connection, $user, $password, ($persistent?array(PDO::ATTR_PERSISTENT => TRUE):array()));
+			$this->connected = TRUE;
 		}
 		catch (Exception $e)
 		{
-			$this->Connected = FALSE;
+			$this->connected = FALSE;
 		}
 
-		$this->Prefix = $prefix;
+		$this->prefix = $prefix;
 
-		return $this->Connected;
+		return $this->connected;
 	}
 
 
@@ -401,8 +401,8 @@ abstract class EstatsDriver
 */
 	public function disconnect()
 	{
-		$this->PDO = NULL;
-		$this->Connected = FALSE;
+		$this->connection = NULL;
+		$this->connected = FALSE;
 	}
 
 /**
@@ -470,7 +470,7 @@ abstract class EstatsDriver
 	{
 		$data = $this->selectData(array($table), array($field), $where, 1, $offset, $orderBy);
 
-		return ($data?array_shift($data[0]):'');
+		return ($data ? array_shift($data[0]) : '');
 	}
 
 /**
@@ -517,7 +517,7 @@ abstract class EstatsDriver
 	{
 		$data = $this->selectData(array($table), $fields, $where, 1, $offset, $orderBy, $groupBy, $having, $distinct);
 
-		return ($data?$data[0]:array());
+		return ($data ? $data[0] : array());
 	}
 
 /**
@@ -534,7 +534,7 @@ abstract class EstatsDriver
 	{
 		$data = $this->selectData(array($table), array(self::FUNCTION_COUNT), $where, 0, 0, NULL, $groupBy, $having, $distinct);
 
-		return ($data?array_shift($data[0]):FALSE);
+		return ($data ? array_shift($data[0]) : FALSE);
 	}
 
 /**
@@ -572,7 +572,7 @@ abstract class EstatsDriver
 
 	public function beginTransaction()
 	{
-		$this->PDO->beginTransaction();
+		$this->connection->beginTransaction();
 	}
 
 /**
@@ -581,7 +581,7 @@ abstract class EstatsDriver
 
 	public function commitTransaction()
 	{
-		$this->PDO->commit();
+		$this->connection->commit();
 	}
 
 /**
@@ -590,7 +590,7 @@ abstract class EstatsDriver
 
 	public function rollBackTransaction()
 	{
-		$this->PDO->rollBack();
+		$this->connection->rollBack();
 	}
 }
 ?>

@@ -105,7 +105,7 @@ class EstatsDriverPostgresql extends EstatsDriver
 			case self::ELEMENT_FIELD:
 				return $this->fieldString($data);
 			case self::ELEMENT_VALUE:
-				return $this->PDO->quote($data);
+				return $this->connection->quote($data);
 			case self::ELEMENT_FUNCTION:
 				if ($data[0] == self::FUNCTION_COUNT)
 				{
@@ -202,7 +202,7 @@ class EstatsDriverPostgresql extends EstatsDriver
 			case self::ELEMENT_OPERATION:
 				if ($data[1] & self::OPERATOR_BETWEEN)
 				{
-					return (is_array($data[0])?$this->elementString($data[0][0], $data[0][1]):$this->PDO->quote($data[2])).' '.(($data[1] & self::OPERATOR_NOT)?'NOT ':'').'BETWEEN '.$this->fieldString($data[2]).' AND '.$this->fieldString($data[3]);
+					return (is_array($data[0])?$this->elementString($data[0][0], $data[0][1]):$this->connection->quote($data[2])).' '.(($data[1] & self::OPERATOR_NOT)?'NOT ':'').'BETWEEN '.$this->fieldString($data[2]).' AND '.$this->fieldString($data[3]);
 				}
 				else if ($data[1] & self::OPERATOR_IN)
 				{
@@ -210,14 +210,14 @@ class EstatsDriverPostgresql extends EstatsDriver
 
 					for ($i = 0, $c = count($data[2]); $i < $c; ++$i)
 					{
-						$items[] = $this->PDO->quote($data[2][$i]);
+						$items[] = $this->connection->quote($data[2][$i]);
 					}
 
 					return $this->fieldString($data[0]).' '.(($data[1] & self::OPERATOR_NOT)?'NOT ':'').'IN('.implode(', ', $items).')';
 				}
 				else
 				{
-					return (is_array($data[0])?$this->elementString($data[0][0], $data[0][1]):$this->fieldString($data[0])).' '.$this->operatorString($data[1]).(isset($data[2])?' '.(is_array($data[2])?$this->elementString($data[2][0], $data[2][1]):$this->PDO->quote($data[2])):'');
+					return (is_array($data[0])?$this->elementString($data[0][0], $data[0][1]):$this->fieldString($data[0])).' '.$this->operatorString($data[1]).(isset($data[2])?' '.(is_array($data[2])?$this->elementString($data[2][0], $data[2][1]):$this->connection->quote($data[2])):'');
 				}
 			case self::ELEMENT_EXPRESSION:
 				$string = '';
@@ -314,13 +314,13 @@ class EstatsDriverPostgresql extends EstatsDriver
 
 	public function option($option)
 	{
-		if (!$this->Information || count($this->Information) < 2)
+		if (!$this->information || count($this->information) < 2)
 		{
 			$information =  parse_ini_file(dirname(__FILE__).'/plugin.ini', TRUE);
-			$this->Information = &$information['Information'];
+			$this->information = &$information['Information'];
 		}
 
-		return (isset($this->Information[$option])?$this->Information[$option]:'');
+		return (isset($this->information[$option])?$this->information[$option]:'');
 	}
 
 /**
@@ -337,10 +337,10 @@ class EstatsDriverPostgresql extends EstatsDriver
 	{
 		if (parent::connect($connection, $user, $password, $prefix, $persistent))
 		{
-			$this->Information['DatabaseVersion'] = $this->PDO->getAttribute(PDO::ATTR_SERVER_VERSION);
+			$this->information['DatabaseVersion'] = $this->connection->getAttribute(PDO::ATTR_SERVER_VERSION);
 		}
 
-		return $this->Connected;
+		return $this->connected;
 	}
 
 /**
@@ -374,7 +374,7 @@ class EstatsDriverPostgresql extends EstatsDriver
 				$value['type'] = 'TIMESTAMP';
 			}
 
-			$sQL = '"'.$key.'" '.(isset($value['autoincrement'])?'SERIAL':$value['type'].((isset($value['length']) && $value['type'] != 'INTEGER')?'('.$value['length'].')':'')).(isset($value['null'])?'':' NOT NULL');
+			$sql = '"'.$key.'" '.(isset($value['autoincrement'])?'SERIAL':$value['type'].((isset($value['length']) && $value['type'] != 'INTEGER')?'('.$value['length'].')':'')).(isset($value['null'])?'':' NOT NULL');
 
 			if (isset($value['unique']))
 			{
@@ -391,15 +391,15 @@ class EstatsDriverPostgresql extends EstatsDriver
 				}
 				else
 				{
-					$sQL.= ' UNIQUE';
+					$sql.= ' UNIQUE';
 				}
 			}
 			else if (isset($value['default']))
 			{
-				$sQL.= ' DEFAULT '.$this->PDO->quote($value['default']);
+				$sql.= ' DEFAULT '.$this->connection->quote($value['default']);
 			}
 
-			$parts[] = $sQL;
+			$parts[] = $sql;
 
 			if (isset($value['primary']))
 			{
@@ -409,7 +409,7 @@ class EstatsDriverPostgresql extends EstatsDriver
 			if (isset($value['foreign']))
 			{
 				$field = explode('.', $value['foreign']);
-				$foreignKeys[] = 'FOREIGN KEY("'.$key.'") REFERENCES "'.$this->Prefix.$field[0].'" ("'.$field[1].'")'.(isset($value['onupdate'])?' ON UPDATE '.$value['onupdate']:'').(isset($value['ondelete'])?' ON DELETE '.$value['ondelete']:'');
+				$foreignKeys[] = 'FOREIGN KEY("'.$key.'") REFERENCES "'.$this->prefix.$field[0].'" ("'.$field[1].'")'.(isset($value['onupdate'])?' ON UPDATE '.$value['onupdate']:'').(isset($value['ondelete'])?' ON DELETE '.$value['ondelete']:'');
 			}
 
 			if (isset($value['index']) && !isset($value['unique']))
@@ -433,11 +433,11 @@ class EstatsDriverPostgresql extends EstatsDriver
 
 		$parts = array_merge($parts, $foreignKeys);
 
-		$this->PDO->exec('CREATE TABLE "'.$this->Prefix.$table.'" ('.implode(', ', $parts).')');
+		$this->connection->exec('CREATE TABLE "'.$this->prefix.$table.'" ('.implode(', ', $parts).')');
 
 		for ($i = 0, $c = count($indexKeys); $i < $c; ++$i)
 		{
-			$this->PDO->exec('CREATE INDEX "'.$this->Prefix.$table.'_'.$indexKeys[$i].'_index" ON "'.$this->Prefix.$table.'" ("'.$indexKeys[$i].'")');
+			$this->connection->exec('CREATE INDEX "'.$this->prefix.$table.'_'.$indexKeys[$i].'_index" ON "'.$this->prefix.$table.'" ("'.$indexKeys[$i].'")');
 		}
 
 		return $this->tableExists($table);
@@ -451,7 +451,7 @@ class EstatsDriverPostgresql extends EstatsDriver
 
 	public function deleteTable($table)
 	{
-		$this->PDO->exec('DROP TABLE "'.$this->Prefix.$table.'"');
+		$this->connection->exec('DROP TABLE "'.$this->prefix.$table.'"');
 
 		return !$this->tableExists($table);
 	}
@@ -464,7 +464,7 @@ class EstatsDriverPostgresql extends EstatsDriver
 
 	public function tableExists($table)
 	{
-		$result = $this->PDO->query('SELECT "table_name" FROM "information_schema"."tables" WHERE "table_type" = \'BASE TABLE\' AND "table_name" = '.$this->PDO->quote($this->Prefix.$table).' AND "table_schema" NOT IN (\'pg_catalog\', \'information_schema\')');
+		$result = $this->connection->query('SELECT "table_name" FROM "information_schema"."tables" WHERE "table_type" = \'BASE TABLE\' AND "table_name" = '.$this->connection->quote($this->prefix.$table).' AND "table_schema" NOT IN (\'pg_catalog\', \'information_schema\')');
 
 		return ($result?(strlen($result->fetchColumn(0)) > 1):0);
 	}
@@ -477,7 +477,7 @@ class EstatsDriverPostgresql extends EstatsDriver
 
 	public function tableSize($table)
 	{
-		$result = $this->PDO->query('SELECT "relpages" FROM "pg_class" WHERE "relname" = '.$this->PDO->quote($this->Prefix.$table));
+		$result = $this->connection->query('SELECT "relpages" FROM "pg_class" WHERE "relname" = '.$this->connection->quote($this->prefix.$table));
 
 		return ($result?($result->fetchColumn(0) * 8192):FALSE);
 	}
@@ -561,12 +561,12 @@ class EstatsDriverPostgresql extends EstatsDriver
 				}
 				else
 				{
-					$tablesPart.= '"'.$this->Prefix.$tables[$i][0].'" AS "'.$tables[$i][1].'"';
+					$tablesPart.= '"'.$this->prefix.$tables[$i][0].'" AS "'.$tables[$i][1].'"';
 				}
 			}
 			else
 			{
-				$tablesPart.= '"'.$this->Prefix.$tables[$i].'"'.($this->Prefix?' AS "'.$tables[$i].'"':'');
+				$tablesPart.= '"'.$this->prefix.$tables[$i].'"'.($this->prefix?' AS "'.$tables[$i].'"':'');
 			}
 
 			if ($i > 0 && is_array($tables[$i - 1]) && is_int($tables[$i - 1][0]))
@@ -626,14 +626,14 @@ class EstatsDriverPostgresql extends EstatsDriver
 			}
 		}
 
-		$sQL = 'SELECT '.($distinct?'DISTINCT ':'').$fieldsPart.' FROM '.$tablesPart.($where?' WHERE '.$this->elementString(self::ELEMENT_EXPRESSION, $where):'').($groupBy?' GROUP BY '.implode(', ', $groupBy).($having?' HAVING '.$this->elementString(self::ELEMENT_EXPRESSION, $having):''):'').($orderBy?' ORDER BY '.implode(', ', $orderBy):'').($amount?' LIMIT '.(int) $amount:'').($offset?' OFFSET '.(int) $offset:'');
+		$sql = 'SELECT '.($distinct?'DISTINCT ':'').$fieldsPart.' FROM '.$tablesPart.($where?' WHERE '.$this->elementString(self::ELEMENT_EXPRESSION, $where):'').($groupBy?' GROUP BY '.implode(', ', $groupBy).($having?' HAVING '.$this->elementString(self::ELEMENT_EXPRESSION, $having):''):'').($orderBy?' ORDER BY '.implode(', ', $orderBy):'').($amount?' LIMIT '.(int) $amount:'').($offset?' OFFSET '.(int) $offset:'');
 
 		if ($mode == self::RETURN_QUERY)
 		{
-			return $sQL;
+			return $sql;
 		}
 
-		$statement = $this->PDO->prepare($sQL);
+		$statement = $this->connection->prepare($sql);
 		$result = ($statement?$statement->execute():NULL);
 
 		if ($result)
@@ -656,7 +656,7 @@ class EstatsDriverPostgresql extends EstatsDriver
 
 	public function insertData($table, $values, $returnID = FALSE)
 	{
-		$statement = $this->PDO->prepare('INSERT INTO "'.$this->Prefix.$table.'" ("'.implode('", "', array_keys($values)).'") VALUES('.str_repeat('?, ', (count($values) - 1)).'?)'.($returnID?' RETURNING CURRVAL("'.$this->Prefix.$table.'_sequence")':''));
+		$statement = $this->connection->prepare('INSERT INTO "'.$this->prefix.$table.'" ("'.implode('", "', array_keys($values)).'") VALUES('.str_repeat('?, ', (count($values) - 1)).'?)'.($returnID?' RETURNING CURRVAL("'.$this->prefix.$table.'_sequence")':''));
 
 		if (!$statement || !$statement->execute(array_values($values)))
 		{
@@ -698,11 +698,11 @@ class EstatsDriverPostgresql extends EstatsDriver
 			}
 			else
 			{
-				$parts[] = '"'.$key.'" = '.$this->PDO->quote($value);
+				$parts[] = '"'.$key.'" = '.$this->connection->quote($value);
 			}
 		}
 
-		$statement = $this->PDO->prepare('UPDATE "'.$this->Prefix.$table.'" SET '.implode(', ', $parts).' WHERE '.$this->elementString(self::ELEMENT_EXPRESSION, $where));
+		$statement = $this->connection->prepare('UPDATE "'.$this->prefix.$table.'" SET '.implode(', ', $parts).' WHERE '.$this->elementString(self::ELEMENT_EXPRESSION, $where));
 
 		return ($statement?$statement->execute():FALSE);
 	}
@@ -716,7 +716,7 @@ class EstatsDriverPostgresql extends EstatsDriver
 
 	public function deleteData($table, $where = NULL)
 	{
-		$statement = $this->PDO->prepare('DELETE FROM "'.$this->Prefix.$table.'"'.($where?' WHERE '.$this->elementString(self::ELEMENT_EXPRESSION, $where):''));
+		$statement = $this->connection->prepare('DELETE FROM "'.$this->prefix.$table.'"'.($where?' WHERE '.$this->elementString(self::ELEMENT_EXPRESSION, $where):''));
 
 		return ($statement?$statement->execute():FALSE);
 	}

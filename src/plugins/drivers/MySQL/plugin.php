@@ -22,7 +22,7 @@ class EstatsDriverMysql extends EstatsDriver
 			$table = substr($field, 0, $position);
 			$field = substr($field, ($position + 1));
 
-			return '`'.$table.'`.'.(($field == '*')?'*':'`'.$field.'`');
+			return '`'.$table.'`.'.(($field == '*') ? '*' : '`'.$field.'`');
 		}
 		else
 		{
@@ -54,11 +54,11 @@ class EstatsDriverMysql extends EstatsDriver
 				case self::OPERATOR_OR:
 					return 'OR';
 				case self::OPERATOR_EQUAL:
-					return ($not?'!':'').'=';
+					return ($not ? '!' : '').'=';
 				case self::OPERATOR_REGEXP:
 					return 'REGEXP';
 				case self::OPERATOR_LIKE:
-					return ($not?'NOT ':'').'LIKE';
+					return ($not ? 'NOT ' : '').'LIKE';
 				case self::OPERATOR_GREATER:
 					return '>';
 				case self::OPERATOR_GREATEROREQUAL:
@@ -105,15 +105,15 @@ class EstatsDriverMysql extends EstatsDriver
 			case self::ELEMENT_FIELD:
 				return $this->fieldString($data);
 			case self::ELEMENT_VALUE:
-				return $this->PDO->quote($data);
+				return $this->connection->quote($data);
 			case self::ELEMENT_FUNCTION:
 				if ($data[0] == self::FUNCTION_COUNT)
 				{
-					return 'COUNT('.($data[1]?$this->fieldString($data[1]):'*').')';
+					return 'COUNT('.($data[1] ? $this->fieldString($data[1]) : '*').')';
 				}
 				else if ($data[0] == self::FUNCTION_DATETIME)
 				{
-					return 'DATE_FORMAT('.$this->fieldString($data[1][0]).', '.$this->PDO->quote(strtr($data[1][1], array('%M' => '%i', '%W' => '%u'))).')';
+					return 'DATE_FORMAT('.$this->fieldString($data[1][0]).', '.$this->connection->quote(strtr($data[1][1], array('%M' => '%i', '%W' => '%u'))).')';
 				}
 				else
 				{
@@ -145,7 +145,7 @@ class EstatsDriverMysql extends EstatsDriver
 			case self::ELEMENT_OPERATION:
 				if ($data[1] & self::OPERATOR_BETWEEN)
 				{
-					return (is_array($data[0])?$this->elementString($data[0][0], $data[0][1]):$this->PDO->quote($data[2])).' '.(($data[1] & self::OPERATOR_NOT)?'NOT ':'').'BETWEEN '.$this->fieldString($data[2]).' AND '.$this->fieldString($data[3]);
+					return (is_array($data[0]) ? $this->elementString($data[0][0], $data[0][1]) : $this->connection->quote($data[2])).' '.(($data[1] & self::OPERATOR_NOT) ? 'NOT ' : '').'BETWEEN '.$this->fieldString($data[2]).' AND '.$this->fieldString($data[3]);
 				}
 				else if ($data[1] & self::OPERATOR_IN)
 				{
@@ -153,14 +153,14 @@ class EstatsDriverMysql extends EstatsDriver
 
 					for ($i = 0, $c = count($data[2]); $i < $c; ++$i)
 					{
-						$items[] = $this->PDO->quote($data[2][$i]);
+						$items[] = $this->connection->quote($data[2][$i]);
 					}
 
-					return $this->fieldString($data[0]).' '.(($data[1] & self::OPERATOR_NOT)?'NOT ':'').'IN('.implode(', ', $items).')';
+					return $this->fieldString($data[0]).' '.(($data[1] & self::OPERATOR_NOT) ? 'NOT ' : '').'IN('.implode(', ', $items).')';
 				}
 				else
 				{
-					return (is_array($data[0])?$this->elementString($data[0][0], $data[0][1]):$this->fieldString($data[0])).' '.$this->operatorString($data[1]).(isset($data[2])?' '.(is_array($data[2])?$this->elementString($data[2][0], $data[2][1]):$this->PDO->quote($data[2])):'');
+					return (is_array($data[0]) ? $this->elementString($data[0][0], $data[0][1]) : $this->fieldString($data[0])).' '.$this->operatorString($data[1]).(isset($data[2]) ? ' '.(is_array($data[2]) ? $this->elementString($data[2][0], $data[2][1]) : $this->connection->quote($data[2])) : '');
 				}
 			case self::ELEMENT_EXPRESSION:
 				$string = '';
@@ -212,17 +212,17 @@ class EstatsDriverMysql extends EstatsDriver
 				{
 					if (isset($data[$i][1]))
 					{
-						$parts[] = 'WHEN '.(is_array($data[$i][0])?$this->elementString($data[$i][0][0], $data[$i][0][1]):$this->fieldString($data[$i][0])).' THEN '.(is_array($data[$i][1])?$this->elementString($data[$i][1][0], $data[$i][1][1]):$this->fieldString($data[$i][1]));
+						$parts[] = 'WHEN '.(is_array($data[$i][0]) ? $this->elementString($data[$i][0][0], $data[$i][0][1]) : $this->fieldString($data[$i][0])).' THEN '.(is_array($data[$i][1]) ? $this->elementString($data[$i][1][0], $data[$i][1][1]) : $this->fieldString($data[$i][1]));
 					}
 					else
 					{
-						$parts[] = 'ELSE '.(is_array($data[$i][0])?$this->elementString($data[$i][0][0], $data[$i][0][1]):$this->fieldString($data[$i][0]));
+						$parts[] = 'ELSE '.(is_array($data[$i][0]) ? $this->elementString($data[$i][0][0], $data[$i][0][1]) : $this->fieldString($data[$i][0]));
 					}
 				}
 
 				return 'CASE '.implode(' ', $parts).' END';
 			CASE self::ELEMENT_SUBQUERY:
-				return ('('.self::selectData($data[0], (isset($data[1])?$data[1]:NULL), (isset($data[2])?$data[2]:NULL), (isset($data[3])?$data[3]:0), (isset($data[4])?$data[4]:0), (isset($data[5])?$data[5]:NULL), (isset($data[6])?$data[6]:NULL), (isset($data[7])?$data[7]:NULL), (isset($data[8])?$data[8]:FALSE), self::RETURN_QUERY).')');
+				return ('('.self::selectData($data[0], (isset($data[1]) ? $data[1] : NULL), (isset($data[2]) ? $data[2] : NULL), (isset($data[3]) ? $data[3] : 0), (isset($data[4]) ? $data[4] : 0), (isset($data[5]) ? $data[5] : NULL), (isset($data[6]) ? $data[6] : NULL), (isset($data[7]) ? $data[7] : NULL), (isset($data[8]) ? $data[8] : FALSE), self::RETURN_QUERY).')');
 			default:
 				return '';
 		}
@@ -246,7 +246,7 @@ class EstatsDriverMysql extends EstatsDriver
 
 	public function connectionString($parameters)
 	{
-		return 'mysql:host='.$parameters['DatabaseHost'].($parameters['DatabasePort']?';port='.$parameters['DatabasePort']:'').';dbname='.$parameters['DatabaseName'];
+		return 'mysql:host='.$parameters['DatabaseHost'].($parameters['DatabasePort'] ? ';port='.$parameters['DatabasePort'] : '').';dbname='.$parameters['DatabaseName'];
 	}
 
 /**
@@ -257,13 +257,13 @@ class EstatsDriverMysql extends EstatsDriver
 
 	public function option($option)
 	{
-		if (!$this->Information || count($this->Information) < 2)
+		if (!$this->information || count($this->information) < 2)
 		{
 			$information =  parse_ini_file(dirname(__FILE__).'/plugin.ini', TRUE);
-			$this->Information = &$information['Information'];
+			$this->information = &$information['Information'];
 		}
 
-		return (isset($this->Information[$option])?$this->Information[$option]:'');
+		return (isset($this->information[$option]) ? $this->information[$option] : '');
 	}
 
 /**
@@ -280,11 +280,11 @@ class EstatsDriverMysql extends EstatsDriver
 	{
 		if (parent::connect($connection, $user, $password, $prefix, $persistent))
 		{
-			$this->Information['DatabaseVersion'] = $this->PDO->getAttribute(PDO::ATTR_SERVER_VERSION);
-			$this->PDO->query('SET NAMES \'utf8\'');
+			$this->information['DatabaseVersion'] = $this->connection->getAttribute(PDO::ATTR_SERVER_VERSION);
+			$this->connection->query('SET NAMES \'utf8\'');
 		}
 
-		return $this->Connected;
+		return $this->connected;
 	}
 
 /**
@@ -315,7 +315,7 @@ class EstatsDriverMysql extends EstatsDriver
 
 		foreach ($attributes as $key => $value)
 		{
-			$sQL = '`'.$key.'` '.$value['type'].(isset($value['length'])?'('.$value['length'].')':'').(in_array(strtoupper($value['type']), $textTypes)?' CHARACTER SET \'utf8\' COLLATE \'utf8_unicode_ci\'':'').(isset($value['null'])?'':' NOT NULL').(isset($value['autoincrement'])?' AUTO_INCREMENT':'');
+			$sql = '`'.$key.'` '.$value['type'].(isset($value['length']) ? '('.$value['length'].')' : '').(in_array(strtoupper($value['type']), $textTypes) ? ' CHARACTER SET \'utf8\' COLLATE \'utf8_unicode_ci\'' : '').(isset($value['null']) ? '' : ' NOT NULL').(isset($value['autoincrement']) ? ' AUTO_INCREMENT' : '');
 
 			if (isset($value['unique']))
 			{
@@ -332,15 +332,15 @@ class EstatsDriverMysql extends EstatsDriver
 				}
 				else
 				{
-					$sQL.= ' UNIQUE';
+					$sql.= ' UNIQUE';
 				}
 			}
 			else if (isset($value['default']))
 			{
-				$sQL.= ' DEFAULT '.$this->PDO->quote($value['default']);
+				$sql.= ' DEFAULT '.$this->connection->quote($value['default']);
 			}
 
-			$parts[] = $sQL;
+			$parts[] = $sql;
 
 			if (isset($value['primary']))
 			{
@@ -350,7 +350,7 @@ class EstatsDriverMysql extends EstatsDriver
 			if (isset($value['foreign']))
 			{
 				$field = explode('.', $value['foreign']);
-				$foreignKeys[] = 'FOREIGN KEY(`'.$key.'`) REFERENCES `'.$this->Prefix.$field[0].'` (`'.$field[1].'`)'.(isset($value['onupdate'])?' ON UPDATE '.$value['onupdate']:'').(isset($value['ondelete'])?' ON DELETE '.$value['ondelete']:'');
+				$foreignKeys[] = 'FOREIGN KEY(`'.$key.'`) REFERENCES `'.$this->prefix.$field[0].'` (`'.$field[1].'`)'.(isset($value['onupdate']) ? ' ON UPDATE '.$value['onupdate'] : '').(isset($value['ondelete']) ? ' ON DELETE '.$value['ondelete'] : '');
 			}
 
 			if (isset($value['index']) && !isset($value['unique']))
@@ -374,7 +374,7 @@ class EstatsDriverMysql extends EstatsDriver
 
 		$parts = array_merge($parts, $foreignKeys, $indexKeys);
 
-		$this->PDO->exec('CREATE TABLE `'.$this->Prefix.$table.'` ('.implode(', ', $parts).') ENGINE=InnoDB CHARACTER SET \'utf8\' COLLATE \'utf8_unicode_ci\'');
+		$this->connection->exec('CREATE TABLE `'.$this->prefix.$table.'` ('.implode(', ', $parts).') ENGINE=InnoDB CHARACTER SET \'utf8\' COLLATE \'utf8_unicode_ci\'');
 
 		return $this->tableExists($table);
 	}
@@ -387,7 +387,7 @@ class EstatsDriverMysql extends EstatsDriver
 
 	public function deleteTable($table)
 	{
-		$this->PDO->exec('DROP TABLE `'.$this->Prefix.$table.'`');
+		$this->connection->exec('DROP TABLE `'.$this->prefix.$table.'`');
 
 		return !$this->tableExists($table);
 	}
@@ -400,9 +400,9 @@ class EstatsDriverMysql extends EstatsDriver
 
 	public function tableExists($table)
 	{
-		$result = $this->PDO->query('SHOW TABLES LIKE'.$this->PDO->quote($this->Prefix.$table));
+		$result = $this->connection->query('SHOW TABLES LIKE'.$this->connection->quote($this->prefix.$table));
 
-		return ($result?(strlen($result->fetchColumn(0)) > 1):0);
+		return ($result ? (strlen($result->fetchColumn(0)) > 1) : 0);
 	}
 
 /**
@@ -413,7 +413,7 @@ class EstatsDriverMysql extends EstatsDriver
 
 	public function tableSize($table)
 	{
-		$result = $this->PDO->query('SHOW TABLE STATUS LIKE '.$this->PDO->quote($this->Prefix.$table));
+		$result = $this->connection->query('SHOW TABLE STATUS LIKE '.$this->connection->quote($this->prefix.$table));
 
 		if (!$result)
 		{
@@ -454,7 +454,7 @@ class EstatsDriverMysql extends EstatsDriver
 				}
 				else if (is_array($fields[$i]))
 				{
-					$parts[] = $this->elementString($fields[$i][0], $fields[$i][1]).(empty($fields[$i][2])?'':' AS `'.$fields[$i][2].'`');
+					$parts[] = $this->elementString($fields[$i][0], $fields[$i][1]).(empty($fields[$i][2]) ? '' : ' AS `'.$fields[$i][2].'`');
 				}
 				else
 				{
@@ -479,7 +479,7 @@ class EstatsDriverMysql extends EstatsDriver
 				{
 					$natural = ($tables[$i][0] & self::JOIN_NATURAL);
 					$tables[$i][0] = ($tables[$i][0] & ~self::JOIN_NATURAL);
-					$tablesPart.= ($natural?' NATURAL':'').' ';
+					$tablesPart.= ($natural ? ' NATURAL' : '').' ';
 
 					switch ($tables[$i][0])
 					{
@@ -504,12 +504,12 @@ class EstatsDriverMysql extends EstatsDriver
 				}
 				else
 				{
-					$tablesPart.= '`'.$this->Prefix.$tables[$i][0].'` AS `'.$tables[$i][1].'`';
+					$tablesPart.= '`'.$this->prefix.$tables[$i][0].'` AS `'.$tables[$i][1].'`';
 				}
 			}
 			else
 			{
-				$tablesPart.= '`'.$this->Prefix.$tables[$i].'`'.($this->Prefix?' AS `'.$tables[$i].'`':'');
+				$tablesPart.= '`'.$this->prefix.$tables[$i].'`'.($this->prefix ? ' AS `'.$tables[$i].'`' : '');
 			}
 
 			if ($i > 0 && is_array($tables[$i - 1]) && is_int($tables[$i - 1][0]))
@@ -543,11 +543,11 @@ class EstatsDriverMysql extends EstatsDriver
 			{
 				if (is_array($value))
 				{
-					$orderBy[$key] = $this->elementString($key[0], $key[1]).($value?' ASC':' DESC');
+					$orderBy[$key] = $this->elementString($key[0], $key[1]).($value ? ' ASC' : ' DESC');
 				}
 				else
 				{
-					$orderBy[$key] = $this->fieldString($key).($value?' ASC':' DESC');
+					$orderBy[$key] = $this->fieldString($key).($value ? ' ASC' : ' DESC');
 				}
 			}
 
@@ -569,19 +569,19 @@ class EstatsDriverMysql extends EstatsDriver
 			}
 		}
 
-		$sQL = 'SELECT '.($distinct?'DISTINCT ':'').$fieldsPart.' FROM '.$tablesPart.($where?' WHERE '.$this->elementString(self::ELEMENT_EXPRESSION, $where):'').($groupBy?' GROUP BY '.implode(', ', $groupBy).($having?' HAVING '.$this->elementString(self::ELEMENT_EXPRESSION, $having):''):'').($orderBy?' ORDER BY '.implode(', ', $orderBy):'').(($amount || $offset)?' LIMIT '.(int) $offset.', '.(int) $amount:'');
+		$sql = 'SELECT '.($distinct ? 'DISTINCT ' : '').$fieldsPart.' FROM '.$tablesPart.($where ? ' WHERE '.$this->elementString(self::ELEMENT_EXPRESSION, $where) : '').($groupBy ? ' GROUP BY '.implode(', ', $groupBy).($having ? ' HAVING '.$this->elementString(self::ELEMENT_EXPRESSION, $having) : '') : '').($orderBy ? ' ORDER BY '.implode(', ', $orderBy) : '').(($amount || $offset) ? ' LIMIT '.(int) $offset.', '.(int) $amount : '');
 
 		if ($mode == self::RETURN_QUERY)
 		{
-			return $sQL;
+			return $sql;
 		}
 
-		$statement = $this->PDO->prepare($sQL);
-		$result = ($statement?$statement->execute():NULL);
+		$statement = $this->connection->prepare($sql);
+		$result = ($statement ? $statement->execute() : NULL);
 
 		if ($result)
 		{
-			return (($mode == self::RETURN_RESULT)?$statement->fetchAll(PDO::FETCH_ASSOC):$statement);
+			return (($mode == self::RETURN_RESULT) ? $statement->fetchAll(PDO::FETCH_ASSOC) : $statement);
 		}
 		else
 		{
@@ -599,7 +599,7 @@ class EstatsDriverMysql extends EstatsDriver
 
 	public function insertData($table, $values, $returnID = FALSE)
 	{
-		$statement = $this->PDO->prepare('INSERT INTO `'.$this->Prefix.$table.'` (`'.implode('`, `', array_keys($values)).'`) VALUES('.str_repeat('?, ', (count($values) - 1)).'?)');
+		$statement = $this->connection->prepare('INSERT INTO `'.$this->prefix.$table.'` (`'.implode('`, `', array_keys($values)).'`) VALUES('.str_repeat('?, ', (count($values) - 1)).'?)');
 
 		if (!$statement || !$statement->execute(array_values($values)))
 		{
@@ -608,7 +608,7 @@ class EstatsDriverMysql extends EstatsDriver
 
 		if ($returnID)
 		{
-			return $this->PDO->lastInsertId();
+			return $this->connection->lastInsertId();
 		}
 		else
 		{
@@ -641,11 +641,11 @@ class EstatsDriverMysql extends EstatsDriver
 			}
 			else
 			{
-				$parts[] = '`'.$key.'` = '.$this->PDO->quote($value);
+				$parts[] = '`'.$key.'` = '.$this->connection->quote($value);
 			}
 		}
 
-		$statement = $this->PDO->prepare('UPDATE `'.$this->Prefix.$table.'` SET '.implode(', ', $parts).' WHERE '.$this->elementString(self::ELEMENT_EXPRESSION, $where));
+		$statement = $this->connection->prepare('UPDATE `'.$this->prefix.$table.'` SET '.implode(', ', $parts).' WHERE '.$this->elementString(self::ELEMENT_EXPRESSION, $where));
 
 		return ($statement?$statement->execute():FALSE);
 	}
@@ -659,7 +659,7 @@ class EstatsDriverMysql extends EstatsDriver
 
 	public function deleteData($table, $where = NULL)
 	{
-		$statement = $this->PDO->prepare('DELETE FROM `'.$this->Prefix.$table.'`'.($where?' WHERE '.$this->elementString(self::ELEMENT_EXPRESSION, $where):''));
+		$statement = $this->connection->prepare('DELETE FROM `'.$this->prefix.$table.'`'.($where?' WHERE '.$this->elementString(self::ELEMENT_EXPRESSION, $where):''));
 
 		return ($statement?$statement->execute():FALSE);
 	}
