@@ -22,7 +22,7 @@ class EstatsDriverSqlite extends EstatsDriver
 			$table = substr($field, 0, $position);
 			$field = substr($field, ($position + 1));
 
-			return '"'.$table.'".'.(($field == '*')?'*':'"'.$field.'"');
+			return '"'.$table.'".'.(($field == '*') ? '*' : '"'.$field.'"');
 		}
 		else
 		{
@@ -54,11 +54,11 @@ class EstatsDriverSqlite extends EstatsDriver
 				case self::OPERATOR_OR:
 					return 'OR';
 				case self::OPERATOR_EQUAL:
-					return ($not?'!':'').'=';
+					return ($not ? '!' : '').'=';
 				case self::OPERATOR_REGEXP:
 					return 'REGEXP';
 				case self::OPERATOR_LIKE:
-					return ($not?'NOT ':'').'LIKE';
+					return ($not ? 'NOT ' : '').'LIKE';
 				case self::OPERATOR_GREATER:
 					return '>';
 				case self::OPERATOR_GREATEROREQUAL:
@@ -68,7 +68,7 @@ class EstatsDriverSqlite extends EstatsDriver
 				case self::OPERATOR_LESSOREQUAL:
 					return '<=';
 				case self::OPERATOR_ISNULL:
-					return 'IS '.($not?'NOT ':'').'NULL';
+					return 'IS '.($not ? 'NOT ' : '').'NULL';
 				case self::OPERATOR_PLUS:
 					return '+';
 				case self::OPERATOR_MINUS:
@@ -109,7 +109,7 @@ class EstatsDriverSqlite extends EstatsDriver
 			case self::ELEMENT_FUNCTION:
 				if ($data[0] == self::FUNCTION_COUNT)
 				{
-					return 'COUNT('.($data[1]?$this->fieldString($data[1]):'*').')';
+					return 'COUNT('.($data[1] ? $this->fieldString($data[1]) : '*').')';
 				}
 				else if ($data[0] == self::FUNCTION_DATETIME)
 				{
@@ -145,7 +145,7 @@ class EstatsDriverSqlite extends EstatsDriver
 			case self::ELEMENT_OPERATION:
 				if ($data[1] & self::OPERATOR_BETWEEN)
 				{
-					return (is_array($data[0])?$this->elementString($data[0][0], $data[0][1]):$this->connection->quote($data[2])).' '.(($data[1] & self::OPERATOR_NOT)?'NOT ':'').'BETWEEN '.$this->fieldString($data[2]).' AND '.$this->fieldString($data[3]);
+					return (is_array($data[0]) ? $this->elementString($data[0][0], $data[0][1]) : $this->connection->quote($data[2])).' '.(($data[1] & self::OPERATOR_NOT) ? 'NOT ' : '').'BETWEEN '.$this->fieldString($data[2]).' AND '.$this->fieldString($data[3]);
 				}
 				else if ($data[1] & self::OPERATOR_IN)
 				{
@@ -156,11 +156,11 @@ class EstatsDriverSqlite extends EstatsDriver
 						$items[] = $this->connection->quote($data[2][$i]);
 					}
 
-					return $this->fieldString($data[0]).' '.(($data[1] & self::OPERATOR_NOT)?'NOT ':'').'IN('.implode(', ', $items).')';
+					return $this->fieldString($data[0]).' '.(($data[1] & self::OPERATOR_NOT) ? 'NOT ' : '').'IN('.implode(', ', $items).')';
 				}
 				else
 				{
-					return (is_array($data[0])?$this->elementString($data[0][0], $data[0][1]):$this->fieldString($data[0])).' '.$this->operatorString($data[1]).(isset($data[2])?' '.(is_array($data[2])?$this->elementString($data[2][0], $data[2][1]):$this->connection->quote($data[2])):'');
+					return (is_array($data[0]) ? $this->elementString($data[0][0], $data[0][1]) : $this->fieldString($data[0])).' '.$this->operatorString($data[1]).(isset($data[2]) ? ' '.(is_array($data[2]) ? $this->elementString($data[2][0], $data[2][1]) : $this->connection->quote($data[2])) : '');
 				}
 			case self::ELEMENT_EXPRESSION:
 				$string = '';
@@ -212,17 +212,17 @@ class EstatsDriverSqlite extends EstatsDriver
 				{
 					if (isset($data[$i][1]))
 					{
-						$parts[] = 'WHEN '.(is_array($data[$i][0])?$this->elementString($data[$i][0][0], $data[$i][0][1]):$this->fieldString($data[$i][0])).' THEN '.(is_array($data[$i][1])?$this->elementString($data[$i][1][0], $data[$i][1][1]):$this->fieldString($data[$i][1]));
+						$parts[] = 'WHEN '.(is_array($data[$i][0]) ? $this->elementString($data[$i][0][0], $data[$i][0][1]) : $this->fieldString($data[$i][0])).' THEN '.(is_array($data[$i][1]) ? $this->elementString($data[$i][1][0], $data[$i][1][1]) : $this->fieldString($data[$i][1]));
 					}
 					else
 					{
-						$parts[] = 'ELSE '.(is_array($data[$i][0])?$this->elementString($data[$i][0][0], $data[$i][0][1]):$this->fieldString($data[$i][0]));
+						$parts[] = 'ELSE '.(is_array($data[$i][0]) ? $this->elementString($data[$i][0][0], $data[$i][0][1]) : $this->fieldString($data[$i][0]));
 					}
 				}
 
 				return 'CASE '.implode(' ', $parts).' END';
 			CASE self::ELEMENT_SUBQUERY:
-				return ('('.self::selectData($data[0], (isset($data[1])?$data[1]:NULL), (isset($data[2])?$data[2]:NULL), (isset($data[3])?$data[3]:0), (isset($data[4])?$data[4]:0), (isset($data[5])?$data[5]:NULL), (isset($data[6])?$data[6]:NULL), (isset($data[7])?$data[7]:NULL), (isset($data[8])?$data[8]:FALSE), self::RETURN_QUERY).')');
+				return ('('.self::selectData($data[0], (isset($data[1]) ? $data[1] : NULL), (isset($data[2]) ? $data[2] : NULL), (isset($data[3]) ? $data[3] : 0), (isset($data[4]) ? $data[4] : 0), (isset($data[5]) ? $data[5] : NULL), (isset($data[6]) ? $data[6] : NULL), (isset($data[7]) ? $data[7] : NULL), (isset($data[8]) ? $data[8] : FALSE), self::RETURN_QUERY).')');
 			default:
 				return '';
 		}
@@ -263,7 +263,7 @@ class EstatsDriverSqlite extends EstatsDriver
 			$this->information = &$information['Information'];
 		}
 
-		return (isset($this->information[$option])?$this->information[$option]:'');
+		return (isset($this->information[$option]) ? $this->information[$option] : '');
 	}
 
 /**
@@ -312,7 +312,7 @@ class EstatsDriverSqlite extends EstatsDriver
 
 		foreach ($attributes as $key => $value)
 		{
-			$sql = '"'.$key.'" '.$value['type'].(isset($value['length'])?'('.$value['length'].')':'').(isset($value['null'])?'':' NOT NULL').(isset($value['autoincrement'])?' AUTOINCREMENT':'');
+			$sql = '"'.$key.'" '.$value['type'].(isset($value['length']) ? '('.$value['length'].')' : '').(isset($value['null']) ? '' : ' NOT NULL').(isset($value['autoincrement']) ? ' AUTOINCREMENT' : '');
 
 			if (isset($value['unique']))
 			{
@@ -347,7 +347,7 @@ class EstatsDriverSqlite extends EstatsDriver
 			if (isset($value['foreign']))
 			{
 				$field = explode('.', $value['foreign']);
-				$foreignKeys[] = 'FOREIGN KEY("'.$key.'") REFERENCES "'.$this->prefix.$field[0].'" ("'.$field[1].'")'.(isset($value['onupdate'])?' ON UPDATE '.$value['onupdate']:'').(isset($value['ondelete'])?' ON DELETE '.$value['ondelete']:'');
+				$foreignKeys[] = 'FOREIGN KEY("'.$key.'") REFERENCES "'.$this->prefix.$field[0].'" ("'.$field[1].'")'.(isset($value['onupdate']) ? ' ON UPDATE '.$value['onupdate'] : '').(isset($value['ondelete']) ? ' ON DELETE '.$value['ondelete'] : '');
 			}
 
 			if (isset($value['index']) && !isset($value['unique']))
@@ -404,7 +404,7 @@ class EstatsDriverSqlite extends EstatsDriver
 	{
 		$result = $this->connection->query('SELECT "name" FROM "sqlite_master" WHERE "name" = '.$this->connection->quote($this->prefix.$table).' AND "type" = \'table\'');
 
-		return ($result?(strlen($result->fetchColumn(0)) > 1):0);
+		return ($result ? (strlen($result->fetchColumn(0)) > 1) : 0);
 	}
 
 /**
@@ -432,7 +432,7 @@ class EstatsDriverSqlite extends EstatsDriver
 
 		$result = $this->connection->query('SELECT ('.implode(' + ', $parts).') FROM '.$this->connection->quote($this->prefix.$table));
 
-		return ($result?$result->fetchColumn(0):FALSE);
+		return ($result ? $result->fetchColumn(0) : FALSE);
 	}
 
 /**
@@ -464,11 +464,11 @@ class EstatsDriverSqlite extends EstatsDriver
 				}
 				else if (is_array($fields[$i]))
 				{
-					$parts[] = $this->elementString($fields[$i][0], $fields[$i][1]).(empty($fields[$i][2])?'':' AS "'.$fields[$i][2].'"');
+					$parts[] = $this->elementString($fields[$i][0], $fields[$i][1]).(empty($fields[$i][2]) ? '' : ' AS "'.$fields[$i][2].'"');
 				}
 				else
 				{
-					$parts[] = $this->fieldString($fields[$i]).(strstr($fields[$i], '.')?'':' AS "'.$fields[$i].'"');
+					$parts[] = $this->fieldString($fields[$i]).(strstr($fields[$i], '.') ? '' : ' AS "'.$fields[$i].'"');
 				}
 			}
 
@@ -489,7 +489,7 @@ class EstatsDriverSqlite extends EstatsDriver
 				{
 					$natural = ($tables[$i][0] & self::JOIN_NATURAL);
 					$tables[$i][0] = ($tables[$i][0] & ~self::JOIN_NATURAL);
-					$tablesPart.= ($natural?' NATURAL':'').' ';
+					$tablesPart.= ($natural ? ' NATURAL' : '').' ';
 
 					switch ($tables[$i][0])
 					{
@@ -519,7 +519,7 @@ class EstatsDriverSqlite extends EstatsDriver
 			}
 			else
 			{
-				$tablesPart.= '"'.$this->prefix.$tables[$i].'"'.($this->prefix?' AS "'.$tables[$i].'"':'');
+				$tablesPart.= '"'.$this->prefix.$tables[$i].'"'.($this->prefix ? ' AS "'.$tables[$i].'"' : '');
 			}
 
 			if ($i > 0 && is_array($tables[$i - 1]) && is_int($tables[$i - 1][0]))
@@ -553,11 +553,11 @@ class EstatsDriverSqlite extends EstatsDriver
 			{
 				if (is_array($value))
 				{
-					$orderBy[$key] = $this->elementString($key[0], $key[1]).($value?' ASC':' DESC');
+					$orderBy[$key] = $this->elementString($key[0], $key[1]).($value ? ' ASC' : ' DESC');
 				}
 				else
 				{
-					$orderBy[$key] = $this->fieldString($key).($value?' ASC':' DESC');
+					$orderBy[$key] = $this->fieldString($key).($value ? ' ASC' : ' DESC');
 				}
 			}
 
@@ -579,7 +579,7 @@ class EstatsDriverSqlite extends EstatsDriver
 			}
 		}
 
-		$sql = 'SELECT '.($distinct?'DISTINCT ':'').$fieldsPart.' FROM '.$tablesPart.($where?' WHERE '.$this->elementString(self::ELEMENT_EXPRESSION, $where):'').($groupBy?' GROUP BY '.implode(', ', $groupBy).($having?' HAVING '.$this->elementString(self::ELEMENT_EXPRESSION, $having):''):'').($orderBy?' ORDER BY '.implode(', ', $orderBy):'').(($amount || $offset)?' LIMIT '.(int) $offset.', '.(int) $amount:'');
+		$sql = 'SELECT '.($distinct ? 'DISTINCT ' : '').$fieldsPart.' FROM '.$tablesPart.($where ? ' WHERE '.$this->elementString(self::ELEMENT_EXPRESSION, $where) : '').($groupBy ? ' GROUP BY '.implode(', ', $groupBy).($having ? ' HAVING '.$this->elementString(self::ELEMENT_EXPRESSION, $having) : '') : '').($orderBy ? ' ORDER BY '.implode(', ', $orderBy) : '').(($amount || $offset) ? ' LIMIT '.(int) $offset.', '.(int) $amount : '');
 
 		if ($mode == self::RETURN_QUERY)
 		{
@@ -587,11 +587,11 @@ class EstatsDriverSqlite extends EstatsDriver
 		}
 
 		$statement = $this->connection->prepare($sql);
-		$result = ($statement?$statement->execute():NULL);
+		$result = ($statement ? $statement->execute() : NULL);
 
 		if ($result)
 		{
-			return (($mode == self::RETURN_RESULT)?$statement->fetchAll(PDO::FETCH_ASSOC):$statement);
+			return (($mode == self::RETURN_RESULT) ? $statement->fetchAll(PDO::FETCH_ASSOC) : $statement);
 		}
 		else
 		{
@@ -657,7 +657,7 @@ class EstatsDriverSqlite extends EstatsDriver
 
 		$statement = $this->connection->prepare('UPDATE "'.$this->prefix.$table.'" SET '.implode(', ', $parts).' WHERE '.$this->elementString(self::ELEMENT_EXPRESSION, $where));
 
-		return ($statement?$statement->execute():FALSE);
+		return ($statement ? $statement->execute() : FALSE);
 	}
 
 /**
@@ -669,9 +669,9 @@ class EstatsDriverSqlite extends EstatsDriver
 
 	public function deleteData($table, $where = NULL)
 	{
-		$statement = $this->connection->prepare('DELETE FROM "'.$this->prefix.$table.'"'.($where?' WHERE '.$this->elementString(self::ELEMENT_EXPRESSION, $where):''));
+		$statement = $this->connection->prepare('DELETE FROM "'.$this->prefix.$table.'"'.($where ? ' WHERE '.$this->elementString(self::ELEMENT_EXPRESSION, $where) : ''));
 
-		return ($statement?$statement->execute():FALSE);
+		return ($statement ? $statement->execute() : FALSE);
 	}
 }
 ?>
