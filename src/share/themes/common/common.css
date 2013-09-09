@@ -3,123 +3,104 @@
 	margin:0;
 	padding:0;
 }
-
 html, table, textarea
 {
 	font:12px /16px Arial, Helvetica, sans-serif;
 }
-
 html, body
 {
 	height:100%;
 	cursor:default;
 }
-
 body
 {
 	text-align:center;
 }
-
 table
 {
-	text-align:center;
-	margin:0 0 6px 0;
 	width:100%;
+	margin:0 0 6px 0;
+	text-align:center;
 }
-
 th, td
 {
 	padding:2px;
 	vertical-align:top;
 }
-
 th, h3
 {
-	font-weight:bold;
 	padding:2px;
+	font-weight:bold;
 	clear:both;
 }
-
 input, textarea, select
 {
 	margin:1px 0;
 	padding:1px 2px;
-	background:white;
 	font-size:12px !important;
+	background:#FFF;
 }
-
-input[type="button"], input[type="submit"], input[type="reset"]
+input[type='button', input[type='submit'], input[type='reset']
 {
-	cursor:pointer;
 	padding:2px 5px;
 	font-weight:bold;
+	cursor:pointer;
 }
-
 a
 {
 	text-decoration:none;
 }
-
 div
 {
 	clear:both;
 }
-
 img
 {
 	border:0;
 }
-
 ol li
 {
 	margin:3px 10px;
 	list-style-position:inside;
 }
-
 ul
 {
-	list-style-type:none;
-	position:relative;
-	clear:both;
 	display:block;
 	margin:0 0 5px 0;
+	position:relative;
+	list-style-type:none;
+	clear:both;
 }
-
 ul li
 {
+	margin:0 1px;
 	float:left;
 	list-style-position:inside;
-	margin:0 1px;
 }
-
 ul li a
 {
 	padding:1px 4px;
 	font:bold 13px /15px sans-serif;
 }
-
 ul li ul
 {
+	display:none;
+	border-width:1px 2px 2px 0;
 	position:absolute;
 	z-index:10;
-	display:none;
 	opacity:0.9;
-	border-width:1px 2px 2px 0;
 }
-
 ul li:hover ul, ul li:focus ul, ul li.hover ul
 {
 	display:block;
 }
-
 ul li ul li
 {
 	display:block;
-	float:none;
-	border:0;
 	margin:0;
+	border:0;
+	float:none;
 }
-
 ul li ul a
 {
 	display:block;
@@ -128,126 +109,106 @@ ul li ul a
 	font:normal 12px /20px sans-serif;
 	white-space:nowrap;
 }
-
 ul li ul span
 {
 	display:block;
 	padding:0 6px;
 }
-
 ul li ul a:hover, ul li ul a:focus, ul li ul a.active
 {
 	font-style:italic;
 }
-
 ul li ul a.active span
 {
-	border-width:1px 0;
 	margin:0;
+	border-width:1px 0;
 }
-
 ul li ul a:hover span, ul li ul a:focus span
 {
 	margin:0;
 }
-
 h1
 {
+	height:40px;
 	margin:5px;
 	font-size:24px;
 	line-height:80%;
-	height:40px;
 }
-
 h1 small
 {
 	font-size:14px;
 }
-
 h2, .chart thead th, #summary
 {
 	padding:0 1px;
-	text-align:center !important;
 	font-size:16px;
 	font-weight:bold;
 	line-height:25px;
+	text-align:center !important;
 	clear:both;
 }
-
 h2
 {
-	border-width:1px 0;
 	margin:5px 0 0 0;
+	border-width:1px 0;
 }
-
 h3
 {
 	font-size:15px;
 }
-
 h4
 {
-	text-align:left;
 	margin:5px 3px;
 	font-size:14px;
+	text-align:left;
 }
-
 h5
 {
 	margin:4px;
 }
-
 p
 {
+	height:auto;
 	margin:4px;
 	padding:3px;
-	text-align:left;
 	overflow:auto;
-	height:auto;
+	text-align:left;
 }
-
 p label
 {
 	display:block;
 }
-
 label > span
 {
 	float:right;
 }
-
 textarea
 {
 	width:100%;
 }
-
 p span textarea
 {
-	height:30px;
 	width:300px;
+	height:30px;
 }
-
 fieldset
 {
 	margin:5px;
 	padding:7px;
-	clear:both;
 	text-align:left;
+	clear:both;
 }
-
 fieldset p
 {
 	min-height:25px;
 	padding:1px 5px;
 }
-
 fieldset dfn
 {
-	font-style:italic;
 	font-size:11px;
+	font-style:italic;
 	font-weight:normal !important;
 }
-
 fieldset legend
 {
 	margin:2px 0 0 5px;
@@ -255,212 +216,178 @@ fieldset legend
 	font-size:14px;
 	cursor:pointer;
 }
-
 fieldset legend:hover, .expanded legend
 {
-	font-weight:bold;
 	padding:1px 3px;
+	font-weight:bold;
 }
-
 fieldset textarea
 {
 	height:25px;
 }
-
 map div
 {
 	display:none;
 }
-
 small.user, small.online, small.returns, small.robot
 {
 	padding:2px 4px;
 }
-
 .user td, small.user
 {
-	background:#FFEBC8 url(images/user.png);
+	background:#FFEBC8 url('./images/user.png');
 }
-
 .online td, small.online
 {
-	background:#CEFFB4 url(images/online.png);
+	background:#CEFFB4 url('./images/online.png');
 }
-
 .returns td, small.returns
 {
-	background:#E8E8E8 url(images/returns.png);
+	background:#E8E8E8 url('./images/returns.png');
 }
-
 .robot td, small.robot
 {
-	background:#FFB9B7 url(images/robot.png);
+	background:#FFB9B7 url('./images/robot.png');
 }
-
 .wide
 {
 	width:75% !important;
 	text-align:left;
 }
-
 .auto
 {
 	width:auto !important;
 }
-
 .chart
 {
 	width:100%;
 }
-
 .chart div
 {
 	clear:none;
 }
-
 .chart th
 {
 	border:0;
 }
-
 .chart span
 {
 	display:none;
 }
-
 .chart td:hover span, .tooltip:hover span
 {
-	position:absolute;
 	display:block;
-	text-align:left;
-	font-weight:normal;
-	white-space:nowrap;
-	padding:3px;
 	margin:175px 0 0 -50px;
-	opacity:0.85;
+	padding:3px;
+	position:absolute;
 	z-index:3;
+	font-weight:normal;
+	text-align:left;
+	white-space:nowrap;
+	opacity:0.85;
 }
-
 .tooltip span
 {
 	display:none;
 }
-
 .tooltip:hover span
 {
 	margin:0;
 }
-
 .chart td
 {
-	padding:0;
 	margin:0;
-	vertical-align:bottom;
+	padding:0;
 	text-align:center;
+	vertical-align:bottom;
 }
-
 .chart td div
 {
 	margin:auto;
-	text-align:center !important;
 	font-size:0;
+	text-align:center !important;
 }
-
 .chart td div div
 {
-	border-bottom:0;
 	width:25px !important;
 	margin:auto;
+	border-bottom:0;
 	float:left;
 }
-
 .chart .bars_2 div div
 {
 	width:18px !important;
 	margin:auto 2px 0 2px;
 }
-
 .chart .bars_3 div div
 {
 	width:10px !important;
 	margin:auto 2px 0 2px;
 }
-
 .narrow td div
 {
 	width:20px;
 }
-
 .narrow .bars_1 div div
 {
 	width:12px !important;
 	margin:auto 2px 0 2px;
 }
-
 .narrow .bars_2 div div
 {
 	width:6px !important;
 	margin:auto 1px 0 0;
 }
-
 .narrow .bars_3 div div
 {
 	margin:auto 1px 0 0;
 	width:3px !important;
 }
-
 .chart .empty
 {
-	border:0 !important;
 	height:150px;
+	border:0 !important;
 	background:transparent !important;
 }
-
 .chart tbody th
 {
-	font-size:10px;
 	font-family:monospace;
+	font-size:10px;
 	white-space:pre;
 	text-transform:uppercase;
 }
-
 .chart .scale
 {
 	padding:0;
 	position:relative;
 	z-index:2;
 }
-
 .chart .scale pre
 {
-	text-align:right;
 	padding:3px 3px 0 0;
-	font:9px /15px sans-serif;
-	z-index:2;
 	position:relative;
+	z-index:2;
+	font:9px /15px sans-serif;
+	text-align:right;
 }
-
 .chart thead th
 {
 	border-top:0;
 	font-size:14px;
 	line-height:22px;
 }
-
 .chart tfoot th
 {
 	text-transform:uppercase;
 }
-
 .chart hr
 {
-	opacity:0.6;
-	position:absolute;
 	width:700px;
 	margin-left:0;
+	position:absolute;
 	z-index:1;
+	opacity:0.6;
 }
-
 .chart .levels
 {
 	width:100%;
@@ -468,101 +395,84 @@ small.user, small.online, small.returns, small.robot
 	border:0;
 	text-align:left !important;
 }
-
 .chart input
 {
 	margin:3px 3px auto auto;
 	float:right;
 }
-
 .chart th em
 {
 	font-style:normal;
 }
-
 .summary
 {
 	margin-top:-2px;
 	font-size:10px;
 }
-
 .summary td
 {
-	font-style:italic;
 	width:20%;
+	font-style:italic;
 }
-
 .red, .decrease
 {
 	color:red;
 }
-
 .green, .increase
 {
 	color:green;
 }
-
 .yellow
 {
 	color:#E3AD00;
 }
-
 .remain
 {
 	color:gray;
 }
-
 .error, .success, .warning, .information
 {
-	border:1px solid red;
-	background:#FCFFE1 url(../../icons/miscellaneous/dialog_error.png) no-repeat 7px 45% !important;
-	text-align:justify;
 	margin:1px 3px;
 	padding:5px 5px 5px 30px;
+	border:1px solid red;
+	text-align:justify;
+	background:#FCFFE1 url('../../icons/miscellaneous/dialog_error.png') no-repeat 7px 45% !important;
 }
-
 .success
 {
-	background-image:url(../../icons/miscellaneous/dialog_success.png) !important;
 	border-color:green;
+	background-image:url('../../icons/miscellaneous/dialog_success.png') !important;
 }
-
 .warning
 {
-	background-image:url(../../icons/miscellaneous/dialog_warning.png) !important;
 	border-color:#E2C472;
+	background-image:url('../../icons/miscellaneous/dialog_warning.png') !important;
 }
-
 .information
 {
-	background-image:url(../../icons/miscellaneous/dialog_information.png) !important;
 	border-color:#7E9EB9;
+	background-image:url('../../icons/miscellaneous/dialog_information.png') !important;
 }
-
 .parent
 {
 	font-size:15px;
 }
-
 .collapsed div
 {
 	display:none;
 }
-
 .collapsed legend
 {
 	margin:0;
-	font-weight:normal;
 	padding:1px 5px;
+	font-weight:normal;
 }
-
 .collapsed
 {
-	padding:0;
 	margin:3px 0;
+	padding:0;
 	border:0;
 }
-
 .groupdesc
 {
 	display:block;
@@ -570,217 +480,182 @@ small.user, small.online, small.returns, small.robot
 	padding:2px;
 	font-size:13px;
 }
-
 .changed label
 {
 	font-weight:bold;
 }
-
 .links
 {
-	text-align:center;
 	margin:6px;
+	text-align:center;
 }
-
 .buttons
 {
 	margin:10px;
 }
-
 .settings
 {
 	padding:0 !important;
 }
-
 .settings h3
 {
 	font-size:9px !important;
 	line-height:9px;
 }
-
 .maptooltip
 {
-	text-align:left;
 	margin:-20px 50px 10px 50px;
 	padding:5px;
-}
-
-#body
-{
-	position:relative;
-	min-height:100%;
-	margin:0 auto;
 	text-align:left;
 }
-
+#body
+{
+	min-height:100%;
+	margin:0 auto;
+	position:relative;
+	text-align:left;
+}
 #content
 {
-	text-align:center;
 	margin:0 16px;
 	padding:0 0 60px 0;
 	position:static;
+	text-align:center;
 }
-
 #header
 {
 	height:75px;
-	text-align:left;
 	padding:2px;
+	text-align:left;
 }
-
 #header form
 {
 	display:inline;
 }
-
 #headerright
 {
+	margin:0 3px 3px 3px;
 	float:right;
 	text-align:right;
-	margin:0 3px 3px 3px;
 }
-
 #headerright a
 {
 	font-weight:bold;
 }
-
 #footer
 {
+	padding:0 0 1px 0;
 	position:absolute;
 	bottom:0;
 	text-align:center;
-	padding:0 0 1px 0;
 }
-
 #gototop
 {
-	float:right;
-	margin:0 2px 0 185px;
 	display:block;
 	width:13px;
 	height:14px;
+	margin:0 2px 0 185px;
+	float:right;
 	font-size:0;
 }
-
 #dateform
 {
 	margin:0 0 5px 0;
 }
-
 #dateform input, #dateform select
 {
 	margin:-3px 2px 0 2px;
 }
-
 #debug
 {
-	overflow:auto;
 	max-height:200px;
-	text-align:left;
 	padding:3px;
+	overflow:auto;
+	text-align:left;
 }
-
 #antipixelpreview
 {
 	margin:0 0 -3px 0;
 }
-
 #advanced form
 {
 	margin:3px;
 }
-
 #search
 {
-	text-align:left;
-	font-weight:normal;
-	font-size:12px;
-	line-height:15px;
 	height:40px;
-	padding:3px;
 	margin-bottom:10px;
+	padding:3px;
+	font-size:12px;
+	font-weight:normal;
+	line-height:15px;
+	text-align:left;
 }
-
 #search span
 {
 	float:right;
 }
-
 #visits th
 {
 	white-space:nowrap;
 }
-
 #login
 {
 	width:300px;
 	margin:10px auto;
 }
-
 #details .detailsheader:hover td
 {
 	background-color:inherit !important;
 }
-
 #preloader img
 {
-	visibility:hidden;
 	width:1px;
 	height:1px;
+	visibility:hidden;
 }
-
 #general td td, #technical td td, #geolocation td td, #group td, td th, td table
 {
-	border:0;
 	margin:0;
+	border:0;
 }
-
 #general td tr:hover td.settings, #technical td tr:hover td.settings, #geolocation td tr:hover td.settings, #group td tr:hover td.settings
 {
 	background-color:transparent !important;
 }
-
 #general td, #technical td, #geolocation td
 {
-	padding:0;
 	width:50%;
+	padding:0;
 }
-
 #general td td, #technical td td, #geolocation td td, #group td td
 {
 	padding:2px;
 }
-
 #general img, #technical img, #geolocation img, #group img, .maptooltip img
 {
 	margin:0 5px -3px 0;
 }
-
 #group .wide
 {
 	min-width:40% !important;
 }
-
 #group .bar
 {
-	text-align:right;
 	min-width:300px !important;
+	text-align:right;
 }
-
 #geolocationmap
 {
 	margin:30px auto;
 }
-
 #geolocationtooltips
 {
-	border:1px solid transparent;
 	height:30px;
+	border:1px solid transparent;
 }
-
 #geolocationtooltips div
 {
-	padding:3px 5px;
 	display:none;
+	padding:3px 5px;
 }
