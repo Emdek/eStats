@@ -29,7 +29,7 @@ p:hover input, p:hover textarea, p:hover select, input:focus, textarea:focus, se
 	border-color:#6D6D6D;
 	color:#151109;
 }
-input[type="button"], input[type="submit"], input[type="reset"]
+input[type='button'], input[type='submit'], input[type='reset']
 {
 	border:1px solid #646C64;
 	background:#848C84;
