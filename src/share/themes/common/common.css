@@ -40,7 +40,7 @@ input, textarea, select
 	font-size:12px !important;
 	background:#FFF;
 }
-input[type='button', input[type='submit'], input[type='reset']
+input[type='button'], input[type='submit'], input[type='reset']
 {
 	padding:2px 5px;
 	font-weight:bold;
