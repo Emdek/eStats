@@ -2,7 +2,7 @@ var eFlashVersion = 0;
 
 if (navigator.plugins.length)
 {
-	var eFlashPlugin = navigator.plugins["Shockwave Flash"];
+	var eFlashPlugin = navigator.plugins['Shockwave Flash'];
 
 	if (eFlashPlugin)
 	{
