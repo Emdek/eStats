@@ -16,6 +16,9 @@ table
 th, td
 {
 	padding:0;
+}
+td
+{
 	vertical-align:middle;
 }
 input, textarea, select
