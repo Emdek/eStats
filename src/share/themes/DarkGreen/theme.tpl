@@ -50,7 +50,7 @@ Powered by<br>
 <br>
 <div>
 Design by <strong>Neo</strong><br>
-&copy; 2005 - 2013 <a href="http://emdek.pl/"><strong>Emdek</strong></a>
+&copy; 2005 - 2014 <a href="http://emdek.pl/"><strong>Emdek</strong></a>
 </div>
 <a href="#header" title="{lang_gototop}" id="gototop">&nbsp;</a>
 <small>{pagegeneration}</small>
