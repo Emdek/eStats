@@ -42,12 +42,12 @@ Licence: GPL
 {preloader}</div>
 <div id="footer">
 Powered by<br />
-<a href="http://estats.emdek.cba.pl/" tabindex="{tabindex}">
+<a href="http://estats.emdek.pl/" tabindex="{tabindex}">
 <img src="{datapath}share/antipixels/default/fresh.png" alt="eStats" title="eStats" />
 </a>
 <br />
 <div>
-&copy; 2005 - 2012 <a href="http://emdek.cba.pl/" tabindex="{tabindex}"><strong>Emdek</strong></a>
+&copy; 2005 - 2014 <a href="http://emdek.pl/" tabindex="{tabindex}"><strong>Emdek</strong></a>
 </div>
 <a href="#header" title="{lang_gototop}" tabindex="{tabindex}" id="gototop">&nbsp;</a>
 <small>{pagegeneration}</small>
