@@ -267,7 +267,7 @@ class EstatsCore
 			{
 				if (strstr($Key, '.'))
 				{
-					$Version = explode('.', $Key);
+					$Version = explode('.', $Key, 2);
 					$Key = $Version[0];
 				}
 
